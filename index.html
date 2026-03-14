@@ -39,15 +39,13 @@ body{font-family:'Nanum Gothic',sans-serif;background:var(--bg);min-height:100vh
 .tab-ico-wrap{position:relative;display:inline-block;}
 
 /* ── 페이지 공통 ── */
-.page{display:none;min-height:100vh;padding-top:var(--bar-h);padding-bottom:calc(var(--tab-h)+32px);}
+.page{display:none;min-height:100vh;padding-top:var(--bar-h);padding-bottom:calc(var(--tab-h)+48px);}
 .page.active{display:block;}
-.page-inner{padding:18px 14px calc(var(--tab-h)+40px);}
+.page-inner{padding:16px 14px calc(var(--tab-h)+52px);}
 .back-btn{display:inline-flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;font-family:'Jua',sans-serif;font-size:0.88rem;color:#888;padding:4px 2px;margin-bottom:8px;}
 .big-btn{width:100%;padding:15px;border:none;border-radius:16px;color:#fff;font-family:'Jua',sans-serif;font-size:1.1rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;}
 .big-btn:active{transform:scale(0.97);}
 .btn-primary{background:linear-gradient(135deg,var(--primary),#FF8E53);box-shadow:0 4px 16px rgba(255,107,107,0.3);}
-.btn-secondary{background:linear-gradient(135deg,var(--secondary),#38d9cc);box-shadow:0 4px 16px rgba(78,205,196,0.3);}
-.btn-gold{background:linear-gradient(135deg,#f59f00,#FFE66D);color:#2D3436;box-shadow:0 4px 16px rgba(245,159,0,0.3);}
 .section-title{font-family:'Jua',sans-serif;font-size:1.05rem;color:var(--text);margin-bottom:12px;}
 .empty-msg{text-align:center;padding:28px;color:#bbb;font-size:0.85rem;}
 .tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:0.62rem;font-weight:700;margin:2px;}
@@ -134,13 +132,13 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
    연습
 ══════════════════════════════════════ */
 #pg-prac{background:var(--bg);}
-.pcard{background:#fff;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,0.07);padding:14px;margin-bottom:11px;}
+.pcard{background:#fff;border-radius:14px;box-shadow:0 3px 10px rgba(0,0,0,0.07);padding:12px;margin-bottom:9px;}
 .pcard-t{font-family:'Jua',sans-serif;font-size:0.87rem;color:var(--text);margin-bottom:9px;}
 .score-wrap{width:100%;background:#f9f9f9;border-radius:10px;padding:6px 5px;overflow-x:auto;}
 .score-wrap svg{display:block;}
-.note-bar{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px;}
+.note-bar{display:flex;gap:3px;flex-wrap:wrap;margin-top:6px;}
 .note-chip{display:flex;flex-direction:column;align-items:center;gap:2px;}
-.note-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Jua',sans-serif;font-size:0.66rem;color:#fff;transition:all 0.25s;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+.note-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Jua',sans-serif;font-size:0.66rem;color:#fff;transition:all 0.25s;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
 .note-dot.waiting{background:var(--waiting);}
 .note-dot.current{background:#f59f00;transform:scale(1.2);box-shadow:0 0 0 4px rgba(245,159,0,0.3);animation:pulse 1s infinite;}
 .note-dot.correct{background:var(--correct);}
@@ -151,7 +149,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .prog-wrap{height:6px;background:#eee;border-radius:99px;margin-top:9px;overflow:hidden;}
 .prog-bar{height:100%;background:linear-gradient(90deg,var(--secondary),var(--correct));border-radius:99px;transition:width 0.4s;width:0%;}
 .detect-row{display:flex;gap:9px;flex-wrap:wrap;}
-.detect-box{flex:1;min-width:110px;background:linear-gradient(135deg,#f0f8ff,#e8f4fd);border:2px solid #d0e8f8;border-radius:12px;padding:12px;text-align:center;}
+.detect-box{flex:1;min-width:110px;background:linear-gradient(135deg,#f0f8ff,#e8f4fd);border:2px solid #d0e8f8;border-radius:11px;padding:10px;text-align:center;}
 .big-note{font-family:'Do Hyeon',sans-serif;font-size:1.7rem;color:var(--secondary);}
 .hz-txt{font-size:0.67rem;color:#aaa;margin-top:2px;}
 .mic-row{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:4px;}
@@ -159,19 +157,19 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .mic-dot.on{background:#ff4444;animation:blink 0.8s infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 .mic-lbl{font-size:0.67rem;color:#aaa;}
-.stat-box{flex:1;min-width:110px;border-radius:12px;padding:12px;text-align:center;transition:all 0.3s;background:#f9f9f9;border:2px solid #eee;}
+.stat-box{flex:1;min-width:110px;border-radius:11px;padding:10px;text-align:center;transition:all 0.3s;background:#f9f9f9;border:2px solid #eee;}
 .stat-box.ok{background:linear-gradient(135deg,#d3f9d8,#b2f2bb);border-color:#69db7c;}
 .stat-box.ng{background:linear-gradient(135deg,#ffe3e3,#ffc9c9);border-color:#ff8787;}
 .stat-box.go{background:linear-gradient(135deg,#fff9db,#ffec99);border-color:#ffd43b;}
 .s-em{font-size:1.5rem;}.s-tx{font-family:'Jua',sans-serif;font-size:0.85rem;color:var(--text);margin-top:3px;}
-.done-banner{display:none;margin-top:9px;background:linear-gradient(135deg,#51CF66,#38d9cc);color:#fff;font-family:'Jua',sans-serif;font-size:1rem;border-radius:12px;padding:13px;text-align:center;}
+.done-banner{display:none;margin-top:7px;background:linear-gradient(135deg,#51CF66,#38d9cc);color:#fff;font-family:'Jua',sans-serif;font-size:0.95rem;border-radius:11px;padding:11px;text-align:center;}
 .done-banner.show{display:block;animation:pop 0.4s;}
 @keyframes pop{from{transform:scale(0.7);opacity:0}to{transform:scale(1);opacity:1}}
 .ses-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px;}
 .ses-dot{width:25px;height:25px;border-radius:50%;font-family:'Jua',sans-serif;font-size:0.62rem;display:flex;align-items:center;justify-content:center;transition:all 0.3s;background:#e9ecef;color:#aaa;}
 .ses-dot.done{background:var(--correct);color:#fff;}
 .ses-dot.curr{background:var(--accent);color:var(--text);border:2px solid #ffd43b;}
-.mic-go-btn{width:100%;padding:13px;border:none;border-radius:13px;background:linear-gradient(135deg,var(--secondary),#38d9cc);color:#fff;font-family:'Jua',sans-serif;font-size:1rem;cursor:pointer;box-shadow:0 4px 12px rgba(78,205,196,0.3);transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:9px;}
+.mic-go-btn{width:100%;padding:12px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--secondary),#38d9cc);color:#fff;font-family:'Jua',sans-serif;font-size:0.95rem;cursor:pointer;box-shadow:0 4px 12px rgba(78,205,196,0.3);transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:7px;}
 .mic-go-btn:active{transform:scale(0.97);}
 .mic-go-btn:disabled{background:#ccc;box-shadow:none;cursor:default;}
 
@@ -179,7 +177,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
    보상 탭
 ══════════════════════════════════════ */
 #pg-reward{background:linear-gradient(160deg,#1a1a2e,#16213e,#0f3460);}
-.reward-inner{padding:18px 14px calc(var(--tab-h)+40px);}
+.reward-inner{padding:16px 14px calc(var(--tab-h)+52px);}
 .reward-header{text-align:center;padding:14px 0 18px;}
 .reward-header .r-title{font-family:'Do Hyeon',sans-serif;font-size:1.7rem;color:#FFE66D;letter-spacing:2px;text-shadow:0 0 20px rgba(255,230,109,0.4);}
 .reward-header .r-sub{font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:3px;}
@@ -221,7 +219,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
    핀볼 가챠 게임
 ══════════════════════════════════════ */
 #pg-pinball{background:linear-gradient(160deg,#1a1a2e,#0f3460);}
-.pb-wrap{max-width:480px;margin:0 auto;padding:6px 14px calc(var(--tab-h)+16px);text-align:center;}
+.pb-wrap{max-width:480px;margin:0 auto;padding:6px 14px calc(var(--tab-h)+52px);text-align:center;}
 .pb-title{font-family:'Do Hyeon',sans-serif;font-size:1.15rem;color:#FFE66D;letter-spacing:1px;margin-bottom:1px;text-shadow:0 0 20px rgba(255,230,109,0.4);}
 .pb-sub{font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;}
 .pb-score-row{display:flex;justify-content:center;gap:7px;margin-bottom:6px;flex-wrap:wrap;}
@@ -241,9 +239,9 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .pb-btn-back{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);}
 
 /* ── 말풍선 ── */
-.speech-bubble{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#f59f00,#FFE66D);color:#2D3436;font-family:'Jua',sans-serif;font-size:0.68rem;padding:6px 11px;border-radius:12px;white-space:nowrap;box-shadow:0 3px 12px rgba(245,159,0,0.4);pointer-events:none;z-index:1001;animation:bubblePop 0.4s;}
-.speech-bubble::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#FFE66D;}
-.speech-bubble.ticket{background:linear-gradient(135deg,#51CF66,#38d9cc);border-top-color:#38d9cc;}
+.speech-bubble{position:fixed;bottom:calc(var(--tab-h) + 8px);right:14px;background:linear-gradient(135deg,#f59f00,#FFE66D);color:#2D3436;font-family:'Jua',sans-serif;font-size:0.68rem;padding:6px 11px;border-radius:12px;white-space:nowrap;box-shadow:0 3px 12px rgba(245,159,0,0.4);pointer-events:none;z-index:1001;animation:bubblePop 0.4s;}
+.speech-bubble::after{content:'';position:absolute;bottom:-8px;right:20px;border:5px solid transparent;border-top-color:#FFE66D;}
+.speech-bubble.ticket{background:linear-gradient(135deg,#51CF66,#38d9cc);}
 .speech-bubble.ticket::after{border-top-color:#38d9cc;}
 @keyframes bubblePop{from{transform:translateX(-50%) scale(0.7);opacity:0}to{transform:translateX(-50%) scale(1);opacity:1}}
 
@@ -279,7 +277,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .admin-header{background:linear-gradient(135deg,#2D3436,#636e72);padding:20px 14px 16px;text-align:center;}
 .admin-header .ah-title{font-family:'Do Hyeon',sans-serif;font-size:1.3rem;color:#fff;letter-spacing:1px;}
 .admin-header .ah-sub{font-size:0.7rem;color:rgba(255,255,255,0.5);margin-top:2px;}
-.admin-inner{padding:16px 14px calc(var(--tab-h)+40px);}
+.admin-inner{padding:16px 14px calc(var(--tab-h)+52px);}
 
 /* 관리자 섹션 */
 .admin-section{background:#fff;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 3px 12px rgba(0,0,0,0.07);}
@@ -372,19 +370,20 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
     <div class="tab-ico-wrap"><span class="t-ico">🎹</span></div>
     <span class="t-lbl">연습</span>
   </button>
-  <button class="tab-item" id="tab-reward" onclick="switchTab('reward')" style="position:relative">
+  <button class="tab-item" id="tab-reward" onclick="switchTab('reward')">
     <div class="tab-ico-wrap" style="position:relative">
       <span class="t-ico">🎰</span>
       <span class="tab-badge" id="ticket-badge" style="display:none">0</span>
     </div>
     <span class="t-lbl">보상</span>
-    <div class="speech-bubble" id="reward-speech">연습 10회 → 가챠권 🎟</div>
   </button>
   <button class="tab-item" id="tab-admin" onclick="openAdminModal()">
     <div class="tab-ico-wrap"><span class="t-ico">⚙️</span></div>
     <span class="t-lbl">관리</span>
   </button>
 </div>
+<!-- 말풍선 (탭바 위 고정) -->
+<div class="speech-bubble" id="reward-speech">연습 10회 → 가챠권 🎟</div>
 
 <!-- ① 연습 홈 -->
 <div id="pg-practice" class="page active">
@@ -872,6 +871,7 @@ function showPage(id){
 }
 
 function switchTab(tab){
+  if(tab==='admin'){switchTabAdmin();return;}
   doStopMic(); clearTimer();
   document.querySelectorAll('.tab-item').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
@@ -1636,8 +1636,103 @@ function showPinballResult(){
 }
 
 // ════════════════════════════════════════════════════════
-// 초기화
+// 관리자 기능
 // ════════════════════════════════════════════════════════
+const ADMIN_PW='5363';
+let adminLoggedIn=false,editingId=null;
+
+function openAdminModal(){
+  if(adminLoggedIn){switchTabAdmin();return;}
+  const inp=document.getElementById('admin-pw-input');
+  inp.value='';inp.className='admin-pw-input';
+  document.getElementById('admin-pw-modal').classList.add('show');
+  setTimeout(()=>inp.focus(),200);
+}
+function closeAdminModal(){document.getElementById('admin-pw-modal').classList.remove('show');}
+function onPwInput(){if(document.getElementById('admin-pw-input').value.length===4)checkAdminPw();}
+function checkAdminPw(){
+  const val=document.getElementById('admin-pw-input').value;
+  if(val===ADMIN_PW){adminLoggedIn=true;closeAdminModal();switchTabAdmin();}
+  else{const inp=document.getElementById('admin-pw-input');inp.className='admin-pw-input error';inp.value='';setTimeout(()=>{inp.className='admin-pw-input';},600);}
+}
+function adminLogout(){adminLoggedIn=false;switchTab('practice');}
+function switchTabAdmin(){
+  doStopMic();clearTimer();
+  document.querySelectorAll('.tab-item').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-admin').classList.add('active');
+  document.getElementById('bar-ctrl').style.visibility='hidden';
+  document.getElementById('bar-timer').style.display='none';
+  document.getElementById('bar-count').style.display='none';
+  document.getElementById('bar-song').textContent='관리자';
+  hideForm();renderAdminSongList();renderAdminCatGrid();showPage('pg-admin');
+}
+function renderAdminSongList(){
+  const el=document.getElementById('admin-song-list');if(!el)return;
+  if(!SONG_DB.length){el.innerHTML='<div class="empty-msg">등록된 곡이 없어요</div>';return;}
+  const icons={'동요':'🎵','바이엘':'📖','체르니':'🎹','기타':'🌟'};
+  el.innerHTML=SONG_DB.map(s=>`<div class="admin-song-item"><div class="asi-emoji">${s.emoji}</div><div class="asi-info"><div class="asi-name">${s.name}</div><div class="asi-meta">${s.tags.book} · ${s.tags.level} · ${s.right.length}음</div></div><div class="asi-btns"><button class="asi-btn edit" onclick="editSong('${s.id}')">수정</button><button class="asi-btn del" onclick="deleteSong('${s.id}')">삭제</button></div></div>`).join('');
+}
+function renderAdminCatGrid(){
+  const el=document.getElementById('admin-cat-grid');if(!el)return;
+  const icons={'동요':'🎵','바이엘':'📖','체르니':'🎹','기타':'🌟'};
+  const books=[...new Set(SONG_DB.map(s=>s.tags.book))];
+  el.innerHTML=books.map(b=>`<div class="cat-manage-item"><div class="cmi-icon">${icons[b]||'📁'}</div><div class="cmi-name">${b}</div><div class="cmi-cnt">곡 ${SONG_DB.filter(s=>s.tags.book===b).length}개</div></div>`).join('');
+}
+function showAddForm(){
+  editingId=null;
+  document.getElementById('form-title').textContent='➕ 곡 추가';
+  ['f-name','f-emoji','f-notes-right'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-emoji').value='🎵';
+  document.getElementById('song-form').classList.add('show');
+  document.getElementById('song-form').scrollIntoView({behavior:'smooth'});
+}
+function editSong(id){
+  const s=SONG_DB.find(s=>s.id===id);if(!s)return;
+  editingId=id;
+  document.getElementById('form-title').textContent='✏️ 곡 수정: '+s.name;
+  document.getElementById('f-name').value=s.name;
+  document.getElementById('f-emoji').value=s.emoji;
+  document.getElementById('f-book').value=s.tags.book;
+  document.getElementById('f-genre').value=s.tags.genre;
+  document.getElementById('f-level').value=s.tags.level;
+  document.getElementById('f-hands').value=s.hands;
+  document.getElementById('f-bpm').value=s.bpm;
+  document.getElementById('f-notes-right').value=JSON.stringify(s.right);
+  document.getElementById('song-form').classList.add('show');
+  document.getElementById('song-form').scrollIntoView({behavior:'smooth'});
+}
+function hideForm(){const f=document.getElementById('song-form');if(f)f.classList.remove('show');editingId=null;}
+function saveSong(){
+  const name=document.getElementById('f-name').value.trim();
+  const emoji=document.getElementById('f-emoji').value.trim()||'🎵';
+  const book=document.getElementById('f-book').value;
+  const genre=document.getElementById('f-genre').value;
+  const level=document.getElementById('f-level').value;
+  const hands=document.getElementById('f-hands').value;
+  const bpm=parseInt(document.getElementById('f-bpm').value);
+  const notesRaw=document.getElementById('f-notes-right').value.trim();
+  if(!name){alert('곡 이름을 입력해주세요!');return;}
+  let notes=[];
+  if(notesRaw){try{notes=JSON.parse(notesRaw);}catch(e){alert('음표 데이터 형식이 잘못됐어요!');return;}}
+  const hl=hands==='both'?'양손':'오른손';
+  if(editingId){
+    const idx=SONG_DB.findIndex(s=>s.id===editingId);
+    if(idx>=0)SONG_DB[idx]={...SONG_DB[idx],name,emoji,bpm,hands,tags:{...SONG_DB[idx].tags,book,genre,level,hands:hl},right:notes.length?notes:SONG_DB[idx].right};
+    alert('✅ 수정됐어요!');
+  }else{
+    SONG_DB.push({id:'song_'+Date.now(),name,emoji,bpm,hands,tags:{book,genre,level,hands:hl},right:notes,left:[]});
+    alert('✅ 추가됐어요!\n(새로고침 시 초기화됩니다)');
+  }
+  hideForm();renderAdminSongList();renderAdminCatGrid();renderCatGrid('book');
+}
+function deleteSong(id){
+  const s=SONG_DB.find(s=>s.id===id);if(!s)return;
+  if(!confirm(`'${s.name}'을 삭제할까요?`))return;
+  SONG_DB.splice(SONG_DB.findIndex(s=>s.id===id),1);
+  renderAdminSongList();renderAdminCatGrid();renderCatGrid('book');
+}
+
+// ── 초기화 ──
 renderCatGrid('book');
 renderPrizesInfo();
 updateRewardUI();
