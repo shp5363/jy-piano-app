@@ -475,7 +475,203 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .lp-stat-num{font-family:'Do Hyeon',sans-serif;font-size:1.3rem;color:#2D3436;}
 .lp-stat-lbl{font-family:'Jua',sans-serif;font-size:0.62rem;color:#868e96;margin-top:2px;line-height:1.3;}
 
+
+/* ── 학생 로그인 모달 ── */
+.login-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:4000;align-items:flex-end;justify-content:center;}
+.login-modal-bg.show{display:flex;}
+.login-modal{background:#fff;border-radius:24px 24px 0 0;padding:20px 18px 36px;width:100%;max-width:500px;max-height:85vh;overflow-y:auto;animation:slideUp 0.3s;}
+.lm-handle{width:40px;height:4px;background:#dee2e6;border-radius:99px;margin:0 auto 16px;}
+.lm-title{font-family:'Do Hyeon',sans-serif;font-size:1.2rem;color:#2D3436;text-align:center;margin-bottom:4px;}
+.lm-sub{font-size:0.75rem;color:#aaa;text-align:center;margin-bottom:14px;}
+/* 성씨 필터 */
+.surname-filter{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px;-webkit-overflow-scrolling:touch;}
+.surname-filter::-webkit-scrollbar{display:none;}
+.sf-btn{flex-shrink:0;padding:6px 14px;border-radius:99px;border:2px solid #eee;background:#fff;font-family:'Jua',sans-serif;font-size:0.8rem;color:#888;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.sf-btn.active{border-color:var(--primary);background:var(--primary);color:#fff;}
+/* 학생 목록 */
+.student-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.student-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#f8f9fa;border-radius:13px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;}
+.student-item:active{transform:scale(0.98);}
+.student-item:hover{border-color:var(--secondary);background:#F0FDFB;}
+.si-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--secondary),#38d9cc);display:flex;align-items:center;justify-content:center;font-size:1rem;color:#fff;font-family:'Do Hyeon',sans-serif;flex-shrink:0;}
+.si-sname{font-family:'Jua',sans-serif;font-size:0.95rem;color:#2D3436;}
+.si-slv{font-size:0.7rem;color:#aaa;margin-top:2px;}
+.guest-btn{width:100%;padding:13px;border:2px dashed #ddd;border-radius:13px;background:none;font-family:'Jua',sans-serif;font-size:0.9rem;color:#aaa;cursor:pointer;transition:all 0.2s;}
+.guest-btn:active{background:#f8f9fa;}
+/* 현재 접속자 표시 */
+.current-user-bar{background:linear-gradient(135deg,rgba(78,205,196,0.25),rgba(78,205,196,0.1));border:1px solid rgba(78,205,196,0.5);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:12px;cursor:pointer;}
+.cub-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--secondary),#38d9cc);display:flex;align-items:center;justify-content:center;font-size:0.9rem;color:#fff;font-family:'Do Hyeon',sans-serif;}
+.cub-info{flex:1;}
+.cub-name{font-family:'Jua',sans-serif;font-size:0.85rem;color:#fff;font-weight:700;}
+.cub-sub{font-size:0.68rem;color:rgba(255,255,255,0.6);}
+.cub-change{font-family:'Jua',sans-serif;font-size:0.7rem;color:var(--secondary);}
+
+
+/* ── 마을 탭 ── */
+#pg-village{background:linear-gradient(160deg,#0f3460,#16213e,#1a1a2e);}
+.village-inner{padding:16px 14px 120px;}
+.village-header{text-align:center;padding:16px 0 14px;}
+.village-header-title{font-family:'Do Hyeon',sans-serif;font-size:1.5rem;color:#FFE66D;letter-spacing:1px;}
+.village-header-sub{font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:4px;}
+
+/* 메뉴 그리드 */
+.village-menu{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.vmenu-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:18px;padding:18px 14px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
+.vmenu-card:active{transform:scale(0.96);}
+.vmenu-card.disabled{opacity:0.4;cursor:default;}
+.vmenu-card .vm-ico{font-size:2rem;margin-bottom:8px;}
+.vmenu-card .vm-name{font-family:'Jua',sans-serif;font-size:0.88rem;color:#fff;}
+.vmenu-card .vm-sub{font-size:0.65rem;color:rgba(255,255,255,0.4);margin-top:3px;}
+.vmenu-card .vm-badge{position:absolute;top:10px;right:10px;background:#FF6B6B;color:#fff;border-radius:99px;font-size:0.6rem;padding:2px 7px;font-family:'Jua',sans-serif;}
+.vmenu-card.has-char{border-color:rgba(78,205,196,0.4);background:rgba(78,205,196,0.08);}
+
+/* 포인트 표시 */
+.village-pts-bar{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.vpb-label{font-family:'Jua',sans-serif;font-size:0.78rem;color:rgba(255,255,255,0.5);}
+.vpb-pts{font-family:'Do Hyeon',sans-serif;font-size:1.2rem;color:#FFE66D;}
+.vpb-daily{font-size:0.65rem;color:rgba(255,255,255,0.35);margin-top:1px;text-align:right;}
+
+/* ── 캐릭터 생성 화면 ── */
+.char-create-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:3000;overflow-y:auto;}
+.char-create-bg.show{display:block;}
+.char-create-wrap{min-height:100vh;padding:20px 16px 60px;max-width:500px;margin:0 auto;}
+.cc-title{font-family:'Do Hyeon',sans-serif;font-size:1.3rem;color:#FFE66D;text-align:center;margin-bottom:4px;margin-top:16px;}
+.cc-sub{font-size:0.75rem;color:rgba(255,255,255,0.4);text-align:center;margin-bottom:20px;}
+.cc-section{background:rgba(255,255,255,0.06);border-radius:16px;padding:16px;margin-bottom:14px;}
+.cc-section-title{font-family:'Jua',sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.7);margin-bottom:12px;}
+
+/* 성별 선택 */
+.gender-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.gender-card{border:3px solid rgba(255,255,255,0.15);border-radius:16px;padding:16px;text-align:center;cursor:pointer;transition:all 0.2s;background:rgba(255,255,255,0.04);}
+.gender-card:active{transform:scale(0.95);}
+.gender-card.sel{border-color:#4ECDC4;background:rgba(78,205,196,0.12);}
+.gc-ico{font-size:1.4rem;margin-bottom:6px;}
+.gc-name{font-family:'Jua',sans-serif;font-size:0.9rem;color:#fff;}
+
+/* 옷 세트 선택 */
+.outfit-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.outfit-card{border:3px solid rgba(255,255,255,0.12);border-radius:14px;padding:10px 6px;text-align:center;cursor:pointer;transition:all 0.2s;background:rgba(255,255,255,0.04);}
+.outfit-card:active{transform:scale(0.95);}
+.outfit-card.sel{border-color:#FFE66D;background:rgba(255,230,109,0.1);}
+.oc-char{margin-bottom:6px;}
+.oc-name{font-family:'Jua',sans-serif;font-size:0.68rem;color:rgba(255,255,255,0.7);}
+.oc-color{font-size:0.6rem;color:rgba(255,255,255,0.4);margin-top:2px;}
+
+/* 캐릭터 미리보기 */
+.char-preview{display:flex;justify-content:center;align-items:center;padding:20px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:14px;}
+
+/* ── 캐릭터 꾸미기 화면 ── */
+.char-edit-bg{display:none;position:fixed;inset:0;background:#0f1923;z-index:3000;overflow-y:auto;}
+.char-edit-bg.show{display:block;}
+.char-edit-wrap{max-width:500px;margin:0 auto;padding:16px 14px 80px;}
+.ce-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-top:8px;}
+.ce-back{background:none;border:none;color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.88rem;cursor:pointer;}
+.ce-title{font-family:'Do Hyeon',sans-serif;font-size:1.1rem;color:#fff;flex:1;}
+.ce-shop-btn{padding:7px 14px;border:none;border-radius:99px;background:linear-gradient(135deg,#f59f00,#FFE66D);color:#2D3436;font-family:'Jua',sans-serif;font-size:0.78rem;cursor:pointer;}
+
+/* 캐릭터 + 장착 아이템 */
+.ce-main{display:flex;gap:14px;margin-bottom:14px;}
+.ce-char-area{background:rgba(255,255,255,0.05);border-radius:16px;padding:16px;flex:0 0 130px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.ce-char-preview{width:90px;height:120px;}
+.ce-reset-btn{width:100%;padding:6px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:none;font-family:'Jua',sans-serif;font-size:0.7rem;color:rgba(255,255,255,0.5);cursor:pointer;}
+
+/* 슬롯 그리드 */
+.ce-slots{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.ce-slot{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
+.ce-slot:active{transform:scale(0.95);}
+.ce-slot.equipped{border-color:rgba(78,205,196,0.5);background:rgba(78,205,196,0.08);}
+.ce-slot .slot-ico{font-size:1.1rem;}
+.ce-slot .slot-name{font-family:'Jua',sans-serif;font-size:0.6rem;color:rgba(255,255,255,0.5);margin-top:2px;}
+.ce-slot .slot-item{font-size:0.65rem;color:#4ECDC4;margin-top:1px;}
+
+/* 소지품 목록 */
+.ce-inv-title{font-family:'Jua',sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:8px;}
+.ce-inv-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px;-webkit-overflow-scrolling:touch;}
+.ce-inv-tabs::-webkit-scrollbar{display:none;}
+.ce-inv-tab{flex-shrink:0;padding:5px 12px;border-radius:99px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);font-family:'Jua',sans-serif;font-size:0.72rem;color:rgba(255,255,255,0.5);cursor:pointer;white-space:nowrap;}
+.ce-inv-tab.active{border-color:#4ECDC4;background:rgba(78,205,196,0.15);color:#4ECDC4;}
+.ce-inv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.ce-item{background:rgba(255,255,255,0.06);border:2px solid transparent;border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;transition:all 0.2s;}
+.ce-item:active{transform:scale(0.95);}
+.ce-item.equipped{border-color:#4ECDC4;}
+.ce-item.preview{border-color:#FFE66D;}
+.ce-item .ci-ico{font-size:1.3rem;}
+.ce-item .ci-name{font-family:'Jua',sans-serif;font-size:0.6rem;color:rgba(255,255,255,0.6);margin-top:3px;}
+.ce-item .ci-type{font-size:0.55rem;color:rgba(255,255,255,0.35);}
+.ce-empty{color:rgba(255,255,255,0.3);font-size:0.8rem;text-align:center;padding:20px;grid-column:span 4;}
+
+/* ── 상점 화면 ── */
+.shop-bg{display:none;position:fixed;inset:0;background:#0f1923;z-index:3100;overflow-y:auto;}
+.shop-bg.show{display:block;}
+.shop-wrap{max-width:500px;margin:0 auto;padding:16px 14px 80px;}
+.shop-header{display:flex;align-items:center;gap:10px;margin-bottom:6px;padding-top:8px;}
+.shop-back{background:none;border:none;color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.88rem;cursor:pointer;}
+.shop-title{font-family:'Do Hyeon',sans-serif;font-size:1.1rem;color:#fff;flex:1;}
+.shop-pts{font-family:'Do Hyeon',sans-serif;font-size:1rem;color:#FFE66D;}
+.shop-cat-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;-webkit-overflow-scrolling:touch;}
+.shop-cat-tabs::-webkit-scrollbar{display:none;}
+.shop-cat-tab{flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);font-family:'Jua',sans-serif;font-size:0.75rem;color:rgba(255,255,255,0.5);cursor:pointer;white-space:nowrap;}
+.shop-cat-tab.active{border-color:#FFE66D;background:rgba(255,230,109,0.15);color:#FFE66D;}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.shop-item{background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.1);border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
+.shop-item.owned{border-color:rgba(78,205,196,0.4);background:rgba(78,205,196,0.06);}
+.shop-item.previewing{border-color:#FFE66D;background:rgba(255,230,109,0.08);}
+.shop-item .si-ico{font-size:2rem;margin-bottom:6px;}
+.shop-item .si-name{font-family:'Jua',sans-serif;font-size:0.8rem;color:#fff;margin-bottom:4px;}
+.shop-item .si-pts{font-family:'Do Hyeon',sans-serif;font-size:0.9rem;color:#FFE66D;}
+.shop-item .si-owned{font-family:'Jua',sans-serif;font-size:0.7rem;color:#4ECDC4;}
+.shop-item .si-preview{font-size:0.65rem;color:rgba(255,255,255,0.4);margin-top:3px;}
+.shop-item:active{transform:scale(0.96);}
+.shop-buy-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(15,25,35,0.95);padding:12px 16px 24px;border-top:1px solid rgba(255,255,255,0.1);display:none;z-index:3200;}
+.shop-buy-bar.show{display:flex;gap:10px;}
+.sbb-info{flex:1;}
+.sbb-name{font-family:'Jua',sans-serif;font-size:0.9rem;color:#fff;}
+.sbb-pts{font-family:'Do Hyeon',sans-serif;font-size:1rem;color:#FFE66D;}
+.sbb-buy{padding:12px 20px;border:none;border-radius:12px;background:linear-gradient(135deg,#f59f00,#FFE66D);color:#2D3436;font-family:'Jua',sans-serif;font-size:0.9rem;cursor:pointer;}
+.sbb-cancel{padding:12px 16px;border:none;border-radius:12px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.9rem;cursor:pointer;}
+
+/* ── 마을 꾸미기 화면 ── */
+.town-bg{display:none;position:fixed;inset:0;background:#0f2027;z-index:3000;overflow:hidden;}
+.town-bg.show{display:block;}
+.town-header{position:absolute;top:0;left:0;right:0;height:52px;background:rgba(15,32,39,0.9);display:flex;align-items:center;gap:10px;padding:0 14px;z-index:10;border-bottom:1px solid rgba(255,255,255,0.08);}
+.town-back{background:none;border:none;color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.85rem;cursor:pointer;}
+.town-title{font-family:'Do Hyeon',sans-serif;font-size:1rem;color:#fff;flex:1;}
+.town-pts-display{font-family:'Do Hyeon',sans-serif;font-size:0.9rem;color:#FFE66D;}
+.town-shop-btn{padding:6px 12px;border:none;border-radius:99px;background:linear-gradient(135deg,#f59f00,#FFE66D);color:#2D3436;font-family:'Jua',sans-serif;font-size:0.72rem;cursor:pointer;}
+/* 마을 캔버스 */
+#town-canvas{display:block;width:100%;height:100%;image-rendering:pixelated;}
+/* 마을 하단 툴바 */
+.town-toolbar{position:absolute;bottom:0;left:0;right:0;background:rgba(15,32,39,0.95);border-top:1px solid rgba(255,255,255,0.1);padding:10px 14px 24px;display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.town-toolbar::-webkit-scrollbar{display:none;}
+.tt-item{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:6px 10px;border-radius:10px;border:1px solid transparent;transition:all 0.2s;}
+.tt-item.active-tool{border-color:#4ECDC4;background:rgba(78,205,196,0.1);}
+.tt-ico{font-size:1.3rem;}
+.tt-lbl{font-family:'Jua',sans-serif;font-size:0.6rem;color:rgba(255,255,255,0.5);}
+
+/* 포인트 선물 */
+.gift-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:3000;align-items:flex-end;justify-content:center;}
+.gift-modal-bg.show{display:flex;}
+.gift-modal{background:#1a2a3a;border-radius:22px 22px 0 0;padding:22px 18px 36px;width:100%;max-width:500px;}
+.gm-title{font-family:'Do Hyeon',sans-serif;font-size:1.1rem;color:#fff;margin-bottom:4px;}
+.gm-sub{font-size:0.75rem;color:rgba(255,255,255,0.4);margin-bottom:16px;}
+.gm-my-pts{font-family:'Jua',sans-serif;font-size:0.8rem;color:rgba(255,255,255,0.5);margin-bottom:12px;}
+.gm-my-pts span{color:#FFE66D;font-family:'Do Hyeon',sans-serif;font-size:1rem;}
+.gm-student-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;max-height:200px;overflow-y:auto;}
+.gm-student{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.06);border-radius:10px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;}
+.gm-student.sel{border-color:#4ECDC4;}
+.gm-student .gs-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#4ECDC4,#38d9cc);display:flex;align-items:center;justify-content:center;font-family:'Do Hyeon',sans-serif;color:#fff;font-size:0.9rem;}
+.gm-student .gs-name{font-family:'Jua',sans-serif;font-size:0.85rem;color:#fff;flex:1;}
+.gm-student .gs-pts{font-size:0.7rem;color:rgba(255,255,255,0.4);}
+.gm-amount-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.gm-amount-row label{font-family:'Jua',sans-serif;font-size:0.8rem;color:rgba(255,255,255,0.6);white-space:nowrap;}
+.gm-amount-inp{flex:1;padding:10px 14px;border:1px solid rgba(255,255,255,0.2);border-radius:10px;background:rgba(255,255,255,0.07);color:#fff;font-family:'Do Hyeon',sans-serif;font-size:1.1rem;text-align:center;outline:none;}
+.gm-btns{display:flex;gap:8px;}
+.gm-send{flex:1;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#4ECDC4,#38d9cc);color:#fff;font-family:'Jua',sans-serif;font-size:0.95rem;cursor:pointer;}
+.gm-cancel{padding:13px 18px;border:none;border-radius:12px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.95rem;cursor:pointer;}
+
 </style>
+<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+<script>var vConsole = new VConsole();</script>
 </head>
 <body>
 
@@ -498,11 +694,11 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 
 <!-- 하단 탭 바 -->
 <div id="tab-bar">
-  <button class="tab-item" id="tab-home" onclick="switchTab('home')">
+  <button class="tab-item active" id="tab-home" onclick="switchTab('home')">
     <div class="tab-ico-wrap"><span class="t-ico">🏠</span></div>
     <span class="t-lbl">홈</span>
   </button>
-  <button class="tab-item active" id="tab-practice" onclick="switchTab('practice')">
+  <button class="tab-item" id="tab-practice" onclick="switchTab('practice')">
     <div class="tab-ico-wrap"><span class="t-ico">🎹</span></div>
     <span class="t-lbl">연습</span>
   </button>
@@ -544,7 +740,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 </div>
 
 <!-- ① 연습 홈 -->
-<div id="pg-practice" class="page active">
+<div id="pg-practice" class="page">
   <div class="practice-hero">
     <div class="logo">JY PIANO</div>
     <div class="sub">연습실</div>
@@ -741,6 +937,22 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
   </div>
 </div>
 
+
+<!-- 학생 로그인 모달 -->
+<div class="login-modal-bg" id="login-modal-bg">
+  <div class="login-modal">
+    <div class="lm-handle"></div>
+    <div class="lm-title">🎹 JY PIANO</div>
+    <div class="lm-sub">이름을 선택해서 시작하세요!</div>
+    <!-- 성씨 필터 -->
+    <div class="surname-filter" id="surname-filter"></div>
+    <!-- 학생 목록 -->
+    <div class="student-list" id="login-student-list"></div>
+    <!-- 게스트 접속 -->
+    <button class="guest-btn" onclick="loginAsGuest()">👤 게스트로 접속 (연습만 가능)</button>
+  </div>
+</div>
+
 <!-- 비밀번호 모달 -->
 <div class="admin-modal-bg" id="admin-pw-modal">
   <div class="admin-modal">
@@ -850,6 +1062,16 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       <div class="firebase-notice">관리자 비밀번호 확인 후 게임권이 추가돼요</div>
     </div>
 
+    <!-- 학생 관리 -->
+    <div class="admin-section">
+      <div class="admin-section-title">👥 학생 관리</div>
+      <div id="admin-student-list" style="margin-bottom:8px;"></div>
+      <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <input class="form-input" id="new-student-name" type="text" placeholder="학생 이름 입력" style="flex:1;">
+        <button onclick="addStudent()" style="padding:10px 14px;border:none;border-radius:10px;background:var(--secondary);color:#fff;font-family:'Jua',sans-serif;font-size:0.85rem;cursor:pointer;white-space:nowrap;">추가</button>
+      </div>
+    </div>
+
     <!-- 곡 목록 관리 -->
     <div class="admin-section">
       <div class="admin-section-title">
@@ -872,14 +1094,23 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 </div>
 
 <!-- 홈 탭 -->
-<div id="pg-home" class="page">
+<div id="pg-home" class="page active">
   <div style="background:linear-gradient(160deg,#1a1a2e,#16213e,#0f3460);min-height:100%;">
     <div style="padding:18px 14px 120px;">
 
+      <!-- 현재 접속자 바 -->
+      <div class="current-user-bar" id="current-user-bar" onclick="openLoginModal()" style="margin-top:4px;">
+        <div class="cub-avatar" id="cub-avatar">?</div>
+        <div class="cub-info">
+          <div class="cub-name" id="cub-name">로그인하세요</div>
+          <div class="cub-sub" id="cub-sub">이름을 선택해서 시작하세요</div>
+        </div>
+        <div class="cub-change">변경 ›</div>
+      </div>
       <!-- 학생 프로필 -->
-      <div style="text-align:center;padding:20px 0 16px;">
+      <div style="text-align:center;padding:12px 0 14px;">
         <div id="home-char" style="font-size:3.5rem;line-height:1;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));">🐣</div>
-        <div id="home-student-name" style="font-family:'Do Hyeon',sans-serif;font-size:1.4rem;color:#fff;letter-spacing:1px;">학생 이름</div>
+        <div id="home-student-name" style="font-family:'Do Hyeon',sans-serif;font-size:1.4rem;color:#fff;letter-spacing:1px;">---</div>
         <div id="home-student-sub" style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:4px;">피아노 마을 주민</div>
       </div>
 
@@ -922,40 +1153,179 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
   </div>
 </div>
 
-<!-- 마을 탭 (준비중) -->
+<!-- 마을 탭 -->
 <div id="pg-village" class="page">
-  <div style="background:linear-gradient(160deg,#0f3460,#16213e,#1a1a2e);min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;">
-    <div style="font-size:4rem;margin-bottom:16px;">🎮</div>
-    <div style="font-family:'Do Hyeon',sans-serif;font-size:1.5rem;color:#FFE66D;letter-spacing:1px;margin-bottom:8px;">피아노 마을</div>
-    <div style="font-family:'Jua',sans-serif;font-size:0.9rem;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:24px;">
-      열심히 연습하면<br>나만의 마을이 생겨요!<br><br>
-      <span style="font-size:0.78rem;color:rgba(255,255,255,0.3);">캐릭터 · 집 꾸미기 · 친구 방문<br>곧 오픈 예정이에요 🚧</span>
+  <div class="village-inner">
+    <div class="village-header">
+      <div class="village-header-title">🎮 피아노 마을</div>
+      <div class="village-header-sub">나만의 캐릭터와 마을을 만들어요!</div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:8px;width:100%;max-width:280px;">
-      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;">
-        <span style="font-size:1.3rem;">🏚</span>
-        <div style="text-align:left;">
-          <div style="font-family:'Jua',sans-serif;font-size:0.82rem;color:#fff;">나만의 집 꾸미기</div>
-          <div style="font-size:0.68rem;color:rgba(255,255,255,0.35);">연습할수록 집이 커져요</div>
-        </div>
-        <div style="margin-left:auto;font-size:0.65rem;color:rgba(255,255,255,0.3);font-family:'Jua',sans-serif;">준비중</div>
+    <!-- 포인트 바 -->
+    <div class="village-pts-bar">
+      <div>
+        <div class="vpb-label">보유 포인트</div>
+        <div class="vpb-daily">매일 자정 +10p 자동 충전</div>
       </div>
-      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;">
-        <span style="font-size:1.3rem;">👗</span>
-        <div style="text-align:left;">
-          <div style="font-family:'Jua',sans-serif;font-size:0.82rem;color:#fff;">캐릭터 꾸미기</div>
-          <div style="font-size:0.68rem;color:rgba(255,255,255,0.35);">포인트로 아이템 구매</div>
-        </div>
-        <div style="margin-left:auto;font-size:0.65rem;color:rgba(255,255,255,0.3);font-family:'Jua',sans-serif;">준비중</div>
+      <div style="text-align:right;">
+        <div class="vpb-pts" id="village-pts-display">0p</div>
       </div>
-      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;">
-        <span style="font-size:1.3rem;">👋</span>
-        <div style="text-align:left;">
-          <div style="font-family:'Jua',sans-serif;font-size:0.82rem;color:#fff;">친구 집 방문</div>
-          <div style="font-size:0.68rem;color:rgba(255,255,255,0.35);">포인트 선물도 가능해요</div>
-        </div>
-        <div style="margin-left:auto;font-size:0.65rem;color:rgba(255,255,255,0.3);font-family:'Jua',sans-serif;">준비중</div>
+    </div>
+    <!-- 메뉴 -->
+    <div class="village-menu">
+      <!-- 캐릭터 꾸미기 -->
+      <div class="vmenu-card" id="vmenu-char" onclick="openCharEdit()">
+        <div class="vm-ico">👤</div>
+        <div class="vm-name">캐릭터 꾸미기</div>
+        <div class="vm-sub" id="vmenu-char-sub">캐릭터를 만들어요</div>
       </div>
+      <!-- 신규 생성 -->
+      <div class="vmenu-card" id="vmenu-create" onclick="openCharCreate()">
+        <div class="vm-ico">✨</div>
+        <div class="vm-name">캐릭터 생성</div>
+        <div class="vm-sub">새 캐릭터 만들기</div>
+      </div>
+      <!-- 마을 꾸미기 -->
+      <div class="vmenu-card" id="vmenu-town" onclick="openTown()">
+        <div class="vm-ico">🏡</div>
+        <div class="vm-name">마을 꾸미기</div>
+        <div class="vm-sub">나만의 마을을 꾸며요</div>
+      </div>
+      <!-- 포인트 선물 -->
+      <div class="vmenu-card" onclick="openGiftModal()">
+        <div class="vm-ico">🎁</div>
+        <div class="vm-name">포인트 선물</div>
+        <div class="vm-sub">친구에게 선물하기</div>
+      </div>
+    </div>
+    <!-- 친구 마을 (Firebase 후) -->
+    <div class="vmenu-card disabled" style="margin-bottom:0;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5rem;">🚧</span>
+        <div style="text-align:left;">
+          <div class="vm-name">친구 마을 놀러가기</div>
+          <div class="vm-sub">Firebase 연동 후 오픈 예정</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 캐릭터 생성 화면 -->
+<div class="char-create-bg" id="char-create-bg">
+  <div class="char-create-wrap">
+    <button onclick="closeCharCreate()" style="background:none;border:none;color:rgba(255,255,255,0.5);font-family:'Jua',sans-serif;font-size:0.85rem;cursor:pointer;padding:4px 0;">← 뒤로</button>
+    <div class="cc-title">캐릭터 만들기</div>
+    <div class="cc-sub">나만의 캐릭터를 만들어봐요!</div>
+    <!-- 미리보기 -->
+    <div class="char-preview">
+      <div id="cc-preview-area">
+        <svg id="cc-preview-svg" width="100" height="140" viewBox="0 0 80 110"></svg>
+      </div>
+    </div>
+    <!-- 성별 선택 -->
+    <div class="cc-section">
+      <div class="cc-section-title">성별 선택</div>
+      <div class="gender-grid">
+        <div class="gender-card sel" id="gc-f" onclick="selectGender('f')">
+          <div class="gc-ico">👧</div>
+          <div class="gc-name">여자</div>
+        </div>
+        <div class="gender-card" id="gc-m" onclick="selectGender('m')">
+          <div class="gc-ico">👦</div>
+          <div class="gc-name">남자</div>
+        </div>
+      </div>
+    </div>
+    <!-- 기본 옷 세트 -->
+    <div class="cc-section">
+      <div class="cc-section-title">기본 옷 세트 선택</div>
+      <div class="outfit-grid" id="outfit-grid"></div>
+    </div>
+    <button onclick="confirmCreateChar()" style="width:100%;padding:15px;border:none;border-radius:16px;background:linear-gradient(135deg,#4ECDC4,#38d9cc);color:#fff;font-family:'Jua',sans-serif;font-size:1.05rem;cursor:pointer;box-shadow:0 4px 14px rgba(78,205,196,0.35);">캐릭터 생성 완료!</button>
+  </div>
+</div>
+
+<!-- 캐릭터 꾸미기 화면 -->
+<div class="char-edit-bg" id="char-edit-bg">
+  <div class="char-edit-wrap">
+    <div class="ce-header">
+      <button class="ce-back" onclick="closeCharEdit()">← 뒤로</button>
+      <div class="ce-title">캐릭터 꾸미기</div>
+      <button class="ce-shop-btn" onclick="openShop()">상점 가기</button>
+    </div>
+    <!-- 캐릭터 + 슬롯 -->
+    <div class="ce-main">
+      <div class="ce-char-area">
+        <svg id="ce-preview-svg" width="90" height="120" viewBox="0 0 80 110"></svg>
+        <button class="ce-reset-btn" onclick="resetEquip()">초기화</button>
+      </div>
+      <div class="ce-slots" id="ce-slots"></div>
+    </div>
+    <!-- 소지품 -->
+    <div class="ce-inv-title">소지 아이템</div>
+    <div class="ce-inv-tabs" id="ce-inv-tabs"></div>
+    <div class="ce-inv-grid" id="ce-inv-grid"></div>
+  </div>
+</div>
+
+<!-- 상점 -->
+<div class="shop-bg" id="shop-bg">
+  <div class="shop-wrap">
+    <div class="shop-header">
+      <button class="shop-back" onclick="closeShop()">← 뒤로</button>
+      <div class="shop-title">아이템 상점</div>
+      <div class="shop-pts" id="shop-pts-display">0p</div>
+    </div>
+    <div class="shop-cat-tabs" id="shop-cat-tabs"></div>
+    <div class="shop-grid" id="shop-grid"></div>
+  </div>
+  <div class="shop-buy-bar" id="shop-buy-bar">
+    <div class="sbb-info">
+      <div class="sbb-name" id="sbb-name">-</div>
+      <div class="sbb-pts" id="sbb-pts">0p</div>
+    </div>
+    <button class="sbb-cancel" onclick="cancelPreview()">취소</button>
+    <button class="sbb-buy" onclick="buyItem()">구매하기</button>
+  </div>
+</div>
+
+<!-- 마을 꾸미기 -->
+<div class="town-bg" id="town-bg">
+  <div class="town-header">
+    <button class="town-back" onclick="closeTown()">← 뒤로</button>
+    <div class="town-title">내 마을</div>
+    <div class="town-pts-display" id="town-pts-display">0p</div>
+    <button class="town-shop-btn" onclick="openTownShop()">상점</button>
+  </div>
+  <canvas id="town-canvas"></canvas>
+  <div class="town-toolbar" id="town-toolbar">
+    <div class="tt-item active-tool" onclick="setTownTool('move')">
+      <div class="tt-ico">🚶</div><div class="tt-lbl">이동</div>
+    </div>
+    <div class="tt-item" onclick="setTownTool('place')">
+      <div class="tt-ico">📦</div><div class="tt-lbl">배치</div>
+    </div>
+    <div class="tt-item" onclick="setTownTool('remove')">
+      <div class="tt-ico">🗑</div><div class="tt-lbl">제거</div>
+    </div>
+  </div>
+</div>
+
+<!-- 포인트 선물 모달 -->
+<div class="gift-modal-bg" id="gift-modal-bg" onclick="closeGiftModal(event)">
+  <div class="gift-modal">
+    <div class="gm-title">🎁 포인트 선물</div>
+    <div class="gm-sub">친구에게 포인트를 선물해요!</div>
+    <div class="gm-my-pts">내 보유 포인트: <span id="gift-my-pts">0</span>p</div>
+    <div class="gm-student-list" id="gift-student-list"></div>
+    <div class="gm-amount-row">
+      <label>선물할 양</label>
+      <input class="gm-amount-inp" id="gift-amount" type="number" min="1" value="10" placeholder="10">
+      <span style="font-family:'Do Hyeon',sans-serif;color:#FFE66D;font-size:1rem;">p</span>
+    </div>
+    <div class="gm-btns">
+      <button class="gm-cancel" onclick="closeGiftModal()">취소</button>
+      <button class="gm-send" onclick="sendGift()">선물하기</button>
     </div>
   </div>
 </div>
@@ -1185,13 +1555,21 @@ function switchTab(tab){
   document.getElementById('bar-timer').style.display='none';
   document.getElementById('bar-count').style.display='none';
 
-  if(tab==='practice'){
+  if(tab==='home'){
+    document.getElementById('bar-song').textContent='홈';
+    updateHomeTab();
+    showPage('pg-home');
+  } else if(tab==='practice'){
     document.getElementById('bar-song').textContent='연습실';
     showPage('pg-practice');
   } else if(tab==='reward'){
     document.getElementById('bar-song').textContent='보상 센터';
     updateRewardUI();
     showPage('pg-reward');
+  } else if(tab==='village'){
+    document.getElementById('bar-song').textContent='피아노 마을';
+    updateVillageTab();
+    showPage('pg-village');
   }
 }
 
@@ -2014,7 +2392,7 @@ function switchTabAdmin(){
   document.getElementById('bar-timer').style.display='none';
   document.getElementById('bar-count').style.display='none';
   document.getElementById('bar-song').textContent='관리자';
-  hideForm();renderAdminSongList();renderAdminCatGrid();
+  hideForm();renderAdminSongList();renderAdminCatGrid();renderAdminStudentList();
   const atc=document.getElementById('admin-ticket-count');
   if(atc) atc.textContent=tickets;
   showPage('pg-admin');
@@ -2091,7 +2469,7 @@ function saveSong(){
     SONG_DB.push({id:'song_'+Date.now(),name,emoji,bpm,hands,tags:{book,genre,level,hands:hl},right:notes,left:leftNotes});
     alert('추가됐어요!\n(새로고침 시 초기화됩니다)');
   }
-  hideForm();renderAdminSongList();renderAdminCatGrid();renderCatGrid('book');
+  hideForm();renderAdminSongList();renderAdminCatGrid();renderAdminStudentList();renderCatGrid('book');
 }
 function deleteSong(id){
   const s=SONG_DB.find(s=>s.id===id);if(!s)return;
@@ -2131,12 +2509,7 @@ function getLevelInfo(pts) {
   return { cur, next, pct, need };
 }
 
-function addPoints(songLevel) {
-  const pts = LEVEL_POINTS[songLevel] || 1;
-  totalPoints += pts;
-  updateLevelUI();
-  return pts;
-}
+// addPoints: 학생 시스템에서 통합 처리
 
 function updateLevelUI() {
   const info = getLevelInfo(totalPoints);
@@ -2252,14 +2625,7 @@ function getMedalEmoji(rank){
 }
 
 // 현재 나의 포인트를 포함한 전체 랭킹 계산
-function getAllRanking(){
-  // 내 데이터 + 등록된 학생 데이터 합산
-  const me = {name:'나', pts:totalPoints, isMe:true};
-  const all = [me, ...studentPoints.map(s=>({...s, isMe:false}))];
-  // 포인트 내림차순 정렬
-  all.sort((a,b)=>b.pts - a.pts);
-  return all;
-}
+// getAllRanking 구버전 제거
 
 function renderPodium(){
   renderPodiumTo('podium-wrap-home');
@@ -2352,11 +2718,750 @@ function renderPodiumTo(targetId){
   }).join('');
 }
 
+
+// ════════════════════════════════════════════════════════
+// 마을/캐릭터 시스템
+// ════════════════════════════════════════════════════════
+
+// ── 데이터 ──
+const SLOT_TYPES = ['모자','머리','안경','상의','하의','신발','장갑','가방'];
+const SLOT_ICONS = {'모자':'🎩','머리':'💇','안경':'👓','상의':'👕','하의':'👖','신발':'👟','장갑':'🧤','가방':'🎒'};
+
+// 아이템 DB (포인트 상점)
+const ITEM_DB = [
+  // 모자
+  {id:'hat1',type:'모자',name:'빨간 베레모',ico:'🎩',color:'#FF6B6B',pts:30,gender:'all'},
+  {id:'hat2',type:'모자',name:'파란 야구모자',ico:'🧢',color:'#4ECDC4',pts:25,gender:'all'},
+  {id:'hat3',type:'모자',name:'왕관',ico:'👑',color:'#FFD700',pts:80,gender:'all'},
+  {id:'hat4',type:'모자',name:'마법사 모자',ico:'🪄',color:'#9775FA',pts:60,gender:'all'},
+  // 머리
+  {id:'hair1',type:'머리',name:'긴 웨이브',ico:'💇',color:'#C0392B',pts:40,gender:'f'},
+  {id:'hair2',type:'머리',name:'단발',ico:'💆',color:'#8B4513',pts:35,gender:'f'},
+  {id:'hair3',type:'머리',name:'포니테일',ico:'🐴',color:'#E74C3C',pts:45,gender:'f'},
+  {id:'hair4',type:'머리',name:'스포츠컷',ico:'✂️',color:'#4A3728',pts:35,gender:'m'},
+  {id:'hair5',type:'머리',name:'곱슬머리',ico:'🌀',color:'#2C3E50',pts:40,gender:'m'},
+  // 안경
+  {id:'glass1',type:'안경',name:'동그란 안경',ico:'👓',color:'#333',pts:20,gender:'all'},
+  {id:'glass2',type:'안경',name:'하트 선글라스',ico:'🕶️',color:'#FF6B6B',pts:35,gender:'all'},
+  {id:'glass3',type:'안경',name:'별 안경',ico:'⭐',color:'#FFD700',pts:50,gender:'all'},
+  // 상의
+  {id:'top1',type:'상의',name:'무지개 티셔츠',ico:'🌈',color:'#FF6B6B',pts:40,gender:'all'},
+  {id:'top2',type:'상의',name:'별 스웨터',ico:'⭐',color:'#9775FA',pts:55,gender:'all'},
+  {id:'top3',type:'상의',name:'하트 후드',ico:'❤️',color:'#FF4D7D',pts:60,gender:'f'},
+  {id:'top4',type:'상의',name:'스트라이프 셔츠',ico:'👔',color:'#4ECDC4',pts:50,gender:'m'},
+  // 하의
+  {id:'bot1',type:'하의',name:'꽃무늬 치마',ico:'🌸',color:'#FFB6C1',pts:45,gender:'f'},
+  {id:'bot2',type:'하의',name:'체크 치마',ico:'🏴',color:'#5C6BC0',pts:40,gender:'f'},
+  {id:'bot3',type:'하의',name:'청바지',ico:'👖',color:'#1565C0',pts:40,gender:'m'},
+  {id:'bot4',type:'하의',name:'카고 팬츠',ico:'🫙',color:'#795548',pts:45,gender:'m'},
+  // 신발
+  {id:'shoe1',type:'신발',name:'핑크 스니커즈',ico:'👟',color:'#FF85A1',pts:35,gender:'all'},
+  {id:'shoe2',type:'신발',name:'무지개 부츠',ico:'🥾',color:'#9B59B6',pts:50,gender:'all'},
+  {id:'shoe3',type:'신발',name:'반짝이 구두',ico:'✨',color:'#FFD700',pts:65,gender:'f'},
+  // 장갑
+  {id:'glove1',type:'장갑',name:'흰 장갑',ico:'🧤',color:'#fff',pts:20,gender:'all'},
+  {id:'glove2',type:'장갑',name:'별무늬 장갑',ico:'⭐',color:'#FFD700',pts:35,gender:'all'},
+  // 가방
+  {id:'bag1',type:'가방',name:'별 배낭',ico:'🎒',color:'#FF922B',pts:45,gender:'all'},
+  {id:'bag2',type:'가방',name:'하트 가방',ico:'💝',color:'#FF4D7D',pts:50,gender:'f'},
+  {id:'bag3',type:'가방',name:'피아노 가방',ico:'🎹',color:'#333',pts:70,gender:'all'},
+];
+
+// 기본 옷 세트
+const OUTFIT_SETS = {
+  f: [
+    {id:'of1', name:'핑크 원피스', color:'#FF85A1', topColor:'#FF85A1', botColor:'#FF85A1'},
+    {id:'of2', name:'보라 후드+치마', color:'#9B59B6', topColor:'#9B59B6', botColor:'#5C6BC0'},
+    {id:'of3', name:'민트 교복', color:'#4ECDC4', topColor:'#fff', botColor:'#5C6BC0'},
+  ],
+  m: [
+    {id:'om1', name:'민트 줄무늬 티', color:'#4ECDC4', topColor:'#4ECDC4', botColor:'#5C6BC0'},
+    {id:'om2', name:'빨간 스포츠웨어', color:'#FF6B6B', topColor:'#FF6B6B', botColor:'#333'},
+    {id:'om3', name:'남색 교복', color:'#1a237e', topColor:'#1a237e', botColor:'#263238'},
+  ]
+};
+
+// 캐릭터 데이터 (학생별 저장)
+let myChar = null; // {gender, outfitId, equipped:{모자,머리,...}, skinColor}
+let previewEquip = {}; // 미리입기용
+let selectedShopItem = null;
+let shopCurrentCat = '전체';
+let invCurrentCat = '전체';
+let myInventory = []; // 소지한 아이템 id 배열
+let ccGender = 'f';
+let ccOutfitId = 'of1';
+
+// ── 포인트 ──
+// 일일 자동 충전 (자정 기준)
+function checkDailyBonus(){
+  const today = new Date().toDateString();
+  const lastBonus = localStorage.getItem('jypiano_lastbonus_'+(currentStudent?.id||'guest'));
+  if(lastBonus !== today){
+    totalPoints += 10;
+    if(currentStudent){ currentStudent.pts = totalPoints; const idx=STUDENTS.findIndex(s=>s.id===currentStudent.id); if(idx>=0)STUDENTS[idx].pts=totalPoints; }
+    localStorage.setItem('jypiano_lastbonus_'+(currentStudent?.id||'guest'), today);
+    updateLevelUI();
+    updateVillagePts();
+  }
+}
+
+function updateVillagePts(){
+  const el = document.getElementById('village-pts-display');
+  if(el) el.textContent = totalPoints + 'p';
+  const sel = document.getElementById('shop-pts-display');
+  if(sel) sel.textContent = totalPoints + 'p';
+  const tel = document.getElementById('town-pts-display');
+  if(tel) tel.textContent = totalPoints + 'p';
+  const gel = document.getElementById('gift-my-pts');
+  if(gel) gel.textContent = totalPoints;
+}
+
+// ── 마을 탭 진입 ──
+function updateVillageTab(){
+  updateVillagePts();
+  checkDailyBonus();
+  // 캐릭터 있으면 꾸미기 활성, 없으면 생성만
+  const charCard = document.getElementById('vmenu-char');
+  const createCard = document.getElementById('vmenu-create');
+  const charSub = document.getElementById('vmenu-char-sub');
+  if(myChar){
+    charCard.classList.add('has-char');
+    if(charSub) charSub.textContent = myChar.gender==='f'?'여자 캐릭터':'남자 캐릭터';
+    if(createCard){ createCard.style.opacity='0.5'; createCard.querySelector('.vm-sub').textContent='이미 생성됨'; }
+  } else {
+    charCard.style.opacity='0.5';
+    if(charSub) charSub.textContent='먼저 생성해주세요';
+  }
+}
+
+// ── 캐릭터 생성 ──
+function openCharCreate(){
+  ccGender='f'; ccOutfitId='of1';
+  renderOutfitGrid();
+  updateGenderUI();
+  renderCCPreview();
+  document.getElementById('char-create-bg').classList.add('show');
+}
+function closeCharCreate(){ document.getElementById('char-create-bg').classList.remove('show'); }
+
+function selectGender(g){
+  ccGender=g;
+  ccOutfitId = g==='f'?'of1':'om1';
+  updateGenderUI(); renderOutfitGrid(); renderCCPreview();
+}
+function updateGenderUI(){
+  document.getElementById('gc-f').classList.toggle('sel', ccGender==='f');
+  document.getElementById('gc-m').classList.toggle('sel', ccGender==='m');
+}
+function renderOutfitGrid(){
+  const sets = OUTFIT_SETS[ccGender];
+  const el = document.getElementById('outfit-grid');
+  el.innerHTML = sets.map(s=>`
+    <div class="outfit-card ${s.id===ccOutfitId?'sel':''}" onclick="selectOutfit('${s.id}')">
+      <div class="oc-char">${renderSDCharMini(ccGender, s.topColor, s.botColor)}</div>
+      <div class="oc-name">${s.name}</div>
+    </div>`).join('');
+}
+function selectOutfit(id){ ccOutfitId=id; renderOutfitGrid(); renderCCPreview(); }
+
+function renderCCPreview(){
+  const sets = OUTFIT_SETS[ccGender];
+  const outfit = sets.find(s=>s.id===ccOutfitId)||sets[0];
+  const svgEl = document.getElementById('cc-preview-svg');
+  if(svgEl) svgEl.innerHTML = getCharSVGContent(ccGender, outfit.topColor, outfit.botColor, '#FFD4A3', {});
+}
+
+function confirmCreateChar(){
+  if(!currentStudent){ alert('먼저 로그인해주세요!'); return; }
+  const sets = OUTFIT_SETS[ccGender];
+  const outfit = sets.find(s=>s.id===ccOutfitId)||sets[0];
+  myChar = { gender:ccGender, topColor:outfit.topColor, botColor:outfit.botColor, equipped:{} };
+  myInventory = [];
+  previewEquip = {};
+  closeCharCreate();
+  updateVillageTab();
+  alert('캐릭터가 생성됐어요! 🎉');
+}
+
+// ── SD 캐릭터 SVG ──
+function getCharSVGContent(gender, topColor, botColor, skinColor, equipped){
+  const sc = skinColor||'#FFD4A3';
+  const tc = equipped['상의']?getItemColor(equipped['상의']):topColor||'#4ECDC4';
+  const bc = equipped['하의']?getItemColor(equipped['하의']):botColor||'#5C6BC0';
+  const hc = equipped['머리']?getItemColor(equipped['머리']):(gender==='f'?'#8B4513':'#4A3728');
+  const shoeC = equipped['신발']?getItemColor(equipped['신발']):(gender==='f'?'#FF4D7D':'#333');
+
+  let hairF = gender==='f'
+    ? `<ellipse cx="40" cy="32" rx="26" ry="28" fill="${hc}"/><rect x="14" y="32" width="8" height="35" rx="4" fill="${hc}"/><rect x="58" y="32" width="8" height="35" rx="4" fill="${hc}"/>`
+    : `<ellipse cx="40" cy="30" rx="24" ry="20" fill="${hc}"/><rect x="16" y="20" width="48" height="15" rx="7" fill="${hc}"/>`;
+
+  // 모자
+  let hatSvg = '';
+  if(equipped['모자']){
+    const hi = getItemIco(equipped['모자']);
+    hatSvg = `<text x="40" y="14" text-anchor="middle" font-size="14">${hi}</text>`;
+  }
+  // 안경
+  let glassSvg = '';
+  if(equipped['안경']){
+    glassSvg = `<circle cx="32" cy="32" r="5" fill="none" stroke="#333" stroke-width="1.5"/><circle cx="48" cy="32" r="5" fill="none" stroke="#333" stroke-width="1.5"/><line x1="37" y1="32" x2="43" y2="32" stroke="#333" stroke-width="1.5"/>`;
+  }
+  // 가방
+  let bagSvg = '';
+  if(equipped['가방']){
+    bagSvg = `<rect x="58" y="58" width="12" height="14" rx="3" fill="${getItemColor(equipped['가방'])}"/>`;
+  }
+  // 장갑
+  let gloveSvg = '';
+  if(equipped['장갑']){
+    const gc2 = getItemColor(equipped['장갑']);
+    gloveSvg = `<ellipse cx="17" cy="76" rx="6" ry="5" fill="${gc2}"/><ellipse cx="63" cy="76" rx="6" ry="5" fill="${gc2}"/>`;
+  }
+
+  return `
+    ${hatSvg}
+    ${hairF}
+    <ellipse cx="40" cy="34" rx="22" ry="22" fill="${sc}"/>
+    <ellipse cx="32" cy="30" rx="4" ry="5" fill="#333"/>
+    <ellipse cx="48" cy="30" rx="4" ry="5" fill="#333"/>
+    <ellipse cx="33" cy="29" rx="1.5" ry="1.5" fill="#fff"/>
+    <ellipse cx="49" cy="29" rx="1.5" ry="1.5" fill="#fff"/>
+    <ellipse cx="27" cy="36" rx="5" ry="3" fill="#FFB6C1" opacity="0.6"/>
+    <ellipse cx="53" cy="36" rx="5" ry="3" fill="#FFB6C1" opacity="0.6"/>
+    <path d="M35 40 Q40 44 45 40" stroke="${gender==='f'?'#FF8C8C':'#CC8866'}" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    ${glassSvg}
+    <rect x="24" y="54" width="32" height="30" rx="6" fill="${tc}"/>
+    ${bagSvg}
+    <rect x="28" y="82" width="10" height="20" rx="5" fill="${bc}"/>
+    <rect x="42" y="82" width="10" height="20" rx="5" fill="${bc}"/>
+    <ellipse cx="33" cy="101" rx="7" ry="4" fill="${shoeC}"/>
+    <ellipse cx="47" cy="101" rx="7" ry="4" fill="${shoeC}"/>
+    <rect x="12" y="56" width="12" height="22" rx="6" fill="${sc}"/>
+    <rect x="56" y="56" width="12" height="22" rx="6" fill="${sc}"/>
+    ${gloveSvg}`;
+}
+
+function renderSDCharMini(gender, topColor, botColor){
+  const hc = gender==='f'?'#8B4513':'#4A3728';
+  const sc = '#FFD4A3';
+  return `<svg width="50" height="70" viewBox="0 0 80 110">
+    ${gender==='f'
+      ? `<ellipse cx="40" cy="32" rx="26" ry="28" fill="${hc}"/>`
+      : `<ellipse cx="40" cy="30" rx="24" ry="20" fill="${hc}"/><rect x="16" y="20" width="48" height="15" rx="7" fill="${hc}"/>`}
+    <ellipse cx="40" cy="34" rx="22" ry="22" fill="${sc}"/>
+    <ellipse cx="32" cy="30" rx="4" ry="5" fill="#333"/>
+    <ellipse cx="48" cy="30" rx="4" ry="5" fill="#333"/>
+    <ellipse cx="33" cy="29" rx="1.5" ry="1.5" fill="#fff"/>
+    <ellipse cx="49" cy="29" rx="1.5" ry="1.5" fill="#fff"/>
+    <ellipse cx="27" cy="36" rx="5" ry="3" fill="#FFB6C1" opacity="0.6"/>
+    <ellipse cx="53" cy="36" rx="5" ry="3" fill="#FFB6C1" opacity="0.6"/>
+    <rect x="24" y="54" width="32" height="30" rx="6" fill="${topColor}"/>
+    <rect x="28" y="82" width="10" height="20" rx="5" fill="${botColor}"/>
+    <rect x="42" y="82" width="10" height="20" rx="5" fill="${botColor}"/>
+    <ellipse cx="33" cy="101" rx="7" ry="4" fill="${gender==='f'?'#FF4D7D':'#333'}"/>
+    <ellipse cx="47" cy="101" rx="7" ry="4" fill="${gender==='f'?'#FF4D7D':'#333'}"/>
+    <rect x="12" y="56" width="12" height="22" rx="6" fill="${sc}"/>
+    <rect x="56" y="56" width="12" height="22" rx="6" fill="${sc}"/>
+  </svg>`;
+}
+
+function getItemColor(itemId){ const item=ITEM_DB.find(i=>i.id===itemId); return item?item.color:'#aaa'; }
+function getItemIco(itemId){ const item=ITEM_DB.find(i=>i.id===itemId); return item?item.ico:'?'; }
+
+function renderCharSVG(svgId, equipped){
+  const svgEl = document.getElementById(svgId);
+  if(!svgEl||!myChar) return;
+  svgEl.innerHTML = getCharSVGContent(myChar.gender, myChar.topColor, myChar.botColor, '#FFD4A3', equipped||myChar.equipped||{});
+}
+
+// ── 캐릭터 꾸미기 ──
+function openCharEdit(){
+  if(!currentStudent){ alert('먼저 로그인해주세요!'); return; }
+  if(!myChar){ alert('먼저 캐릭터를 생성해주세요!'); openCharCreate(); return; }
+  previewEquip = {...(myChar.equipped||{})};
+  renderCharSVG('ce-preview-svg', previewEquip);
+  renderCESlots();
+  renderCEInvTabs();
+  renderCEInv('전체');
+  document.getElementById('char-edit-bg').classList.add('show');
+}
+function closeCharEdit(){ document.getElementById('char-edit-bg').classList.remove('show'); }
+
+function renderCESlots(){
+  const el = document.getElementById('ce-slots');
+  el.innerHTML = SLOT_TYPES.map(type=>{
+    const itemId = previewEquip[type];
+    const item = itemId ? ITEM_DB.find(i=>i.id===itemId) : null;
+    return `<div class="ce-slot ${itemId?'equipped':''}" onclick="unequipSlot('${type}')">
+      <div class="slot-ico">${SLOT_ICONS[type]}</div>
+      <div class="slot-name">${type}</div>
+      <div class="slot-item">${item?item.name:'없음'}</div>
+    </div>`;
+  }).join('');
+}
+function unequipSlot(type){
+  delete previewEquip[type];
+  renderCharSVG('ce-preview-svg', previewEquip);
+  renderCESlots();
+  renderCEInv(invCurrentCat);
+}
+function renderCEInvTabs(){
+  const cats = ['전체', ...SLOT_TYPES];
+  const el = document.getElementById('ce-inv-tabs');
+  el.innerHTML = cats.map(c=>`<div class="ce-inv-tab ${c===invCurrentCat?'active':''}" onclick="renderCEInv('${c}')">${c}</div>`).join('');
+}
+function renderCEInv(cat){
+  invCurrentCat = cat;
+  renderCEInvTabs();
+  const el = document.getElementById('ce-inv-grid');
+  const items = myInventory.map(id=>ITEM_DB.find(i=>i.id===id)).filter(Boolean);
+  const filtered = cat==='전체' ? items : items.filter(i=>i.type===cat);
+  if(!filtered.length){ el.innerHTML='<div class="ce-empty">소지한 아이템이 없어요<br>상점에서 구매해보세요!</div>'; return; }
+  el.innerHTML = filtered.map(item=>{
+    const isEquipped = previewEquip[item.type]===item.id;
+    return `<div class="ce-item ${isEquipped?'equipped':''}" onclick="equipItem('${item.id}')">
+      <div class="ci-ico">${item.ico}</div>
+      <div class="ci-name">${item.name}</div>
+      <div class="ci-type">${item.type}</div>
+    </div>`;
+  }).join('');
+}
+function equipItem(itemId){
+  const item = ITEM_DB.find(i=>i.id===itemId);
+  if(!item) return;
+  if(previewEquip[item.type]===itemId){ delete previewEquip[item.type]; }
+  else previewEquip[item.type] = itemId;
+  myChar.equipped = {...previewEquip};
+  renderCharSVG('ce-preview-svg', previewEquip);
+  renderCESlots();
+  renderCEInv(invCurrentCat);
+}
+function resetEquip(){
+  previewEquip = {};
+  myChar.equipped = {};
+  renderCharSVG('ce-preview-svg', previewEquip);
+  renderCESlots();
+  renderCEInv(invCurrentCat);
+}
+
+// ── 상점 ──
+function openShop(){ renderShopCatTabs(); renderShopGrid('전체'); document.getElementById('shop-bg').classList.add('show'); updateVillagePts(); }
+function closeShop(){ document.getElementById('shop-bg').classList.remove('show'); cancelPreview(); }
+function renderShopCatTabs(){
+  const cats=['전체',...SLOT_TYPES];
+  document.getElementById('shop-cat-tabs').innerHTML=cats.map(c=>`<div class="shop-cat-tab ${c===shopCurrentCat?'active':''}" onclick="renderShopGrid('${c}')">${c}</div>`).join('');
+}
+function renderShopGrid(cat){
+  shopCurrentCat=cat;
+  renderShopCatTabs();
+  const items = cat==='전체' ? ITEM_DB : ITEM_DB.filter(i=>i.type===cat);
+  const filtered = myChar ? items.filter(i=>i.gender==='all'||i.gender===myChar.gender) : items;
+  document.getElementById('shop-grid').innerHTML = filtered.map(item=>{
+    const owned = myInventory.includes(item.id);
+    const prev = selectedShopItem===item.id;
+    return `<div class="shop-item ${owned?'owned':''} ${prev?'previewing':''}" onclick="selectShopItem('${item.id}')">
+      <div class="si-ico">${item.ico}</div>
+      <div class="si-name">${item.name}</div>
+      ${owned ? '<div class="si-owned">보유중</div>' : `<div class="si-pts">${item.pts}p</div>`}
+      <div class="si-preview">${owned?'탭해서 장착':'탭해서 미리보기'}</div>
+    </div>`;
+  }).join('');
+}
+function selectShopItem(itemId){
+  const item=ITEM_DB.find(i=>i.id===itemId);
+  if(!item) return;
+  if(myInventory.includes(itemId)){
+    if(myChar){ previewEquip[item.type]=itemId; myChar.equipped={...previewEquip}; renderCharSVG('ce-preview-svg',previewEquip); renderCESlots(); renderCEInv(invCurrentCat); }
+    return;
+  }
+  selectedShopItem=itemId;
+  // 미리입기
+  if(myChar){ previewEquip[item.type]=itemId; renderCharSVG('ce-preview-svg',previewEquip); }
+  document.getElementById('sbb-name').textContent=item.name;
+  document.getElementById('sbb-pts').textContent=item.pts+'p';
+  document.getElementById('shop-buy-bar').classList.add('show');
+  renderShopGrid(shopCurrentCat);
+}
+function cancelPreview(){
+  selectedShopItem=null;
+  if(myChar){ previewEquip={...(myChar.equipped||{})}; renderCharSVG('ce-preview-svg',previewEquip); }
+  document.getElementById('shop-buy-bar').classList.remove('show');
+  renderShopGrid(shopCurrentCat);
+}
+function buyItem(){
+  if(!selectedShopItem) return;
+  const item=ITEM_DB.find(i=>i.id===selectedShopItem);
+  if(!item) return;
+  if(totalPoints<item.pts){ alert('포인트가 부족해요! ('+totalPoints+'p / '+item.pts+'p 필요)'); return; }
+  totalPoints-=item.pts;
+  if(currentStudent){currentStudent.pts=totalPoints;const idx=STUDENTS.findIndex(s=>s.id===currentStudent.id);if(idx>=0)STUDENTS[idx].pts=totalPoints;}
+  myInventory.push(item.id);
+  if(myChar){previewEquip[item.type]=item.id;myChar.equipped={...previewEquip};}
+  selectedShopItem=null;
+  updateVillagePts();
+  updateLevelUI();
+  document.getElementById('shop-buy-bar').classList.remove('show');
+  renderShopGrid(shopCurrentCat);
+  alert(item.name+' 구매 완료! (잔여 '+totalPoints+'p)');
+}
+
+// ── 마을 꾸미기 (캔버스) ──
+let townCtx, townW, townH, charX=200, charY=200, charDir=1, charAnim=0, townAnimId=null;
+let townObjects = []; // 배치된 오브젝트 [{id,x,y,ico}]
+let townTool = 'move';
+
+const TOWN_OBJECTS = [
+  {id:'tree1',ico:'🌳',name:'나무',pts:30},
+  {id:'flower1',ico:'🌸',name:'벚꽃나무',pts:40},
+  {id:'bench1',ico:'🪑',name:'벤치',pts:25},
+  {id:'lamp1',ico:'💡',name:'가로등',pts:20},
+  {id:'fountain1',ico:'⛲',name:'분수대',pts:80},
+  {id:'pond1',ico:'🫧',name:'연못',pts:60},
+  {id:'piano1',ico:'🎹',name:'야외 피아노',pts:100},
+  {id:'note1',ico:'🎵',name:'음표 조각',pts:35},
+  {id:'flag1',ico:'🚩',name:'깃발',pts:15},
+  {id:'mailbox1',ico:'📮',name:'우체통',pts:20},
+];
+
+function openTown(){
+  if(!currentStudent){alert('먼저 로그인해주세요!');return;}
+  document.getElementById('town-bg').classList.add('show');
+  setTimeout(initTownCanvas,100);
+}
+function closeTown(){
+  document.getElementById('town-bg').classList.remove('show');
+  cancelAnimationFrame(townAnimId);
+}
+function initTownCanvas(){
+  const canvas=document.getElementById('town-canvas');
+  const bg=document.getElementById('town-bg');
+  canvas.width=bg.offsetWidth;
+  canvas.height=bg.offsetHeight-52-80;
+  canvas.style.marginTop='52px';
+  townW=canvas.width; townH=canvas.height;
+  townCtx=canvas.getContext('2d');
+  charX=townW/2; charY=townH/2;
+  canvas.addEventListener('click',onTownClick);
+  townAnimId=requestAnimationFrame(townLoop);
+}
+function townLoop(){
+  if(!townCtx){return;}
+  // 배경
+  townCtx.fillStyle='#2d5a1b';
+  townCtx.fillRect(0,0,townW,townH);
+  // 잔디 패턴
+  for(let x=0;x<townW;x+=40){for(let y=0;y<townH;y+=40){townCtx.fillStyle=(Math.floor(x/40+y/40))%2===0?'#2d5a1b':'#2a5518';townCtx.fillRect(x,y,40,40);}}
+  // 길
+  townCtx.fillStyle='#c4a882';
+  townCtx.fillRect(townW/2-20,0,40,townH);
+  townCtx.fillRect(0,townH/2-20,townW,40);
+  // 오브젝트
+  townCtx.font='24px serif';
+  townCtx.textAlign='center';
+  townObjects.forEach(obj=>{townCtx.fillText(obj.ico,obj.x,obj.y);});
+  // 캐릭터 (SD 간단 버전)
+  drawTownChar(charX,charY);
+  // 안내
+  townCtx.fillStyle='rgba(255,255,255,0.3)';
+  townCtx.font='12px sans-serif';
+  townCtx.textAlign='center';
+  townCtx.fillText(townTool==='move'?'탭해서 이동':townTool==='place'?'탭해서 배치':'탭해서 제거',townW/2,20);
+  townAnimId=requestAnimationFrame(townLoop);
+}
+function drawTownChar(x,y){
+  if(!myChar){
+    townCtx.font='28px serif';townCtx.textAlign='center';townCtx.fillText('🐣',x,y);return;
+  }
+  const tc=myChar.topColor||'#4ECDC4';
+  const bc=myChar.botColor||'#5C6BC0';
+  const sc='#FFD4A3';
+  // 그림자
+  townCtx.fillStyle='rgba(0,0,0,0.2)';
+  townCtx.beginPath();townCtx.ellipse(x,y+2,10,4,0,0,Math.PI*2);townCtx.fill();
+  // 다리
+  townCtx.fillStyle=bc;
+  townCtx.fillRect(x-7,y-8,6,12);
+  townCtx.fillRect(x+1,y-8,6,12);
+  // 몸
+  townCtx.fillStyle=tc;
+  townCtx.fillStyle=tc;townCtx.fillRect(x-10,y-22,20,16);
+  // 얼굴
+  townCtx.fillStyle=sc;
+  townCtx.beginPath();townCtx.arc(x,y-30,10,0,Math.PI*2);townCtx.fill();
+  // 눈
+  townCtx.fillStyle='#333';
+  townCtx.beginPath();townCtx.arc(x-3,y-31,1.5,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.arc(x+3,y-31,1.5,0,Math.PI*2);townCtx.fill();
+  // 볼
+  townCtx.fillStyle='rgba(255,182,193,0.6)';
+  townCtx.beginPath();townCtx.arc(x-6,y-28,2.5,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.arc(x+6,y-28,2.5,0,Math.PI*2);townCtx.fill();
+}
+function onTownClick(e){
+  const rect=document.getElementById('town-canvas').getBoundingClientRect();
+  const x=e.clientX-rect.left, y=e.clientY-rect.top;
+  if(townTool==='move'){ charX=x; charY=y; }
+  else if(townTool==='place'&&selectedTownObj){
+    townObjects.push({id:selectedTownObj.id,ico:selectedTownObj.ico,x,y});
+  } else if(townTool==='remove'){
+    townObjects=townObjects.filter(o=>Math.sqrt((o.x-x)**2+(o.y-y)**2)>20);
+  }
+}
+let selectedTownObj=null;
+function setTownTool(tool){
+  townTool=tool;
+  document.querySelectorAll('.tt-item').forEach(el=>el.classList.remove('active-tool'));
+  event.currentTarget.classList.add('active-tool');
+  if(tool==='place') openTownShop();
+}
+function openTownShop(){
+  const items=TOWN_OBJECTS.map(o=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.06);border-radius:10px;cursor:pointer;margin-bottom:6px;border:2px solid ${selectedTownObj&&selectedTownObj.id===o.id?'#4ECDC4':'transparent'}" onclick="selectTownObj('${o.id}')">
+      <span style="font-size:1.5rem;">${o.ico}</span>
+      <div style="flex:1"><div style="font-family:'Jua',sans-serif;font-size:0.82rem;color:#fff;">${o.name}</div></div>
+      <div style="font-family:'Do Hyeon',sans-serif;font-size:0.85rem;color:#FFE66D;">${o.pts}p</div>
+    </div>`).join('');
+  const modal=document.createElement('div');
+  modal.id='town-shop-modal';
+  modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:3100;display:flex;align-items:flex-end;justify-content:center;';
+  modal.innerHTML=`<div style="background:#1a2a3a;border-radius:22px 22px 0 0;padding:20px 16px 36px;width:100%;max-width:500px;max-height:70vh;overflow-y:auto;">
+    <div style="font-family:'Do Hyeon',sans-serif;font-size:1rem;color:#fff;margin-bottom:12px;">🏪 마을 오브젝트 상점</div>
+    ${items}
+    <button onclick="document.getElementById('town-shop-modal').remove();townTool='move';" style="width:100%;padding:12px;border:none;border-radius:12px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.9rem;cursor:pointer;margin-top:8px;">닫기</button>
+  </div>`;
+  document.body.appendChild(modal);
+}
+function selectTownObj(id){
+  selectedTownObj=TOWN_OBJECTS.find(o=>o.id===id);
+  townTool='place';
+  const m=document.getElementById('town-shop-modal');
+  if(m)m.remove();
+}
+
+// ── 포인트 선물 ──
+function openGiftModal(){
+  if(!currentStudent){alert('먼저 로그인해주세요!');return;}
+  updateVillagePts();
+  const el=document.getElementById('gift-student-list');
+  const others=STUDENTS.filter(s=>s.id!==currentStudent?.id);
+  if(!others.length){el.innerHTML='<div style="color:rgba(255,255,255,0.3);font-size:0.8rem;padding:10px;text-align:center;">다른 학생이 없어요</div>';
+  }else{
+    el.innerHTML=others.map(s=>`<div class="gm-student" id="gm-stu-${s.id}" onclick="selectGiftTarget('${s.id}')">
+      <div class="gs-avatar">${s.name[0]}</div>
+      <div class="gs-name">${s.name}</div>
+      <div class="gs-pts">${s.pts}p</div>
+    </div>`).join('');
+  }
+  document.getElementById('gift-modal-bg').classList.add('show');
+}
+let giftTargetId=null;
+function selectGiftTarget(id){
+  giftTargetId=id;
+  document.querySelectorAll('.gm-student').forEach(el=>el.classList.remove('sel'));
+  const el=document.getElementById('gm-stu-'+id);
+  if(el)el.classList.add('sel');
+}
+function closeGiftModal(e){
+  if(e&&e.target!==document.getElementById('gift-modal-bg'))return;
+  document.getElementById('gift-modal-bg').classList.remove('show');
+  giftTargetId=null;
+}
+function sendGift(){
+  if(!giftTargetId){alert('선물할 친구를 선택해주세요!');return;}
+  const amount=parseInt(document.getElementById('gift-amount').value)||0;
+  if(amount<=0){alert('선물할 포인트를 입력해주세요!');return;}
+  if(totalPoints<amount){alert('포인트가 부족해요! (보유: '+totalPoints+'p)');return;}
+  const target=STUDENTS.find(s=>s.id===giftTargetId);
+  if(!target)return;
+  totalPoints-=amount;
+  target.pts+=amount;
+  if(currentStudent){currentStudent.pts=totalPoints;const idx=STUDENTS.findIndex(s=>s.id===currentStudent.id);if(idx>=0)STUDENTS[idx].pts=totalPoints;}
+  updateLevelUI();updateVillagePts();
+  document.getElementById('gift-modal-bg').classList.remove('show');
+  giftTargetId=null;
+  alert(target.name+'에게 '+amount+'p 선물 완료! (잔여 '+totalPoints+'p)');
+}
+
+// ── 학생 시스템 ──
+let STUDENTS = [
+  {id:'s1', name:'박상호', pts:0},
+  {id:'s2', name:'정지윤', pts:0},
+  {id:'s3', name:'정충희', pts:0},
+  {id:'s4', name:'정석희', pts:0},
+  {id:'s5', name:'박상윤', pts:0},
+];
+let currentStudent = null;
+let selectedSurname = '전체';
+
+function openLoginModal(){
+  renderSurnameFilter();
+  renderLoginStudentList('전체');
+  document.getElementById('login-modal-bg').classList.add('show');
+}
+function closeLoginModal(){
+  document.getElementById('login-modal-bg').classList.remove('show');
+}
+function getSurnames(){
+  return ['전체', ...[...new Set(STUDENTS.map(s=>s.name[0]))]];
+}
+function renderSurnameFilter(){
+  const el=document.getElementById('surname-filter');
+  el.innerHTML=getSurnames().map(s=>
+    `<button class="sf-btn ${s===selectedSurname?'active':''}" onclick="filterBySurname('${s}')">${s}</button>`
+  ).join('');
+}
+function filterBySurname(surname){
+  selectedSurname=surname;
+  renderSurnameFilter();
+  renderLoginStudentList(surname);
+}
+function renderLoginStudentList(filter){
+  const el=document.getElementById('login-student-list');
+  const list=filter==='전체'?STUDENTS:STUDENTS.filter(s=>s.name[0]===filter);
+  if(!list.length){el.innerHTML='<div style="color:#bbb;font-size:0.82rem;padding:10px;text-align:center;">해당 학생이 없어요</div>';return;}
+  el.innerHTML=list.map(s=>{
+    const info=getLevelInfo(s.pts);
+    const isMe=currentStudent&&currentStudent.id===s.id;
+    return `<div class="student-item" onclick="loginAsStudent('${s.id}')" style="${isMe?'border-color:var(--secondary);background:#F0FDFB;':''}">
+      <div class="si-avatar">${s.name[0]}</div>
+      <div style="flex:1">
+        <div class="si-sname">${s.name}${isMe?' ✓':''}</div>
+        <div class="si-slv">${info.cur.icon} Lv.${info.cur.lv} · ${s.pts}p</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function loginAsStudent(id){
+  const student=STUDENTS.find(s=>s.id===id);
+  if(!student) return;
+  currentStudent=student;
+  totalPoints=student.pts;
+  closeLoginModal();
+  updateCurrentUserBar();
+  updateHomeTab();
+  updateLevelUI();
+}
+function loginAsGuest(){
+  currentStudent=null;
+  totalPoints=0;
+  closeLoginModal();
+  updateCurrentUserBar();
+  updateHomeTab();
+}
+function updateCurrentUserBar(){
+  const avatar=document.getElementById('cub-avatar');
+  const name=document.getElementById('cub-name');
+  const sub=document.getElementById('cub-sub');
+  if(!avatar) return;
+  if(currentStudent){
+    avatar.textContent=currentStudent.name[0];
+    name.textContent=currentStudent.name;
+    const info=getLevelInfo(currentStudent.pts);
+    sub.textContent=info.cur.icon+' Lv.'+info.cur.lv+' '+info.cur.name+' · '+currentStudent.pts+'p';
+  } else {
+    avatar.textContent='👤';
+    name.textContent='게스트';
+    sub.textContent='연습만 가능해요';
+  }
+  const hn=document.getElementById('home-student-name');
+  if(hn) hn.textContent=currentStudent?currentStudent.name:'게스트';
+}
+// addPoints 오버라이드 - 학생 포인트 누적
+function addPoints(songLevel){
+  const pts=LEVEL_POINTS[songLevel]||1;
+  totalPoints+=pts;
+  if(currentStudent){
+    currentStudent.pts=totalPoints;
+    const idx=STUDENTS.findIndex(s=>s.id===currentStudent.id);
+    if(idx>=0) STUDENTS[idx].pts=totalPoints;
+  }
+  updateLevelUI();
+  return pts;
+}
+// getAllRanking 오버라이드 - STUDENTS 기반
+function getAllRanking(){
+  const all=STUDENTS.map(s=>({name:s.name,pts:s.pts,isMe:currentStudent&&s.id===currentStudent.id}));
+  if(!currentStudent) all.push({name:'게스트',pts:totalPoints,isMe:true});
+  all.sort((a,b)=>b.pts-a.pts);
+  return all;
+}
+
+// ── 관리자 학생 관리 ──
+function renderAdminStudentList(){
+  const el=document.getElementById('admin-student-list');
+  if(!el) return;
+  if(!STUDENTS.length){el.innerHTML='<div class="empty-msg">등록된 학생이 없어요</div>';return;}
+  el.innerHTML=STUDENTS.map(s=>`
+    <div class="admin-song-item" id="stu-row-${s.id}">
+      <div class="asi-emoji">${s.name[0]}</div>
+      <div class="asi-info" style="flex:1">
+        <div class="asi-name" id="stu-name-${s.id}">${s.name}</div>
+        <div class="asi-meta">${getLevelInfo(s.pts).cur.icon} Lv.${getLevelInfo(s.pts).cur.lv} · ${s.pts}p</div>
+      </div>
+      <div class="asi-btns">
+        <button class="asi-btn edit" onclick="startEditStudent('${s.id}')">수정</button>
+        <button class="asi-btn del" onclick="deleteStudent('${s.id}')">삭제</button>
+      </div>
+    </div>`).join('');
+}
+function startEditStudent(id){
+  const s=STUDENTS.find(s=>s.id===id);
+  if(!s) return;
+  const nameEl=document.getElementById('stu-name-'+id);
+  const row=document.getElementById('stu-row-'+id);
+  if(!nameEl||!row) return;
+  // 이름 영역을 인풋으로 교체
+  nameEl.innerHTML=`<input id="stu-edit-inp-${id}" value="${s.name}" style="border:1px solid var(--secondary);border-radius:6px;padding:3px 7px;font-family:'Jua',sans-serif;font-size:0.85rem;width:120px;outline:none;">`;
+  // 버튼 교체
+  row.querySelector('.asi-btns').innerHTML=`
+    <button class="asi-btn edit" onclick="confirmEditStudent('${id}')">저장</button>
+    <button class="asi-btn" style="background:#f1f3f5;color:#868e96;" onclick="renderAdminStudentList()">취소</button>`;
+  document.getElementById('stu-edit-inp-'+id).focus();
+}
+function confirmEditStudent(id){
+  const inp=document.getElementById('stu-edit-inp-'+id);
+  if(!inp) return;
+  const newName=inp.value.trim();
+  if(!newName){alert('이름을 입력해주세요!');return;}
+  if(STUDENTS.find(s=>s.name===newName&&s.id!==id)){alert('이미 있는 이름이에요!');return;}
+  const idx=STUDENTS.findIndex(s=>s.id===id);
+  if(idx>=0){
+    STUDENTS[idx].name=newName;
+    if(currentStudent&&currentStudent.id===id){
+      currentStudent.name=newName;
+      updateCurrentUserBar();
+    }
+  }
+  renderAdminStudentList();
+}
+function addStudent(){
+  const inp=document.getElementById('new-student-name');
+  const name=inp.value.trim();
+  if(!name){alert('이름을 입력해주세요!');return;}
+  if(STUDENTS.find(s=>s.name===name)){alert('이미 있는 학생이에요!');return;}
+  STUDENTS.push({id:'s'+Date.now(),name,pts:0});
+  inp.value='';
+  renderAdminStudentList();
+  alert(name+' 학생이 추가됐어요!');
+}
+function deleteStudent(id){
+  const s=STUDENTS.find(s=>s.id===id);
+  if(!s) return;
+  if(!confirm(`'${s.name}' 학생을 삭제할까요?`)) return;
+  STUDENTS=STUDENTS.filter(s=>s.id!==id);
+  if(currentStudent&&currentStudent.id===id){currentStudent=null;totalPoints=0;updateCurrentUserBar();}
+  renderAdminStudentList();
+}
+
+// ── 초기화 ──
 renderCatGrid('book');
 renderPrizesInfo();
 updateRewardUI();
 updateLevelUI();
 renderPodium();
+document.getElementById('bar-song').textContent='홈';
+updateHomeTab();
+setTimeout(()=>openLoginModal(), 400);
 </script>
 </body>
 </html>
