@@ -1128,13 +1128,10 @@ html {
         </div>
         <div class="cub-change">변경 ›</div>
       </div>
-      <!-- 학생 이름 (캐릭터 제거, 이름만 심플하게) -->
-      <div style="text-align:center;padding:10px 0 6px;">
-        <div id="home-student-name" style="font-family:'Do Hyeon',sans-serif;font-size:1.4rem;color:var(--text);letter-spacing:1px;">---</div>
-        <div id="home-student-sub" style="font-size:0.75rem;color:#aaa;margin-top:2px;">피아노 마을 주민</div>
-      </div>
-      <!-- home-char 숨김 (updateHomeTab에서 참조하므로 유지) -->
+      <!-- home-char/name 숨김 처리 (참조 유지) -->
       <div id="home-char" style="display:none;"></div>
+      <div id="home-student-name" style="display:none;">---</div>
+      <div id="home-student-sub" style="display:none;">피아노 마을 주민</div>
 
       <!-- 레벨 카드 -->
       <div style="background:#fff;border:1px solid #eee;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 3px 12px rgba(0,0,0,0.06);">
