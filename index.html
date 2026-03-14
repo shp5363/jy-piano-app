@@ -670,8 +670,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .gm-cancel{padding:13px 18px;border:none;border-radius:12px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.95rem;cursor:pointer;}
 
 </style>
-<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
-<script>var vConsole = new VConsole();</script>
 </head>
 <body>
 
@@ -2655,8 +2653,15 @@ function updateHomeTab(){
   const info = getLevelInfo(totalPoints);
   const { cur, next, pct, need } = info;
 
-  // 캐릭터
-  document.getElementById('home-char').textContent = getCharEmoji(totalPoints);
+  // 캐릭터 - 생성된 캐릭터 있으면 SVG, 없으면 이모지
+  const hc = document.getElementById('home-char');
+  if(hc){
+    if(myChar){
+      hc.innerHTML = `<svg width="80" height="110" viewBox="0 0 80 110">${getCharSVGContent(myChar.gender,myChar.topColor,myChar.botColor,'#FFE0B2',myChar.equipped||{})}</svg>`;
+    } else {
+      hc.innerHTML = '<span style="font-size:3.5rem">🐣</span>';
+    }
+  }
 
   // 레벨 타이틀
   const ht = document.getElementById('home-level-title');
@@ -2820,6 +2825,7 @@ function updateVillagePts(){
 function updateVillageTab(){
   updateVillagePts();
   checkDailyBonus();
+  updateVillagePts(); // 보너스 후 재갱신
   // 캐릭터 있으면 꾸미기 활성, 없으면 생성만
   const charCard = document.getElementById('vmenu-char');
   const createCard = document.getElementById('vmenu-create');
@@ -2878,8 +2884,10 @@ function confirmCreateChar(){
   myChar = { gender:ccGender, topColor:outfit.topColor, botColor:outfit.botColor, equipped:{} };
   myInventory = [];
   previewEquip = {};
+  saveCharLocal();
   closeCharCreate();
   updateVillageTab();
+  updateHomeTab();
   alert('캐릭터가 생성됐어요! 🎉');
 }
 
@@ -2979,11 +2987,10 @@ function openCharEdit(){
   if(!currentStudent){ alert('먼저 로그인해주세요!'); return; }
   if(!myChar){ alert('먼저 캐릭터를 생성해주세요!'); openCharCreate(); return; }
   previewEquip = {...(myChar.equipped||{})};
-  renderCharSVG('ce-preview-svg', previewEquip);
+  setTimeout(()=>renderCharSVG('ce-preview-svg', previewEquip), 50);
   renderCESlots();
   renderCEInvTabs();
   renderCEInv('전체');
-  document.getElementById('char-edit-bg').classList.add('show');
 }
 function closeCharEdit(){ document.getElementById('char-edit-bg').classList.remove('show'); }
 
@@ -3097,6 +3104,7 @@ function buyItem(){
   if(currentStudent){currentStudent.pts=totalPoints;const idx=STUDENTS.findIndex(s=>s.id===currentStudent.id);if(idx>=0)STUDENTS[idx].pts=totalPoints;}
   myInventory.push(item.id);
   if(myChar){previewEquip[item.type]=item.id;myChar.equipped={...previewEquip};}
+  saveCharLocal();
   selectedShopItem=null;
   updateVillagePts();
   updateLevelUI();
@@ -3106,9 +3114,17 @@ function buyItem(){
 }
 
 // ── 마을 꾸미기 (캔버스) ──
-let townCtx, townW, townH, charX=200, charY=200, charDir=1, charAnim=0, townAnimId=null;
-let townObjects = []; // 배치된 오브젝트 [{id,x,y,ico}]
+let townCtx, townW, townH, townAnimId=null;
+// 캐릭터 이동 시스템
+let charX=200, charY=200;       // 현재 위치
+let charTargetX=200, charTargetY=200; // 목적지
+let charDir=1;   // 1=오른쪽, -1=왼쪽
+let charWalk=0;  // 걷기 애니 프레임
+let charIdle=0;  // 대기 프레임
+let charAutoTimer=0; // 자동 이동 타이머
+let townObjects = [];
 let townTool = 'move';
+let townFrame = 0; // 전체 프레임 카운터 (구름 등 애니용)
 
 const TOWN_OBJECTS = [
   {id:'tree1',ico:'🌳',name:'나무',pts:30},
@@ -3140,71 +3156,317 @@ function initTownCanvas(){
   canvas.style.marginTop='52px';
   townW=canvas.width; townH=canvas.height;
   townCtx=canvas.getContext('2d');
-  charX=townW/2; charY=townH/2;
+  charX=townW/2; charY=townH*0.65;
+  charTargetX=townW/2; charTargetY=townH*0.65;
   canvas.addEventListener('click',onTownClick);
   townAnimId=requestAnimationFrame(townLoop);
 }
 function townLoop(){
   if(!townCtx){return;}
-  // 배경
-  townCtx.fillStyle='#2d5a1b';
-  townCtx.fillRect(0,0,townW,townH);
-  // 잔디 패턴
-  for(let x=0;x<townW;x+=40){for(let y=0;y<townH;y+=40){townCtx.fillStyle=(Math.floor(x/40+y/40))%2===0?'#2d5a1b':'#2a5518';townCtx.fillRect(x,y,40,40);}}
-  // 길
-  townCtx.fillStyle='#c4a882';
-  townCtx.fillRect(townW/2-20,0,40,townH);
-  townCtx.fillRect(0,townH/2-20,townW,40);
-  // 오브젝트
-  townCtx.font='24px serif';
-  townCtx.textAlign='center';
-  townObjects.forEach(obj=>{townCtx.fillText(obj.ico,obj.x,obj.y);});
-  // 캐릭터 (SD 간단 버전)
+  townFrame++;
+
+  // ── 캐릭터 자동 이동 ──
+  const dx=charTargetX-charX, dy=charTargetY-charY;
+  const dist=Math.sqrt(dx*dx+dy*dy);
+  const speed=2.2;
+  if(dist>speed){
+    charX+=dx/dist*speed; charY+=dy/dist*speed;
+    charDir=dx>0?1:-1;
+    charWalk++;
+  } else {
+    charX=charTargetX; charY=charTargetY;
+    charWalk=0; charIdle++;
+    // 자동 랜덤 이동
+    charAutoTimer++;
+    if(charAutoTimer>180){
+      charAutoTimer=0;
+      charTargetX=townW*0.1+Math.random()*townW*0.8;
+      charTargetY=townH*0.25+Math.random()*townH*0.6;
+    }
+  }
+
+  // ── 배경 그리기 ──
+  // 하늘
+  const skyGrad=townCtx.createLinearGradient(0,0,0,townH*0.45);
+  skyGrad.addColorStop(0,'#87CEEB'); skyGrad.addColorStop(1,'#B0E2FF');
+  townCtx.fillStyle=skyGrad; townCtx.fillRect(0,0,townW,townH*0.45);
+
+  // 구름 (움직이는)
+  drawClouds();
+
+  // 땅 그라데이션
+  const groundGrad=townCtx.createLinearGradient(0,townH*0.43,0,townH);
+  groundGrad.addColorStop(0,'#5a8a2a'); groundGrad.addColorStop(0.3,'#4a7a1a'); groundGrad.addColorStop(1,'#3a6010');
+  townCtx.fillStyle=groundGrad; townCtx.fillRect(0,townH*0.43,townW,townH);
+
+  // 잔디 질감
+  for(let x=0;x<townW;x+=6){
+    const h=3+Math.sin(x*0.3+townFrame*0.02)*1.5;
+    townCtx.fillStyle=`hsl(${100+x%20},60%,${35+x%10}%)`;
+    townCtx.fillRect(x,townH*0.43-h,2,h+2);
+  }
+
+  // 포장 도로
+  drawRoad();
+
+  // 원경 나무들
+  drawBgTrees();
+
+  // 배치된 오브젝트 (캐릭터보다 뒤에 있는 것)
+  townObjects.filter(o=>o.y<charY).forEach(obj=>drawTownObj(obj));
+
+  // 캐릭터
   drawTownChar(charX,charY);
-  // 안내
-  townCtx.fillStyle='rgba(255,255,255,0.3)';
-  townCtx.font='12px sans-serif';
-  townCtx.textAlign='center';
-  townCtx.fillText(townTool==='move'?'탭해서 이동':townTool==='place'?'탭해서 배치':'탭해서 제거',townW/2,20);
+
+  // 배치된 오브젝트 (캐릭터보다 앞에 있는 것)
+  townObjects.filter(o=>o.y>=charY).forEach(obj=>drawTownObj(obj));
+
+  // 안내 텍스트
+  townCtx.fillStyle='rgba(0,0,0,0.45)';
+  townCtx.beginPath();
+  townCtx.roundRect?townCtx.roundRect(townW/2-80,8,160,24,12):townCtx.rect(townW/2-80,8,160,24);
+  townCtx.fill();
+  townCtx.fillStyle='rgba(255,255,255,0.85)';
+  townCtx.font='11px sans-serif'; townCtx.textAlign='center';
+  townCtx.fillText(townTool==='move'?'탭하면 그곳으로 걸어가요':townTool==='place'?'탭해서 배치':'탭해서 제거',townW/2,23);
+
   townAnimId=requestAnimationFrame(townLoop);
 }
-function drawTownChar(x,y){
-  if(!myChar){
-    townCtx.font='28px serif';townCtx.textAlign='center';townCtx.fillText('🐣',x,y);return;
-  }
-  const tc=myChar.topColor||'#4ECDC4';
-  const bc=myChar.botColor||'#5C6BC0';
-  const sc='#FFD4A3';
+
+function drawClouds(){
+  const clouds=[
+    {x:(townFrame*0.3)%( townW+120)-60, y:townH*0.08, r:22},
+    {x:(townFrame*0.18+200)%(townW+120)-60, y:townH*0.15, r:16},
+    {x:(townFrame*0.25+400)%(townW+120)-60, y:townH*0.05, r:28},
+  ];
+  townCtx.fillStyle='rgba(255,255,255,0.88)';
+  clouds.forEach(cl=>{
+    townCtx.beginPath();
+    townCtx.arc(cl.x,cl.y,cl.r,0,Math.PI*2);
+    townCtx.arc(cl.x+cl.r*0.9,cl.y-cl.r*0.3,cl.r*0.7,0,Math.PI*2);
+    townCtx.arc(cl.x-cl.r*0.8,cl.y-cl.r*0.2,cl.r*0.6,0,Math.PI*2);
+    townCtx.fill();
+  });
+}
+
+function drawRoad(){
+  // 세로 길
+  townCtx.fillStyle='#bba878';
+  townCtx.fillRect(townW/2-22,townH*0.43,44,townH);
+  // 가로 길
+  townCtx.fillRect(0,townH*0.62,townW,36);
+  // 길 중앙선
+  townCtx.strokeStyle='rgba(255,255,220,0.5)';
+  townCtx.lineWidth=2; townCtx.setLineDash([14,12]);
+  townCtx.beginPath();townCtx.moveTo(townW/2,townH*0.43);townCtx.lineTo(townW/2,townH);townCtx.stroke();
+  townCtx.beginPath();townCtx.moveTo(0,townH*0.62+18);townCtx.lineTo(townW,townH*0.62+18);townCtx.stroke();
+  townCtx.setLineDash([]);
+}
+
+function drawBgTrees(){
+  // 배경 나무 실루엣
+  const trees=[0.05,0.15,0.82,0.92,0.35,0.65];
+  trees.forEach((tx,i)=>{
+    const x=townW*tx, y=townH*0.43+2;
+    const h=28+i%3*8;
+    townCtx.fillStyle='#2a5a0a';
+    townCtx.beginPath();
+    townCtx.moveTo(x,y-h);
+    townCtx.lineTo(x-h*0.5,y);
+    townCtx.lineTo(x+h*0.5,y);
+    townCtx.fill();
+    townCtx.fillStyle='#1e4a06';
+    townCtx.beginPath();
+    townCtx.moveTo(x,y-h*1.3);
+    townCtx.lineTo(x-h*0.4,y-h*0.4);
+    townCtx.lineTo(x+h*0.4,y-h*0.4);
+    townCtx.fill();
+    townCtx.fillStyle='#5a3a1a';
+    townCtx.fillRect(x-3,y,6,8);
+  });
+}
+
+function drawTownObj(obj){
+  townCtx.save();
   // 그림자
-  townCtx.fillStyle='rgba(0,0,0,0.2)';
-  townCtx.beginPath();townCtx.ellipse(x,y+2,10,4,0,0,Math.PI*2);townCtx.fill();
-  // 다리
+  townCtx.fillStyle='rgba(0,0,0,0.18)';
+  townCtx.beginPath();
+  townCtx.ellipse(obj.x,obj.y+4,16,5,0,0,Math.PI*2);
+  townCtx.fill();
+  townCtx.font='28px serif';
+  townCtx.textAlign='center';
+  townCtx.textBaseline='bottom';
+  townCtx.fillText(obj.ico,obj.x,obj.y);
+  townCtx.textBaseline='alphabetic';
+  townCtx.restore();
+}
+function drawTownChar(x,y){
+  const tc=myChar?myChar.topColor:'#4ECDC4';
+  const bc=myChar?myChar.botColor:'#5C6BC0';
+  const sc='#FFE0B2';
+  const isFemale=!myChar||myChar.gender==='f';
+  const hairColor=isFemale?'#8B4513':'#3E2723';
+  // 걷기 애니메이션
+  const walkCycle=Math.sin(charWalk*0.25);
+  const legSwing=dist=>Math.abs(charTargetX-charX)>3||Math.abs(charTargetY-charY)>3?walkCycle*dist:0;
+  const s=charDir; // 방향 (1=오른쪽)
+
+  townCtx.save();
+  townCtx.translate(x,y);
+  if(s<0) {townCtx.scale(-1,1);}
+
+  // 그림자
+  townCtx.fillStyle='rgba(0,0,0,0.25)';
+  townCtx.beginPath();townCtx.ellipse(0,2,13,4,0,0,Math.PI*2);townCtx.fill();
+
+  // 다리 (걷기 애니)
+  const legAngle=legSwing(8);
+  // 왼쪽 다리
   townCtx.fillStyle=bc;
-  townCtx.fillRect(x-7,y-8,6,12);
-  townCtx.fillRect(x+1,y-8,6,12);
-  // 몸
+  townCtx.save();townCtx.translate(-5,-8);townCtx.rotate(legAngle*0.08);
+  townCtx.fillRect(-3,0,6,14);
+  // 신발
+  townCtx.fillStyle=myChar&&myChar.equipped&&myChar.equipped['신발']?getItemColor(myChar.equipped['신발']):(isFemale?'#E91E63':'#333');
+  townCtx.beginPath();townCtx.ellipse(0,14,5,3,0,0,Math.PI*2);townCtx.fill();
+  townCtx.restore();
+  // 오른쪽 다리
+  townCtx.fillStyle=bc;
+  townCtx.save();townCtx.translate(5,-8);townCtx.rotate(-legAngle*0.08);
+  townCtx.fillRect(-3,0,6,14);
+  townCtx.fillStyle=myChar&&myChar.equipped&&myChar.equipped['신발']?getItemColor(myChar.equipped['신발']):(isFemale?'#E91E63':'#333');
+  townCtx.beginPath();townCtx.ellipse(0,14,5,3,0,0,Math.PI*2);townCtx.fill();
+  townCtx.restore();
+
+  // 치마 or 바지 하단 (여자)
+  if(isFemale){
+    townCtx.fillStyle=bc;
+    townCtx.beginPath();townCtx.ellipse(0,-8,11,5,0,0,Math.PI*2);townCtx.fill();
+  }
+
+  // 팔 (걷기 반대 방향)
+  const armSwing=-legAngle*0.06;
+  // 왼팔
   townCtx.fillStyle=tc;
-  townCtx.fillStyle=tc;townCtx.fillRect(x-10,y-22,20,16);
+  townCtx.save();townCtx.translate(-11,-24);townCtx.rotate(armSwing);
+  townCtx.fillRect(-3,0,6,12);
+  // 손
+  townCtx.fillStyle=sc;townCtx.beginPath();townCtx.arc(0,13,3.5,0,Math.PI*2);townCtx.fill();
+  // 장갑
+  if(myChar&&myChar.equipped&&myChar.equipped['장갑']){townCtx.fillStyle=getItemColor(myChar.equipped['장갑']);townCtx.beginPath();townCtx.arc(0,13,3.5,0,Math.PI*2);townCtx.fill();}
+  townCtx.restore();
+  // 오른팔
+  townCtx.fillStyle=tc;
+  townCtx.save();townCtx.translate(11,-24);townCtx.rotate(-armSwing);
+  townCtx.fillRect(-3,0,6,12);
+  townCtx.fillStyle=sc;townCtx.beginPath();townCtx.arc(0,13,3.5,0,Math.PI*2);townCtx.fill();
+  if(myChar&&myChar.equipped&&myChar.equipped['장갑']){townCtx.fillStyle=getItemColor(myChar.equipped['장갑']);townCtx.beginPath();townCtx.arc(0,13,3.5,0,Math.PI*2);townCtx.fill();}
+  townCtx.restore();
+
+  // 가방
+  if(myChar&&myChar.equipped&&myChar.equipped['가방']){
+    townCtx.fillStyle=getItemColor(myChar.equipped['가방']);
+    townCtx.fillRect(9,-32,8,10);
+    townCtx.strokeStyle='rgba(0,0,0,0.3)';townCtx.lineWidth=1;
+    townCtx.strokeRect(9,-32,8,10);
+  }
+
+  // 몸통
+  townCtx.fillStyle=tc;
+  townCtx.beginPath();
+  townCtx.moveTo(-11,-24);townCtx.lineTo(11,-24);townCtx.lineTo(12,-8);townCtx.lineTo(-12,-8);townCtx.closePath();
+  townCtx.fill();
+  // 몸통 음영
+  townCtx.fillStyle='rgba(0,0,0,0.1)';
+  townCtx.fillRect(4,-24,8,16);
+
+  // 목
+  townCtx.fillStyle=sc;townCtx.fillRect(-4,-28,8,6);
+
+  // 머리카락 뒷부분
+  townCtx.fillStyle=hairColor;
+  townCtx.beginPath();townCtx.arc(0,-38,13,0,Math.PI*2);townCtx.fill();
+  if(isFemale){
+    // 긴머리
+    townCtx.fillRect(-14,-38,6,22);townCtx.fillRect(8,-38,6,22);
+    townCtx.beginPath();townCtx.arc(-11,-16,5,0,Math.PI*2);townCtx.fill();
+    townCtx.beginPath();townCtx.arc(11,-16,5,0,Math.PI*2);townCtx.fill();
+  }
+
   // 얼굴
   townCtx.fillStyle=sc;
-  townCtx.beginPath();townCtx.arc(x,y-30,10,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.arc(0,-38,12,0,Math.PI*2);townCtx.fill();
+  // 얼굴 음영
+  townCtx.fillStyle='rgba(0,0,0,0.04)';
+  townCtx.beginPath();townCtx.arc(4,-38,8,0,Math.PI*2);townCtx.fill();
+
+  // 머리카락 앞부분
+  townCtx.fillStyle=hairColor;
+  if(isFemale){
+    townCtx.beginPath();townCtx.arc(-3,-46,5,Math.PI,0);townCtx.fill();
+    townCtx.beginPath();townCtx.arc(5,-46,4,Math.PI,0);townCtx.fill();
+  } else {
+    townCtx.fillRect(-12,-50,24,10);
+    townCtx.beginPath();townCtx.arc(0,-50,10,Math.PI,0);townCtx.fill();
+  }
+
+  // 모자
+  if(myChar&&myChar.equipped&&myChar.equipped['모자']){
+    townCtx.font='16px serif';townCtx.textAlign='center';
+    townCtx.fillText(getItemIco(myChar.equipped['모자']),0,-50);
+  }
+
   // 눈
-  townCtx.fillStyle='#333';
-  townCtx.beginPath();townCtx.arc(x-3,y-31,1.5,0,Math.PI*2);townCtx.fill();
-  townCtx.beginPath();townCtx.arc(x+3,y-31,1.5,0,Math.PI*2);townCtx.fill();
+  const eyeY=-39+Math.sin(charIdle*0.05)*0.3;
+  // 눈 흰자
+  townCtx.fillStyle='#fff';
+  townCtx.beginPath();townCtx.ellipse(-4,eyeY,3.5,4,0,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.ellipse(4,eyeY,3.5,4,0,0,Math.PI*2);townCtx.fill();
+  // 눈동자
+  townCtx.fillStyle='#1a1a1a';
+  townCtx.beginPath();townCtx.ellipse(-4,eyeY+0.5,2,2.8,0,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.ellipse(4,eyeY+0.5,2,2.8,0,0,Math.PI*2);townCtx.fill();
+  // 눈 하이라이트
+  townCtx.fillStyle='#fff';
+  townCtx.beginPath();townCtx.arc(-3,eyeY-0.5,0.9,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.arc(5,eyeY-0.5,0.9,0,Math.PI*2);townCtx.fill();
+  // 눈썹
+  townCtx.strokeStyle=hairColor;townCtx.lineWidth=1.5;townCtx.lineCap='round';
+  townCtx.beginPath();townCtx.moveTo(-7,eyeY-5);townCtx.quadraticCurveTo(-4,eyeY-7,-1,eyeY-5);townCtx.stroke();
+  townCtx.beginPath();townCtx.moveTo(7,eyeY-5);townCtx.quadraticCurveTo(4,eyeY-7,1,eyeY-5);townCtx.stroke();
+
+  // 안경
+  if(myChar&&myChar.equipped&&myChar.equipped['안경']){
+    townCtx.strokeStyle='#333';townCtx.lineWidth=1.2;
+    townCtx.beginPath();townCtx.arc(-4,eyeY,5,0,Math.PI*2);townCtx.stroke();
+    townCtx.beginPath();townCtx.arc(4,eyeY,5,0,Math.PI*2);townCtx.stroke();
+    townCtx.beginPath();townCtx.moveTo(1,eyeY);townCtx.lineTo(-1,eyeY);townCtx.stroke();
+  }
+
   // 볼
-  townCtx.fillStyle='rgba(255,182,193,0.6)';
-  townCtx.beginPath();townCtx.arc(x-6,y-28,2.5,0,Math.PI*2);townCtx.fill();
-  townCtx.beginPath();townCtx.arc(x+6,y-28,2.5,0,Math.PI*2);townCtx.fill();
+  townCtx.fillStyle='rgba(255,150,150,0.35)';
+  townCtx.beginPath();townCtx.ellipse(-7,-36,4,2.5,0,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.ellipse(7,-36,4,2.5,0,0,Math.PI*2);townCtx.fill();
+
+  // 입 (살짝 웃는)
+  townCtx.strokeStyle='rgba(180,80,80,0.7)';townCtx.lineWidth=1.3;
+  townCtx.beginPath();townCtx.moveTo(-3,-33);townCtx.quadraticCurveTo(0,-31,3,-33);townCtx.stroke();
+
+  townCtx.restore();
 }
 function onTownClick(e){
   const rect=document.getElementById('town-canvas').getBoundingClientRect();
   const x=e.clientX-rect.left, y=e.clientY-rect.top;
-  if(townTool==='move'){ charX=x; charY=y; }
-  else if(townTool==='place'&&selectedTownObj){
+  if(townTool==='move'){
+    // 순간이동 X → 목적지 설정해서 걸어감
+    charTargetX=x; charTargetY=Math.max(townH*0.48,Math.min(townH*0.88,y));
+    charAutoTimer=0; // 자동이동 타이머 리셋
+    // 발자국 이펙트
+    townCtx.fillStyle='rgba(255,255,255,0.3)';
+    townCtx.beginPath();townCtx.arc(x,y,8,0,Math.PI*2);townCtx.fill();
+  } else if(townTool==='place'&&selectedTownObj){
     townObjects.push({id:selectedTownObj.id,ico:selectedTownObj.ico,x,y});
   } else if(townTool==='remove'){
-    townObjects=townObjects.filter(o=>Math.sqrt((o.x-x)**2+(o.y-y)**2)>20);
+    townObjects=townObjects.filter(o=>Math.sqrt((o.x-x)**2+(o.y-y)**2)>24);
   }
 }
 let selectedTownObj=null;
@@ -3276,10 +3538,10 @@ function sendGift(){
   totalPoints-=amount;
   target.pts+=amount;
   if(currentStudent){currentStudent.pts=totalPoints;const idx=STUDENTS.findIndex(s=>s.id===currentStudent.id);if(idx>=0)STUDENTS[idx].pts=totalPoints;}
-  updateLevelUI();updateVillagePts();
+  updateLevelUI(); updateVillagePts(); renderPodium();
   document.getElementById('gift-modal-bg').classList.remove('show');
   giftTargetId=null;
-  alert(target.name+'에게 '+amount+'p 선물 완료! (잔여 '+totalPoints+'p)');
+  alert(target.name+'에게 '+amount+'p 선물 완료!\n잔여 포인트: '+totalPoints+'p');
 }
 
 // ── 학생 시스템 ──
@@ -3290,6 +3552,11 @@ let STUDENTS = [
   {id:'s4', name:'정석희', pts:0},
   {id:'s5', name:'박상윤', pts:0},
 ];
+// localStorage에서 포인트 복원
+STUDENTS.forEach(s=>{
+  const saved=localStorage.getItem('jypiano_pts_'+s.id);
+  if(saved!==null) s.pts=parseInt(saved)||0;
+});
 let currentStudent = null;
 let selectedSurname = '전체';
 
@@ -3331,15 +3598,27 @@ function renderLoginStudentList(filter){
     </div>`;
   }).join('');
 }
+
+function saveCharLocal(){
+  if(!currentStudent) return;
+  localStorage.setItem('jypiano_char_'+currentStudent.id, JSON.stringify(myChar));
+  localStorage.setItem('jypiano_inv_'+currentStudent.id, JSON.stringify(myInventory));
+}
 function loginAsStudent(id){
   const student=STUDENTS.find(s=>s.id===id);
   if(!student) return;
   currentStudent=student;
   totalPoints=student.pts;
+  // 로컬 캐릭터/인벤토리 로드
+  const savedChar=localStorage.getItem('jypiano_char_'+id);
+  const savedInv=localStorage.getItem('jypiano_inv_'+id);
+  myChar=savedChar?JSON.parse(savedChar):null;
+  myInventory=savedInv?JSON.parse(savedInv):[];
   closeLoginModal();
   updateCurrentUserBar();
   updateHomeTab();
   updateLevelUI();
+  checkDailyBonus();
 }
 function loginAsGuest(){
   currentStudent=null;
@@ -3374,6 +3653,7 @@ function addPoints(songLevel){
     currentStudent.pts=totalPoints;
     const idx=STUDENTS.findIndex(s=>s.id===currentStudent.id);
     if(idx>=0) STUDENTS[idx].pts=totalPoints;
+    localStorage.setItem('jypiano_pts_'+currentStudent.id, totalPoints);
   }
   updateLevelUI();
   return pts;
