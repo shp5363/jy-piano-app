@@ -725,7 +725,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
     <h3>🎟 게임권 추가</h3>
     <p>추가할 게임권 수량과 비밀번호를 입력해주세요</p>
     <div class="ticket-count-row">
-      <button class="ticket-cnt-btn" onclick="chgTicketAdd(-1)">−</button>
+      <button class="ticket-cnt-btn" onclick="chgTicketAdd(-1)">-</button>
       <div class="ticket-cnt-disp" id="ticket-add-cnt">1</div>
       <button class="ticket-cnt-btn" onclick="chgTicketAdd(1)">+</button>
     </div>
@@ -790,7 +790,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
     <div class="section-title">⚙️ 연습 설정</div>
     <div class="scard"><h3>🔁 연습 횟수</h3>
       <div class="count-row">
-        <button class="cnt-btn" onclick="chgCnt(-1)">−</button>
+        <button class="cnt-btn" onclick="chgCnt(-1)">-</button>
         <div id="cnt-disp">10</div>
         <button class="cnt-btn" onclick="chgCnt(1)">+</button>
       </div>
@@ -1297,13 +1297,10 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
   </div>
   <canvas id="town-canvas"></canvas>
   <div class="town-toolbar" id="town-toolbar">
-    <div class="tt-item active-tool" onclick="setTownTool('move')">
-      <div class="tt-ico">🚶</div><div class="tt-lbl">이동</div>
-    </div>
-    <div class="tt-item" onclick="setTownTool('place')">
+    <div class="tt-item active-tool" id="tt-place" onclick="setTownTool('place')">
       <div class="tt-ico">📦</div><div class="tt-lbl">배치</div>
     </div>
-    <div class="tt-item" onclick="setTownTool('remove')">
+    <div class="tt-item" id="tt-remove" onclick="setTownTool('remove')">
       <div class="tt-ico">🗑</div><div class="tt-lbl">제거</div>
     </div>
   </div>
@@ -2893,83 +2890,240 @@ function confirmCreateChar(){
 
 // ── SD 캐릭터 SVG ──
 function getCharSVGContent(gender, topColor, botColor, skinColor, equipped){
-  const sc = skinColor||'#FFD4A3';
-  const tc = equipped['상의']?getItemColor(equipped['상의']):topColor||'#4ECDC4';
-  const bc = equipped['하의']?getItemColor(equipped['하의']):botColor||'#5C6BC0';
-  const hc = equipped['머리']?getItemColor(equipped['머리']):(gender==='f'?'#8B4513':'#4A3728');
-  const shoeC = equipped['신발']?getItemColor(equipped['신발']):(gender==='f'?'#FF4D7D':'#333');
-
-  let hairF = gender==='f'
-    ? `<ellipse cx="40" cy="32" rx="26" ry="28" fill="${hc}"/><rect x="14" y="32" width="8" height="35" rx="4" fill="${hc}"/><rect x="58" y="32" width="8" height="35" rx="4" fill="${hc}"/>`
-    : `<ellipse cx="40" cy="30" rx="24" ry="20" fill="${hc}"/><rect x="16" y="20" width="48" height="15" rx="7" fill="${hc}"/>`;
+  const sc=skinColor||'#FDDCB5';
+  const tc=equipped['상의']?getItemColor(equipped['상의']):topColor||'#E8B4CB';
+  const bc=equipped['하의']?getItemColor(equipped['하의']):botColor||'#7B9ED9';
+  const hc=equipped['머리']?getItemColor(equipped['머리']):(gender==='f'?'#4A2C0A':'#2C1A08');
+  const shoeC=equipped['신발']?getItemColor(equipped['신발']):(gender==='f'?'#C9748A':'#4A6080');
+  const isFemale=gender==='f';
 
   // 모자
-  let hatSvg = '';
-  if(equipped['모자']){
-    const hi = getItemIco(equipped['모자']);
-    hatSvg = `<text x="40" y="14" text-anchor="middle" font-size="14">${hi}</text>`;
-  }
-  // 안경
-  let glassSvg = '';
-  if(equipped['안경']){
-    glassSvg = `<circle cx="32" cy="32" r="5" fill="none" stroke="#333" stroke-width="1.5"/><circle cx="48" cy="32" r="5" fill="none" stroke="#333" stroke-width="1.5"/><line x1="37" y1="32" x2="43" y2="32" stroke="#333" stroke-width="1.5"/>`;
-  }
-  // 가방
-  let bagSvg = '';
-  if(equipped['가방']){
-    bagSvg = `<rect x="58" y="58" width="12" height="14" rx="3" fill="${getItemColor(equipped['가방'])}"/>`;
-  }
-  // 장갑
-  let gloveSvg = '';
-  if(equipped['장갑']){
-    const gc2 = getItemColor(equipped['장갑']);
-    gloveSvg = `<ellipse cx="17" cy="76" rx="6" ry="5" fill="${gc2}"/><ellipse cx="63" cy="76" rx="6" ry="5" fill="${gc2}"/>`;
-  }
+  const hatSvg=equipped['모자']?`<text x="40" y="7" text-anchor="middle" font-size="16" font-family="serif">${getItemIco(equipped['모자'])}</text>`:'';
 
-  return `
-    ${hatSvg}
-    ${hairF}
-    <ellipse cx="40" cy="34" rx="22" ry="22" fill="${sc}"/>
-    <ellipse cx="32" cy="30" rx="4" ry="5" fill="#333"/>
-    <ellipse cx="48" cy="30" rx="4" ry="5" fill="#333"/>
-    <ellipse cx="33" cy="29" rx="1.5" ry="1.5" fill="#fff"/>
-    <ellipse cx="49" cy="29" rx="1.5" ry="1.5" fill="#fff"/>
-    <ellipse cx="27" cy="36" rx="5" ry="3" fill="#FFB6C1" opacity="0.6"/>
-    <ellipse cx="53" cy="36" rx="5" ry="3" fill="#FFB6C1" opacity="0.6"/>
-    <path d="M35 40 Q40 44 45 40" stroke="${gender==='f'?'#FF8C8C':'#CC8866'}" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    ${glassSvg}
-    <rect x="24" y="54" width="32" height="30" rx="6" fill="${tc}"/>
-    ${bagSvg}
-    <rect x="28" y="82" width="10" height="20" rx="5" fill="${bc}"/>
-    <rect x="42" y="82" width="10" height="20" rx="5" fill="${bc}"/>
-    <ellipse cx="33" cy="101" rx="7" ry="4" fill="${shoeC}"/>
-    <ellipse cx="47" cy="101" rx="7" ry="4" fill="${shoeC}"/>
-    <rect x="12" y="56" width="12" height="22" rx="6" fill="${sc}"/>
-    <rect x="56" y="56" width="12" height="22" rx="6" fill="${sc}"/>
-    ${gloveSvg}`;
+  // ── 머리카락 ──
+  const hairBack = isFemale
+    ? `<ellipse cx="40" cy="25" rx="21" ry="22" fill="${hc}"/>
+       <path d="M19 28 Q16 42 18 55 Q22 62 25 58 Q22 48 24 35" fill="${hc}"/>
+       <path d="M61 28 Q64 42 62 55 Q58 62 55 58 Q58 48 56 35" fill="${hc}"/>`
+    : `<ellipse cx="40" cy="25" rx="20" ry="20" fill="${hc}"/>
+       <rect x="20" y="10" width="40" height="16" rx="6" fill="${hc}"/>`;
+
+  // ── 얼굴 ──
+  const face=`
+    <ellipse cx="40" cy="28" rx="18" ry="20" fill="${sc}"/>
+    <ellipse cx="23" cy="30" rx="4" ry="5.5" fill="${sc}"/>
+    <ellipse cx="57" cy="30" rx="4" ry="5.5" fill="${sc}"/>
+    <ellipse cx="23" cy="30" rx="2.5" ry="3.5" fill="#F0C090"/>
+    <ellipse cx="57" cy="30" rx="2.5" ry="3.5" fill="#F0C090"/>`;
+
+  // ── 눈 (아이러브커피: 크고 또렷, 속눈썹) ──
+  const eyeBaseY = 26;
+  const eyes = isFemale ? `
+    <!-- 눈 흰자 -->
+    <ellipse cx="33" cy="${eyeBaseY}" rx="6.5" ry="7" fill="white"/>
+    <ellipse cx="47" cy="${eyeBaseY}" rx="6.5" ry="7" fill="white"/>
+    <!-- 홍채 -->
+    <circle cx="33" cy="${eyeBaseY+1}" r="4.5" fill="#5B3A8C"/>
+    <circle cx="47" cy="${eyeBaseY+1}" r="4.5" fill="#5B3A8C"/>
+    <!-- 눈동자 -->
+    <circle cx="33" cy="${eyeBaseY+1}" r="2.8" fill="#1a0a2e"/>
+    <circle cx="47" cy="${eyeBaseY+1}" r="2.8" fill="#1a0a2e"/>
+    <!-- 하이라이트 -->
+    <circle cx="35" cy="${eyeBaseY-1}" r="1.5" fill="white"/>
+    <circle cx="49" cy="${eyeBaseY-1}" r="1.5" fill="white"/>
+    <circle cx="31.5" cy="${eyeBaseY+2}" r="0.8" fill="rgba(255,255,255,0.6)"/>
+    <circle cx="45.5" cy="${eyeBaseY+2}" r="0.8" fill="rgba(255,255,255,0.6)"/>
+    <!-- 속눈썹 (여자) -->
+    <path d="M27 ${eyeBaseY-6} Q29 ${eyeBaseY-9} 31 ${eyeBaseY-7}" stroke="#1a0a2e" stroke-width="1.3" fill="none"/>
+    <path d="M33 ${eyeBaseY-7} Q35 ${eyeBaseY-10} 37 ${eyeBaseY-7}" stroke="#1a0a2e" stroke-width="1.3" fill="none"/>
+    <path d="M39 ${eyeBaseY-6} Q41 ${eyeBaseY-8} 42 ${eyeBaseY-6}" stroke="#1a0a2e" stroke-width="1" fill="none"/>
+    <!-- 눈 아랫선 -->
+    <path d="M27 ${eyeBaseY+6} Q33 ${eyeBaseY+8} 39 ${eyeBaseY+6}" stroke="#1a0a2e" stroke-width="1" fill="none"/>
+    <path d="M41 ${eyeBaseY+6} Q47 ${eyeBaseY+8} 53 ${eyeBaseY+6}" stroke="#1a0a2e" stroke-width="1" fill="none"/>
+    <!-- 눈썹 -->
+    <path d="M27 ${eyeBaseY-9} Q33 ${eyeBaseY-13} 39 ${eyeBaseY-9}" stroke="${hc}" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M41 ${eyeBaseY-9} Q47 ${eyeBaseY-13} 53 ${eyeBaseY-9}" stroke="${hc}" stroke-width="2" fill="none" stroke-linecap="round"/>` : `
+    <!-- 눈 (남자: 좀 더 각지게) -->
+    <ellipse cx="33" cy="${eyeBaseY}" rx="5.5" ry="6" fill="white"/>
+    <ellipse cx="47" cy="${eyeBaseY}" rx="5.5" ry="6" fill="white"/>
+    <circle cx="33" cy="${eyeBaseY+1}" r="4" fill="#2E4A7C"/>
+    <circle cx="47" cy="${eyeBaseY+1}" r="4" fill="#2E4A7C"/>
+    <circle cx="33" cy="${eyeBaseY+1}" r="2.5" fill="#0a1a3e"/>
+    <circle cx="47" cy="${eyeBaseY+1}" r="2.5" fill="#0a1a3e"/>
+    <circle cx="34.5" cy="${eyeBaseY-1}" r="1.3" fill="white"/>
+    <circle cx="48.5" cy="${eyeBaseY-1}" r="1.3" fill="white"/>
+    <!-- 눈썹 (남자: 직선적) -->
+    <path d="M28 ${eyeBaseY-8} L38 ${eyeBaseY-10}" stroke="${hc}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <path d="M42 ${eyeBaseY-10} L52 ${eyeBaseY-8}" stroke="${hc}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`;
+
+  // ── 코 ──
+  const nose=`<path d="M38 35 Q40 37 42 35" stroke="#D4956A" stroke-width="1" fill="none"/>`;
+
+  // ── 입 ──
+  const mouth = isFemale
+    ? `<path d="M35 40 Q40 44 45 40" stroke="#D4607A" stroke-width="1.5" fill="#EDAABB"/>
+       <path d="M35 40 Q40 42 45 40" fill="#FF8FAA" opacity="0.6"/>`
+    : `<path d="M35 40 Q40 43 45 40" stroke="#C05A3A" stroke-width="1.5" fill="none"/>`;
+
+  // ── 볼 ──
+  const cheeks=`
+    <ellipse cx="27" cy="36" rx="6" ry="4" fill="#FFB8C8" opacity="0.5"/>
+    <ellipse cx="53" cy="36" rx="6" ry="4" fill="#FFB8C8" opacity="0.5"/>`;
+
+  // ── 안경 ──
+  const glasses=equipped['안경']?`
+    <rect x="26" y="${eyeBaseY-7}" width="13" height="12" rx="5" fill="none" stroke="${getItemColor(equipped['안경'])}" stroke-width="1.8"/>
+    <rect x="41" y="${eyeBaseY-7}" width="13" height="12" rx="5" fill="none" stroke="${getItemColor(equipped['안경'])}" stroke-width="1.8"/>
+    <line x1="39" y1="${eyeBaseY-1}" x2="41" y2="${eyeBaseY-1}" stroke="${getItemColor(equipped['안경'])}" stroke-width="1.5"/>
+    <line x1="20" y1="${eyeBaseY-2}" x2="26" y2="${eyeBaseY-2}" stroke="${getItemColor(equipped['안경'])}" stroke-width="1.2"/>
+    <line x1="54" y1="${eyeBaseY-2}" x2="60" y2="${eyeBaseY-2}" stroke="${getItemColor(equipped['안경'])}" stroke-width="1.2"/>`:'';
+
+  // ── 머리카락 앞 ──
+  const hairFront = isFemale
+    ? `<path d="M22 18 Q25 8 33 12 Q38 8 40 14 Q42 8 47 12 Q55 8 58 18" fill="${hc}"/>
+       <path d="M22 18 Q20 24 22 28" fill="${hc}"/>`
+    : `<path d="M20 18 Q22 6 40 8 Q58 6 60 18" fill="${hc}"/>
+       <path d="M20 18 Q18 14 20 22" fill="${hc}"/>`;
+
+  // ── 머리 장식 ──
+  const hairDeco = equipped['머리'] && isFemale
+    ? `<circle cx="23" cy="16" r="5" fill="${getItemColor(equipped['머리'])}"/>
+       <circle cx="57" cy="16" r="5" fill="${getItemColor(equipped['머리'])}"/>` : '';
+
+  // ── 목 ──
+  const neck=`<rect x="36" y="47" width="8" height="8" rx="3" fill="${sc}"/>`;
+
+  // ── 몸통 (날씬한 S라인) ──
+  const body = isFemale ? `
+    <!-- 상의 -->
+    <path d="M25 55 Q22 60 21 72 Q22 78 40 79 Q58 78 59 72 Q58 60 55 55 Q48 52 40 52 Q32 52 25 55Z" fill="${tc}"/>
+    <!-- 칼라/목깃 -->
+    <path d="M35 52 Q40 56 45 52" fill="rgba(255,255,255,0.3)"/>
+    <!-- 허리선 -->
+    <path d="M24 68 Q40 72 56 68" stroke="rgba(0,0,0,0.1)" stroke-width="1" fill="none"/>` : `
+    <!-- 상의 -->
+    <path d="M23 55 Q20 62 20 74 Q21 80 40 80 Q59 80 60 74 Q60 62 57 55 Q48 51 40 51 Q32 51 23 55Z" fill="${tc}"/>
+    <!-- 칼라 -->
+    <path d="M33 51 L40 58 L47 51" fill="rgba(255,255,255,0.25)"/>`;
+
+  // ── 팔 ──
+  const arms = isFemale ? `
+    <path d="M25 55 Q18 62 16 74 Q16 80 21 80 Q25 80 26 74 Q27 65 28 58Z" fill="${tc}"/>
+    <ellipse cx="18" cy="81" rx="5.5" ry="5" fill="${sc}"/>
+    <path d="M55 55 Q62 62 64 74 Q64 80 59 80 Q55 80 54 74 Q53 65 52 58Z" fill="${tc}"/>
+    <ellipse cx="62" cy="81" rx="5.5" ry="5" fill="${sc}"/>` : `
+    <path d="M23 55 Q15 63 14 76 Q14 82 20 82 Q24 82 25 75 Q26 66 27 59Z" fill="${tc}"/>
+    <ellipse cx="17" cy="83" rx="6" ry="5.5" fill="${sc}"/>
+    <path d="M57 55 Q65 63 66 76 Q66 82 60 82 Q56 82 55 75 Q54 66 53 59Z" fill="${tc}"/>
+    <ellipse cx="63" cy="83" rx="6" ry="5.5" fill="${sc}"/>`;
+
+  // ── 장갑 ──
+  const gloves=equipped['장갑']?`
+    <ellipse cx="18" cy="81" rx="5.5" ry="5" fill="${getItemColor(equipped['장갑'])}"/>
+    <ellipse cx="62" cy="81" rx="5.5" ry="5" fill="${getItemColor(equipped['장갑'])}"/>`:'';
+
+  // ── 가방 ──
+  const bag=equipped['가방']?`
+    <rect x="62" y="60" width="12" height="16" rx="4" fill="${getItemColor(equipped['가방'])}"/>
+    <rect x="64" y="57" width="3" height="6" rx="1.5" fill="${getItemColor(equipped['가방'])}"/>
+    <line x1="64" y1="67" x2="72" y2="67" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>`:'';
+
+  // ── 하의 ──
+  const bottom = isFemale ? `
+    <path d="M21 78 Q22 86 40 88 Q58 86 59 78 L62 104 Q62 110 40 110 Q18 110 18 104Z" fill="${bc}"/>
+    <!-- 치마 주름 -->
+    <path d="M28 82 L24 110" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+    <path d="M40 88 L40 110" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+    <path d="M52 82 L56 110" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+    <!-- 다리 -->
+    <rect x="26" y="106" width="10" height="9" rx="3" fill="${sc}"/>
+    <rect x="44" y="106" width="10" height="9" rx="3" fill="${sc}"/>` : `
+    <path d="M21 78 Q22 86 30 88 L34 108 L46 108 L50 88 Q58 86 59 78Z" fill="${bc}"/>
+    <line x1="40" y1="88" x2="40" y2="108" stroke="rgba(0,0,0,0.15)" stroke-width="2"/>
+    <!-- 다리 -->
+    <rect x="25" y="104" width="11" height="9" rx="3" fill="${sc}"/>
+    <rect x="44" y="104" width="11" height="9" rx="3" fill="${sc}"/>`;
+
+  // ── 신발 ──
+  const shoes = isFemale ? `
+    <path d="M22 114 Q31 118 36 115 Q36 112 26 111Z" fill="${shoeC}"/>
+    <path d="M44 115 Q49 118 58 114 L54 111 Q44 112 44 115Z" fill="${shoeC}"/>` : `
+    <path d="M21 112 Q32 117 37 114 L36 110 Q24 110 21 112Z" fill="${shoeC}"/>
+    <path d="M43 114 Q48 117 59 112 L56 110 Q44 110 43 114Z" fill="${shoeC}"/>`;
+
+  return `${hairBack}${face}${body}${arms}${gloves}${bag}${bottom}${shoes}${eyes}${nose}${mouth}${cheeks}${glasses}${hairFront}${hairDeco}${neck}${hatSvg}`;
 }
 
 function renderSDCharMini(gender, topColor, botColor){
-  const hc = gender==='f'?'#8B4513':'#4A3728';
-  const sc = '#FFD4A3';
-  return `<svg width="50" height="70" viewBox="0 0 80 110">
-    ${gender==='f'
-      ? `<ellipse cx="40" cy="32" rx="26" ry="28" fill="${hc}"/>`
-      : `<ellipse cx="40" cy="30" rx="24" ry="20" fill="${hc}"/><rect x="16" y="20" width="48" height="15" rx="7" fill="${hc}"/>`}
-    <ellipse cx="40" cy="34" rx="22" ry="22" fill="${sc}"/>
-    <ellipse cx="32" cy="30" rx="4" ry="5" fill="#333"/>
-    <ellipse cx="48" cy="30" rx="4" ry="5" fill="#333"/>
-    <ellipse cx="33" cy="29" rx="1.5" ry="1.5" fill="#fff"/>
-    <ellipse cx="49" cy="29" rx="1.5" ry="1.5" fill="#fff"/>
-    <ellipse cx="27" cy="36" rx="5" ry="3" fill="#FFB6C1" opacity="0.6"/>
-    <ellipse cx="53" cy="36" rx="5" ry="3" fill="#FFB6C1" opacity="0.6"/>
-    <rect x="24" y="54" width="32" height="30" rx="6" fill="${topColor}"/>
-    <rect x="28" y="82" width="10" height="20" rx="5" fill="${botColor}"/>
-    <rect x="42" y="82" width="10" height="20" rx="5" fill="${botColor}"/>
-    <ellipse cx="33" cy="101" rx="7" ry="4" fill="${gender==='f'?'#FF4D7D':'#333'}"/>
-    <ellipse cx="47" cy="101" rx="7" ry="4" fill="${gender==='f'?'#FF4D7D':'#333'}"/>
-    <rect x="12" y="56" width="12" height="22" rx="6" fill="${sc}"/>
-    <rect x="56" y="56" width="12" height="22" rx="6" fill="${sc}"/>
+  const sc='#FDDCB5'; const hc='#4A2C0A'; const isFemale=gender==='f';
+  const shoeC=isFemale?'#C9748A':'#4A6080';
+  return `<svg width="60" height="84" viewBox="0 0 80 120">
+    ${isFemale?`
+      <ellipse cx="40" cy="28" rx="21" ry="22" fill="${hc}"/>
+      <path d="M19 30 Q16 44 18 57 Q22 63 25 59" fill="${hc}"/>
+      <path d="M61 30 Q64 44 62 57 Q58 63 55 59" fill="${hc}"/>
+      <path d="M24 20 Q27 10 35 13 Q40 9 45 13 Q53 10 56 20" fill="${hc}"/>
+      <path d="M24 20 Q22 26 24 30" fill="${hc}"/>`
+    :`
+      <ellipse cx="40" cy="28" rx="20" ry="20" fill="${hc}"/>
+      <rect x="20" y="11" width="40" height="16" rx="6" fill="${hc}"/>
+      <path d="M20 16 Q22 8 30 13" fill="${hc}"/>
+      <path d="M36 10 Q40 4 44 10" fill="${hc}"/>
+      <path d="M50 13 Q58 8 60 16" fill="${hc}"/>`}
+    <ellipse cx="40" cy="30" rx="18" ry="20" fill="${sc}"/>
+    <ellipse cx="23" cy="31" rx="4" ry="5.5" fill="${sc}"/>
+    <ellipse cx="57" cy="31" rx="4" ry="5.5" fill="${sc}"/>
+    ${isFemale?`
+      <ellipse cx="33" cy="26" rx="6.5" ry="7" fill="white"/>
+      <ellipse cx="47" cy="26" rx="6.5" ry="7" fill="white"/>
+      <circle cx="33" cy="27" r="4.5" fill="#5B3A8C"/>
+      <circle cx="47" cy="27" r="4.5" fill="#5B3A8C"/>
+      <circle cx="33" cy="27" r="2.8" fill="#1a0a2e"/>
+      <circle cx="47" cy="27" r="2.8" fill="#1a0a2e"/>
+      <circle cx="35" cy="25" r="1.5" fill="white"/>
+      <circle cx="49" cy="25" r="1.5" fill="white"/>
+      <path d="M27 17 Q33 13 39 17" stroke="${hc}" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M41 17 Q47 13 53 17" stroke="${hc}" stroke-width="2" fill="none" stroke-linecap="round"/>`
+    :`
+      <ellipse cx="33" cy="26" rx="5.5" ry="6" fill="white"/>
+      <ellipse cx="47" cy="26" rx="5.5" ry="6" fill="white"/>
+      <circle cx="33" cy="27" r="4" fill="#2E4A7C"/>
+      <circle cx="47" cy="27" r="4" fill="#2E4A7C"/>
+      <circle cx="33" cy="27" r="2.5" fill="#0a1a3e"/>
+      <circle cx="47" cy="27" r="2.5" fill="#0a1a3e"/>
+      <circle cx="34.5" cy="25" r="1.3" fill="white"/>
+      <circle cx="48.5" cy="25" r="1.3" fill="white"/>
+      <path d="M28 17 L38 15" stroke="${hc}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M42 15 L52 17" stroke="${hc}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`}
+    <path d="M38 35 Q40 37 42 35" stroke="#D4956A" stroke-width="1" fill="none"/>
+    <ellipse cx="27" cy="36" rx="6" ry="4" fill="#FFB8C8" opacity="0.5"/>
+    <ellipse cx="53" cy="36" rx="6" ry="4" fill="#FFB8C8" opacity="0.5"/>
+    ${isFemale
+      ?`<path d="M35 40 Q40 44 45 40" stroke="#D4607A" stroke-width="1.5" fill="#EDAABB"/>`
+      :`<path d="M35 40 Q40 43 45 40" stroke="#C05A3A" stroke-width="1.5" fill="none"/>`}
+    <rect x="36" y="48" width="8" height="7" rx="3" fill="${sc}"/>
+    ${isFemale?`
+      <path d="M25 55 Q22 60 21 72 Q22 78 40 79 Q58 78 59 72 Q58 60 55 55 Q48 52 40 52 Q32 52 25 55Z" fill="${topColor}"/>
+      <path d="M25 55 Q18 62 16 74 Q16 80 21 80 Q25 80 26 74" fill="${topColor}"/>
+      <path d="M55 55 Q62 62 64 74 Q64 80 59 80 Q55 80 54 74" fill="${topColor}"/>
+      <ellipse cx="18" cy="81" rx="5.5" ry="5" fill="${sc}"/>
+      <ellipse cx="62" cy="81" rx="5.5" ry="5" fill="${sc}"/>
+      <path d="M21 78 Q22 86 40 88 Q58 86 59 78 L62 104 Q62 110 40 110 Q18 110 18 104Z" fill="${botColor}"/>
+      <rect x="26" y="106" width="10" height="9" rx="3" fill="${sc}"/>
+      <rect x="44" y="106" width="10" height="9" rx="3" fill="${sc}"/>
+      <path d="M22 114 Q31 118 36 115 Q36 112 26 111Z" fill="${shoeC}"/>
+      <path d="M44 115 Q49 118 58 114 L54 111 Q44 112 44 115Z" fill="${shoeC}"/>`
+    :`
+      <path d="M23 55 Q20 62 20 74 Q21 80 40 80 Q59 80 60 74 Q60 62 57 55 Q48 51 40 51 Q32 51 23 55Z" fill="${topColor}"/>
+      <path d="M23 55 Q15 63 14 76 Q14 82 20 82" fill="${topColor}"/>
+      <path d="M57 55 Q65 63 66 76 Q66 82 60 82" fill="${topColor}"/>
+      <ellipse cx="17" cy="83" rx="6" ry="5.5" fill="${sc}"/>
+      <ellipse cx="63" cy="83" rx="6" ry="5.5" fill="${sc}"/>
+      <path d="M21 78 Q22 86 30 88 L34 108 L46 108 L50 88 Q58 86 59 78Z" fill="${botColor}"/>
+      <rect x="25" y="104" width="11" height="9" rx="3" fill="${sc}"/>
+      <rect x="44" y="104" width="11" height="9" rx="3" fill="${sc}"/>
+      <path d="M21 112 Q32 117 37 114 L36 110 Q24 110 21 112Z" fill="${shoeC}"/>
+      <path d="M43 114 Q48 117 59 112 L56 110 Q44 110 43 114Z" fill="${shoeC}"/>`}
   </svg>`;
 }
 
@@ -3116,15 +3270,25 @@ function buyItem(){
 // ── 마을 꾸미기 (캔버스) ──
 let townCtx, townW, townH, townAnimId=null;
 // 캐릭터 이동 시스템
-let charX=200, charY=200;       // 현재 위치
-let charTargetX=200, charTargetY=200; // 목적지
-let charDir=1;   // 1=오른쪽, -1=왼쪽
-let charWalk=0;  // 걷기 애니 프레임
-let charIdle=0;  // 대기 프레임
-let charAutoTimer=0; // 자동 이동 타이머
+let charX=4, charY=4;
+let charTargetX=4, charTargetY=4;
+let charDir=1;
+let charWalk=0;
+let charIdle=0;
+let charAutoTimer=0;
 let townObjects = [];
-let townTool = 'move';
-let townFrame = 0; // 전체 프레임 카운터 (구름 등 애니용)
+let townTool = 'place'; // 기본 툴: 배치 (이동 툴 제거)
+let townFrame = 0;
+// 말풍선 시스템
+const CHAR_BUBBLES = [
+  '심심해~😪','피아노 치고 싶다🎹','오늘도 열심히!💪',
+  '배고파...🍙','날씨 좋다☀️','친구 어딨지?👀',
+  '연습해야지~🎵','졸려...😴','뭐하지?🤔',
+  '피아노 마을 최고!🏡','레벨 올려야지⭐','포인트 모으자💰',
+];
+let bubbleText = '';
+let bubbleTimer = 0;    // 말풍선 표시 중 남은 프레임
+let bubbleInterval = 0; // 다음 말풍선까지 대기 프레임
 
 const TOWN_OBJECTS = [
   {id:'tree1',ico:'🌳',name:'나무',pts:30},
@@ -3156,19 +3320,23 @@ function initTownCanvas(){
   canvas.style.marginTop='52px';
   townW=canvas.width; townH=canvas.height;
   townCtx=canvas.getContext('2d');
-  charX=townW/2; charY=townH*0.65;
-  charTargetX=townW/2; charTargetY=townH*0.65;
+  charX=4; charY=4;       // 그리드 중앙
+  charTargetX=4; charTargetY=4;
   canvas.addEventListener('click',onTownClick);
   townAnimId=requestAnimationFrame(townLoop);
 }
+// ── 아이소메트릭 좌표 변환 ──
+function isoX(gx,gy){ return townW/2 + (gx-gy)*32; }
+function isoY(gx,gy){ return townH*0.28 + (gx+gy)*16; }
+
 function townLoop(){
   if(!townCtx){return;}
   townFrame++;
 
-  // ── 캐릭터 자동 이동 ──
+  // ── 캐릭터 자동 이동 (아이소 그리드 기준) ──
   const dx=charTargetX-charX, dy=charTargetY-charY;
   const dist=Math.sqrt(dx*dx+dy*dy);
-  const speed=2.2;
+  const speed=0.9; // 천천히 걷기
   if(dist>speed){
     charX+=dx/dist*speed; charY+=dy/dist*speed;
     charDir=dx>0?1:-1;
@@ -3176,328 +3344,641 @@ function townLoop(){
   } else {
     charX=charTargetX; charY=charTargetY;
     charWalk=0; charIdle++;
-    // 자동 랜덤 이동
     charAutoTimer++;
-    if(charAutoTimer>180){
+    if(charAutoTimer>280){
       charAutoTimer=0;
-      charTargetX=townW*0.1+Math.random()*townW*0.8;
-      charTargetY=townH*0.25+Math.random()*townH*0.6;
+      // 아이소 그리드 내 랜덤 이동 (천천히)
+      const tgx=1.5+Math.random()*6, tgy=1.5+Math.random()*6;
+      charTargetX=tgx; charTargetY=tgy;
     }
+    // 말풍선 - 가만히 있을 때 가끔 표시
+    bubbleInterval++;
+    if(bubbleInterval > 360 && bubbleTimer===0){
+      bubbleInterval=0;
+      bubbleText=CHAR_BUBBLES[Math.floor(Math.random()*CHAR_BUBBLES.length)];
+      bubbleTimer=160; // 약 2.5초 표시
+    }
+    if(bubbleTimer>0) bubbleTimer--;
   }
 
-  // ── 배경 그리기 ──
-  // 하늘
-  const skyGrad=townCtx.createLinearGradient(0,0,0,townH*0.45);
-  skyGrad.addColorStop(0,'#87CEEB'); skyGrad.addColorStop(1,'#B0E2FF');
-  townCtx.fillStyle=skyGrad; townCtx.fillRect(0,0,townW,townH*0.45);
+  // ── 배경 ──
+  // 하늘 그라데이션
+  const sky=townCtx.createLinearGradient(0,0,0,townH*0.35);
+  sky.addColorStop(0,'#6BB8E8'); sky.addColorStop(1,'#B8DFF5');
+  townCtx.fillStyle=sky; townCtx.fillRect(0,0,townW,townH);
 
-  // 구름 (움직이는)
-  drawClouds();
+  // 구름
+  drawIsoClouds();
 
-  // 땅 그라데이션
-  const groundGrad=townCtx.createLinearGradient(0,townH*0.43,0,townH);
-  groundGrad.addColorStop(0,'#5a8a2a'); groundGrad.addColorStop(0.3,'#4a7a1a'); groundGrad.addColorStop(1,'#3a6010');
-  townCtx.fillStyle=groundGrad; townCtx.fillRect(0,townH*0.43,townW,townH);
+  // 원경 건물/나무
+  drawIsoBackground();
 
-  // 잔디 질감
-  for(let x=0;x<townW;x+=6){
-    const h=3+Math.sin(x*0.3+townFrame*0.02)*1.5;
-    townCtx.fillStyle=`hsl(${100+x%20},60%,${35+x%10}%)`;
-    townCtx.fillRect(x,townH*0.43-h,2,h+2);
+  // ── 아이소메트릭 타일 바닥 ──
+  drawIsoFloor();
+
+  // ── 오브젝트 + 캐릭터 깊이순 정렬 ──
+  const charScreenX = isoX(charX,charY);
+  const charScreenY = isoY(charX,charY);
+  // 미리보기 오브젝트 임시 추가
+  const previewEntity = previewObj
+    ? [{ico:previewObj.ico, name:previewObj.name, gx:previewGX, gy:previewGY,
+        sx:isoX(previewGX,previewGY), sy:isoY(previewGX,previewGY), isChar:false, isPreview:true}]
+    : [];
+
+  const allEntities = [
+    ...townObjects.map(o=>({...o, sx:isoX(o.gx,o.gy), sy:isoY(o.gx,o.gy), isChar:false})),
+    ...previewEntity,
+    {sx:charScreenX, sy:charScreenY, isChar:true}
+  ];
+  allEntities.sort((a,b)=>a.sy-b.sy);
+  allEntities.forEach(e=>{
+    if(e.isChar) drawTownChar(charScreenX, charScreenY);
+    else drawIsoObj(e);
+  });
+
+  // 미리보기 확정 버튼 (화면에 그리기)
+  if(previewObj){
+    const px=isoX(previewGX,previewGY), py=isoY(previewGX,previewGY)-40;
+    townCtx.fillStyle='rgba(78,205,196,0.9)';
+    if(townCtx.roundRect) townCtx.roundRect(px-32,py-14,64,26,13);
+    else townCtx.rect(px-32,py-14,64,26);
+    townCtx.fill();
+    townCtx.fillStyle='#fff';
+    townCtx.font='bold 12px sans-serif';townCtx.textAlign='center';
+    townCtx.fillText('✓ 여기에 배치',px,py+4);
   }
 
-  // 포장 도로
-  drawRoad();
+  // ── 말풍선 그리기 ──
+  if(bubbleTimer>0){
+    const bsx=isoX(charX,charY), bsy=isoY(charX,charY);
+    const alpha=bubbleTimer<30?bubbleTimer/30:bubbleTimer>140?1:(160-bubbleTimer)/20+0.8;
+    drawBubble(bsx, bsy-60, bubbleText, Math.min(1,alpha));
+  }
 
-  // 원경 나무들
-  drawBgTrees();
-
-  // 배치된 오브젝트 (캐릭터보다 뒤에 있는 것)
-  townObjects.filter(o=>o.y<charY).forEach(obj=>drawTownObj(obj));
-
-  // 캐릭터
-  drawTownChar(charX,charY);
-
-  // 배치된 오브젝트 (캐릭터보다 앞에 있는 것)
-  townObjects.filter(o=>o.y>=charY).forEach(obj=>drawTownObj(obj));
-
-  // 안내 텍스트
-  townCtx.fillStyle='rgba(0,0,0,0.45)';
+  // ── UI 안내 ──
+  townCtx.fillStyle='rgba(80,50,20,0.65)';
+  const tw=160, tx=townW/2-tw/2;
   townCtx.beginPath();
-  townCtx.roundRect?townCtx.roundRect(townW/2-80,8,160,24,12):townCtx.rect(townW/2-80,8,160,24);
+  if(townCtx.roundRect) townCtx.roundRect(tx,8,tw,22,11);
+  else townCtx.rect(tx,8,tw,22);
   townCtx.fill();
-  townCtx.fillStyle='rgba(255,255,255,0.85)';
+  townCtx.fillStyle='rgba(255,240,200,0.9)';
   townCtx.font='11px sans-serif'; townCtx.textAlign='center';
-  townCtx.fillText(townTool==='move'?'탭하면 그곳으로 걸어가요':townTool==='place'?'탭해서 배치':'탭해서 제거',townW/2,23);
+  townCtx.fillText(
+    townTool==='place'?'📦 탭해서 오브젝트 배치':
+    '🗑 탭해서 제거', townW/2, 22);
 
   townAnimId=requestAnimationFrame(townLoop);
 }
 
-function drawClouds(){
-  const clouds=[
-    {x:(townFrame*0.3)%( townW+120)-60, y:townH*0.08, r:22},
-    {x:(townFrame*0.18+200)%(townW+120)-60, y:townH*0.15, r:16},
-    {x:(townFrame*0.25+400)%(townW+120)-60, y:townH*0.05, r:28},
-  ];
-  townCtx.fillStyle='rgba(255,255,255,0.88)';
-  clouds.forEach(cl=>{
-    townCtx.beginPath();
-    townCtx.arc(cl.x,cl.y,cl.r,0,Math.PI*2);
-    townCtx.arc(cl.x+cl.r*0.9,cl.y-cl.r*0.3,cl.r*0.7,0,Math.PI*2);
-    townCtx.arc(cl.x-cl.r*0.8,cl.y-cl.r*0.2,cl.r*0.6,0,Math.PI*2);
-    townCtx.fill();
-  });
-}
-
-function drawRoad(){
-  // 세로 길
-  townCtx.fillStyle='#bba878';
-  townCtx.fillRect(townW/2-22,townH*0.43,44,townH);
-  // 가로 길
-  townCtx.fillRect(0,townH*0.62,townW,36);
-  // 길 중앙선
-  townCtx.strokeStyle='rgba(255,255,220,0.5)';
-  townCtx.lineWidth=2; townCtx.setLineDash([14,12]);
-  townCtx.beginPath();townCtx.moveTo(townW/2,townH*0.43);townCtx.lineTo(townW/2,townH);townCtx.stroke();
-  townCtx.beginPath();townCtx.moveTo(0,townH*0.62+18);townCtx.lineTo(townW,townH*0.62+18);townCtx.stroke();
-  townCtx.setLineDash([]);
-}
-
-function drawBgTrees(){
-  // 배경 나무 실루엣
-  const trees=[0.05,0.15,0.82,0.92,0.35,0.65];
-  trees.forEach((tx,i)=>{
-    const x=townW*tx, y=townH*0.43+2;
-    const h=28+i%3*8;
-    townCtx.fillStyle='#2a5a0a';
-    townCtx.beginPath();
-    townCtx.moveTo(x,y-h);
-    townCtx.lineTo(x-h*0.5,y);
-    townCtx.lineTo(x+h*0.5,y);
-    townCtx.fill();
-    townCtx.fillStyle='#1e4a06';
-    townCtx.beginPath();
-    townCtx.moveTo(x,y-h*1.3);
-    townCtx.lineTo(x-h*0.4,y-h*0.4);
-    townCtx.lineTo(x+h*0.4,y-h*0.4);
-    townCtx.fill();
-    townCtx.fillStyle='#5a3a1a';
-    townCtx.fillRect(x-3,y,6,8);
-  });
-}
-
-function drawTownObj(obj){
+function drawBubble(x, y, text, alpha){
   townCtx.save();
-  // 그림자
-  townCtx.fillStyle='rgba(0,0,0,0.18)';
+  townCtx.globalAlpha = alpha;
+  // 말풍선 배경
+  const pad=10, fSize=13;
+  townCtx.font=`bold ${fSize}px sans-serif`;
+  const tw=townCtx.measureText(text).width;
+  const bw=tw+pad*2, bh=28;
+  const bx=x-bw/2, by=y-bh;
+  // 배경 흰색 둥근 박스
+  townCtx.fillStyle='rgba(255,255,255,0.95)';
+  townCtx.strokeStyle='rgba(180,140,100,0.8)';
+  townCtx.lineWidth=1.5;
+  if(townCtx.roundRect){
+    townCtx.beginPath(); townCtx.roundRect(bx,by,bw,bh,10); townCtx.fill(); townCtx.stroke();
+  } else {
+    townCtx.fillRect(bx,by,bw,bh); townCtx.strokeRect(bx,by,bw,bh);
+  }
+  // 꼬리 삼각형
+  townCtx.fillStyle='rgba(255,255,255,0.95)';
   townCtx.beginPath();
-  townCtx.ellipse(obj.x,obj.y+4,16,5,0,0,Math.PI*2);
+  townCtx.moveTo(x-7, by+bh);
+  townCtx.lineTo(x+7, by+bh);
+  townCtx.lineTo(x, by+bh+10);
+  townCtx.closePath(); townCtx.fill();
+  townCtx.strokeStyle='rgba(180,140,100,0.8)'; townCtx.lineWidth=1.5;
+  townCtx.beginPath();
+  townCtx.moveTo(x-7, by+bh);
+  townCtx.lineTo(x, by+bh+10);
+  townCtx.lineTo(x+7, by+bh);
+  townCtx.stroke();
+  // 텍스트
+  townCtx.fillStyle='#5A3A1A';
+  townCtx.textAlign='center'; townCtx.textBaseline='middle';
+  townCtx.fillText(text, x, by+bh/2);
+  townCtx.restore();
+}
+
+function drawIsoClouds(){
+  const clouds=[
+    {ox:0.2, oy:0.07, r:28},
+    {ox:0.6, oy:0.12, r:20},
+    {ox:0.85,oy:0.05, r:24},
+  ];
+  clouds.forEach((cl,i)=>{
+    const cx=(cl.ox*townW + (townFrame*(0.15+i*0.05))%townW)%townW;
+    const cy=townH*cl.oy;
+    townCtx.fillStyle='rgba(255,255,255,0.9)';
+    townCtx.beginPath();
+    townCtx.arc(cx,cy,cl.r,0,Math.PI*2);
+    townCtx.arc(cx+cl.r*1.1,cy-cl.r*0.25,cl.r*0.75,0,Math.PI*2);
+    townCtx.arc(cx-cl.r*0.9,cy-cl.r*0.2,cl.r*0.65,0,Math.PI*2);
+    townCtx.fill();
+  });
+}
+
+function drawIsoBackground(){
+  // 원경 나무들
+  const bgTrees=[
+    {x:townW*0.05,y:townH*0.22,s:0.7},
+    {x:townW*0.12,y:townH*0.25,s:0.9},
+    {x:townW*0.88,y:townH*0.23,s:0.8},
+    {x:townW*0.94,y:townH*0.2,s:0.6},
+  ];
+  bgTrees.forEach(t=>{ drawBgTree(t.x,t.y,t.s); });
+}
+
+function drawBgTree(x,y,s){
+  // 나무 기둥
+  townCtx.fillStyle='#7a5230';
+  townCtx.fillRect(x-4*s,y,8*s,24*s);
+  // 나뭇잎 3층
+  [[0,0,22],[0,-14,18],[0,-26,14]].forEach(([dx,dy,r])=>{
+    townCtx.fillStyle=`hsl(${115+Math.random()*10},55%,${32+Math.random()*8}%)`;
+    townCtx.beginPath();
+    townCtx.arc(x+dx,y+dy,r*s,0,Math.PI*2);
+    townCtx.fill();
+  });
+}
+
+function drawIsoFloor(){
+  const GRID=9;
+  for(let gy=0;gy<GRID;gy++){
+    for(let gx=0;gx<GRID;gx++){
+      const sx=isoX(gx,gy), sy=isoY(gx,gy);
+      const TW=32, TH=16;
+      // 타일 색상 (체크무늬 + 테두리)
+      const isEdge=(gx===0||gy===0||gx===GRID-1||gy===GRID-1);
+      const isDark=(gx+gy)%2===0;
+      let tileColor;
+      if(isEdge) tileColor=isDark?'#8EB86A':'#A0CC7A';
+      else tileColor=isDark?'#F5E6C8':'#EDD8A8';
+
+      townCtx.beginPath();
+      townCtx.moveTo(sx,sy);
+      townCtx.lineTo(sx+TW,sy+TH);
+      townCtx.lineTo(sx,sy+TH*2);
+      townCtx.lineTo(sx-TW,sy+TH);
+      townCtx.closePath();
+      townCtx.fillStyle=tileColor;
+      townCtx.fill();
+      // 타일 테두리
+      townCtx.strokeStyle='rgba(0,0,0,0.08)';
+      townCtx.lineWidth=0.5;
+      townCtx.stroke();
+    }
+  }
+  // 잔디 테두리 장식
+  for(let i=0;i<9;i++){
+    drawIsoGrassBorder(i,0); drawIsoGrassBorder(i,8);
+    drawIsoGrassBorder(0,i); drawIsoGrassBorder(8,i);
+  }
+}
+
+function drawIsoGrassBorder(gx,gy){
+  const sx=isoX(gx,gy), sy=isoY(gx,gy);
+  // 통나무 울타리
+  townCtx.fillStyle='#8B6914';
+  townCtx.beginPath();
+  townCtx.moveTo(sx,sy+14);
+  townCtx.lineTo(sx+32,sy+30);
+  townCtx.lineTo(sx+32,sy+26);
+  townCtx.lineTo(sx,sy+10);
+  townCtx.closePath();
   townCtx.fill();
-  townCtx.font='28px serif';
+}
+
+function drawIsoObj(obj){
+  const sx=obj.sx, sy=obj.sy;
+  townCtx.save();
+  if(obj.isPreview) townCtx.globalAlpha=0.5;
+  // 그림자
+  if(!obj.isPreview){
+    townCtx.fillStyle='rgba(0,0,0,0.2)';
+    townCtx.beginPath();
+    townCtx.ellipse(sx,sy+4,20,7,0,0,Math.PI*2);
+    townCtx.fill();
+  }
+  // 오브젝트
+  townCtx.font='30px serif';
   townCtx.textAlign='center';
   townCtx.textBaseline='bottom';
-  townCtx.fillText(obj.ico,obj.x,obj.y);
-  townCtx.textBaseline='alphabetic';
+  townCtx.fillText(obj.ico,sx,sy);
+  if(!obj.isPreview){
+    townCtx.font='10px sans-serif';
+    townCtx.fillStyle='rgba(80,50,10,0.7)';
+    townCtx.textBaseline='top';
+    townCtx.fillText(obj.name||'',sx,sy+2);
+  }
+  // 미리보기 테두리
+  if(obj.isPreview){
+    townCtx.globalAlpha=0.8;
+    townCtx.strokeStyle='#4ECDC4';townCtx.lineWidth=2;
+    townCtx.beginPath();townCtx.arc(sx,sy-15,18,0,Math.PI*2);townCtx.stroke();
+  }
   townCtx.restore();
 }
-function drawTownChar(x,y){
-  const tc=myChar?myChar.topColor:'#4ECDC4';
-  const bc=myChar?myChar.botColor:'#5C6BC0';
-  const sc='#FFE0B2';
+function drawTownChar(sx,sy){
+  // sx,sy는 이미 아이소 스크린 좌표
+  const tc=myChar?myChar.topColor:'#E8B4CB';
+  const bc=myChar?myChar.botColor:'#7B9ED9';
+  const sc='#FDDCB5';
   const isFemale=!myChar||myChar.gender==='f';
-  const hairColor=isFemale?'#8B4513':'#3E2723';
-  // 걷기 애니메이션
-  const walkCycle=Math.sin(charWalk*0.25);
-  const legSwing=dist=>Math.abs(charTargetX-charX)>3||Math.abs(charTargetY-charY)>3?walkCycle*dist:0;
-  const s=charDir; // 방향 (1=오른쪽)
+  const hc='#4A2C0A';
+  const shoeC=myChar&&myChar.equipped&&myChar.equipped['신발']?getItemColor(myChar.equipped['신발']):(isFemale?'#C9748A':'#4A6080');
+
+  // 걷기 애니
+  const isWalking=Math.abs(charTargetX-charX)>0.1||Math.abs(charTargetY-charY)>0.1;
+  const walkCycle=Math.sin(charWalk*0.3)*0.18;
+  const bobY=isWalking?Math.abs(Math.sin(charWalk*0.3))*3:0;
+  const y=sy-bobY;
 
   townCtx.save();
-  townCtx.translate(x,y);
-  if(s<0) {townCtx.scale(-1,1);}
+  townCtx.translate(sx,y);
+  // 방향에 따라 좌우 반전
+  if(charDir<0) townCtx.scale(-1,1);
+
+  const S=1.0; // 스케일
 
   // 그림자
-  townCtx.fillStyle='rgba(0,0,0,0.25)';
-  townCtx.beginPath();townCtx.ellipse(0,2,13,4,0,0,Math.PI*2);townCtx.fill();
+  townCtx.fillStyle='rgba(0,0,0,0.22)';
+  townCtx.beginPath();townCtx.ellipse(0,18*S,16*S,5*S,0,0,Math.PI*2);townCtx.fill();
 
-  // 다리 (걷기 애니)
-  const legAngle=legSwing(8);
-  // 왼쪽 다리
+  // ── 하의 ──
   townCtx.fillStyle=bc;
-  townCtx.save();townCtx.translate(-5,-8);townCtx.rotate(legAngle*0.08);
-  townCtx.fillRect(-3,0,6,14);
-  // 신발
-  townCtx.fillStyle=myChar&&myChar.equipped&&myChar.equipped['신발']?getItemColor(myChar.equipped['신발']):(isFemale?'#E91E63':'#333');
-  townCtx.beginPath();townCtx.ellipse(0,14,5,3,0,0,Math.PI*2);townCtx.fill();
-  townCtx.restore();
-  // 오른쪽 다리
-  townCtx.fillStyle=bc;
-  townCtx.save();townCtx.translate(5,-8);townCtx.rotate(-legAngle*0.08);
-  townCtx.fillRect(-3,0,6,14);
-  townCtx.fillStyle=myChar&&myChar.equipped&&myChar.equipped['신발']?getItemColor(myChar.equipped['신발']):(isFemale?'#E91E63':'#333');
-  townCtx.beginPath();townCtx.ellipse(0,14,5,3,0,0,Math.PI*2);townCtx.fill();
-  townCtx.restore();
-
-  // 치마 or 바지 하단 (여자)
   if(isFemale){
-    townCtx.fillStyle=bc;
-    townCtx.beginPath();townCtx.ellipse(0,-8,11,5,0,0,Math.PI*2);townCtx.fill();
+    // 치마
+    townCtx.beginPath();
+    townCtx.moveTo(-14*S,2*S);townCtx.lineTo(14*S,2*S);
+    townCtx.lineTo(18*S,20*S);townCtx.lineTo(-18*S,20*S);townCtx.closePath();
+    townCtx.fill();
+    // 치마 주름 하이라이트
+    townCtx.strokeStyle='rgba(255,255,255,0.25)'; townCtx.lineWidth=1;
+    townCtx.beginPath();townCtx.moveTo(-6*S,4*S);townCtx.lineTo(-8*S,20*S);townCtx.stroke();
+    townCtx.beginPath();townCtx.moveTo(6*S,4*S);townCtx.lineTo(8*S,20*S);townCtx.stroke();
+    // 다리
+    townCtx.fillStyle=sc;
+    townCtx.fillRect(-10*S,18*S,7*S,9*S);
+    townCtx.fillRect(3*S,18*S,7*S,9*S);
+  } else {
+    // 바지
+    townCtx.beginPath();
+    townCtx.moveTo(-12*S,2*S);townCtx.lineTo(12*S,2*S);
+    townCtx.lineTo(13*S,20*S);townCtx.lineTo(4*S,20*S);
+    townCtx.lineTo(0,14*S);townCtx.lineTo(-4*S,20*S);
+    townCtx.lineTo(-13*S,20*S);townCtx.closePath();
+    townCtx.fill();
+    // 바지선
+    townCtx.strokeStyle='rgba(0,0,0,0.15)'; townCtx.lineWidth=1;
+    townCtx.beginPath();townCtx.moveTo(0,14*S);townCtx.lineTo(0,4*S);townCtx.stroke();
+    // 다리
+    townCtx.fillStyle=sc;
+    townCtx.fillRect(-11*S,18*S,8*S,8*S);
+    townCtx.fillRect(3*S,18*S,8*S,8*S);
   }
 
-  // 팔 (걷기 반대 방향)
-  const armSwing=-legAngle*0.06;
-  // 왼팔
+  // ── 신발 ──
+  townCtx.fillStyle=shoeC;
+  if(isFemale){
+    // 뒷굽 구두
+    townCtx.beginPath();townCtx.ellipse(-6*S,27*S,7*S,3.5*S,0,0,Math.PI*2);townCtx.fill();
+    townCtx.beginPath();townCtx.ellipse(6*S,27*S,7*S,3.5*S,0,0,Math.PI*2);townCtx.fill();
+  } else {
+    townCtx.beginPath();townCtx.ellipse(-6*S,26*S,8*S,4*S,0,0,Math.PI*2);townCtx.fill();
+    townCtx.beginPath();townCtx.ellipse(6*S,26*S,8*S,4*S,0,0,Math.PI*2);townCtx.fill();
+  }
+
+  // ── 팔 (걷기 애니) ──
+  const la=walkCycle, ra=-walkCycle;
   townCtx.fillStyle=tc;
-  townCtx.save();townCtx.translate(-11,-24);townCtx.rotate(armSwing);
-  townCtx.fillRect(-3,0,6,12);
-  // 손
-  townCtx.fillStyle=sc;townCtx.beginPath();townCtx.arc(0,13,3.5,0,Math.PI*2);townCtx.fill();
-  // 장갑
-  if(myChar&&myChar.equipped&&myChar.equipped['장갑']){townCtx.fillStyle=getItemColor(myChar.equipped['장갑']);townCtx.beginPath();townCtx.arc(0,13,3.5,0,Math.PI*2);townCtx.fill();}
+  // 왼팔
+  townCtx.save();townCtx.translate(-14*S,-12*S);townCtx.rotate(la);
+  townCtx.beginPath();
+  townCtx.ellipse(0,8*S,4*S,10*S,0,0,Math.PI*2);townCtx.fill();
+  townCtx.fillStyle=sc;townCtx.beginPath();townCtx.arc(0,18*S,4*S,0,Math.PI*2);townCtx.fill();
+  if(myChar&&myChar.equipped&&myChar.equipped['장갑']){
+    townCtx.fillStyle=getItemColor(myChar.equipped['장갑']);
+    townCtx.beginPath();townCtx.arc(0,18*S,4*S,0,Math.PI*2);townCtx.fill();
+  }
   townCtx.restore();
   // 오른팔
   townCtx.fillStyle=tc;
-  townCtx.save();townCtx.translate(11,-24);townCtx.rotate(-armSwing);
-  townCtx.fillRect(-3,0,6,12);
-  townCtx.fillStyle=sc;townCtx.beginPath();townCtx.arc(0,13,3.5,0,Math.PI*2);townCtx.fill();
-  if(myChar&&myChar.equipped&&myChar.equipped['장갑']){townCtx.fillStyle=getItemColor(myChar.equipped['장갑']);townCtx.beginPath();townCtx.arc(0,13,3.5,0,Math.PI*2);townCtx.fill();}
+  townCtx.save();townCtx.translate(14*S,-12*S);townCtx.rotate(ra);
+  townCtx.beginPath();townCtx.ellipse(0,8*S,4*S,10*S,0,0,Math.PI*2);townCtx.fill();
+  townCtx.fillStyle=sc;townCtx.beginPath();townCtx.arc(0,18*S,4*S,0,Math.PI*2);townCtx.fill();
+  if(myChar&&myChar.equipped&&myChar.equipped['장갑']){
+    townCtx.fillStyle=getItemColor(myChar.equipped['장갑']);
+    townCtx.beginPath();townCtx.arc(0,18*S,4*S,0,Math.PI*2);townCtx.fill();
+  }
   townCtx.restore();
 
-  // 가방
+  // ── 가방 ──
   if(myChar&&myChar.equipped&&myChar.equipped['가방']){
     townCtx.fillStyle=getItemColor(myChar.equipped['가방']);
-    townCtx.fillRect(9,-32,8,10);
-    townCtx.strokeStyle='rgba(0,0,0,0.3)';townCtx.lineWidth=1;
-    townCtx.strokeRect(9,-32,8,10);
+    townCtx.beginPath();townCtx.roundRect?
+      townCtx.roundRect(12*S,-14*S,10*S,13*S,3):
+      townCtx.rect(12*S,-14*S,10*S,13*S);
+    townCtx.fill();
+    townCtx.strokeStyle='rgba(0,0,0,0.2)';townCtx.lineWidth=0.8;townCtx.stroke();
   }
 
-  // 몸통
+  // ── 몸통 ──
   townCtx.fillStyle=tc;
   townCtx.beginPath();
-  townCtx.moveTo(-11,-24);townCtx.lineTo(11,-24);townCtx.lineTo(12,-8);townCtx.lineTo(-12,-8);townCtx.closePath();
+  if(isFemale){
+    townCtx.moveTo(-14*S,-20*S);townCtx.bezierCurveTo(-16*S,-10*S,-15*S,0,-13*S,2*S);
+    townCtx.lineTo(13*S,2*S);townCtx.bezierCurveTo(15*S,0,16*S,-10*S,14*S,-20*S);
+    townCtx.closePath();
+  } else {
+    townCtx.moveTo(-14*S,-20*S);townCtx.lineTo(-15*S,2*S);
+    townCtx.lineTo(15*S,2*S);townCtx.lineTo(14*S,-20*S);townCtx.closePath();
+  }
   townCtx.fill();
   // 몸통 음영
-  townCtx.fillStyle='rgba(0,0,0,0.1)';
-  townCtx.fillRect(4,-24,8,16);
+  townCtx.fillStyle='rgba(0,0,0,0.07)';
+  townCtx.beginPath();townCtx.ellipse(8*S,-10*S,5*S,12*S,0,0,Math.PI*2);townCtx.fill();
 
-  // 목
-  townCtx.fillStyle=sc;townCtx.fillRect(-4,-28,8,6);
+  // ── 목 ──
+  townCtx.fillStyle=sc;
+  townCtx.fillRect(-4*S,-24*S,8*S,6*S);
 
-  // 머리카락 뒷부분
-  townCtx.fillStyle=hairColor;
-  townCtx.beginPath();townCtx.arc(0,-38,13,0,Math.PI*2);townCtx.fill();
+  // ── 머리카락 뒤 ──
+  townCtx.fillStyle=hc;
+  townCtx.beginPath();townCtx.ellipse(0,-36*S,16*S,17*S,0,0,Math.PI*2);townCtx.fill();
   if(isFemale){
-    // 긴머리
-    townCtx.fillRect(-14,-38,6,22);townCtx.fillRect(8,-38,6,22);
-    townCtx.beginPath();townCtx.arc(-11,-16,5,0,Math.PI*2);townCtx.fill();
-    townCtx.beginPath();townCtx.arc(11,-16,5,0,Math.PI*2);townCtx.fill();
+    // 긴머리 옆
+    townCtx.beginPath();townCtx.ellipse(-15*S,-30*S,5*S,14*S,0,0,Math.PI*2);townCtx.fill();
+    townCtx.beginPath();townCtx.ellipse(15*S,-30*S,5*S,14*S,0,0,Math.PI*2);townCtx.fill();
   }
 
-  // 얼굴
+  // ── 얼굴 ──
   townCtx.fillStyle=sc;
-  townCtx.beginPath();townCtx.arc(0,-38,12,0,Math.PI*2);townCtx.fill();
-  // 얼굴 음영
-  townCtx.fillStyle='rgba(0,0,0,0.04)';
-  townCtx.beginPath();townCtx.arc(4,-38,8,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.ellipse(0,-36*S,14*S,16*S,0,0,Math.PI*2);townCtx.fill();
+  // 귀
+  townCtx.beginPath();townCtx.ellipse(-14*S,-36*S,3.5*S,5*S,0,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.ellipse(14*S,-36*S,3.5*S,5*S,0,0,Math.PI*2);townCtx.fill();
 
-  // 머리카락 앞부분
-  townCtx.fillStyle=hairColor;
+  // ── 머리카락 앞 ──
+  townCtx.fillStyle=hc;
   if(isFemale){
-    townCtx.beginPath();townCtx.arc(-3,-46,5,Math.PI,0);townCtx.fill();
-    townCtx.beginPath();townCtx.arc(5,-46,4,Math.PI,0);townCtx.fill();
+    townCtx.beginPath();townCtx.moveTo(-15*S,-44*S);
+    townCtx.quadraticCurveTo(-8*S,-54*S,0,-52*S);
+    townCtx.quadraticCurveTo(8*S,-54*S,15*S,-44*S);
+    townCtx.quadraticCurveTo(10*S,-40*S,0,-42*S);
+    townCtx.quadraticCurveTo(-10*S,-40*S,-15*S,-44*S);
+    townCtx.fill();
   } else {
-    townCtx.fillRect(-12,-50,24,10);
-    townCtx.beginPath();townCtx.arc(0,-50,10,Math.PI,0);townCtx.fill();
+    townCtx.fillRect(-15*S,-52*S,30*S,12*S);
+    // 삐죽 앞머리
+    townCtx.beginPath();townCtx.moveTo(-8*S,-50*S);townCtx.quadraticCurveTo(-4*S,-58*S,0,-50*S);townCtx.fill();
+    townCtx.beginPath();townCtx.moveTo(4*S,-52*S);townCtx.quadraticCurveTo(8*S,-60*S,12*S,-52*S);townCtx.fill();
+  }
+
+  // 머리 장식 (여자)
+  if(isFemale && myChar&&myChar.equipped&&myChar.equipped['머리']){
+    townCtx.fillStyle=getItemColor(myChar.equipped['머리']);
+    townCtx.beginPath();townCtx.arc(-13*S,-40*S,4*S,0,Math.PI*2);townCtx.fill();
+    townCtx.beginPath();townCtx.arc(13*S,-40*S,4*S,0,Math.PI*2);townCtx.fill();
   }
 
   // 모자
   if(myChar&&myChar.equipped&&myChar.equipped['모자']){
-    townCtx.font='16px serif';townCtx.textAlign='center';
-    townCtx.fillText(getItemIco(myChar.equipped['모자']),0,-50);
+    townCtx.font=`${18*S}px serif`;townCtx.textAlign='center';
+    townCtx.fillText(getItemIco(myChar.equipped['모자']),0,-54*S);
   }
 
-  // 눈
-  const eyeY=-39+Math.sin(charIdle*0.05)*0.3;
+  // ── 눈 (아이러브커피 스타일: 크고 또렷) ──
+  const ey=-38*S;
   // 눈 흰자
-  townCtx.fillStyle='#fff';
-  townCtx.beginPath();townCtx.ellipse(-4,eyeY,3.5,4,0,0,Math.PI*2);townCtx.fill();
-  townCtx.beginPath();townCtx.ellipse(4,eyeY,3.5,4,0,0,Math.PI*2);townCtx.fill();
+  townCtx.fillStyle='white';
+  townCtx.beginPath();townCtx.ellipse(-5*S,ey,5*S,5.5*S,0,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.ellipse(5*S,ey,5*S,5.5*S,0,0,Math.PI*2);townCtx.fill();
+  // 홍채
+  const irisC=isFemale?'#6B4AAC':'#2E4A7C';
+  townCtx.fillStyle=irisC;
+  townCtx.beginPath();townCtx.arc(-5*S,ey+S,3.5*S,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.arc(5*S,ey+S,3.5*S,0,Math.PI*2);townCtx.fill();
   // 눈동자
-  townCtx.fillStyle='#1a1a1a';
-  townCtx.beginPath();townCtx.ellipse(-4,eyeY+0.5,2,2.8,0,0,Math.PI*2);townCtx.fill();
-  townCtx.beginPath();townCtx.ellipse(4,eyeY+0.5,2,2.8,0,0,Math.PI*2);townCtx.fill();
-  // 눈 하이라이트
-  townCtx.fillStyle='#fff';
-  townCtx.beginPath();townCtx.arc(-3,eyeY-0.5,0.9,0,Math.PI*2);townCtx.fill();
-  townCtx.beginPath();townCtx.arc(5,eyeY-0.5,0.9,0,Math.PI*2);townCtx.fill();
+  townCtx.fillStyle='#0a0a1a';
+  townCtx.beginPath();townCtx.arc(-5*S,ey+S,2.2*S,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.arc(5*S,ey+S,2.2*S,0,Math.PI*2);townCtx.fill();
+  // 하이라이트
+  townCtx.fillStyle='white';
+  townCtx.beginPath();townCtx.arc(-3.5*S,ey-0.5*S,1.2*S,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.arc(6.5*S,ey-0.5*S,1.2*S,0,Math.PI*2);townCtx.fill();
+  // 속눈썹 (여자)
+  if(isFemale){
+    townCtx.strokeStyle='#1a0a2e'; townCtx.lineWidth=1.2; townCtx.lineCap='round';
+    [[-9,-5],[-5,-7],[-1,-6]].forEach(([ex,ey2])=>{
+      townCtx.beginPath();townCtx.moveTo(ex*S,(ey+ey2)*S);
+      townCtx.lineTo((ex-1)*S,(ey+ey2-3)*S);townCtx.stroke();
+    });
+    [[1,-6],[5,-7],[9,-5]].forEach(([ex,ey2])=>{
+      townCtx.beginPath();townCtx.moveTo(ex*S,(ey+ey2)*S);
+      townCtx.lineTo((ex+1)*S,(ey+ey2-3)*S);townCtx.stroke();
+    });
+  }
   // 눈썹
-  townCtx.strokeStyle=hairColor;townCtx.lineWidth=1.5;townCtx.lineCap='round';
-  townCtx.beginPath();townCtx.moveTo(-7,eyeY-5);townCtx.quadraticCurveTo(-4,eyeY-7,-1,eyeY-5);townCtx.stroke();
-  townCtx.beginPath();townCtx.moveTo(7,eyeY-5);townCtx.quadraticCurveTo(4,eyeY-7,1,eyeY-5);townCtx.stroke();
-
+  townCtx.strokeStyle=hc; townCtx.lineWidth=isFemale?1.6:2.2; townCtx.lineCap='round';
+  if(isFemale){
+    townCtx.beginPath();townCtx.moveTo(-9*S,ey-8*S);townCtx.quadraticCurveTo(-5*S,ey-12*S,-1*S,ey-9*S);townCtx.stroke();
+    townCtx.beginPath();townCtx.moveTo(9*S,ey-8*S);townCtx.quadraticCurveTo(5*S,ey-12*S,1*S,ey-9*S);townCtx.stroke();
+  } else {
+    townCtx.beginPath();townCtx.moveTo(-9*S,ey-9*S);townCtx.lineTo(-1*S,ey-11*S);townCtx.stroke();
+    townCtx.beginPath();townCtx.moveTo(9*S,ey-9*S);townCtx.lineTo(1*S,ey-11*S);townCtx.stroke();
+  }
   // 안경
   if(myChar&&myChar.equipped&&myChar.equipped['안경']){
-    townCtx.strokeStyle='#333';townCtx.lineWidth=1.2;
-    townCtx.beginPath();townCtx.arc(-4,eyeY,5,0,Math.PI*2);townCtx.stroke();
-    townCtx.beginPath();townCtx.arc(4,eyeY,5,0,Math.PI*2);townCtx.stroke();
-    townCtx.beginPath();townCtx.moveTo(1,eyeY);townCtx.lineTo(-1,eyeY);townCtx.stroke();
+    const gc=getItemColor(myChar.equipped['안경']);
+    townCtx.strokeStyle=gc; townCtx.lineWidth=1.5;
+    townCtx.strokeRect(-10*S,ey-6*S,9*S,9*S);
+    townCtx.strokeRect(1*S,ey-6*S,9*S,9*S);
+    townCtx.beginPath();townCtx.moveTo(-1*S,ey-1.5*S);townCtx.lineTo(1*S,ey-1.5*S);townCtx.stroke();
   }
-
-  // 볼
-  townCtx.fillStyle='rgba(255,150,150,0.35)';
-  townCtx.beginPath();townCtx.ellipse(-7,-36,4,2.5,0,0,Math.PI*2);townCtx.fill();
-  townCtx.beginPath();townCtx.ellipse(7,-36,4,2.5,0,0,Math.PI*2);townCtx.fill();
-
-  // 입 (살짝 웃는)
-  townCtx.strokeStyle='rgba(180,80,80,0.7)';townCtx.lineWidth=1.3;
-  townCtx.beginPath();townCtx.moveTo(-3,-33);townCtx.quadraticCurveTo(0,-31,3,-33);townCtx.stroke();
+  // 코
+  townCtx.strokeStyle='#D4956A'; townCtx.lineWidth=1.2;
+  townCtx.beginPath();townCtx.moveTo(-2*S,ey+6*S);townCtx.quadraticCurveTo(0,ey+8*S,2*S,ey+6*S);townCtx.stroke();
+  // 볼터치
+  townCtx.fillStyle='rgba(255,160,180,0.42)';
+  townCtx.beginPath();townCtx.ellipse(-9*S,ey+5*S,6*S,3.5*S,0,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.ellipse(9*S,ey+5*S,6*S,3.5*S,0,0,Math.PI*2);townCtx.fill();
+  // 입
+  if(isFemale){
+    townCtx.fillStyle='#EDAABB';
+    townCtx.beginPath();townCtx.moveTo(-5*S,ey+11*S);townCtx.quadraticCurveTo(0,ey+15*S,5*S,ey+11*S);
+    townCtx.quadraticCurveTo(0,ey+13*S,-5*S,ey+11*S);townCtx.fill();
+    townCtx.strokeStyle='#D4607A'; townCtx.lineWidth=1.3;
+    townCtx.beginPath();townCtx.moveTo(-5*S,ey+11*S);townCtx.quadraticCurveTo(0,ey+15*S,5*S,ey+11*S);townCtx.stroke();
+  } else {
+    townCtx.strokeStyle='#B05030'; townCtx.lineWidth=1.5;
+    townCtx.beginPath();townCtx.moveTo(-4*S,ey+12*S);townCtx.quadraticCurveTo(0,ey+15*S,4*S,ey+12*S);townCtx.stroke();
+  }
 
   townCtx.restore();
 }
+function screenToIso(sx,sy){
+  // 스크린 좌표 → 그리드 좌표
+  const ox=sx-townW/2, oy=sy-townH*0.28;
+  const gx=(ox/32+oy/16)/2;
+  const gy=(oy/16-ox/32)/2;
+  return {gx:Math.max(1,Math.min(7,gx)), gy:Math.max(1,Math.min(7,gy))};
+}
+
 function onTownClick(e){
   const rect=document.getElementById('town-canvas').getBoundingClientRect();
-  const x=e.clientX-rect.left, y=e.clientY-rect.top;
-  if(townTool==='move'){
-    // 순간이동 X → 목적지 설정해서 걸어감
-    charTargetX=x; charTargetY=Math.max(townH*0.48,Math.min(townH*0.88,y));
-    charAutoTimer=0; // 자동이동 타이머 리셋
-    // 발자국 이펙트
-    townCtx.fillStyle='rgba(255,255,255,0.3)';
-    townCtx.beginPath();townCtx.arc(x,y,8,0,Math.PI*2);townCtx.fill();
-  } else if(townTool==='place'&&selectedTownObj){
-    townObjects.push({id:selectedTownObj.id,ico:selectedTownObj.ico,x,y});
+  const sx=e.clientX-rect.left, sy=e.clientY-rect.top;
+  const {gx,gy}=screenToIso(sx,sy);
+  const snap_gx=Math.max(1,Math.min(7,Math.round(gx)));
+  const snap_gy=Math.max(1,Math.min(7,Math.round(gy)));
+
+  if(townTool==='place' && previewObj){
+    // 미리보기 확정 버튼 영역 클릭 체크
+    const px=isoX(previewGX,previewGY), py=isoY(previewGX,previewGY)-40;
+    const inBtn=sx>=px-32&&sx<=px+32&&sy>=py-14&&sy<=py+12;
+    if(inBtn){
+      // 확정! 배치
+      townObjects.push({
+        id:previewObj.id+'_'+Date.now(),
+        ico:previewObj.ico,
+        name:previewObj.name,
+        gx:previewGX, gy:previewGY,
+        sx:isoX(previewGX,previewGY),
+        sy:isoY(previewGX,previewGY)
+      });
+      previewObj=null;
+      townTool='remove';
+      document.getElementById('tt-remove')?.classList.add('active-tool');
+      document.getElementById('tt-place')?.classList.remove('active-tool');
+      updateTownInventoryUI();
+      return;
+    }
+    // 버튼 외 클릭 → 미리보기 위치 이동
+    previewGX=snap_gx; previewGY=snap_gy;
   } else if(townTool==='remove'){
-    townObjects=townObjects.filter(o=>Math.sqrt((o.x-x)**2+(o.y-y)**2)>24);
+    townObjects=townObjects.filter(o=>Math.sqrt((o.gx-gx)**2+(o.gy-gy)**2)>1);
   }
 }
 let selectedTownObj=null;
+let myTownInventory=[]; // 구매한 마을 오브젝트 목록 [{id, ico, name, pts}]
+let previewObj=null;    // 반투명 미리보기 중인 오브젝트
+let previewGX=4, previewGY=4; // 미리보기 위치
 function setTownTool(tool){
   townTool=tool;
   document.querySelectorAll('.tt-item').forEach(el=>el.classList.remove('active-tool'));
-  event.currentTarget.classList.add('active-tool');
-  if(tool==='place') openTownShop();
+  document.getElementById('tt-'+tool)?.classList.add('active-tool');
+  if(tool==='place') openTownShop('inv');
 }
-function openTownShop(){
-  const items=TOWN_OBJECTS.map(o=>`
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.06);border-radius:10px;cursor:pointer;margin-bottom:6px;border:2px solid ${selectedTownObj&&selectedTownObj.id===o.id?'#4ECDC4':'transparent'}" onclick="selectTownObj('${o.id}')">
-      <span style="font-size:1.5rem;">${o.ico}</span>
-      <div style="flex:1"><div style="font-family:'Jua',sans-serif;font-size:0.82rem;color:#fff;">${o.name}</div></div>
-      <div style="font-family:'Do Hyeon',sans-serif;font-size:0.85rem;color:#FFE66D;">${o.pts}p</div>
-    </div>`).join('');
+function openTownShop(tab='inv'){
+  const m=document.getElementById('town-shop-modal');
+  if(m)m.remove();
   const modal=document.createElement('div');
   modal.id='town-shop-modal';
   modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:3100;display:flex;align-items:flex-end;justify-content:center;';
-  modal.innerHTML=`<div style="background:#1a2a3a;border-radius:22px 22px 0 0;padding:20px 16px 36px;width:100%;max-width:500px;max-height:70vh;overflow-y:auto;">
-    <div style="font-family:'Do Hyeon',sans-serif;font-size:1rem;color:#fff;margin-bottom:12px;">🏪 마을 오브젝트 상점</div>
-    ${items}
-    <button onclick="document.getElementById('town-shop-modal').remove();townTool='move';" style="width:100%;padding:12px;border:none;border-radius:12px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.9rem;cursor:pointer;margin-top:8px;">닫기</button>
+  modal.innerHTML=`
+  <div style="background:#1a2a3a;border-radius:22px 22px 0 0;padding:0 0 36px;width:100%;max-width:500px;max-height:75vh;display:flex;flex-direction:column;">
+    <!-- 탭 헤더 -->
+    <div style="display:flex;border-bottom:1px solid rgba(255,255,255,0.1);padding:16px 16px 0;">
+      <button id="ts-tab-inv" onclick="openTownShop('inv')" style="flex:1;padding:10px;border:none;background:none;font-family:'Jua',sans-serif;font-size:0.88rem;cursor:pointer;border-bottom:2px solid ${tab==='inv'?'#4ECDC4':'transparent'};color:${tab==='inv'?'#4ECDC4':'rgba(255,255,255,0.5)'};">🎒 소지품</button>
+      <button id="ts-tab-shop" onclick="openTownShop('shop')" style="flex:1;padding:10px;border:none;background:none;font-family:'Jua',sans-serif;font-size:0.88rem;cursor:pointer;border-bottom:2px solid ${tab==='shop'?'#FFE66D':'transparent'};color:${tab==='shop'?'#FFE66D':'rgba(255,255,255,0.5)'};">🏪 상점</button>
+    </div>
+    <!-- 보유 포인트 -->
+    <div style="padding:10px 16px 0;display:flex;justify-content:flex-end;">
+      <span style="font-family:'Jua',sans-serif;font-size:0.75rem;color:rgba(255,255,255,0.4);">보유 포인트: </span>
+      <span style="font-family:'Do Hyeon',sans-serif;font-size:0.88rem;color:#FFE66D;margin-left:4px;">${totalPoints}p</span>
+    </div>
+    <!-- 콘텐츠 -->
+    <div style="overflow-y:auto;padding:12px 16px;flex:1;" id="ts-content">
+      ${tab==='inv' ? renderTownInvHTML() : renderTownShopHTML()}
+    </div>
+    <div style="padding:0 16px;">
+      <button onclick="closeTownShop()" style="width:100%;padding:12px;border:none;border-radius:12px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.9rem;cursor:pointer;">닫기</button>
+    </div>
   </div>`;
   document.body.appendChild(modal);
 }
-function selectTownObj(id){
-  selectedTownObj=TOWN_OBJECTS.find(o=>o.id===id);
-  townTool='place';
+
+function renderTownInvHTML(){
+  if(!myTownInventory.length) return '<div style="color:rgba(255,255,255,0.3);text-align:center;padding:24px;font-family:Jua,sans-serif;font-size:0.82rem;">소지품이 없어요<br>상점에서 구매해보세요!</div>';
+  // 아이템별로 그룹핑 (id 기준 개수 합산)
+  const grouped={};
+  myTownInventory.forEach((o,idx)=>{
+    if(!grouped[o.id]) grouped[o.id]={...o, cnt:0, firstIdx:idx};
+    grouped[o.id].cnt++;
+  });
+  return Object.values(grouped).map(o=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.06);border-radius:10px;margin-bottom:8px;">
+      <span style="font-size:1.6rem;">${o.ico}</span>
+      <div style="flex:1">
+        <div style="font-family:'Jua',sans-serif;font-size:0.85rem;color:#fff;">${o.name}</div>
+        <div style="font-size:0.7rem;color:#4ECDC4;margin-top:2px;">${o.cnt}개 보유</div>
+      </div>
+      <button onclick="startPlaceFromInv('${o.id}')" style="padding:8px 14px;border:none;border-radius:10px;background:linear-gradient(135deg,#4ECDC4,#38d9cc);color:#fff;font-family:'Jua',sans-serif;font-size:0.78rem;cursor:pointer;">배치하기</button>
+    </div>`).join('');
+}
+
+function renderTownShopHTML(){
+  return TOWN_OBJECTS.map(o=>{
+    const ownedCnt = myTownInventory.filter(i=>i.id===o.id).length;
+    const canAfford = totalPoints>=o.pts;
+    return `
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.06);border-radius:10px;margin-bottom:8px;">
+      <span style="font-size:1.6rem;">${o.ico}</span>
+      <div style="flex:1">
+        <div style="font-family:'Jua',sans-serif;font-size:0.85rem;color:#fff;">${o.name}</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:2px;">
+          <span style="font-family:'Do Hyeon',sans-serif;font-size:0.82rem;color:${canAfford?'#FFE66D':'#FF6B6B'};">${o.pts}p</span>
+          ${ownedCnt>0?`<span style="font-family:'Jua',sans-serif;font-size:0.68rem;color:#4ECDC4;">보유 ${ownedCnt}개</span>`:''}
+        </div>
+      </div>
+      <button onclick="buyTownObj('${o.id}')" style="padding:8px 14px;border:none;border-radius:10px;background:${canAfford?'linear-gradient(135deg,#f59f00,#FFE66D)':'rgba(255,255,255,0.1)'};color:${canAfford?'#2D3436':'rgba(255,255,255,0.3)'};font-family:'Jua',sans-serif;font-size:0.78rem;cursor:${canAfford?'pointer':'default'};">${ownedCnt>0?'추가 구매':'구매'}</button>
+    </div>`}).join('');
+}
+
+function closeTownShop(){
   const m=document.getElementById('town-shop-modal');
   if(m)m.remove();
+}
+
+function buyTownObj(id){
+  const obj=TOWN_OBJECTS.find(o=>o.id===id);
+  if(!obj) return;
+  if(totalPoints<obj.pts){ alert('포인트가 부족해요!\n(보유: '+totalPoints+'p / 필요: '+obj.pts+'p)'); return; }
+  totalPoints-=obj.pts;
+  if(currentStudent){currentStudent.pts=totalPoints;const idx=STUDENTS.findIndex(s=>s.id===currentStudent.id);if(idx>=0)STUDENTS[idx].pts=totalPoints;localStorage.setItem('jypiano_pts_'+currentStudent.id,totalPoints);}
+  myTownInventory.push({...obj});
+  saveTownLocal();
+  updateLevelUI();updateVillagePts();
+  openTownShop('inv'); // 소지품 탭으로 이동
+  alert(obj.name+' 구매 완료! (잔여 '+totalPoints+'p)');
+}
+
+function startPlaceFromInv(id){
+  const obj=myTownInventory.find(o=>o.id===id);
+  if(!obj) return;
+  previewObj=obj;
+  previewGX=4; previewGY=4;
+  townTool='place';
+  closeTownShop();
+}
+
+function updateTownInventoryUI(){
+  // 필요 시 소지품 UI 갱신
+}
+
+function saveTownLocal(){
+  if(!currentStudent) return;
+  localStorage.setItem('jypiano_town_inv_'+currentStudent.id, JSON.stringify(myTownInventory));
+  localStorage.setItem('jypiano_town_objs_'+currentStudent.id, JSON.stringify(townObjects));
 }
 
 // ── 포인트 선물 ──
@@ -3614,6 +4095,11 @@ function loginAsStudent(id){
   const savedInv=localStorage.getItem('jypiano_inv_'+id);
   myChar=savedChar?JSON.parse(savedChar):null;
   myInventory=savedInv?JSON.parse(savedInv):[];
+  // 마을 소지품/배치 복원
+  const savedTownInv=localStorage.getItem('jypiano_town_inv_'+id);
+  const savedTownObjs=localStorage.getItem('jypiano_town_objs_'+id);
+  myTownInventory=savedTownInv?JSON.parse(savedTownInv):[];
+  townObjects=savedTownObjs?JSON.parse(savedTownObjs):[];
   closeLoginModal();
   updateCurrentUserBar();
   updateHomeTab();
