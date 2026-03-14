@@ -475,6 +475,37 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .lp-stat-num{font-family:'Do Hyeon',sans-serif;font-size:1.3rem;color:#2D3436;}
 .lp-stat-lbl{font-family:'Jua',sans-serif;font-size:0.62rem;color:#868e96;margin-top:2px;line-height:1.3;}
 
+
+/* ── 학생 로그인 모달 ── */
+.login-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:4000;align-items:flex-end;justify-content:center;}
+.login-modal-bg.show{display:flex;}
+.login-modal{background:#fff;border-radius:24px 24px 0 0;padding:20px 18px 36px;width:100%;max-width:500px;max-height:85vh;overflow-y:auto;animation:slideUp 0.3s;}
+.lm-handle{width:40px;height:4px;background:#dee2e6;border-radius:99px;margin:0 auto 16px;}
+.lm-title{font-family:'Do Hyeon',sans-serif;font-size:1.2rem;color:#2D3436;text-align:center;margin-bottom:4px;}
+.lm-sub{font-size:0.75rem;color:#aaa;text-align:center;margin-bottom:14px;}
+/* 성씨 필터 */
+.surname-filter{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px;-webkit-overflow-scrolling:touch;}
+.surname-filter::-webkit-scrollbar{display:none;}
+.sf-btn{flex-shrink:0;padding:6px 14px;border-radius:99px;border:2px solid #eee;background:#fff;font-family:'Jua',sans-serif;font-size:0.8rem;color:#888;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.sf-btn.active{border-color:var(--primary);background:var(--primary);color:#fff;}
+/* 학생 목록 */
+.student-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.student-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#f8f9fa;border-radius:13px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;}
+.student-item:active{transform:scale(0.98);}
+.student-item:hover{border-color:var(--secondary);background:#F0FDFB;}
+.si-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--secondary),#38d9cc);display:flex;align-items:center;justify-content:center;font-size:1rem;color:#fff;font-family:'Do Hyeon',sans-serif;flex-shrink:0;}
+.si-sname{font-family:'Jua',sans-serif;font-size:0.95rem;color:#2D3436;}
+.si-slv{font-size:0.7rem;color:#aaa;margin-top:2px;}
+.guest-btn{width:100%;padding:13px;border:2px dashed #ddd;border-radius:13px;background:none;font-family:'Jua',sans-serif;font-size:0.9rem;color:#aaa;cursor:pointer;transition:all 0.2s;}
+.guest-btn:active{background:#f8f9fa;}
+/* 현재 접속자 표시 */
+.current-user-bar{background:linear-gradient(135deg,rgba(78,205,196,0.15),rgba(78,205,196,0.05));border:1px solid rgba(78,205,196,0.3);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:12px;cursor:pointer;}
+.cub-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--secondary),#38d9cc);display:flex;align-items:center;justify-content:center;font-size:0.9rem;color:#fff;font-family:'Do Hyeon',sans-serif;}
+.cub-info{flex:1;}
+.cub-name{font-family:'Jua',sans-serif;font-size:0.85rem;color:#2D3436;}
+.cub-sub{font-size:0.68rem;color:#aaa;}
+.cub-change{font-family:'Jua',sans-serif;font-size:0.7rem;color:var(--secondary);}
+
 </style>
 </head>
 <body>
@@ -498,11 +529,11 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 
 <!-- 하단 탭 바 -->
 <div id="tab-bar">
-  <button class="tab-item" id="tab-home" onclick="switchTab('home')">
+  <button class="tab-item active" id="tab-home" onclick="switchTab('home')">
     <div class="tab-ico-wrap"><span class="t-ico">🏠</span></div>
     <span class="t-lbl">홈</span>
   </button>
-  <button class="tab-item active" id="tab-practice" onclick="switchTab('practice')">
+  <button class="tab-item" id="tab-practice" onclick="switchTab('practice')">
     <div class="tab-ico-wrap"><span class="t-ico">🎹</span></div>
     <span class="t-lbl">연습</span>
   </button>
@@ -544,7 +575,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 </div>
 
 <!-- ① 연습 홈 -->
-<div id="pg-practice" class="page active">
+<div id="pg-practice" class="page">
   <div class="practice-hero">
     <div class="logo">JY PIANO</div>
     <div class="sub">연습실</div>
@@ -741,6 +772,22 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
   </div>
 </div>
 
+
+<!-- 학생 로그인 모달 -->
+<div class="login-modal-bg" id="login-modal-bg">
+  <div class="login-modal">
+    <div class="lm-handle"></div>
+    <div class="lm-title">🎹 JY PIANO</div>
+    <div class="lm-sub">이름을 선택해서 시작하세요!</div>
+    <!-- 성씨 필터 -->
+    <div class="surname-filter" id="surname-filter"></div>
+    <!-- 학생 목록 -->
+    <div class="student-list" id="login-student-list"></div>
+    <!-- 게스트 접속 -->
+    <button class="guest-btn" onclick="loginAsGuest()">👤 게스트로 접속 (연습만 가능)</button>
+  </div>
+</div>
+
 <!-- 비밀번호 모달 -->
 <div class="admin-modal-bg" id="admin-pw-modal">
   <div class="admin-modal">
@@ -850,6 +897,16 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       <div class="firebase-notice">관리자 비밀번호 확인 후 게임권이 추가돼요</div>
     </div>
 
+    <!-- 학생 관리 -->
+    <div class="admin-section">
+      <div class="admin-section-title">👥 학생 관리</div>
+      <div id="admin-student-list" style="margin-bottom:8px;"></div>
+      <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <input class="form-input" id="new-student-name" type="text" placeholder="학생 이름 입력" style="flex:1;">
+        <button onclick="addStudent()" style="padding:10px 14px;border:none;border-radius:10px;background:var(--secondary);color:#fff;font-family:'Jua',sans-serif;font-size:0.85rem;cursor:pointer;white-space:nowrap;">추가</button>
+      </div>
+    </div>
+
     <!-- 곡 목록 관리 -->
     <div class="admin-section">
       <div class="admin-section-title">
@@ -872,14 +929,23 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 </div>
 
 <!-- 홈 탭 -->
-<div id="pg-home" class="page">
+<div id="pg-home" class="page active">
   <div style="background:linear-gradient(160deg,#1a1a2e,#16213e,#0f3460);min-height:100%;">
     <div style="padding:18px 14px 120px;">
 
+      <!-- 현재 접속자 바 -->
+      <div class="current-user-bar" id="current-user-bar" onclick="openLoginModal()" style="margin-top:4px;">
+        <div class="cub-avatar" id="cub-avatar">?</div>
+        <div class="cub-info">
+          <div class="cub-name" id="cub-name">로그인하세요</div>
+          <div class="cub-sub" id="cub-sub">이름을 선택해서 시작하세요</div>
+        </div>
+        <div class="cub-change">변경 ›</div>
+      </div>
       <!-- 학생 프로필 -->
-      <div style="text-align:center;padding:20px 0 16px;">
+      <div style="text-align:center;padding:12px 0 14px;">
         <div id="home-char" style="font-size:3.5rem;line-height:1;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));">🐣</div>
-        <div id="home-student-name" style="font-family:'Do Hyeon',sans-serif;font-size:1.4rem;color:#fff;letter-spacing:1px;">학생 이름</div>
+        <div id="home-student-name" style="font-family:'Do Hyeon',sans-serif;font-size:1.4rem;color:#fff;letter-spacing:1px;">---</div>
         <div id="home-student-sub" style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:4px;">피아노 마을 주민</div>
       </div>
 
@@ -1185,13 +1251,20 @@ function switchTab(tab){
   document.getElementById('bar-timer').style.display='none';
   document.getElementById('bar-count').style.display='none';
 
-  if(tab==='practice'){
+  if(tab==='home'){
+    document.getElementById('bar-song').textContent='홈';
+    updateHomeTab();
+    showPage('pg-home');
+  } else if(tab==='practice'){
     document.getElementById('bar-song').textContent='연습실';
     showPage('pg-practice');
   } else if(tab==='reward'){
     document.getElementById('bar-song').textContent='보상 센터';
     updateRewardUI();
     showPage('pg-reward');
+  } else if(tab==='village'){
+    document.getElementById('bar-song').textContent='피아노 마을';
+    showPage('pg-village');
   }
 }
 
@@ -2014,7 +2087,7 @@ function switchTabAdmin(){
   document.getElementById('bar-timer').style.display='none';
   document.getElementById('bar-count').style.display='none';
   document.getElementById('bar-song').textContent='관리자';
-  hideForm();renderAdminSongList();renderAdminCatGrid();
+  hideForm();renderAdminSongList();renderAdminCatGrid();renderAdminStudentList();
   const atc=document.getElementById('admin-ticket-count');
   if(atc) atc.textContent=tickets;
   showPage('pg-admin');
@@ -2091,7 +2164,7 @@ function saveSong(){
     SONG_DB.push({id:'song_'+Date.now(),name,emoji,bpm,hands,tags:{book,genre,level,hands:hl},right:notes,left:leftNotes});
     alert('추가됐어요!\n(새로고침 시 초기화됩니다)');
   }
-  hideForm();renderAdminSongList();renderAdminCatGrid();renderCatGrid('book');
+  hideForm();renderAdminSongList();renderAdminCatGrid();renderAdminStudentList();renderCatGrid('book');
 }
 function deleteSong(id){
   const s=SONG_DB.find(s=>s.id===id);if(!s)return;
@@ -2352,11 +2425,187 @@ function renderPodiumTo(targetId){
   }).join('');
 }
 
+// ── 학생 시스템 ──
+let STUDENTS = [
+  {id:'s1', name:'박상호', pts:0},
+  {id:'s2', name:'정지윤', pts:0},
+  {id:'s3', name:'정충희', pts:0},
+  {id:'s4', name:'정석희', pts:0},
+  {id:'s5', name:'박상윤', pts:0},
+];
+let currentStudent = null;
+let selectedSurname = '전체';
+
+function openLoginModal(){
+  renderSurnameFilter();
+  renderLoginStudentList('전체');
+  document.getElementById('login-modal-bg').classList.add('show');
+}
+function closeLoginModal(){
+  document.getElementById('login-modal-bg').classList.remove('show');
+}
+function getSurnames(){
+  return ['전체', ...[...new Set(STUDENTS.map(s=>s.name[0]))]];
+}
+function renderSurnameFilter(){
+  const el=document.getElementById('surname-filter');
+  el.innerHTML=getSurnames().map(s=>
+    `<button class="sf-btn ${s===selectedSurname?'active':''}" onclick="filterBySurname('${s}')">${s}</button>`
+  ).join('');
+}
+function filterBySurname(surname){
+  selectedSurname=surname;
+  renderSurnameFilter();
+  renderLoginStudentList(surname);
+}
+function renderLoginStudentList(filter){
+  const el=document.getElementById('login-student-list');
+  const list=filter==='전체'?STUDENTS:STUDENTS.filter(s=>s.name[0]===filter);
+  if(!list.length){el.innerHTML='<div style="color:#bbb;font-size:0.82rem;padding:10px;text-align:center;">해당 학생이 없어요</div>';return;}
+  el.innerHTML=list.map(s=>{
+    const info=getLevelInfo(s.pts);
+    const isMe=currentStudent&&currentStudent.id===s.id;
+    return `<div class="student-item" onclick="loginAsStudent('${s.id}')" style="${isMe?'border-color:var(--secondary);background:#F0FDFB;':''}">
+      <div class="si-avatar">${s.name[0]}</div>
+      <div style="flex:1">
+        <div class="si-sname">${s.name}${isMe?' ✓':''}</div>
+        <div class="si-slv">${info.cur.icon} Lv.${info.cur.lv} · ${s.pts}p</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function loginAsStudent(id){
+  const student=STUDENTS.find(s=>s.id===id);
+  if(!student) return;
+  currentStudent=student;
+  totalPoints=student.pts;
+  closeLoginModal();
+  updateCurrentUserBar();
+  updateHomeTab();
+  updateLevelUI();
+}
+function loginAsGuest(){
+  currentStudent=null;
+  totalPoints=0;
+  closeLoginModal();
+  updateCurrentUserBar();
+  updateHomeTab();
+}
+function updateCurrentUserBar(){
+  const avatar=document.getElementById('cub-avatar');
+  const name=document.getElementById('cub-name');
+  const sub=document.getElementById('cub-sub');
+  if(!avatar) return;
+  if(currentStudent){
+    avatar.textContent=currentStudent.name[0];
+    name.textContent=currentStudent.name;
+    const info=getLevelInfo(currentStudent.pts);
+    sub.textContent=info.cur.icon+' Lv.'+info.cur.lv+' '+info.cur.name+' · '+currentStudent.pts+'p';
+  } else {
+    avatar.textContent='👤';
+    name.textContent='게스트';
+    sub.textContent='연습만 가능해요';
+  }
+  const hn=document.getElementById('home-student-name');
+  if(hn) hn.textContent=currentStudent?currentStudent.name:'게스트';
+}
+// addPoints 오버라이드 - 학생 포인트 누적
+const _origAddPts=addPoints;
+function addPoints(songLevel){
+  const pts=LEVEL_POINTS[songLevel]||1;
+  totalPoints+=pts;
+  if(currentStudent){
+    currentStudent.pts=totalPoints;
+    const idx=STUDENTS.findIndex(s=>s.id===currentStudent.id);
+    if(idx>=0) STUDENTS[idx].pts=totalPoints;
+  }
+  updateLevelUI();
+  return pts;
+}
+// getAllRanking 오버라이드 - STUDENTS 기반
+function getAllRanking(){
+  const all=STUDENTS.map(s=>({name:s.name,pts:s.pts,isMe:currentStudent&&s.id===currentStudent.id}));
+  if(!currentStudent) all.push({name:'게스트',pts:totalPoints,isMe:true});
+  all.sort((a,b)=>b.pts-a.pts);
+  return all;
+}
+
+// ── 관리자 학생 관리 ──
+function renderAdminStudentList(){
+  const el=document.getElementById('admin-student-list');
+  if(!el) return;
+  if(!STUDENTS.length){el.innerHTML='<div class="empty-msg">등록된 학생이 없어요</div>';return;}
+  el.innerHTML=STUDENTS.map(s=>`
+    <div class="admin-song-item" id="stu-row-${s.id}">
+      <div class="asi-emoji">${s.name[0]}</div>
+      <div class="asi-info" style="flex:1">
+        <div class="asi-name" id="stu-name-${s.id}">${s.name}</div>
+        <div class="asi-meta">${getLevelInfo(s.pts).cur.icon} Lv.${getLevelInfo(s.pts).cur.lv} · ${s.pts}p</div>
+      </div>
+      <div class="asi-btns">
+        <button class="asi-btn edit" onclick="startEditStudent('${s.id}')">수정</button>
+        <button class="asi-btn del" onclick="deleteStudent('${s.id}')">삭제</button>
+      </div>
+    </div>`).join('');
+}
+function startEditStudent(id){
+  const s=STUDENTS.find(s=>s.id===id);
+  if(!s) return;
+  const nameEl=document.getElementById('stu-name-'+id);
+  const row=document.getElementById('stu-row-'+id);
+  if(!nameEl||!row) return;
+  // 이름 영역을 인풋으로 교체
+  nameEl.innerHTML=`<input id="stu-edit-inp-${id}" value="${s.name}" style="border:1px solid var(--secondary);border-radius:6px;padding:3px 7px;font-family:'Jua',sans-serif;font-size:0.85rem;width:120px;outline:none;">`;
+  // 버튼 교체
+  row.querySelector('.asi-btns').innerHTML=`
+    <button class="asi-btn edit" onclick="confirmEditStudent('${id}')">저장</button>
+    <button class="asi-btn" style="background:#f1f3f5;color:#868e96;" onclick="renderAdminStudentList()">취소</button>`;
+  document.getElementById('stu-edit-inp-'+id).focus();
+}
+function confirmEditStudent(id){
+  const inp=document.getElementById('stu-edit-inp-'+id);
+  if(!inp) return;
+  const newName=inp.value.trim();
+  if(!newName){alert('이름을 입력해주세요!');return;}
+  if(STUDENTS.find(s=>s.name===newName&&s.id!==id)){alert('이미 있는 이름이에요!');return;}
+  const idx=STUDENTS.findIndex(s=>s.id===id);
+  if(idx>=0){
+    STUDENTS[idx].name=newName;
+    if(currentStudent&&currentStudent.id===id){
+      currentStudent.name=newName;
+      updateCurrentUserBar();
+    }
+  }
+  renderAdminStudentList();
+}
+function addStudent(){
+  const inp=document.getElementById('new-student-name');
+  const name=inp.value.trim();
+  if(!name){alert('이름을 입력해주세요!');return;}
+  if(STUDENTS.find(s=>s.name===name)){alert('이미 있는 학생이에요!');return;}
+  STUDENTS.push({id:'s'+Date.now(),name,pts:0});
+  inp.value='';
+  renderAdminStudentList();
+  alert(name+' 학생이 추가됐어요!');
+}
+function deleteStudent(id){
+  const s=STUDENTS.find(s=>s.id===id);
+  if(!s) return;
+  if(!confirm(`'${s.name}' 학생을 삭제할까요?`)) return;
+  STUDENTS=STUDENTS.filter(s=>s.id!==id);
+  if(currentStudent&&currentStudent.id===id){currentStudent=null;totalPoints=0;updateCurrentUserBar();}
+  renderAdminStudentList();
+}
+
+// ── 초기화 ──
 renderCatGrid('book');
 renderPrizesInfo();
 updateRewardUI();
 updateLevelUI();
 renderPodium();
+document.getElementById('bar-song').textContent='홈';
+updateHomeTab();
+setTimeout(()=>openLoginModal(), 400);
 </script>
 </body>
 </html>
