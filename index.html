@@ -1472,16 +1472,16 @@ function buildSlots(){ pbSlots=[]; } // 슬롯 없음 - 공 색깔로 판정
 function buildObstacles(){
   pbObstacles=[];
   const W=pbCanvas.width,H=pbCanvas.height;
-  // 삼각형 범퍼들
+  // 범퍼 - 레일 구간(H*0.68 이하) 안에 안 들어오게
   const bumpers=[
-    {x:W*0.2,y:H*0.45},{x:W*0.5,y:H*0.38},{x:W*0.8,y:H*0.45},
-    {x:W*0.35,y:H*0.58},{x:W*0.65,y:H*0.58},{x:W*0.5,y:H*0.68},
+    {x:W*0.2, y:H*0.42},{x:W*0.5,y:H*0.35},{x:W*0.8,y:H*0.42},
+    {x:W*0.35,y:H*0.55},{x:W*0.65,y:H*0.55},
   ];
-  bumpers.forEach(b=>pbObstacles.push({x:b.x,y:b.y,r:10,flash:0}));
-  // 좌우 가이드 레일
+  bumpers.forEach(b=>pbObstacles.push({x:b.x,y:b.y,r:9,flash:0}));
+  // 레일 - 더 가파르고 짧게 (끼임 방지)
   pbRails=[
-    {x1:W*0.05,y1:H*0.75,x2:W*0.22,y2:H*0.88},
-    {x1:W*0.95,y1:H*0.75,x2:W*0.78,y2:H*0.88},
+    {x1:W*0.04,y1:H*0.72,x2:W*0.18,y2:H*0.86},
+    {x1:W*0.96,y1:H*0.72,x2:W*0.82,y2:H*0.86},
   ];
 }
 
@@ -1528,7 +1528,7 @@ function pbLoop(){
         peg.flash=6;
       }
     });
-    // 범퍼 충돌 (더 강하게 튕김)
+    // 범퍼 충돌
     pbObstacles.forEach(obs=>{
       const dx=ball.x-obs.x,dy=ball.y-obs.y,dist=Math.sqrt(dx*dx+dy*dy);
       if(dist<ball.r+obs.r+1){
@@ -1541,6 +1541,23 @@ function pbLoop(){
         obs.flash=8;
       }
     });
+    // 레일 충돌 - 선분과 원 충돌 (끼임 방지)
+    if(pbRails){
+      pbRails.forEach(rail=>{
+        const rdx=rail.x2-rail.x1,rdy=rail.y2-rail.y1;
+        const rlen2=rdx*rdx+rdy*rdy;
+        const t=Math.max(0,Math.min(1,((ball.x-rail.x1)*rdx+(ball.y-rail.y1)*rdy)/rlen2));
+        const cx=rail.x1+t*rdx,cy=rail.y1+t*rdy;
+        const distR=Math.sqrt((ball.x-cx)**2+(ball.y-cy)**2);
+        if(distR<ball.r+3){
+          const nx=(ball.x-cx)/distR,ny=(ball.y-cy)/distR;
+          const dot=ball.vx*nx+ball.vy*ny;
+          if(dot<0){ball.vx=(ball.vx-2*dot*nx)*0.7;ball.vy=(ball.vy-2*dot*ny)*0.7;}
+          const push=ball.r+4-distR;
+          ball.x+=nx*push;ball.y+=ny*push;
+        }
+      });
+    }
     if(ball.y>H*0.92&&ball.active){
       ball.active=false; pbBallsDone++;
       const score=ball.prize?ball.prize.score:0;
