@@ -1148,28 +1148,25 @@ function startPinball(){
   pbPrizePool=buildPrizePool();
   document.getElementById('pb-start-btn').style.display='none';
   document.getElementById('pb-result').className='pb-result';
-  dropNextBall();
+  // 100개 한번에 생성 (살짝 다른 위치/속도로)
+  const W=pbCanvas.width;
+  for(let i=0;i<TOTAL_BALLS;i++){
+    pbBalls.push({
+      x: W*0.1 + Math.random()*W*0.8,
+      y: -10 - i*8, // 위쪽에서 간격두고 시작
+      vx: (Math.random()-0.5)*1.2,
+      vy: 0.8 + Math.random()*0.8,
+      r:6, prize:pbPrizePool[i], active:true
+    });
+  }
   pbAnimId=requestAnimationFrame(pbLoop);
 }
 
-function dropNextBall(){
-  const total=pbBalls.length+pbBallsDone;
-  if(total>=TOTAL_BALLS) return;
-  const W=pbCanvas.width;
-  pbBalls.push({
-    x:W*0.25+Math.random()*W*0.5, y:18,
-    vx:(Math.random()-0.5)*1.0, vy:1.2,
-    r:6, prize:pbPrizePool[total], active:true
-  });
-}
+function dropNextBall(){ /* 사용 안함 */ }
 
 function pbLoop(){
   const W=pbCanvas.width,H=pbCanvas.height;
   pbDropTimer++;
-  const totalDropped=pbBalls.length+pbBallsDone;
-  if(pbDropTimer%12===0 && totalDropped<TOTAL_BALLS && pbBalls.filter(b=>b.active).length<10){
-    dropNextBall();
-  }
   pbBalls.forEach(ball=>{
     if(!ball.active) return;
     ball.vy+=0.12; ball.vx*=0.998;
