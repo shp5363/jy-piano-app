@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" style="background:#FFF8F0;color:#2D3436;color-scheme:light;">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -601,8 +601,12 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .ce-empty{color:#bbb;font-size:0.8rem;text-align:center;padding:20px;grid-column:span 4;}
 
 /* ── 상점 화면 ── */
-.shop-bg{display:none;position:fixed;inset:0;background:#F8F9FA;z-index:3100;overflow-y:auto;}
-.shop-bg.show{display:block;}
+.shop-bg{display:none;position:fixed;inset:0;background:#F8F9FA;z-index:3100;overflow:hidden;flex-direction:column;}
+.shop-bg.show{display:flex;}
+/* 상단 고정 영역 */
+.shop-fixed-top{background:#F8F9FA;max-width:500px;width:100%;margin:0 auto;padding:12px 14px 0;flex-shrink:0;}
+/* 스크롤 영역 */
+.shop-scroll{flex:1;overflow-y:auto;max-width:500px;width:100%;margin:0 auto;padding:0 14px 100px;}
 .shop-wrap{max-width:500px;margin:0 auto;padding:16px 14px 80px;}
 .shop-header{display:flex;align-items:center;gap:10px;margin-bottom:6px;padding-top:8px;}
 .shop-back{background:none;border:none;color:#636e72;font-family:'Jua',sans-serif;font-size:0.88rem;cursor:pointer;}
@@ -664,17 +668,24 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
   50%{transform:translateY(-5px);}
 }
 
-/* ── 라이트모드 강제 (폰 다크모드 무시) ── */
-:root { color-scheme: light only; }
-html, body {
-  background-color: #FFF8F0 !important;
-  color: #2D3436 !important;
-  -webkit-text-fill-color: #2D3436;
+/* ── 라이트모드 강제 ── */
+:root {
+  color-scheme: light !important;
+  forced-color-adjust: none;
 }
-/* 다크모드 완전 차단 */
+html {
+  background: #FFF8F0 !important;
+  filter: none !important;
+}
+/* 다크모드 모든 경우 차단 */
 @media (prefers-color-scheme: dark) {
-  html, body { background-color: #FFF8F0 !important; color: #2D3436 !important; }
-  input, button, select, textarea { background-color: inherit; color: inherit; }
+  :root { color-scheme: light !important; }
+  html, body, * {
+    background-color: unset;
+    color: unset;
+    border-color: unset;
+  }
+  html { background: #FFF8F0 !important; }
 }
 
 </style>
@@ -1271,27 +1282,31 @@ html, body {
 
 <!-- 상점 -->
 <div class="shop-bg" id="shop-bg">
-  <div class="shop-wrap">
+  <!-- 상단 고정: 헤더 + 캐릭터 미리보기 + 카테고리 탭 -->
+  <div class="shop-fixed-top">
     <div class="shop-header">
       <button class="shop-back" onclick="closeShop()">← 뒤로</button>
       <div class="shop-title">아이템 상점</div>
       <div class="shop-pts" id="shop-pts-display">0p</div>
     </div>
-    <!-- 캐릭터 미리보기 영역 -->
-    <div id="shop-char-preview-area" style="display:flex;align-items:center;gap:16px;background:#fff;border:1px solid #eee;border-radius:16px;padding:14px 16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
-      <div id="shop-char-preview" style="display:flex;justify-content:center;align-items:center;min-width:80px;min-height:100px;">
+    <!-- 캐릭터 미리보기 (상단 고정) -->
+    <div id="shop-char-preview-area" style="display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #eee;border-radius:14px;padding:12px 14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div id="shop-char-preview" style="display:flex;justify-content:center;align-items:center;min-width:72px;min-height:90px;">
         <span style="font-size:2.5rem;">🐣</span>
       </div>
       <div style="flex:1;">
-        <div style="font-family:'Jua',sans-serif;font-size:0.85rem;color:#2D3436;margin-bottom:4px;" id="shop-preview-title">내 캐릭터</div>
-        <div style="font-size:0.72rem;color:#aaa;line-height:1.5;" id="shop-preview-hint">아이템을 탭하면<br>미리 입어볼 수 있어요 👗</div>
-        <div id="shop-preview-item-name" style="display:none;margin-top:6px;">
-          <span style="background:linear-gradient(135deg,#f59f00,#FFE66D);color:#2D3436;font-family:'Jua',sans-serif;font-size:0.72rem;padding:3px 10px;border-radius:99px;" id="shop-preview-item-text"></span>
+        <div style="font-family:'Jua',sans-serif;font-size:0.85rem;color:#2D3436;margin-bottom:3px;" id="shop-preview-title">내 캐릭터</div>
+        <div style="font-size:0.7rem;color:#aaa;line-height:1.5;" id="shop-preview-hint">아이템을 탭하면<br>미리 입어볼 수 있어요 👗</div>
+        <div id="shop-preview-item-name" style="display:none;margin-top:5px;">
+          <span style="background:linear-gradient(135deg,#f59f00,#FFE66D);color:#2D3436;font-family:'Jua',sans-serif;font-size:0.7rem;padding:3px 10px;border-radius:99px;" id="shop-preview-item-text"></span>
         </div>
       </div>
     </div>
     <div class="shop-cat-tabs" id="shop-cat-tabs"></div>
-    <div class="shop-grid" id="shop-grid"></div>
+  </div>
+  <!-- 스크롤 영역: 아이템 목록만 -->
+  <div class="shop-scroll">
+    <div class="shop-grid" id="shop-grid" style="padding-top:8px;"></div>
   </div>
   <div class="shop-buy-bar" id="shop-buy-bar">
     <div class="sbb-info">
