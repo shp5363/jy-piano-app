@@ -6,11 +6,7 @@
 <title>🎹 피아노 연습 도우미</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Jua&family=Do+Hyeon&family=Nanum+Gothic:wght@400;700&display=swap');
-:root {
-  --primary:#FF6B6B; --secondary:#4ECDC4; --accent:#FFE66D;
-  --correct:#51CF66; --wrong:#FF6B6B; --waiting:#A5D8FF;
-  --bg:#FFF8F0; --card:#FFFFFF; --text:#2D3436; --bar-h:64px;
-}
+:root{--primary:#FF6B6B;--secondary:#4ECDC4;--accent:#FFE66D;--correct:#51CF66;--wrong:#FF6B6B;--waiting:#A5D8FF;--bg:#FFF8F0;--card:#FFFFFF;--text:#2D3436;--bar-h:64px;}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Nanum Gothic',sans-serif;background:var(--bg);min-height:100vh;overflow-x:hidden;}
 #top-bar{position:fixed;top:0;left:0;right:0;height:var(--bar-h);background:linear-gradient(135deg,#FF6B6B,#FF8E53);display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:999;box-shadow:0 3px 16px rgba(255,107,107,0.35);}
@@ -24,10 +20,10 @@ body{font-family:'Nanum Gothic',sans-serif;background:var(--bg);min-height:100vh
 #bbPlay{background:#fff;color:var(--primary);}
 #bbPause{background:rgba(255,255,255,0.28);color:#fff;font-size:1rem;}
 #bbStop{background:rgba(255,255,255,0.18);color:#fff;}
-.page{display:none;padding-top:calc(var(--bar-h)+16px);padding-bottom:36px;min-height:100vh;}
+.page{display:none;padding-top:calc(var(--bar-h)+20px);padding-bottom:36px;min-height:100vh;}
 .page.active{display:block;}
 #pg-select{background:linear-gradient(160deg,#FFF0E6,#E8F8F7);}
-.hero{padding:calc(var(--bar-h)+20px) 16px 20px;text-align:center;}
+.hero{padding:calc(var(--bar-h)+24px) 16px 20px;text-align:center;}
 .hero h1{font-family:'Jua',sans-serif;font-size:1.9rem;color:var(--primary);margin-bottom:6px;}
 .hero p{font-size:0.85rem;color:#888;}
 .song-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 14px 16px;max-width:580px;margin:0 auto;}
@@ -37,7 +33,7 @@ body{font-family:'Nanum Gothic',sans-serif;background:var(--bg);min-height:100vh
 .sc-emoji{font-size:2rem;margin-bottom:7px;}
 .sc-name{font-family:'Jua',sans-serif;font-size:0.92rem;color:var(--text);}
 .sc-lv{display:inline-block;margin-top:5px;font-size:0.68rem;padding:2px 8px;border-radius:99px;font-weight:700;}
-.lv1{background:#D3F9D8;color:#2f9e44;} .lv2{background:#FFF3BF;color:#e67700;} .lv3{background:#FFE3E3;color:#c92a2a;}
+.lv1{background:#D3F9D8;color:#2f9e44;}.lv2{background:#FFF3BF;color:#e67700;}.lv3{background:#FFE3E3;color:#c92a2a;}
 .next-btn{display:block;width:calc(100% - 28px);max-width:552px;margin:0 auto;padding:16px;border:none;border-radius:18px;background:linear-gradient(135deg,var(--primary),#FF8E53);color:#fff;font-family:'Jua',sans-serif;font-size:1.2rem;cursor:pointer;box-shadow:0 5px 18px rgba(255,107,107,0.3);transition:all 0.2s;}
 .next-btn:active{transform:scale(0.97);}
 #pg-set{background:linear-gradient(160deg,#F0FDFB,#FFF8F0);}
@@ -90,7 +86,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .stat-box.ok{background:linear-gradient(135deg,#d3f9d8,#b2f2bb);border-color:#69db7c;}
 .stat-box.ng{background:linear-gradient(135deg,#ffe3e3,#ffc9c9);border-color:#ff8787;}
 .stat-box.go{background:linear-gradient(135deg,#fff9db,#ffec99);border-color:#ffd43b;}
-.s-em{font-size:1.6rem;} .s-tx{font-family:'Jua',sans-serif;font-size:0.88rem;color:var(--text);margin-top:3px;}
+.s-em{font-size:1.6rem;}.s-tx{font-family:'Jua',sans-serif;font-size:0.88rem;color:var(--text);margin-top:3px;}
 .done-banner{display:none;margin-top:10px;background:linear-gradient(135deg,#51CF66,#38d9cc);color:#fff;font-family:'Jua',sans-serif;font-size:1.1rem;border-radius:13px;padding:14px;text-align:center;}
 .done-banner.show{display:block;animation:pop 0.4s;}
 @keyframes pop{from{transform:scale(0.7);opacity:0}to{transform:scale(1);opacity:1}}
@@ -104,7 +100,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 </style>
 </head>
 <body>
-
 <div id="top-bar">
   <div class="bar-title">🎹 피아노 연습<span id="bar-song">곡을 선택하세요</span></div>
   <div class="bar-right">
@@ -117,19 +112,16 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
     </div>
   </div>
 </div>
-
 <div id="pg-select" class="page active">
   <div class="hero"><h1>🎵 어떤 곡 연습할까요?</h1><p>연습하고 싶은 곡을 골라보세요!</p></div>
   <div class="song-grid" id="song-grid"></div>
   <button class="next-btn" onclick="gotoSet()">다음 →</button>
 </div>
-
 <div id="pg-set" class="page">
   <div class="set-wrap">
     <button class="back-btn" onclick="gotoSel()">← 곡 선택으로</button>
     <h2>⚙️ 연습 설정</h2>
-    <div class="scard">
-      <h3>🔁 연습 횟수</h3>
+    <div class="scard"><h3>🔁 연습 횟수</h3>
       <div class="count-row">
         <button class="cnt-btn" onclick="chgCnt(-1)">−</button>
         <div id="cnt-disp">3</div>
@@ -137,8 +129,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       </div>
       <p style="text-align:center;font-size:0.75rem;color:#aaa;margin-top:7px">같은 곡을 반복 연습할 횟수</p>
     </div>
-    <div class="scard">
-      <h3>🎛 조율 보정</h3>
+    <div class="scard"><h3>🎛 조율 보정</h3>
       <div class="tol-row">
         <label>오차 허용</label>
         <input type="range" id="tol" min="20" max="100" value="50">
@@ -146,14 +137,10 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       </div>
       <p style="font-size:0.72rem;color:#aaa;margin-top:7px">피아노 조율이 약간 안맞을 때 올려주세요</p>
     </div>
-    <div class="scard">
-      <h3>🎼 선택한 곡</h3>
-      <div class="prev-box" id="prev-box"></div>
-    </div>
+    <div class="scard"><h3>🎼 선택한 곡</h3><div class="prev-box" id="prev-box"></div></div>
     <button class="start-btn" onclick="goPrac()">🎹 연습 시작!</button>
   </div>
 </div>
-
 <div id="pg-prac" class="page">
   <div class="prac-wrap">
     <button class="back-btn" onclick="gotoSel()">← 곡 선택으로</button>
@@ -185,7 +172,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
     </div>
   </div>
 </div>
-
 <script>
 const SONGS=[
   {id:'butterfly',name:'나비야',emoji:'🦋',level:1,lvTxt:'입문',bpm:4,notes:[
@@ -215,12 +201,10 @@ const SONGS=[
     {vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'q'},{vex:'c/4',lb:'도',freq:261.63,dur:'h'}
   ]}
 ];
-
 let curSong=SONGS[0],totalSes=3,curSes=1,states=[],cur=0;
 let listening=false,paused=false;
 let audioCtx=null,analyser=null,micStream=null,rafId=null;
 let wrongTid=null,lastOkT=0,timerSec=0,timerTid=null;
-
 function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
 function gotoSel(){doStopMic();clearTimer();document.getElementById('bar-ctrl').style.visibility='hidden';document.getElementById('bar-timer').style.display='none';document.getElementById('bar-count').style.display='none';document.getElementById('bar-song').textContent='곡을 선택하세요';showPage('pg-select');}
 function gotoSet(){updatePrev();showPage('pg-set');}
@@ -233,7 +217,6 @@ function goPrac(){
   document.getElementById('bar-count').style.display='block';
   updBarCount();loadVex();
 }
-
 function renderGrid(){
   const g=document.getElementById('song-grid');g.innerHTML='';
   SONGS.forEach(s=>{
@@ -244,12 +227,10 @@ function renderGrid(){
     g.appendChild(d);
   });
 }
-
 let pCount=3;
 function chgCnt(d){pCount=Math.max(1,Math.min(10,pCount+d));document.getElementById('cnt-disp').textContent=pCount;}
 function updatePrev(){document.getElementById('prev-box').innerHTML=`<div class="prev-name">${curSong.emoji} ${curSong.name}</div><div class="prev-info">음표 ${curSong.notes.length}개 · 난이도 ${curSong.lvTxt} · ${curSong.bpm}/4박자</div>`;}
 document.getElementById('tol').addEventListener('input',function(){document.getElementById('tol-v').textContent='±'+this.value+'¢';});
-
 function initSes(){
   states=curSong.notes.map(()=>'waiting');cur=0;
   document.getElementById('done-banner').classList.remove('show');
@@ -263,40 +244,34 @@ function renderSesDots(){
   for(let i=1;i<=totalSes;i++){const d=document.createElement('div');d.className='ses-dot'+(i<curSes?' done':i===curSes?' curr':'');d.textContent=i;r.appendChild(d);}
 }
 function updBarCount(){document.getElementById('bar-count').textContent=curSes+' / '+totalSes+'회';}
-
 function startTimer(){if(timerTid)return;timerTid=setInterval(()=>{if(!paused){timerSec++;document.getElementById('bar-timer').textContent=String(Math.floor(timerSec/60)).padStart(2,'0')+':'+String(timerSec%60).padStart(2,'0');}},1000);}
 function clearTimer(){clearInterval(timerTid);timerTid=null;timerSec=0;document.getElementById('bar-timer').textContent='00:00';}
-
 function bbPlay(){if(!listening){startMic();return;}paused=false;document.getElementById('bbPause').textContent='⏸';}
 function bbPause(){paused=!paused;document.getElementById('bbPause').textContent=paused?'▶':'⏸';document.getElementById('bbPause').style.background=paused?'rgba(255,255,255,0.6)':'rgba(255,255,255,0.28)';}
 function bbStop(){doStopMic();initSes();}
-
 function drawScore(){
   const wrap=document.getElementById('score-wrap');
   wrap.innerHTML='';
   if(typeof Vex==='undefined'){wrap.innerHTML='<p style="color:#bbb;padding:14px">악보 로딩 중...</p>';return;}
   try{
     const VF=Vex.Flow,song=curSong,bpm=song.bpm||4;
-    const measures=[]; let mArr=[],mBeats=0;
+    const measures=[];let mArr=[],mBeats=0;
     song.notes.forEach((n,i)=>{
       const v=n.dur==='h'?2:n.dur==='w'?4:1;
       mArr.push(i);mBeats+=v;
       if(mBeats>=bpm){measures.push([...mArr]);mArr=[];mBeats=0;}
     });
     if(mArr.length)measures.push(mArr);
-
     const containerW=Math.max(wrap.clientWidth||320,300);
     const CLEF_W=30,TIMESIG_W=26,MARGIN=6,MEA_MIN_W=110;
     const firstExtra=CLEF_W+TIMESIG_W+MARGIN*2;
     const measPerRow=Math.max(1,Math.floor((containerW-firstExtra)/MEA_MIN_W));
     const rows=[];
     for(let i=0;i<measures.length;i+=measPerRow)rows.push(measures.slice(i,i+measPerRow));
-
     const ROW_H=100,totalH=rows.length*ROW_H+24;
     const renderer=new VF.Renderer(wrap,VF.Renderer.Backends.SVG);
     renderer.resize(containerW,totalH);
     const ctx=renderer.getContext();
-
     rows.forEach((rowMeasures,ri)=>{
       const y=ri*ROW_H+12,isFirstRow=ri===0;
       const headerW=isFirstRow?CLEF_W+TIMESIG_W:CLEF_W;
@@ -307,7 +282,8 @@ function drawScore(){
         const isFirstMea=mi===0;
         const sw=isFirstMea?meaW+headerW:meaW;
         const stave=new VF.Stave(x,y,sw);
-        stave.addClef('treble');
+        // 각 줄의 첫 마디에만 음자리표, 첫 줄 첫 마디에만 박자표
+        if(isFirstMea)stave.addClef('treble');
         if(isFirstRow&&isFirstMea)stave.addTimeSignature(bpm+'/4');
         stave.setContext(ctx).draw();
         let beatSum=0;
@@ -328,7 +304,6 @@ function drawScore(){
     document.getElementById('score-t').textContent='🎼 '+song.name+' ('+song.notes.length+'음)';
   }catch(e){wrap.innerHTML='<p style="color:#e03131;padding:14px;font-size:0.78rem">악보 오류: '+e.message+'</p>';console.error(e);}
 }
-
 function drawNoteBar(){
   const bar=document.getElementById('note-bar');bar.innerHTML='';
   curSong.notes.forEach((n,i)=>{
@@ -340,7 +315,6 @@ function drawNoteBar(){
   document.getElementById('prog-bar').style.width=(states.filter(s=>s==='correct').length/curSong.notes.length*100)+'%';
 }
 function redraw(){drawScore();drawNoteBar();}
-
 function detectPitch(buf,sr){
   const half=buf.length>>1;const yin=new Float32Array(half);yin[0]=1;let run=0;
   for(let t=1;t<half;t++){let s=0;for(let j=0;j<half;j++){const d=buf[j]-buf[j+t];s+=d*d;}run+=s;yin[t]=s*t/run;}
@@ -348,7 +322,6 @@ function detectPitch(buf,sr){
   return -1;
 }
 function noteFromFreq(f){const n=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];const m=Math.round(12*Math.log2(f/440)+49);return n[((m-1)%12+12)%12]+Math.floor((m-1)/12);}
-
 function detectLoop(){
   if(!listening)return;
   if(paused){rafId=requestAnimationFrame(detectLoop);return;}
@@ -379,14 +352,12 @@ function detectLoop(){
   }else{document.getElementById('det-hz').textContent='피아노를 쳐보세요 🎵';}
   rafId=requestAnimationFrame(detectLoop);
 }
-
 function onComplete(){
   const b=document.getElementById('done-banner');
   b.textContent=curSes<totalSes?`🎉 ${curSes}회 완료! 잠깐 쉬고 계속해요!`:`🏆 ${totalSes}회 모두 완료! 정말 잘했어요!`;
   b.classList.add('show');setStatus('done');doStopMic();
   if(curSes<totalSes)setTimeout(()=>{curSes++;initSes();},2500);
 }
-
 async function startMic(){
   if(listening)return;
   try{
@@ -403,7 +374,6 @@ async function startMic(){
     setStatus('go');startTimer();detectLoop();
   }catch(e){alert('마이크 권한을 허용해주세요 🎤\n브라우저 주소창 자물쇠 아이콘을 눌러 마이크를 허용해주세요.');}
 }
-
 function doStopMic(){
   listening=false;cancelAnimationFrame(rafId);
   if(micStream){micStream.getTracks().forEach(t=>t.stop());micStream=null;}
@@ -416,7 +386,6 @@ function doStopMic(){
   const dh=document.getElementById('det-hz');if(dh)dh.textContent='마이크를 켜주세요';
   clearTimer();
 }
-
 function setStatus(t){
   const box=document.getElementById('sbox'),em=document.getElementById('s-em'),tx=document.getElementById('s-tx');
   box.className='stat-box';
@@ -426,7 +395,6 @@ function setStatus(t){
   else if(t==='done'){box.classList.add('ok');em.textContent='🎉';tx.textContent='완료!';}
   else{em.textContent='🎵';tx.textContent='시작해볼까요?';}
 }
-
 function loadVex(){
   if(typeof Vex!=='undefined'){setTimeout(redraw,150);return;}
   const s=document.createElement('script');
@@ -435,7 +403,6 @@ function loadVex(){
   s.onerror=()=>{const s2=document.createElement('script');s2.src='https://unpkg.com/vexflow@4.2.2/build/cjs/vexflow.js';s2.onload=()=>setTimeout(redraw,150);document.head.appendChild(s2);};
   document.head.appendChild(s);
 }
-
 window.addEventListener('resize',()=>{if(typeof Vex!=='undefined'&&document.getElementById('pg-prac').classList.contains('active'))drawScore();});
 renderGrid();
 </script>
