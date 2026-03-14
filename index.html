@@ -256,6 +256,95 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .pb-guide-last{font-family:'Jua',sans-serif;font-size:0.7rem;color:#FFE66D;margin-top:3px;padding-top:3px;border-top:1px solid rgba(255,255,255,0.1);}
 
 .test-badge{display:inline-block;background:rgba(255,230,109,0.2);border:1px solid rgba(255,230,109,0.4);border-radius:99px;padding:2px 8px;font-size:0.65rem;color:#FFE66D;font-family:'Jua',sans-serif;margin-bottom:4px;}
+
+/* ══════════════════════════════════════
+   관리자 탭
+══════════════════════════════════════ */
+/* 비밀번호 모달 */
+.admin-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2000;align-items:center;justify-content:center;}
+.admin-modal-bg.show{display:flex;}
+.admin-modal{background:#fff;border-radius:20px;padding:28px 24px;width:85%;max-width:320px;text-align:center;}
+.admin-modal h3{font-family:'Jua',sans-serif;font-size:1.1rem;color:#2D3436;margin-bottom:6px;}
+.admin-modal p{font-size:0.78rem;color:#aaa;margin-bottom:18px;}
+.admin-pw-input{width:100%;padding:12px 16px;border:2px solid #eee;border-radius:12px;font-family:'Do Hyeon',sans-serif;font-size:1.4rem;text-align:center;letter-spacing:8px;outline:none;margin-bottom:12px;transition:border-color 0.2s;}
+.admin-pw-input:focus{border-color:var(--secondary);}
+.admin-pw-input.error{border-color:var(--wrong);animation:shake 0.4s;}
+.admin-modal-btns{display:flex;gap:8px;}
+.admin-modal-btn{flex:1;padding:12px;border:none;border-radius:12px;font-family:'Jua',sans-serif;font-size:0.95rem;cursor:pointer;transition:all 0.2s;}
+.admin-modal-btn.confirm{background:linear-gradient(135deg,var(--secondary),#38d9cc);color:#fff;}
+.admin-modal-btn.cancel{background:#f1f3f5;color:#868e96;}
+
+/* 관리자 페이지 */
+#pg-admin{background:linear-gradient(160deg,#f8f9fa,#e9ecef);}
+.admin-header{background:linear-gradient(135deg,#2D3436,#636e72);padding:20px 14px 16px;text-align:center;}
+.admin-header .ah-title{font-family:'Do Hyeon',sans-serif;font-size:1.3rem;color:#fff;letter-spacing:1px;}
+.admin-header .ah-sub{font-size:0.7rem;color:rgba(255,255,255,0.5);margin-top:2px;}
+.admin-inner{padding:16px 14px calc(var(--tab-h)+40px);}
+
+/* 관리자 섹션 */
+.admin-section{background:#fff;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 3px 12px rgba(0,0,0,0.07);}
+.admin-section-title{font-family:'Jua',sans-serif;font-size:0.95rem;color:#2D3436;margin-bottom:12px;display:flex;align-items:center;gap:7px;}
+.admin-logout{float:right;background:none;border:1px solid #ddd;border-radius:8px;padding:3px 10px;font-family:'Jua',sans-serif;font-size:0.7rem;color:#aaa;cursor:pointer;}
+
+/* 곡 목록 (관리자용) */
+.admin-song-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#f8f9fa;border-radius:10px;margin-bottom:8px;}
+.admin-song-item .asi-emoji{font-size:1.3rem;}
+.admin-song-item .asi-info{flex:1;min-width:0;}
+.admin-song-item .asi-name{font-family:'Jua',sans-serif;font-size:0.85rem;color:#2D3436;}
+.admin-song-item .asi-meta{font-size:0.68rem;color:#aaa;margin-top:2px;}
+.admin-song-item .asi-btns{display:flex;gap:5px;}
+.asi-btn{padding:5px 10px;border:none;border-radius:8px;font-family:'Jua',sans-serif;font-size:0.7rem;cursor:pointer;transition:all 0.2s;}
+.asi-btn:active{transform:scale(0.93);}
+.asi-btn.edit{background:#E3F2FD;color:#1565C0;}
+.asi-btn.del{background:#FFE3E3;color:#c92a2a;}
+
+/* 곡 추가/수정 폼 */
+.admin-form{display:none;}
+.admin-form.show{display:block;}
+.form-group{margin-bottom:12px;}
+.form-group label{font-family:'Jua',sans-serif;font-size:0.8rem;color:#636e72;display:block;margin-bottom:5px;}
+.form-input{width:100%;padding:10px 13px;border:2px solid #eee;border-radius:10px;font-family:'Nanum Gothic',sans-serif;font-size:0.88rem;outline:none;transition:border-color 0.2s;}
+.form-input:focus{border-color:var(--secondary);}
+.form-select{width:100%;padding:10px 13px;border:2px solid #eee;border-radius:10px;font-family:'Nanum Gothic',sans-serif;font-size:0.88rem;outline:none;background:#fff;transition:border-color 0.2s;}
+.form-select:focus{border-color:var(--secondary);}
+.form-textarea{width:100%;padding:10px 13px;border:2px solid #eee;border-radius:10px;font-family:'Nanum Gothic',sans-serif;font-size:0.82rem;outline:none;resize:none;height:80px;transition:border-color 0.2s;}
+.form-textarea:focus{border-color:var(--secondary);}
+.form-hint{font-size:0.68rem;color:#aaa;margin-top:4px;}
+.form-btns{display:flex;gap:8px;margin-top:14px;}
+.form-btn{flex:1;padding:12px;border:none;border-radius:12px;font-family:'Jua',sans-serif;font-size:0.95rem;cursor:pointer;transition:all 0.2s;}
+.form-btn:active{transform:scale(0.97);}
+.form-btn.save{background:linear-gradient(135deg,var(--secondary),#38d9cc);color:#fff;}
+.form-btn.cancel-form{background:#f1f3f5;color:#868e96;}
+
+/* 카테고리 관리 */
+.cat-manage-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.cat-manage-item{background:#f8f9fa;border-radius:10px;padding:10px;text-align:center;cursor:pointer;border:2px solid transparent;transition:all 0.2s;}
+.cat-manage-item.active-cat{border-color:var(--secondary);background:#F0FDFB;}
+.cat-manage-item .cmi-icon{font-size:1.4rem;margin-bottom:4px;}
+.cat-manage-item .cmi-name{font-family:'Jua',sans-serif;font-size:0.78rem;color:#2D3436;}
+.cat-manage-item .cmi-cnt{font-size:0.62rem;color:#aaa;}
+.add-cat-btn{width:100%;padding:11px;border:2px dashed #ddd;border-radius:10px;background:none;font-family:'Jua',sans-serif;font-size:0.82rem;color:#aaa;cursor:pointer;margin-top:8px;transition:all 0.2s;}
+.add-cat-btn:hover{border-color:var(--secondary);color:var(--secondary);}
+
+.admin-add-btn{width:100%;padding:13px;border:none;border-radius:13px;background:linear-gradient(135deg,var(--primary),#FF8E53);color:#fff;font-family:'Jua',sans-serif;font-size:1rem;cursor:pointer;box-shadow:0 4px 12px rgba(255,107,107,0.3);transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:12px;}
+.admin-add-btn:active{transform:scale(0.97);}
+.firebase-notice{background:#FFF9DB;border:1px solid #FFE066;border-radius:10px;padding:10px 12px;font-size:0.72rem;color:#e67700;margin-top:10px;line-height:1.5;}
+
+
+/* 채점 방식 선택 */
+.score-mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:4px;}
+.score-mode-card{border:2px solid #eee;border-radius:13px;padding:13px 10px;text-align:center;cursor:pointer;transition:all 0.2s;background:#fafafa;}
+.score-mode-card:active{transform:scale(0.95);}
+.score-mode-card.sel{border-color:var(--secondary);background:#F0FDFB;}
+.score-mode-card.disabled{opacity:0.35;cursor:default;}
+.smc-ico{font-size:1.5rem;margin-bottom:5px;}
+.smc-name{font-family:'Jua',sans-serif;font-size:0.85rem;color:var(--text);}
+.smc-sub{font-size:0.65rem;color:#aaa;margin-top:3px;}
+/* 양손 채점 시 현재 손 표시 */
+.hand-indicator{display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;border-radius:10px;font-family:'Jua',sans-serif;font-size:0.85rem;margin-top:8px;}
+.hand-indicator.right-hand{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);color:#1565C0;}
+.hand-indicator.left-hand{background:linear-gradient(135deg,#FFF3E0,#FFE0B2);color:#E65100;}
+
 </style>
 </head>
 <body>
@@ -290,6 +379,10 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
     </div>
     <span class="t-lbl">보상</span>
     <div class="speech-bubble" id="reward-speech">연습 10회 → 가챠권 🎟</div>
+  </button>
+  <button class="tab-item" id="tab-admin" onclick="openAdminModal()">
+    <div class="tab-ico-wrap"><span class="t-ico">⚙️</span></div>
+    <span class="t-lbl">관리</span>
   </button>
 </div>
 
@@ -358,6 +451,21 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
         <div class="tol-v" id="tol-v">±50¢</div>
       </div>
     </div>
+    <div class="scard" id="score-mode-card">
+      <h3>🎯 채점 방식</h3>
+      <div class="score-mode-grid">
+        <div class="score-mode-card sel" id="smc-right" onclick="selectScoreMode('right')">
+          <div class="smc-ico">🤚</div>
+          <div class="smc-name">오른손만</div>
+          <div class="smc-sub">멜로디 인식</div>
+        </div>
+        <div class="score-mode-card" id="smc-both" onclick="selectScoreMode('both')">
+          <div class="smc-ico">🤲</div>
+          <div class="smc-name">양손 모두</div>
+          <div class="smc-sub">오른손 → 왼손 순서</div>
+        </div>
+      </div>
+    </div>
     <div class="scard"><h3>🎼 선택한 곡</h3><div class="prev-box" id="prev-box"></div></div>
     <button class="big-btn btn-primary" onclick="goPrac()">🎹 연습 시작!</button>
   </div>
@@ -379,6 +487,9 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       <div class="detect-row">
         <div class="detect-box"><div class="big-note" id="det-note">—</div><div class="hz-txt" id="det-hz">마이크를 켜주세요</div><div class="mic-row"><div class="mic-dot" id="mic-dot"></div><span class="mic-lbl" id="mic-lbl">꺼짐</span></div></div>
         <div class="stat-box" id="sbox"><div class="s-em" id="s-em">🎵</div><div class="s-tx" id="s-tx">시작해볼까요?</div></div>
+      </div>
+      <div class="hand-indicator" id="hand-indicator" style="display:none">
+        <span id="hand-indicator-text">🤚 오른손 차례예요!</span>
       </div>
       <div class="done-banner" id="done-banner">🎉 완료!</div>
       <button class="mic-go-btn" id="mic-go-btn" onclick="startMic()">🎤 마이크 켜고 연습 시작</button>
@@ -423,6 +534,119 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       <div class="pi-title">🏆 당첨 상품 안내 (마지막 공 기준)</div>
       <div id="prizes-list"></div>
     </div>
+  </div>
+</div>
+
+
+<!-- 비밀번호 모달 -->
+<div class="admin-modal-bg" id="admin-pw-modal">
+  <div class="admin-modal">
+    <h3>🔐 관리자 확인</h3>
+    <p>관리자 비밀번호를 입력해주세요</p>
+    <input class="admin-pw-input" id="admin-pw-input" type="password" maxlength="4" placeholder="••••" oninput="onPwInput()">
+    <div class="admin-modal-btns">
+      <button class="admin-modal-btn cancel" onclick="closeAdminModal()">취소</button>
+      <button class="admin-modal-btn confirm" onclick="checkAdminPw()">확인</button>
+    </div>
+  </div>
+</div>
+
+<!-- 관리자 페이지 -->
+<div id="pg-admin" class="page">
+  <div class="admin-header">
+    <div class="ah-title">⚙️ 관리자 모드</div>
+    <div class="ah-sub">곡 및 카테고리를 관리하세요</div>
+  </div>
+  <div class="admin-inner">
+
+    <!-- 곡 추가 버튼 -->
+    <button class="admin-add-btn" onclick="showAddForm()">➕ 새 곡 추가하기</button>
+
+    <!-- 곡 추가/수정 폼 -->
+    <div class="admin-section admin-form" id="song-form">
+      <div class="admin-section-title" id="form-title">➕ 곡 추가</div>
+      <div class="form-group">
+        <label>곡 이름</label>
+        <input class="form-input" id="f-name" type="text" placeholder="예: 나비야">
+      </div>
+      <div class="form-group">
+        <label>이모지</label>
+        <input class="form-input" id="f-emoji" type="text" placeholder="예: 🦋" maxlength="2">
+      </div>
+      <div class="form-group">
+        <label>교재</label>
+        <select class="form-select" id="f-book">
+          <option value="동요">동요</option>
+          <option value="바이엘">바이엘</option>
+          <option value="체르니">체르니</option>
+          <option value="기타">기타</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>장르</label>
+        <select class="form-select" id="f-genre">
+          <option value="동요">동요</option>
+          <option value="클래식">클래식</option>
+          <option value="연습곡">연습곡</option>
+          <option value="OST">OST</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>난이도</label>
+        <select class="form-select" id="f-level">
+          <option value="입문">입문</option>
+          <option value="초급">초급</option>
+          <option value="중급">중급</option>
+          <option value="고급">고급</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>연주방식</label>
+        <select class="form-select" id="f-hands">
+          <option value="right">오른손</option>
+          <option value="both">양손</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>박자 (BPM 분자)</label>
+        <select class="form-select" id="f-bpm">
+          <option value="4">4/4박자</option>
+          <option value="3">3/4박자</option>
+          <option value="2">2/4박자</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>오른손 음표 데이터</label>
+        <textarea class="form-textarea" id="f-notes-right" placeholder='[{"vex":"c/4","lb":"도","freq":261.63,"dur":"q"}, ...]'></textarea>
+        <div class="form-hint">💡 Firebase 연동 후 악보 편집기로 쉽게 입력 가능해져요</div>
+      </div>
+      <div class="form-btns">
+        <button class="form-btn cancel-form" onclick="hideForm()">취소</button>
+        <button class="form-btn save" onclick="saveSong()">저장</button>
+      </div>
+      <div class="firebase-notice">
+        🔥 Firebase 연동 전까지는 추가한 곡이 새로고침 시 초기화돼요.<br>연동 후에는 영구 저장됩니다!
+      </div>
+    </div>
+
+    <!-- 곡 목록 관리 -->
+    <div class="admin-section">
+      <div class="admin-section-title">
+        🎵 곡 목록 관리
+        <button class="admin-logout" onclick="adminLogout()">로그아웃</button>
+      </div>
+      <div id="admin-song-list"></div>
+    </div>
+
+    <!-- 카테고리 관리 -->
+    <div class="admin-section">
+      <div class="admin-section-title">🏷️ 카테고리 현황</div>
+      <div class="cat-manage-grid" id="admin-cat-grid"></div>
+      <div class="firebase-notice" style="margin-top:10px">
+        🔥 카테고리 추가/삭제는 Firebase 연동 후 가능해요
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -630,6 +854,9 @@ function renderPrizesInfo(){
 // 앱 상태
 // ════════════════════════════════════════════════════════
 let curSong=SONG_DB[0], curHandsMode='right', activeFilters={}, curNotes=[];
+let scoreMode='right';       // 'right' | 'both'
+let scoringHand='right';     // 현재 채점 중인 손 'right' | 'left'
+let leftStates=[], leftCur=0; // 왼손 상태
 let totalSes=3, curSes=1, states=[], cur=0;
 let listening=false, paused=false;
 let audioCtx=null, analyser=null, micStream=null, rafId=null;
@@ -753,8 +980,24 @@ function selectHands(mode){
   closeHandsModal(); gotoSet();
 }
 
+function selectScoreMode(mode){
+  // 오른손만 있는 곡은 양손채점 불가
+  if(mode==='both' && curSong.hands!=='both') return;
+  scoreMode = mode;
+  document.getElementById('smc-right').classList.toggle('sel', mode==='right');
+  document.getElementById('smc-both').classList.toggle('sel', mode==='both');
+}
+
 function gotoSet(){
   const s=curSong, hl=curHandsMode==='both'?'양손':'오른손';
+  // 채점방식 카드 - 양손 곡 아닐 때 비활성화
+  const smcBoth = document.getElementById('smc-both');
+  if(s.hands!=='both'){
+    smcBoth.classList.add('disabled');
+    selectScoreMode('right');
+  } else {
+    smcBoth.classList.remove('disabled');
+  }
   document.getElementById('prev-box').innerHTML=
     `<div class="prev-name">${s.emoji} ${s.name}</div>
      <div class="prev-tags"><span class="tag tag-book">${s.tags.book}</span><span class="tag tag-level lv${lvNum(s.tags.level)}">${s.tags.level}</span><span class="tag tag-hands">🤲 ${hl}</span></div>
@@ -764,7 +1007,18 @@ function gotoSet(){
 }
 
 function goPrac(){
-  curNotes=curSong.right;
+  // 채점방식에 따라 curNotes 설정
+  if(scoreMode==='both' && curSong.hands==='both'){
+    curNotes = curSong.right; // 오른손 먼저
+    leftStates = curSong.left.map(()=>'waiting');
+    leftCur = 0;
+    scoringHand = 'right';
+  } else {
+    curNotes = curSong.right;
+    leftStates = [];
+    leftCur = 0;
+    scoringHand = 'right';
+  }
   totalSes=parseInt(document.getElementById('cnt-disp').textContent)||3;
   curSes=1; initSes();
   showPage('pg-prac');
@@ -783,11 +1037,32 @@ document.getElementById('tol').addEventListener('input',function(){document.getE
 // ════════════════════════════════════════════════════════
 function initSes(){
   states=curNotes.map(()=>'waiting'); cur=0;
+  if(scoreMode==='both' && curSong.hands==='both'){
+    leftStates=curSong.left.map(()=>'waiting'); leftCur=0; scoringHand='right';
+  }
   document.getElementById('done-banner').classList.remove('show');
   document.getElementById('mic-go-btn').disabled=false;
   document.getElementById('mic-go-btn').textContent='🎤 마이크 켜고 연습 시작';
+  updateHandIndicator();
   setStatus('idle'); renderSesDots(); drawNoteBar(); updBarCount();
   if(typeof Vex!=='undefined') drawScore();
+}
+
+function updateHandIndicator(){
+  const el = document.getElementById('hand-indicator');
+  const txt = document.getElementById('hand-indicator-text');
+  if(scoreMode==='both' && curSong.hands==='both'){
+    el.style.display='flex';
+    if(scoringHand==='right'){
+      el.className='hand-indicator right-hand';
+      txt.textContent='🤚 오른손 차례예요!';
+    } else {
+      el.className='hand-indicator left-hand';
+      txt.textContent='🤙 왼손 차례예요!';
+    }
+  } else {
+    el.style.display='none';
+  }
 }
 function renderSesDots(){
   const r=document.getElementById('ses-row'); r.innerHTML='';
@@ -929,7 +1204,7 @@ function drawScore(){
   area.innerHTML='<div class="score-wrap" id="sw-main"></div>';
   setTimeout(()=>{
     const wrap=document.getElementById('sw-main'); if(!wrap) return;
-    if(curHandsMode==='both'&&song.hands==='both') drawGrandStaff(wrap,song.right,song.left,states,bpm);
+    if(curHandsMode==='both'&&song.hands==='both') drawGrandStaff(wrap,song.right,song.left,states,bpm,leftStates);
     else drawSingleStaff(wrap,song.right,states,bpm);
   },50);
   document.getElementById('score-t').textContent='🎼 '+song.name+(curHandsMode==='both'?' · 양손':' · 오른손');
@@ -937,23 +1212,46 @@ function drawScore(){
 
 function drawNoteBar(){
   const bar=document.getElementById('note-bar'); bar.innerHTML='';
+  // 오른손 음표
   curNotes.forEach((n,i)=>{
     const chip=document.createElement('div'); chip.className='note-chip';
     const dot=document.createElement('div'); dot.className='note-dot '+states[i]; dot.textContent=n.lb;
     const lbl=document.createElement('div'); lbl.className='note-lbl'; lbl.textContent=i+1;
     chip.append(dot,lbl); bar.appendChild(chip);
   });
-  document.getElementById('prog-bar').style.width=(states.filter(s=>s==='correct').length/curNotes.length*100)+'%';
+  // 양손 채점 시 왼손 음표도 표시
+  if(scoreMode==='both' && curSong.hands==='both' && leftStates.length){
+    const div=document.createElement('div');
+    div.style.cssText='width:100%;border-top:1px dashed #ddd;margin:6px 0 4px;display:flex;align-items:center;gap:4px;';
+    div.innerHTML='<span style="font-size:0.62rem;color:#aaa;font-family:Jua,sans-serif;">🤙 왼손</span>';
+    bar.appendChild(div);
+    curSong.left.forEach((n,i)=>{
+      const chip=document.createElement('div'); chip.className='note-chip';
+      const dot=document.createElement('div');
+      dot.className='note-dot '+(leftStates[i]||'waiting');
+      dot.style.background=leftStates[i]==='correct'?'#51CF66':leftStates[i]==='current'?'#f59f00':leftStates[i]==='wrong'?'#FF6B6B':'#FFD8A8';
+      dot.textContent=n.lb;
+      const lbl=document.createElement('div'); lbl.className='note-lbl'; lbl.textContent=i+1;
+      chip.append(dot,lbl); bar.appendChild(chip);
+    });
+  }
+  // 진행바 - 오른손+왼손 합산
+  const totalNotes = scoreMode==='both'&&curSong.hands==='both'
+    ? curNotes.length + (curSong.left?.length||0)
+    : curNotes.length;
+  const doneNotes = states.filter(s=>s==='correct').length + leftStates.filter(s=>s==='correct').length;
+  document.getElementById('prog-bar').style.width=(doneNotes/totalNotes*100)+'%';
 }
 
 function redraw(){
   const wrap=document.getElementById('sw-main');
   if(wrap&&typeof Vex!=='undefined'){
     const song=curSong,bpm=song.bpm||4;
-    if(curHandsMode==='both'&&song.hands==='both') drawGrandStaff(wrap,song.right,song.left,states,bpm);
+    if(curHandsMode==='both'&&song.hands==='both') drawGrandStaff(wrap,song.right,song.left,states,bpm,leftStates);
     else drawSingleStaff(wrap,song.right,states,bpm);
   }
   drawNoteBar();
+  updateHandIndicator();
 }
 
 // ════════════════════════════════════════════════════════
@@ -977,20 +1275,60 @@ function detectLoop(){
     if(freq>50&&freq<2000){
       document.getElementById('det-note').textContent=noteFromFreq(freq);
       document.getElementById('det-hz').textContent=freq.toFixed(1)+' Hz';
-      if(cur<curNotes.length){
-        const cents=Math.abs(1200*Math.log2(freq/curNotes[cur].freq));
-        const tol=+document.getElementById('tol').value;
-        if(cents<=tol){
-          const now=Date.now();
-          if(now-lastOkT>500){
-            lastOkT=now; states[cur]='correct'; cur++; clearTimeout(wrongTid);
-            if(cur<curNotes.length){states[cur]='current';setStatus('ok');setTimeout(()=>setStatus('go'),600);}
-            else onSessionComplete();
-            redraw();
+      const tol=+document.getElementById('tol').value;
+      // 양손 채점 모드
+      if(scoreMode==='both' && curSong.hands==='both'){
+        if(scoringHand==='right' && cur<curNotes.length){
+          const cents=Math.abs(1200*Math.log2(freq/curNotes[cur].freq));
+          if(cents<=tol){
+            const now=Date.now();
+            if(now-lastOkT>500){
+              lastOkT=now; states[cur]='correct'; cur++; clearTimeout(wrongTid);
+              if(cur<curNotes.length){ states[cur]='current'; setStatus('ok'); setTimeout(()=>setStatus('go'),600); }
+              else {
+                // 오른손 완료 → 왼손으로 전환
+                scoringHand='left'; leftCur=0;
+                if(leftStates.length) leftStates[0]='current';
+                setStatus('go'); updateHandIndicator();
+              }
+              redraw();
+            }
+          } else if(states[cur]==='current'){
+            states[cur]='wrong'; setStatus('ng'); redraw(); clearTimeout(wrongTid);
+            wrongTid=setTimeout(()=>{if(cur<curNotes.length){states[cur]='current';setStatus('go');redraw();}},700);
           }
-        } else if(states[cur]==='current'){
-          states[cur]='wrong'; setStatus('ng'); redraw(); clearTimeout(wrongTid);
-          wrongTid=setTimeout(()=>{if(cur<curNotes.length){states[cur]='current';setStatus('go');redraw();}},700);
+        } else if(scoringHand==='left' && leftCur<curSong.left.length){
+          const lNote=curSong.left[leftCur];
+          const cents=Math.abs(1200*Math.log2(freq/lNote.freq));
+          if(cents<=tol){
+            const now=Date.now();
+            if(now-lastOkT>500){
+              lastOkT=now; leftStates[leftCur]='correct'; leftCur++; clearTimeout(wrongTid);
+              if(leftCur<curSong.left.length){ leftStates[leftCur]='current'; setStatus('ok'); setTimeout(()=>setStatus('go'),600); }
+              else onSessionComplete();
+              redraw();
+            }
+          } else if(leftStates[leftCur]==='current'){
+            leftStates[leftCur]='wrong'; setStatus('ng'); redraw(); clearTimeout(wrongTid);
+            wrongTid=setTimeout(()=>{if(leftCur<curSong.left.length){leftStates[leftCur]='current';setStatus('go');redraw();}},700);
+          }
+        }
+      } else {
+        // 오른손만 채점
+        if(cur<curNotes.length){
+          const cents=Math.abs(1200*Math.log2(freq/curNotes[cur].freq));
+          if(cents<=tol){
+            const now=Date.now();
+            if(now-lastOkT>500){
+              lastOkT=now; states[cur]='correct'; cur++; clearTimeout(wrongTid);
+              if(cur<curNotes.length){states[cur]='current';setStatus('ok');setTimeout(()=>setStatus('go'),600);}
+              else onSessionComplete();
+              redraw();
+            }
+          } else if(states[cur]==='current'){
+            states[cur]='wrong'; setStatus('ng'); redraw(); clearTimeout(wrongTid);
+            wrongTid=setTimeout(()=>{if(cur<curNotes.length){states[cur]='current';setStatus('go');redraw();}},700);
+          }
         }
       }
     } else {
