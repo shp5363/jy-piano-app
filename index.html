@@ -663,27 +663,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       <div class="r-sub">연습 10회 완료 = 가챠권 1장</div>
     </div>
 
-    <!-- 시상대 랭킹 -->
-    <div class="ranking-section">
-      <div class="ranking-title">🏆 피아노 마을 랭킹</div>
-      <!-- 시상대 -->
-      <div class="podium-wrap" id="podium-wrap">
-        <!-- JS로 렌더링 -->
-        <div style="color:rgba(255,255,255,0.3);font-size:0.8rem;text-align:center;width:100%;padding:20px 0">
-          학생 등록 후 랭킹이 표시돼요
-        </div>
-      </div>
-      <!-- 내 랭킹 -->
-      <div class="my-rank-card" id="my-rank-card" style="display:none">
-        <div class="my-rank-num" id="my-rank-num">-</div>
-        <div class="my-rank-info">
-          <div class="my-rank-name" id="my-rank-name">나의 랭킹</div>
-          <div class="my-rank-sub" id="my-rank-sub">포인트 획득 후 랭킹에 참여해요</div>
-        </div>
-        <div class="my-rank-badge" id="my-rank-badge"></div>
-      </div>
-    </div>
-
     <!-- 게임권 현황 -->
     <div class="ticket-card">
       <div class="ticket-count" id="ticket-count">0</div>
@@ -2163,18 +2142,6 @@ function updateLevelUI() {
   const info = getLevelInfo(totalPoints);
   const { cur, next, pct, need } = info;
 
-  // 경험치 바
-  const expBar = document.getElementById('level-exp-bar');
-  if (expBar) {
-    expBar.style.width = pct + '%';
-    expBar.style.background = 'linear-gradient(90deg,' + cur.expColor + ',' + (next ? next.expColor : cur.expColor) + ')';
-  }
-  const expNeed = document.getElementById('level-exp-need');
-  if (expNeed) {
-    expNeed.parentElement.innerHTML = next
-      ? '다음 레벨까지 <span id="level-exp-need">' + need + '</span>포인트 남음'
-      : '<span style="color:var(--primary)">✨ 최고 레벨 달성!</span>';
-  }
   renderPodium();
 }
 
@@ -2295,7 +2262,6 @@ function getAllRanking(){
 }
 
 function renderPodium(){
-  renderPodiumTo('podium-wrap');
   renderPodiumTo('podium-wrap-home');
 }
 
