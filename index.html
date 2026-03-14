@@ -328,7 +328,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .admin-add-btn:active{transform:scale(0.97);}
 .firebase-notice{background:#FFF9DB;border:1px solid #FFE066;border-radius:10px;padding:10px 12px;font-size:0.72rem;color:#e67700;margin-top:10px;line-height:1.5;}
 
-
 /* 채점 방식 선택 */
 .score-mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:4px;}
 .score-mode-card{border:2px solid #eee;border-radius:13px;padding:13px 10px;text-align:center;cursor:pointer;transition:all 0.2s;background:#fafafa;}
@@ -343,7 +342,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .hand-indicator.right-hand{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);color:#1565C0;}
 .hand-indicator.left-hand{background:linear-gradient(135deg,#FFF3E0,#FFE0B2);color:#E65100;}
 
-
 /* 티켓 추가 모달 */
 .ticket-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2000;align-items:center;justify-content:center;}
 .ticket-modal-bg.show{display:flex;}
@@ -356,7 +354,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .ticket-pw-input{width:100%;padding:11px 16px;border:2px solid #eee;border-radius:12px;font-family:'Do Hyeon',sans-serif;font-size:1.3rem;text-align:center;letter-spacing:8px;outline:none;margin-bottom:12px;transition:border-color 0.2s;}
 .ticket-pw-input:focus{border-color:var(--secondary);}
 .ticket-pw-input.error{border-color:var(--wrong);animation:shake 0.4s;}
-
 
 /* ── 레벨 시스템 ── */
 .level-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:99px;font-family:'Do Hyeon',sans-serif;font-size:1rem;transition:all 0.3s;white-space:nowrap;}
@@ -372,8 +369,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 @keyframes lvShine{0%,100%{box-shadow:0 0 24px rgba(255,215,0,0.8),0 0 48px rgba(255,140,0,0.4);}50%{box-shadow:0 0 40px rgba(255,215,0,1),0 0 80px rgba(255,140,0,0.7),0 0 120px rgba(255,69,0,0.3);}}
 
 /* 레벨 카드 (홈/보상 화면) */
-.level-card{background:#fff;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 3px 12px rgba(0,0,0,0.07);text-align:center;}
-.level-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+
 .level-info{text-align:left;}
 .level-title{font-family:'Do Hyeon',sans-serif;font-size:1.4rem;color:var(--text);}
 .level-pts{font-size:0.75rem;color:#aaa;margin-top:2px;}
@@ -383,9 +379,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .level-exp-txt span{color:var(--primary);font-weight:700;}
 
 /* 홈 화면 미니 레벨 표시 */
-.home-level-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;}
-.total-pts-badge{background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.2);border-radius:99px;padding:4px 12px;font-family:'Jua',sans-serif;font-size:0.75rem;color:var(--primary);}
-
 
 /* ── 레벨 팝업 ── */
 .level-popup-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:3000;align-items:flex-end;justify-content:center;}
@@ -427,7 +420,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .lp-road-status.current{color:#f59f00;}
 .lp-road-status.future{color:#aaa;}
 .lp-close{width:100%;padding:13px;border:none;border-radius:13px;background:#f1f3f5;font-family:'Jua',sans-serif;font-size:0.95rem;color:#868e96;cursor:pointer;margin-top:16px;}
-
 
 /* ── 랭킹 시상대 ── */
 .ranking-section{margin-bottom:14px;}
@@ -506,6 +498,10 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 
 <!-- 하단 탭 바 -->
 <div id="tab-bar">
+  <button class="tab-item" id="tab-home" onclick="switchTab('home')">
+    <div class="tab-ico-wrap"><span class="t-ico">🏠</span></div>
+    <span class="t-lbl">홈</span>
+  </button>
   <button class="tab-item active" id="tab-practice" onclick="switchTab('practice')">
     <div class="tab-ico-wrap"><span class="t-ico">🎹</span></div>
     <span class="t-lbl">연습</span>
@@ -517,6 +513,10 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
     </div>
     <span class="t-lbl">보상</span>
   </button>
+  <button class="tab-item" id="tab-village" onclick="switchTab('village')">
+    <div class="tab-ico-wrap"><span class="t-ico">🎮</span></div>
+    <span class="t-lbl">마을</span>
+  </button>
   <button class="tab-item" id="tab-admin" onclick="openAdminModal()">
     <div class="tab-ico-wrap"><span class="t-ico">⚙️</span></div>
     <span class="t-lbl">관리</span>
@@ -524,7 +524,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 </div>
 <!-- 말풍선 (탭바 위 고정) -->
 <div class="speech-bubble" id="reward-speech">연습 10회 → 가챠권 🎟</div>
-
 
 <!-- 티켓 추가 모달 -->
 <div class="ticket-modal-bg" id="ticket-add-modal">
@@ -549,10 +548,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
   <div class="practice-hero">
     <div class="logo">JY PIANO</div>
     <div class="sub">연습실</div>
-    <div class="home-level-row">
-      <div class="level-badge lv-1" id="home-level-badge" onclick="openLevelPopup()" style="cursor:pointer;">🌱 Lv.1 새싹</div>
-      <div class="total-pts-badge" id="home-pts-badge">0 포인트</div>
-    </div>
+
   </div>
   <div class="page-inner" style="padding-top:4px">
     <div class="search-bar">
@@ -667,21 +663,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       <div class="r-sub">연습 10회 완료 = 가챠권 1장</div>
     </div>
 
-    <!-- 레벨 카드 -->
-    <div class="level-card">
-      <div class="level-card-top">
-        <div class="level-info">
-          <div class="level-title" id="reward-level-title">Lv.1 새싹</div>
-          <div class="level-pts" id="reward-level-pts">총 0 포인트</div>
-        </div>
-        <div class="level-badge lv-1" id="reward-level-badge" onclick="openLevelPopup()" style="cursor:pointer;">🌱 Lv.1</div>
-      </div>
-      <div class="level-exp-wrap">
-        <div class="level-exp-bar" id="level-exp-bar" style="width:0%;background:linear-gradient(90deg,#51CF66,#94d82d);"></div>
-      </div>
-      <div class="level-exp-txt">다음 레벨까지 <span id="level-exp-need">50</span>포인트 남음</div>
-    </div>
-
     <!-- 시상대 랭킹 -->
     <div class="ranking-section">
       <div class="ranking-title">🏆 피아노 마을 랭킹</div>
@@ -734,8 +715,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
     </div>
   </div>
 </div>
-
-
 
 <!-- 레벨 팝업 -->
 <div class="level-popup-bg" id="level-popup-bg" onclick="closeLevelPopup(event)">
@@ -913,6 +892,95 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
   </div>
 </div>
 
+<!-- 홈 탭 -->
+<div id="pg-home" class="page">
+  <div style="background:linear-gradient(160deg,#1a1a2e,#16213e,#0f3460);min-height:100%;">
+    <div style="padding:18px 14px 120px;">
+
+      <!-- 학생 프로필 -->
+      <div style="text-align:center;padding:20px 0 16px;">
+        <div id="home-char" style="font-size:3.5rem;line-height:1;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));">🐣</div>
+        <div id="home-student-name" style="font-family:'Do Hyeon',sans-serif;font-size:1.4rem;color:#fff;letter-spacing:1px;">학생 이름</div>
+        <div id="home-student-sub" style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:4px;">피아노 마을 주민</div>
+      </div>
+
+      <!-- 레벨 카드 -->
+      <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:18px;padding:16px;margin-bottom:12px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <div>
+            <div style="font-family:'Do Hyeon',sans-serif;font-size:1.3rem;color:#fff;" id="home-level-title">Lv.1 새싹</div>
+            <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:2px;" id="home-total-pts">총 0 포인트</div>
+          </div>
+          <div class="level-badge lv-1" id="home-level-badge2" onclick="openLevelPopup()" style="cursor:pointer;">🌱 Lv.1 새싹</div>
+        </div>
+        <div style="height:10px;background:rgba(255,255,255,0.1);border-radius:99px;overflow:hidden;margin-bottom:6px;">
+          <div id="home-exp-bar" style="height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,#51CF66,#94d82d);transition:width 0.6s;"></div>
+        </div>
+        <div style="font-family:'Jua',sans-serif;font-size:0.72rem;color:rgba(255,255,255,0.4);text-align:right;" id="home-exp-txt">다음 레벨까지 50포인트 남음</div>
+      </div>
+
+      <!-- 연습 통계 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+        <div style="background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;text-align:center;">
+          <div style="font-family:'Do Hyeon',sans-serif;font-size:1.8rem;color:#FFE66D;" id="home-total-practice">0</div>
+          <div style="font-family:'Jua',sans-serif;font-size:0.7rem;color:rgba(255,255,255,0.4);margin-top:2px;">총 연습 횟수</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;text-align:center;">
+          <div style="font-family:'Do Hyeon',sans-serif;font-size:1.8rem;color:#4ECDC4;" id="home-rank-display">-</div>
+          <div style="font-family:'Jua',sans-serif;font-size:0.7rem;color:rgba(255,255,255,0.4);margin-top:2px;">현재 랭킹</div>
+        </div>
+      </div>
+
+      <!-- 시상대 -->
+      <div style="background:rgba(255,255,255,0.05);border-radius:16px;padding:14px;">
+        <div style="font-family:'Jua',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.5);margin-bottom:10px;text-align:center;">🏆 피아노 마을 랭킹</div>
+        <div class="podium-wrap" id="podium-wrap-home">
+          <div style="color:rgba(255,255,255,0.3);font-size:0.78rem;text-align:center;width:100%;padding:16px 0;">학생 등록 후 랭킹이 표시돼요</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 마을 탭 (준비중) -->
+<div id="pg-village" class="page">
+  <div style="background:linear-gradient(160deg,#0f3460,#16213e,#1a1a2e);min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;">
+    <div style="font-size:4rem;margin-bottom:16px;">🎮</div>
+    <div style="font-family:'Do Hyeon',sans-serif;font-size:1.5rem;color:#FFE66D;letter-spacing:1px;margin-bottom:8px;">피아노 마을</div>
+    <div style="font-family:'Jua',sans-serif;font-size:0.9rem;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:24px;">
+      열심히 연습하면<br>나만의 마을이 생겨요!<br><br>
+      <span style="font-size:0.78rem;color:rgba(255,255,255,0.3);">캐릭터 · 집 꾸미기 · 친구 방문<br>곧 오픈 예정이에요 🚧</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;width:100%;max-width:280px;">
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.3rem;">🏚</span>
+        <div style="text-align:left;">
+          <div style="font-family:'Jua',sans-serif;font-size:0.82rem;color:#fff;">나만의 집 꾸미기</div>
+          <div style="font-size:0.68rem;color:rgba(255,255,255,0.35);">연습할수록 집이 커져요</div>
+        </div>
+        <div style="margin-left:auto;font-size:0.65rem;color:rgba(255,255,255,0.3);font-family:'Jua',sans-serif;">준비중</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.3rem;">👗</span>
+        <div style="text-align:left;">
+          <div style="font-family:'Jua',sans-serif;font-size:0.82rem;color:#fff;">캐릭터 꾸미기</div>
+          <div style="font-size:0.68rem;color:rgba(255,255,255,0.35);">포인트로 아이템 구매</div>
+        </div>
+        <div style="margin-left:auto;font-size:0.65rem;color:rgba(255,255,255,0.3);font-family:'Jua',sans-serif;">준비중</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.3rem;">👋</span>
+        <div style="text-align:left;">
+          <div style="font-family:'Jua',sans-serif;font-size:0.82rem;color:#fff;">친구 집 방문</div>
+          <div style="font-size:0.68rem;color:rgba(255,255,255,0.35);">포인트 선물도 가능해요</div>
+        </div>
+        <div style="margin-left:auto;font-size:0.65rem;color:rgba(255,255,255,0.3);font-family:'Jua',sans-serif;">준비중</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ⑥ 핀볼 가챠 -->
 <div id="pg-pinball" class="page">
   <div class="pb-wrap">
@@ -943,9 +1011,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 </div>
 
 <script>
-// ════════════════════════════════════════════════════════
 // 곡 DB
-// ════════════════════════════════════════════════════════
 const SONG_DB=[
   {id:'butterfly',name:'나비야',emoji:'🦋',tags:{book:'동요',genre:'동요',level:'입문',hands:'오른손'},bpm:4,hands:'right',right:[
     {vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'h'},
@@ -1010,11 +1076,9 @@ const CAT_META={
   hands:{items:[{key:'오른손',icon:'🤚',color:'#74C0FC'},{key:'양손',icon:'🤲',color:'#FF922B'}]}
 };
 
-// ════════════════════════════════════════════════════════
 // 게임권 / 연습 진행 상태
 // SESSIONS_PER_TICKET: 완료 횟수 1회 = 곡 1곡 완주
 // 10회 완주 = 게임권 1장
-// ════════════════════════════════════════════════════════
 const SESSIONS_PER_TICKET = 10;
 let tickets = 0;
 let practiceCount = 0; // 총 완료 횟수 (10회마다 티켓)
@@ -1116,9 +1180,7 @@ function renderPrizesInfo(){
     </div>`).join('');
 }
 
-// ════════════════════════════════════════════════════════
 // 앱 상태
-// ════════════════════════════════════════════════════════
 let curSong=SONG_DB[0], curHandsMode='right', activeFilters={}, curNotes=[];
 let scoreMode='right';       // 'right' | 'both'
 let scoringHand='right';     // 현재 채점 중인 손 'right' | 'left'
@@ -1128,9 +1190,7 @@ let listening=false, paused=false;
 let audioCtx=null, analyser=null, micStream=null, rafId=null;
 let wrongTid=null, lastOkT=0, timerSec=0, timerTid=null;
 
-// ════════════════════════════════════════════════════════
 // 탭 / 페이지 전환
-// ════════════════════════════════════════════════════════
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -1156,9 +1216,7 @@ function switchTab(tab){
   }
 }
 
-// ════════════════════════════════════════════════════════
 // 연습 홈 - 검색 & 카테고리
-// ════════════════════════════════════════════════════════
 function liveSearch(){
   const q=document.getElementById('home-search').value.trim().toLowerCase();
   const el=document.getElementById('live-results');
@@ -1230,9 +1288,7 @@ function pickSong(id){
   openHandsModal();
 }
 
-// ════════════════════════════════════════════════════════
 // 한손/양손 모달
-// ════════════════════════════════════════════════════════
 function openHandsModal(){
   if(curSong.hands==='right'){curHandsMode='right';gotoSet();return;}
   document.getElementById('hc-right').classList.remove('sel');
@@ -1299,9 +1355,7 @@ function goPrac(){
 function chgCnt(d){const v=Math.max(1,Math.min(10,parseInt(document.getElementById('cnt-disp').textContent)+d));document.getElementById('cnt-disp').textContent=v;}
 document.getElementById('tol').addEventListener('input',function(){document.getElementById('tol-v').textContent='±'+this.value+'¢';});
 
-// ════════════════════════════════════════════════════════
 // 세션 / 타이머 / 바 버튼
-// ════════════════════════════════════════════════════════
 function initSes(){
   states=curNotes.map(()=>'waiting'); cur=0;
   if(scoreMode==='both' && curSong.hands==='both'){
@@ -1347,9 +1401,7 @@ function bbPause(){paused=!paused;document.getElementById('bbPause').textContent
 function bbStop(){doStopMic();initSes();}
 function lvNum(l){return l==='입문'?1:l==='초급'?2:l==='중급'?3:4;}
 
-// ════════════════════════════════════════════════════════
 // 그랜드 스태프 악보
-// ════════════════════════════════════════════════════════
 function beatVal(dur){return dur==='w'?4:dur==='h'?2:dur==='8'?0.5:1;}
 function splitMeasures(notes,bpm){
   const measures=[]; let arr=[],beats=0;
@@ -1521,9 +1573,7 @@ function redraw(){
   updateHandIndicator();
 }
 
-// ════════════════════════════════════════════════════════
 // 음정 감지
-// ════════════════════════════════════════════════════════
 function detectPitch(buf,sr){
   const half=buf.length>>1; const yin=new Float32Array(half); yin[0]=1; let run=0;
   for(let t=1;t<half;t++){let s=0;for(let j=0;j<half;j++){const d=buf[j]-buf[j+t];s+=d*d;}run+=s;yin[t]=s*t/run;}
@@ -1681,9 +1731,7 @@ function loadVex(){
 }
 window.addEventListener('resize',()=>{if(typeof Vex!=='undefined'&&document.getElementById('pg-prac').classList.contains('active'))drawScore();});
 
-// ════════════════════════════════════════════════════════
 // 🎰 핀볼 가챠 게임
-// ════════════════════════════════════════════════════════
 const TOTAL_BALLS=100;
 let pbCanvas,pbCtx,pbBalls=[],pbPegs=[],pbSlots=[];
 let pbRunning=false,pbBallsDone=0,pbTotalScore=0,pbBestScore=0,pbAnimId=null;
@@ -1766,8 +1814,6 @@ function startPinball(){
   }
   pbAnimId=requestAnimationFrame(pbLoop);
 }
-
-function dropNextBall(){ /* 사용 안함 */ }
 
 function pbLoop(){
   const W=pbCanvas.width,H=pbCanvas.height;
@@ -1919,12 +1965,9 @@ function showPinballResult(){
   document.getElementById('pb-start-btn').onclick=()=>initPinball();
 }
 
-// ════════════════════════════════════════════════════════
 // 관리자 기능
-// ════════════════════════════════════════════════════════
 const ADMIN_PW='5363';
 let adminLoggedIn=false,editingId=null;
-
 
 function toggleLeftNotes(){
   const hands = document.getElementById('f-hands').value;
@@ -2078,10 +2121,7 @@ function deleteSong(id){
   renderAdminSongList();renderAdminCatGrid();renderCatGrid('book');
 }
 
-
-// ════════════════════════════════════════════════════════
 // 레벨 시스템
-// ════════════════════════════════════════════════════════
 const LEVELS = [
   {lv:1, name:'새싹',         icon:'🌱', minPts:0,    cls:'lv-1', expColor:'#868e96'},
   {lv:2, name:'연주자',       icon:'🎵', minPts:50,   cls:'lv-2', expColor:'#51CF66'},
@@ -2123,26 +2163,6 @@ function updateLevelUI() {
   const info = getLevelInfo(totalPoints);
   const { cur, next, pct, need } = info;
 
-  // 홈 배지
-  const homeBadge = document.getElementById('home-level-badge');
-  if (homeBadge) {
-    homeBadge.textContent = cur.icon + ' Lv.' + cur.lv + ' ' + cur.name;
-    homeBadge.className = 'level-badge ' + cur.cls;
-  }
-  const homePts = document.getElementById('home-pts-badge');
-  if (homePts) homePts.textContent = totalPoints + ' 포인트';
-
-  // 보상탭 레벨 카드
-  const rTitle = document.getElementById('reward-level-title');
-  if (rTitle) rTitle.textContent = 'Lv.' + cur.lv + ' ' + cur.name;
-  const rPts = document.getElementById('reward-level-pts');
-  if (rPts) rPts.textContent = '총 ' + totalPoints + ' 포인트';
-  const rBadge = document.getElementById('reward-level-badge');
-  if (rBadge) {
-    rBadge.textContent = cur.icon + ' Lv.' + cur.lv;
-    rBadge.className = 'level-badge ' + cur.cls;
-  }
-
   // 경험치 바
   const expBar = document.getElementById('level-exp-bar');
   if (expBar) {
@@ -2158,10 +2178,7 @@ function updateLevelUI() {
   renderPodium();
 }
 
-
-// ════════════════════════════════════════════════════════
 // 레벨 팝업
-// ════════════════════════════════════════════════════════
 // 임시 학생 포인트 데이터 (Firebase 연동 전 - 나중에 실제 데이터로 교체)
 // 관리자 탭에서 학생 추가 시 여기에 쌓임
 let studentPoints = []; // [{name:'홍길동', pts:120}, ...]
@@ -2237,7 +2254,7 @@ function openLevelPopup(){
   }).join('');
 
   updatePopupRanking();
-  document.getElementById('level-popup-bg').classList.add('show');
+    document.getElementById('level-popup-bg').classList.add('show');
 }
 
 function closeLevelPopup(e){
@@ -2245,11 +2262,8 @@ function closeLevelPopup(e){
   document.getElementById('level-popup-bg').classList.remove('show');
 }
 
-
-// ════════════════════════════════════════════════════════
 // 랭킹 시스템
 // 캐릭터는 나중에 키우기 게임 완성 후 교체 예정
-// ════════════════════════════════════════════════════════
 
 // 임시 캐릭터 (키우기 게임 연동 전)
 function getCharEmoji(pts){
@@ -2281,46 +2295,10 @@ function getAllRanking(){
 }
 
 function renderPodium(){
-  const wrap = document.getElementById('podium-wrap');
-  if(!wrap) return;
-  const all = getAllRanking();
-  if(all.length === 0){ wrap.innerHTML='<div style="color:rgba(255,255,255,0.3);font-size:0.8rem;text-align:center;width:100%;padding:20px 0">학생 등록 후 랭킹이 표시돼요</div>'; return; }
-
-  // 시상대 순서: 2등 - 1등 - 3등
-  const top3 = [all[1], all[0], all[2]];
-  const classes = ['p2','p1','p3'];
-  const heights = ['52px','70px','38px'];
-  const medals = ['🥈','🥇','🥉'];
-  const ranks = [2,1,3];
-
-  wrap.innerHTML = top3.map((s,i)=>{
-    if(!s) return '<div class="podium-item" style="flex:1"></div>';
-    const info = getLevelInfo(s.pts);
-    const isMeStyle = s.isMe ? 'outline:2px solid #FFE66D;outline-offset:2px;border-radius:8px;' : '';
-    return `<div class="podium-item ${classes[i]}" style="${isMeStyle}">
-      <div class="podium-character">${getCharEmoji(s.pts)}</div>
-      <div class="podium-name">${s.isMe?'나 ('+s.name+')':s.name}</div>
-      <div class="podium-pts">${s.pts}p</div>
-      <div class="podium-badge-mini level-badge ${info.cur.cls}" style="font-size:0.6rem;padding:2px 7px;">${info.cur.icon} Lv.${info.cur.lv}</div>
-      <div class="podium-stand" style="height:${heights[i]}"><span>${medals[i]}</span></div>
-    </div>`;
-  }).join('');
-
-  // 내 랭킹 카드
-  const myRankIdx = all.findIndex(s=>s.isMe);
-  const myRank = myRankIdx + 1;
-  const myCard = document.getElementById('my-rank-card');
-  if(myCard){
-    myCard.style.display = 'flex';
-    document.getElementById('my-rank-num').textContent = getMedalEmoji(myRank);
-    document.getElementById('my-rank-name').textContent = myRank <= 3 ? '🎉 TOP 3!' : myRank + '등';
-    document.getElementById('my-rank-sub').textContent = '전체 ' + all.length + '명 중 ' + myRank + '위 · ' + totalPoints + 'p';
-    const info = getLevelInfo(totalPoints);
-    document.getElementById('my-rank-badge').textContent = info.cur.icon + ' ' + info.cur.name;
-  }
+  renderPodiumTo('podium-wrap');
+  renderPodiumTo('podium-wrap-home');
 }
 
-// 팝업에 랭킹 정보 업데이트
 function updatePopupRanking(){
   const all = getAllRanking();
   const myIdx = all.findIndex(s=>s.isMe);
@@ -2340,7 +2318,74 @@ function updatePopupRanking(){
   document.getElementById('lp-higher').textContent = higher > 0 ? higher+'명' : '없음';
 }
 
-// ── 초기화 ──
+// 홈 탭 업데이트
+function updateHomeTab(){
+  const info = getLevelInfo(totalPoints);
+  const { cur, next, pct, need } = info;
+
+  // 캐릭터
+  document.getElementById('home-char').textContent = getCharEmoji(totalPoints);
+
+  // 레벨 타이틀
+  const ht = document.getElementById('home-level-title');
+  if(ht) ht.textContent = 'Lv.' + cur.lv + ' ' + cur.name;
+  const hp = document.getElementById('home-total-pts');
+  if(hp) hp.textContent = '총 ' + totalPoints + ' 포인트';
+
+  // 레벨 배지
+  const hb = document.getElementById('home-level-badge2');
+  if(hb){ hb.textContent = cur.icon + ' Lv.' + cur.lv + ' ' + cur.name; hb.className = 'level-badge ' + cur.cls; }
+
+  // 경험치 바
+  const expBar = document.getElementById('home-exp-bar');
+  if(expBar){
+    expBar.style.width = pct + '%';
+    expBar.style.background = 'linear-gradient(90deg,' + cur.expColor + ',' + (next ? next.expColor : cur.expColor) + ')';
+  }
+  const expTxt = document.getElementById('home-exp-txt');
+  if(expTxt) expTxt.textContent = next ? '다음 레벨까지 ' + need + '포인트 남음' : '✨ 최고 레벨 달성!';
+
+  // 총 연습 횟수
+  const tp = document.getElementById('home-total-practice');
+  if(tp) tp.textContent = practiceCount;
+
+  // 랭킹
+  const all = getAllRanking();
+  const myIdx = all.findIndex(s=>s.isMe);
+  const myRank = myIdx + 1;
+  const rd = document.getElementById('home-rank-display');
+  if(rd) rd.textContent = getMedalEmoji(myRank);
+
+  // 시상대
+  renderPodiumTo('podium-wrap-home');
+}
+
+function renderPodiumTo(targetId){
+  const wrap = document.getElementById(targetId);
+  if(!wrap) return;
+  const all = getAllRanking();
+  if(all.length === 0){
+    wrap.innerHTML='<div style="color:rgba(255,255,255,0.3);font-size:0.78rem;text-align:center;width:100%;padding:16px 0">학생 등록 후 랭킹이 표시돼요</div>';
+    return;
+  }
+  const top3 = [all[1], all[0], all[2]];
+  const classes = ['p2','p1','p3'];
+  const heights = ['52px','70px','38px'];
+  const medals = ['🥈','🥇','🥉'];
+  wrap.innerHTML = top3.map((s,i)=>{
+    if(!s) return '<div class="podium-item" style="flex:1"></div>';
+    const info = getLevelInfo(s.pts);
+    const isMeStyle = s.isMe ? 'outline:2px solid #FFE66D;outline-offset:2px;border-radius:8px;' : '';
+    return `<div class="podium-item ${classes[i]}" style="${isMeStyle}">
+      <div class="podium-character">${getCharEmoji(s.pts)}</div>
+      <div class="podium-name">${s.isMe?'나':s.name}</div>
+      <div class="podium-pts">${s.pts}p</div>
+      <div class="podium-badge-mini level-badge ${info.cur.cls}" style="font-size:0.6rem;padding:2px 7px;">${info.cur.icon} Lv.${info.cur.lv}</div>
+      <div class="podium-stand" style="height:${heights[i]}"><span>${medals[i]}</span></div>
+    </div>`;
+  }).join('');
+}
+
 renderCatGrid('book');
 renderPrizesInfo();
 updateRewardUI();
