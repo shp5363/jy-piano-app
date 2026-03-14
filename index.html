@@ -357,6 +357,77 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .ticket-pw-input:focus{border-color:var(--secondary);}
 .ticket-pw-input.error{border-color:var(--wrong);animation:shake 0.4s;}
 
+
+/* ── 레벨 시스템 ── */
+.level-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:99px;font-family:'Do Hyeon',sans-serif;font-size:1rem;transition:all 0.3s;white-space:nowrap;}
+.lv-1{background:#e9ecef;color:#868e96;border:2px solid #dee2e6;}
+.lv-2{background:linear-gradient(135deg,#d3f9d8,#b2f2bb);color:#2f9e44;border:2px solid #69db7c;box-shadow:0 2px 8px rgba(81,207,102,0.25);}
+.lv-3{background:linear-gradient(135deg,#fff9db,#ffec99);color:#e67700;border:2px solid #ffd43b;box-shadow:0 2px 10px rgba(255,212,59,0.35);}
+.lv-4{background:linear-gradient(135deg,#d0ebff,#74c0fc);color:#1971c2;border:2px solid #4dabf7;box-shadow:0 3px 12px rgba(116,192,252,0.4);}
+.lv-5{background:linear-gradient(135deg,#ffe8cc,#ffa94d);color:#c05c1a;border:2px solid #ff922b;box-shadow:0 3px 14px rgba(255,146,43,0.45);}
+.lv-6{background:linear-gradient(135deg,#e5dbff,#9775fa);color:#5f3dc4;border:2px solid #9775fa;box-shadow:0 4px 16px rgba(151,117,250,0.5);}
+.lv-7{background:linear-gradient(135deg,#ff6b6b,#f03e3e);color:#fff;border:2px solid #ff4444;box-shadow:0 4px 18px rgba(240,62,62,0.55);animation:lvPulse 2s infinite;}
+.lv-8{background:linear-gradient(135deg,#ffd700,#ff8c00,#ff4500);color:#fff;border:2px solid #ffd700;box-shadow:0 0 24px rgba(255,215,0,0.8),0 0 48px rgba(255,140,0,0.4);animation:lvShine 1.5s infinite;}
+@keyframes lvPulse{0%,100%{box-shadow:0 4px 18px rgba(240,62,62,0.55);}50%{box-shadow:0 4px 28px rgba(240,62,62,0.9),0 0 20px rgba(240,62,62,0.4);}}
+@keyframes lvShine{0%,100%{box-shadow:0 0 24px rgba(255,215,0,0.8),0 0 48px rgba(255,140,0,0.4);}50%{box-shadow:0 0 40px rgba(255,215,0,1),0 0 80px rgba(255,140,0,0.7),0 0 120px rgba(255,69,0,0.3);}}
+
+/* 레벨 카드 (홈/보상 화면) */
+.level-card{background:#fff;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 3px 12px rgba(0,0,0,0.07);text-align:center;}
+.level-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.level-info{text-align:left;}
+.level-title{font-family:'Do Hyeon',sans-serif;font-size:1.4rem;color:var(--text);}
+.level-pts{font-size:0.75rem;color:#aaa;margin-top:2px;}
+.level-exp-wrap{height:10px;background:#f1f3f5;border-radius:99px;overflow:hidden;margin-bottom:6px;}
+.level-exp-bar{height:100%;border-radius:99px;transition:width 0.6s cubic-bezier(0.34,1.56,0.64,1);}
+.level-exp-txt{font-family:'Jua',sans-serif;font-size:0.75rem;color:#aaa;text-align:right;}
+.level-exp-txt span{color:var(--primary);font-weight:700;}
+
+/* 홈 화면 미니 레벨 표시 */
+.home-level-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;}
+.total-pts-badge{background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.2);border-radius:99px;padding:4px 12px;font-family:'Jua',sans-serif;font-size:0.75rem;color:var(--primary);}
+
+
+/* ── 레벨 팝업 ── */
+.level-popup-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:3000;align-items:flex-end;justify-content:center;}
+.level-popup-bg.show{display:flex;}
+.level-popup{background:#fff;border-radius:24px 24px 0 0;padding:20px 18px 36px;width:100%;max-width:500px;max-height:88vh;overflow-y:auto;animation:slideUp 0.3s;}
+.lp-handle{width:40px;height:4px;background:#dee2e6;border-radius:99px;margin:0 auto 16px;}
+.lp-title{font-family:'Jua',sans-serif;font-size:1.05rem;color:#2D3436;margin-bottom:4px;text-align:center;}
+.lp-sub{font-size:0.75rem;color:#aaa;text-align:center;margin-bottom:16px;}
+
+/* 내 현재 레벨 강조 */
+.lp-my-level{border-radius:14px;padding:14px 16px;margin-bottom:16px;text-align:center;}
+.lp-my-badge{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:99px;font-family:'Do Hyeon',sans-serif;font-size:1.1rem;margin-bottom:8px;}
+.lp-my-pts{font-size:0.78rem;color:#666;margin-bottom:10px;}
+.lp-my-expwrap{height:10px;background:#f1f3f5;border-radius:99px;overflow:hidden;margin-bottom:5px;}
+.lp-my-expbar{height:100%;border-radius:99px;transition:width 0.8s;}
+.lp-my-exptxt{font-size:0.72rem;color:#aaa;text-align:right;}
+
+/* 학생 현황 */
+.lp-rank-row{display:flex;gap:8px;margin-bottom:16px;}
+.lp-rank-chip{flex:1;border-radius:12px;padding:10px 8px;text-align:center;}
+.lp-rank-chip.lower{background:#f1f3f5;border:1px solid #dee2e6;}
+.lp-rank-chip.same{background:linear-gradient(135deg,#fff9db,#ffec99);border:1px solid #ffd43b;}
+.lp-rank-chip.higher{background:linear-gradient(135deg,#ffe3e3,#ffc9c9);border:1px solid #ff8787;}
+.lp-rank-num{font-family:'Do Hyeon',sans-serif;font-size:1.5rem;color:#2D3436;}
+.lp-rank-lbl{font-family:'Jua',sans-serif;font-size:0.65rem;color:#868e96;margin-top:2px;}
+
+/* 전체 레벨 로드맵 */
+.lp-roadmap{display:flex;flex-direction:column;gap:6px;}
+.lp-road-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;border:2px solid transparent;transition:all 0.2s;}
+.lp-road-item.current{border-color:#FFD43B;background:#FFFBE6;}
+.lp-road-item.done{background:#f8f9fa;opacity:0.7;}
+.lp-road-item.future{background:#f8f9fa;}
+.lp-road-badge{min-width:90px;}
+.lp-road-info{flex:1;}
+.lp-road-name{font-family:'Jua',sans-serif;font-size:0.85rem;color:#2D3436;}
+.lp-road-pts{font-size:0.7rem;color:#aaa;margin-top:2px;}
+.lp-road-status{font-family:'Jua',sans-serif;font-size:0.7rem;}
+.lp-road-status.done{color:#51CF66;}
+.lp-road-status.current{color:#f59f00;}
+.lp-road-status.future{color:#aaa;}
+.lp-close{width:100%;padding:13px;border:none;border-radius:13px;background:#f1f3f5;font-family:'Jua',sans-serif;font-size:0.95rem;color:#868e96;cursor:pointer;margin-top:16px;}
+
 </style>
 </head>
 <body>
@@ -423,6 +494,10 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
   <div class="practice-hero">
     <div class="logo">JY PIANO</div>
     <div class="sub">연습실</div>
+    <div class="home-level-row">
+      <div class="level-badge lv-1" id="home-level-badge" onclick="openLevelPopup()" style="cursor:pointer;">🌱 Lv.1 새싹</div>
+      <div class="total-pts-badge" id="home-pts-badge">0 포인트</div>
+    </div>
   </div>
   <div class="page-inner" style="padding-top:4px">
     <div class="search-bar">
@@ -537,6 +612,21 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       <div class="r-sub">연습 10회 완료 = 가챠권 1장</div>
     </div>
 
+    <!-- 레벨 카드 -->
+    <div class="level-card">
+      <div class="level-card-top">
+        <div class="level-info">
+          <div class="level-title" id="reward-level-title">Lv.1 새싹</div>
+          <div class="level-pts" id="reward-level-pts">총 0 포인트</div>
+        </div>
+        <div class="level-badge lv-1" id="reward-level-badge" onclick="openLevelPopup()" style="cursor:pointer;">🌱 Lv.1</div>
+      </div>
+      <div class="level-exp-wrap">
+        <div class="level-exp-bar" id="level-exp-bar" style="width:0%;background:linear-gradient(90deg,#51CF66,#94d82d);"></div>
+      </div>
+      <div class="level-exp-txt">다음 레벨까지 <span id="level-exp-need">50</span>포인트 남음</div>
+    </div>
+
     <!-- 게임권 현황 -->
     <div class="ticket-card">
       <div class="ticket-count" id="ticket-count">0</div>
@@ -569,6 +659,47 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
   </div>
 </div>
 
+
+
+<!-- 레벨 팝업 -->
+<div class="level-popup-bg" id="level-popup-bg" onclick="closeLevelPopup(event)">
+  <div class="level-popup" id="level-popup">
+    <div class="lp-handle"></div>
+    <div class="lp-title">🏆 레벨 현황</div>
+    <div class="lp-sub">배지를 누르면 상세 정보를 볼 수 있어요</div>
+
+    <!-- 내 레벨 -->
+    <div class="lp-my-level" id="lp-my-level">
+      <div class="lp-my-badge" id="lp-my-badge">🌱 Lv.1 새싹</div>
+      <div class="lp-my-pts" id="lp-my-pts">총 0 포인트 보유</div>
+      <div class="lp-my-expwrap">
+        <div class="lp-my-expbar" id="lp-my-expbar" style="width:0%"></div>
+      </div>
+      <div class="lp-my-exptxt" id="lp-my-exptxt">다음 레벨까지 50포인트 남음</div>
+    </div>
+
+    <!-- 학생 현황 -->
+    <div class="lp-rank-row">
+      <div class="lp-rank-chip lower">
+        <div class="lp-rank-num" id="lp-lower">-</div>
+        <div class="lp-rank-lbl">나보다 낮은 레벨</div>
+      </div>
+      <div class="lp-rank-chip same">
+        <div class="lp-rank-num" id="lp-same">-</div>
+        <div class="lp-rank-lbl">같은 레벨</div>
+      </div>
+      <div class="lp-rank-chip higher">
+        <div class="lp-rank-num" id="lp-higher">-</div>
+        <div class="lp-rank-lbl">나보다 높은 레벨</div>
+      </div>
+    </div>
+
+    <!-- 전체 로드맵 -->
+    <div class="lp-roadmap" id="lp-roadmap"></div>
+
+    <button class="lp-close" onclick="closeLevelPopup()">닫기</button>
+  </div>
+</div>
 
 <!-- 비밀번호 모달 -->
 <div class="admin-modal-bg" id="admin-pw-modal">
@@ -1865,10 +1996,176 @@ function deleteSong(id){
   renderAdminSongList();renderAdminCatGrid();renderCatGrid('book');
 }
 
+
+// ════════════════════════════════════════════════════════
+// 레벨 시스템
+// ════════════════════════════════════════════════════════
+const LEVELS = [
+  {lv:1, name:'새싹',         icon:'🌱', minPts:0,    cls:'lv-1', expColor:'#868e96'},
+  {lv:2, name:'연주자',       icon:'🎵', minPts:50,   cls:'lv-2', expColor:'#51CF66'},
+  {lv:3, name:'스타',         icon:'⭐', minPts:150,  cls:'lv-3', expColor:'#ffd43b'},
+  {lv:4, name:'아티스트',     icon:'🎸', minPts:350,  cls:'lv-4', expColor:'#74c0fc'},
+  {lv:5, name:'마에스트로',   icon:'👑', minPts:700,  cls:'lv-5', expColor:'#ffa94d'},
+  {lv:6, name:'레전드',       icon:'💎', minPts:1200, cls:'lv-6', expColor:'#9775fa'},
+  {lv:7, name:'그랜드마스터', icon:'🔥', minPts:2000, cls:'lv-7', expColor:'#ff6b6b'},
+  {lv:8, name:'피아노신',     icon:'✨', minPts:3000, cls:'lv-8', expColor:'#ffd700'},
+];
+
+// 난이도별 포인트
+const LEVEL_POINTS = {입문:1, 초급:2, 중급:4, 고급:8};
+
+let totalPoints = 0; // 누적 총 포인트
+
+function getLevelInfo(pts) {
+  let cur = LEVELS[0];
+  for (let i = LEVELS.length - 1; i >= 0; i--) {
+    if (pts >= LEVELS[i].minPts) { cur = LEVELS[i]; break; }
+  }
+  const nextIdx = LEVELS.findIndex(l => l.lv === cur.lv) + 1;
+  const next = nextIdx < LEVELS.length ? LEVELS[nextIdx] : null;
+  const curMin = cur.minPts;
+  const nextMin = next ? next.minPts : cur.minPts;
+  const pct = next ? Math.min(100, ((pts - curMin) / (nextMin - curMin)) * 100) : 100;
+  const need = next ? nextMin - pts : 0;
+  return { cur, next, pct, need };
+}
+
+function addPoints(songLevel) {
+  const pts = LEVEL_POINTS[songLevel] || 1;
+  totalPoints += pts;
+  updateLevelUI();
+  return pts;
+}
+
+function updateLevelUI() {
+  const info = getLevelInfo(totalPoints);
+  const { cur, next, pct, need } = info;
+
+  // 홈 배지
+  const homeBadge = document.getElementById('home-level-badge');
+  if (homeBadge) {
+    homeBadge.textContent = cur.icon + ' Lv.' + cur.lv + ' ' + cur.name;
+    homeBadge.className = 'level-badge ' + cur.cls;
+  }
+  const homePts = document.getElementById('home-pts-badge');
+  if (homePts) homePts.textContent = totalPoints + ' 포인트';
+
+  // 보상탭 레벨 카드
+  const rTitle = document.getElementById('reward-level-title');
+  if (rTitle) rTitle.textContent = 'Lv.' + cur.lv + ' ' + cur.name;
+  const rPts = document.getElementById('reward-level-pts');
+  if (rPts) rPts.textContent = '총 ' + totalPoints + ' 포인트';
+  const rBadge = document.getElementById('reward-level-badge');
+  if (rBadge) {
+    rBadge.textContent = cur.icon + ' Lv.' + cur.lv;
+    rBadge.className = 'level-badge ' + cur.cls;
+  }
+
+  // 경험치 바
+  const expBar = document.getElementById('level-exp-bar');
+  if (expBar) {
+    expBar.style.width = pct + '%';
+    expBar.style.background = 'linear-gradient(90deg,' + cur.expColor + ',' + (next ? next.expColor : cur.expColor) + ')';
+  }
+  const expNeed = document.getElementById('level-exp-need');
+  if (expNeed) {
+    expNeed.parentElement.innerHTML = next
+      ? '다음 레벨까지 <span id="level-exp-need">' + need + '</span>포인트 남음'
+      : '<span style="color:var(--primary)">✨ 최고 레벨 달성!</span>';
+  }
+}
+
+
+// ════════════════════════════════════════════════════════
+// 레벨 팝업
+// ════════════════════════════════════════════════════════
+// 임시 학생 포인트 데이터 (Firebase 연동 전 - 나중에 실제 데이터로 교체)
+// 관리자 탭에서 학생 추가 시 여기에 쌓임
+let studentPoints = []; // [{name:'홍길동', pts:120}, ...]
+
+function openLevelPopup(){
+  const info = getLevelInfo(totalPoints);
+  const { cur, next, pct, need } = info;
+
+  // 내 레벨 영역
+  const myLevel = document.getElementById('lp-my-level');
+  myLevel.style.background = cur.cls === 'lv-8'
+    ? 'linear-gradient(135deg,#fff9db,#ffe066)'
+    : cur.cls === 'lv-7'
+    ? 'linear-gradient(135deg,#ffe3e3,#ffc9c9)'
+    : '#f8f9fa';
+
+  const myBadge = document.getElementById('lp-my-badge');
+  myBadge.textContent = cur.icon + ' Lv.' + cur.lv + ' ' + cur.name;
+  myBadge.className = 'lp-my-badge ' + cur.cls;
+
+  document.getElementById('lp-my-pts').textContent = '총 ' + totalPoints + ' 포인트 보유';
+
+  const expBar = document.getElementById('lp-my-expbar');
+  expBar.style.width = pct + '%';
+  expBar.style.background = 'linear-gradient(90deg,' + cur.expColor + ',' + (next ? next.expColor : cur.expColor) + ')';
+
+  document.getElementById('lp-my-exptxt').innerHTML = next
+    ? '다음 레벨까지 <strong>' + need + '포인트</strong> 남음'
+    : '<strong style="color:var(--primary)">✨ 최고 레벨 달성!</strong>';
+
+  // 학생 현황 (등록된 학생 기준)
+  if(studentPoints.length > 0){
+    const myLv = cur.lv;
+    const lower = studentPoints.filter(s => getLevelInfo(s.pts).cur.lv < myLv).length;
+    const same  = studentPoints.filter(s => getLevelInfo(s.pts).cur.lv === myLv).length;
+    const higher= studentPoints.filter(s => getLevelInfo(s.pts).cur.lv > myLv).length;
+    document.getElementById('lp-lower').textContent = lower + '명';
+    document.getElementById('lp-same').textContent  = same + '명';
+    document.getElementById('lp-higher').textContent= higher + '명';
+  } else {
+    document.getElementById('lp-lower').textContent = '-';
+    document.getElementById('lp-same').textContent  = '-';
+    document.getElementById('lp-higher').textContent= '-';
+  }
+
+  // 전체 로드맵
+  const roadmap = document.getElementById('lp-roadmap');
+  roadmap.innerHTML = LEVELS.map((lv, idx) => {
+    const isCurrentLv = lv.lv === cur.lv;
+    const isDone = totalPoints >= lv.minPts && !isCurrentLv;
+    const isFuture = totalPoints < lv.minPts;
+    const nextLvMin = LEVELS[idx+1] ? LEVELS[idx+1].minPts : lv.minPts;
+    const ptsRange = LEVELS[idx+1]
+      ? lv.minPts + 'p ~ ' + (nextLvMin-1) + 'p'
+      : lv.minPts + 'p ~';
+
+    let statusTxt = '';
+    let statusCls = '';
+    if(isDone){ statusTxt='달성 완료 ✓'; statusCls='done'; }
+    else if(isCurrentLv){ statusTxt='현재 단계 ★'; statusCls='current'; }
+    else { statusTxt= (lv.minPts - totalPoints) + 'p 더 필요'; statusCls='future'; }
+
+    return `<div class="lp-road-item ${isCurrentLv?'current':isDone?'done':'future'}">
+      <div class="lp-road-badge">
+        <div class="level-badge ${lv.cls}" style="font-size:0.78rem;padding:4px 10px;">${lv.icon} Lv.${lv.lv}</div>
+      </div>
+      <div class="lp-road-info">
+        <div class="lp-road-name">${lv.name}</div>
+        <div class="lp-road-pts">${ptsRange}</div>
+      </div>
+      <div class="lp-road-status ${statusCls}">${statusTxt}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('level-popup-bg').classList.add('show');
+}
+
+function closeLevelPopup(e){
+  if(e && e.target !== document.getElementById('level-popup-bg')) return;
+  document.getElementById('level-popup-bg').classList.remove('show');
+}
+
 // ── 초기화 ──
 renderCatGrid('book');
 renderPrizesInfo();
 updateRewardUI();
+updateLevelUI();
 </script>
 </body>
 </html>
