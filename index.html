@@ -476,7 +476,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .lp-stat-num{font-family:'Do Hyeon',sans-serif;font-size:1.3rem;color:#2D3436;}
 .lp-stat-lbl{font-family:'Jua',sans-serif;font-size:0.62rem;color:#868e96;margin-top:2px;line-height:1.3;}
 
-
 /* ── 학생 로그인 모달 ── */
 .login-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:4000;align-items:flex-end;justify-content:center;}
 .login-modal-bg.show{display:flex;}
@@ -506,7 +505,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .cub-name{font-family:'Jua',sans-serif;font-size:0.85rem;color:#fff;font-weight:700;}
 .cub-sub{font-size:0.68rem;color:#aaa;}
 .cub-change{font-family:'Jua',sans-serif;font-size:0.7rem;color:var(--secondary);}
-
 
 /* ── 마을 탭 ── */
 #pg-village{background:linear-gradient(160deg,#E8F5E9,#F1F8E9);}
@@ -631,23 +629,13 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .sbb-buy{padding:12px 20px;border:none;border-radius:12px;background:linear-gradient(135deg,#f59f00,#FFE66D);color:#2D3436;font-family:'Jua',sans-serif;font-size:0.9rem;cursor:pointer;}
 .sbb-cancel{padding:12px 16px;border:none;border-radius:12px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.9rem;cursor:pointer;}
 
-/* ── 마을 꾸미기 화면 ── */
-.town-bg{display:none;position:fixed;inset:0;background:#0f2027;z-index:3000;overflow:hidden;}
 .town-bg.show{display:block;}
-.town-header{position:absolute;top:0;left:0;right:0;height:52px;background:rgba(15,32,39,0.9);display:flex;align-items:center;gap:10px;padding:0 14px;z-index:10;border-bottom:1px solid rgba(255,255,255,0.08);}
-.town-back{background:none;border:none;color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.85rem;cursor:pointer;}
-.town-title{font-family:'Do Hyeon',sans-serif;font-size:1rem;color:#fff;flex:1;}
-.town-pts-display{font-family:'Do Hyeon',sans-serif;font-size:0.9rem;color:#FFE66D;}
-.town-shop-btn{padding:6px 12px;border:none;border-radius:99px;background:linear-gradient(135deg,#f59f00,#FFE66D);color:#2D3436;font-family:'Jua',sans-serif;font-size:0.72rem;cursor:pointer;}
+
 /* 마을 캔버스 */
 #town-canvas{display:block;width:100%;height:100%;image-rendering:pixelated;}
 /* 마을 하단 툴바 */
-.town-toolbar{position:absolute;bottom:0;left:0;right:0;background:rgba(15,32,39,0.95);border-top:1px solid rgba(255,255,255,0.1);padding:10px 14px 24px;display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+
 .town-toolbar::-webkit-scrollbar{display:none;}
-.tt-item{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:6px 10px;border-radius:10px;border:1px solid transparent;transition:all 0.2s;}
-.tt-item.active-tool{border-color:#4ECDC4;background:rgba(78,205,196,0.1);}
-.tt-ico{font-size:1.3rem;}
-.tt-lbl{font-family:'Jua',sans-serif;font-size:0.6rem;color:rgba(255,255,255,0.5);}
 
 /* 포인트 선물 */
 .gift-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:3000;align-items:flex-end;justify-content:center;}
@@ -669,7 +657,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .gm-btns{display:flex;gap:8px;}
 .gm-send{flex:1;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#4ECDC4,#38d9cc);color:#fff;font-family:'Jua',sans-serif;font-size:0.95rem;cursor:pointer;}
 .gm-cancel{padding:13px 18px;border:none;border-radius:12px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.95rem;cursor:pointer;}
-
 
 @keyframes mungFloat{
   0%,100%{transform:translateY(0);}
@@ -714,8 +701,8 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
     <span class="t-lbl">보상</span>
   </button>
   <button class="tab-item" id="tab-village" onclick="switchTab('village')">
-    <div class="tab-ico-wrap"><span class="t-ico">🎮</span></div>
-    <span class="t-lbl">마을</span>
+    <div class="tab-ico-wrap"><span class="t-ico">👤</span></div>
+    <span class="t-lbl">캐릭터</span>
   </button>
   <button class="tab-item" id="tab-admin" onclick="openAdminModal()">
     <div class="tab-ico-wrap"><span class="t-ico">⚙️</span></div>
@@ -941,7 +928,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
   </div>
 </div>
 
-
 <!-- 학생 로그인 모달 -->
 <div class="login-modal-bg" id="login-modal-bg">
   <div class="login-modal">
@@ -1113,7 +1099,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       </div>
       <!-- 학생 프로필 -->
       <div style="text-align:center;padding:12px 0 14px;">
-        <div id="home-char" style="font-size:3.5rem;line-height:1;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));">🐣</div>
+        <div id="home-char" style="display:flex;justify-content:center;margin-bottom:8px;">🐣</div>
         <div id="home-student-name" style="font-family:'Do Hyeon',sans-serif;font-size:1.4rem;color:var(--text);letter-spacing:1px;">---</div>
         <div id="home-student-sub" style="font-size:0.75rem;color:#aaa;margin-top:4px;">피아노 마을 주민</div>
       </div>
@@ -1161,8 +1147,8 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 <div id="pg-village" class="page">
   <div class="village-inner">
     <div class="village-header">
-      <div class="village-header-title">🎮 피아노 마을</div>
-      <div class="village-header-sub">나만의 캐릭터와 마을을 만들어요!</div>
+      <div class="village-header-title">👤 내 캐릭터</div>
+      <div class="village-header-sub">나만의 캐릭터를 꾸며봐요!</div>
     </div>
     <!-- 포인트 바 -->
     <div class="village-pts-bar">
@@ -1174,41 +1160,37 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
         <div class="vpb-pts" id="village-pts-display">0p</div>
       </div>
     </div>
+    <!-- 캐릭터 미리보기 -->
+    <div id="village-char-preview" style="display:flex;justify-content:center;padding:16px 0 6px;min-height:140px;">
+      <span style="font-size:3rem;">🐣</span>
+    </div>
+    <div id="village-char-name" style="text-align:center;font-family:'Jua',sans-serif;font-size:0.82rem;color:#aaa;margin-bottom:14px;">캐릭터를 생성해주세요</div>
     <!-- 메뉴 -->
     <div class="village-menu">
-      <!-- 캐릭터 꾸미기 -->
-      <div class="vmenu-card" id="vmenu-char" onclick="openCharEdit()">
-        <div class="vm-ico">👤</div>
-        <div class="vm-name">캐릭터 꾸미기</div>
-        <div class="vm-sub" id="vmenu-char-sub">캐릭터를 만들어요</div>
-      </div>
-      <!-- 신규 생성 -->
+      <!-- 캐릭터 생성 -->
       <div class="vmenu-card" id="vmenu-create" onclick="openCharCreate()">
         <div class="vm-ico">✨</div>
         <div class="vm-name">캐릭터 생성</div>
-        <div class="vm-sub">새 캐릭터 만들기</div>
+        <div class="vm-sub" id="vmenu-create-sub">새 캐릭터 만들기</div>
       </div>
-      <!-- 마을 꾸미기 -->
-      <div class="vmenu-card" id="vmenu-town" onclick="openTown()">
-        <div class="vm-ico">🏡</div>
-        <div class="vm-name">마을 꾸미기</div>
-        <div class="vm-sub">나만의 마을을 꾸며요</div>
+      <!-- 캐릭터 꾸미기 -->
+      <div class="vmenu-card" id="vmenu-char" onclick="openCharEdit()">
+        <div class="vm-ico">👗</div>
+        <div class="vm-name">캐릭터 꾸미기</div>
+        <div class="vm-sub" id="vmenu-char-sub">아이템 장착하기</div>
+      </div>
+      <!-- 친구 캐릭터 구경 -->
+      <div class="vmenu-card disabled">
+        <div class="vm-ico">👫</div>
+        <div class="vm-name">친구 구경하기</div>
+        <div class="vm-sub">Firebase 연동 후 오픈</div>
+        <div class="vm-badge">준비중</div>
       </div>
       <!-- 포인트 선물 -->
       <div class="vmenu-card" onclick="openGiftModal()">
         <div class="vm-ico">🎁</div>
         <div class="vm-name">포인트 선물</div>
         <div class="vm-sub">친구에게 선물하기</div>
-      </div>
-    </div>
-    <!-- 친구 마을 (Firebase 후) -->
-    <div class="vmenu-card disabled" style="margin-bottom:0;">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <span style="font-size:1.5rem;">🚧</span>
-        <div style="text-align:left;">
-          <div class="vm-name">친구 마을 놀러가기</div>
-          <div class="vm-sub">Firebase 연동 후 오픈 예정</div>
-        </div>
       </div>
     </div>
   </div>
@@ -1290,25 +1272,6 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
     </div>
     <button class="sbb-cancel" onclick="cancelPreview()">취소</button>
     <button class="sbb-buy" onclick="buyItem()">구매하기</button>
-  </div>
-</div>
-
-<!-- 마을 꾸미기 -->
-<div class="town-bg" id="town-bg">
-  <div class="town-header">
-    <button class="town-back" onclick="closeTown()">← 뒤로</button>
-    <div class="town-title">내 마을</div>
-    <div class="town-pts-display" id="town-pts-display">0p</div>
-    <button class="town-shop-btn" onclick="openTownShop()">상점</button>
-  </div>
-  <canvas id="town-canvas"></canvas>
-  <div class="town-toolbar" id="town-toolbar">
-    <div class="tt-item active-tool" id="tt-place" onclick="setTownTool('place')">
-      <div class="tt-ico">📦</div><div class="tt-lbl">배치</div>
-    </div>
-    <div class="tt-item" id="tt-remove" onclick="setTownTool('remove')">
-      <div class="tt-ico">🗑</div><div class="tt-lbl">제거</div>
-    </div>
   </div>
 </div>
 
@@ -1568,7 +1531,7 @@ function switchTab(tab){
     updateRewardUI();
     showPage('pg-reward');
   } else if(tab==='village'){
-    document.getElementById('bar-song').textContent='피아노 마을';
+    document.getElementById('bar-song').textContent='내 캐릭터';
     updateVillageTab();
     showPage('pg-village');
   }
@@ -2607,16 +2570,6 @@ function closeLevelPopup(e){
 // 캐릭터는 나중에 키우기 게임 완성 후 교체 예정
 
 // 임시 캐릭터 (키우기 게임 연동 전)
-function getCharEmoji(pts){
-  if(pts>=3000) return '🧙';
-  if(pts>=2000) return '🦸';
-  if(pts>=1200) return '🧝';
-  if(pts>=700)  return '🧑‍🎤';
-  if(pts>=350)  return '🧑‍🎓';
-  if(pts>=150)  return '🧒';
-  if(pts>=50)   return '👦';
-  return '🐣';
-}
 
 function getMedalEmoji(rank){
   if(rank===1) return '🥇';
@@ -2726,14 +2679,13 @@ function renderPodiumTo(targetId){
   }).join('');
 }
 
-
 // ════════════════════════════════════════════════════════
 // 마을/캐릭터 시스템
 // ════════════════════════════════════════════════════════
 
 // ── 데이터 ──
-const SLOT_TYPES = ['모자','머리','안경','상의','하의','신발','장갑','가방'];
-const SLOT_ICONS = {'모자':'🎩','머리':'💇','안경':'👓','상의':'👕','하의':'👖','신발':'👟','장갑':'🧤','가방':'🎒'};
+const SLOT_TYPES = ['모자','머리','안경','귀걸이','상의','하의','신발','장갑','가방','목걸이','허리띠','배지'];
+const SLOT_ICONS = {'모자':'🎩','머리':'💇','안경':'👓','귀걸이':'💎','상의':'👕','하의':'👖','신발':'👟','장갑':'🧤','가방':'🎒','목걸이':'📿','허리띠':'🪢','배지':'🏅'};
 
 // 아이템 DB (포인트 상점)
 const ITEM_DB = [
@@ -2773,6 +2725,19 @@ const ITEM_DB = [
   {id:'bag1',type:'가방',name:'별 배낭',ico:'🎒',color:'#FF922B',pts:45,gender:'all'},
   {id:'bag2',type:'가방',name:'하트 가방',ico:'💝',color:'#FF4D7D',pts:50,gender:'f'},
   {id:'bag3',type:'가방',name:'피아노 가방',ico:'🎹',color:'#333',pts:70,gender:'all'},
+  {id:'ear1',type:'귀걸이',name:'별 귀걸이',ico:'⭐',color:'#FFD700',pts:25,gender:'all'},
+  {id:'ear2',type:'귀걸이',name:'하트 귀걸이',ico:'💗',color:'#FF6B6B',pts:30,gender:'f'},
+  {id:'ear3',type:'귀걸이',name:'다이아 귀걸이',ico:'💎',color:'#87CEEB',pts:55,gender:'all'},
+  {id:'neck1',type:'목걸이',name:'진주 목걸이',ico:'📿',color:'#F5F5DC',pts:40,gender:'f'},
+  {id:'neck2',type:'목걸이',name:'별자리 목걸이',ico:'✨',color:'#9775FA',pts:50,gender:'all'},
+  {id:'neck3',type:'목걸이',name:'피아노 펜던트',ico:'🎹',color:'#333',pts:65,gender:'all'},
+  {id:'belt1',type:'허리띠',name:'별 허리띠',ico:'⭐',color:'#FFD700',pts:30,gender:'all'},
+  {id:'belt2',type:'허리띠',name:'리본 허리띠',ico:'🎀',color:'#FF85A1',pts:35,gender:'f'},
+  {id:'belt3',type:'허리띠',name:'체인 허리띠',ico:'⛓️',color:'#C0C0C0',pts:45,gender:'all'},
+  {id:'badge1',type:'배지',name:'피아노 배지',ico:'🎹',color:'#4ECDC4',pts:20,gender:'all'},
+  {id:'badge2',type:'배지',name:'별 배지',ico:'🌟',color:'#FFD700',pts:25,gender:'all'},
+  {id:'badge3',type:'배지',name:'왕관 배지',ico:'👑',color:'#FFD700',pts:60,gender:'all'},
+  {id:'badge4',type:'배지',name:'음표 배지',ico:'🎵',color:'#FF6B6B',pts:20,gender:'all'},
 ];
 
 // 기본 옷 세트
@@ -2828,18 +2793,33 @@ function updateVillagePts(){
 function updateVillageTab(){
   updateVillagePts();
   checkDailyBonus();
-  updateVillagePts(); // 보너스 후 재갱신
-  // 캐릭터 있으면 꾸미기 활성, 없으면 생성만
-  const charCard = document.getElementById('vmenu-char');
-  const createCard = document.getElementById('vmenu-create');
-  const charSub = document.getElementById('vmenu-char-sub');
+  updateVillagePts();
+  // 캐릭터 미리보기
+  const preview=document.getElementById('village-char-preview');
+  const nameEl=document.getElementById('village-char-name');
+  if(preview){
+    if(myChar){
+      preview.innerHTML=getMungCharHTML(myChar,1.0);
+      if(nameEl) nameEl.textContent=(currentStudent?currentStudent.name:'')+(myChar.gender==='f'?' · 여자':'· 남자');
+    } else {
+      preview.innerHTML='<span style="font-size:3rem">🐣</span>';
+      if(nameEl) nameEl.textContent='캐릭터를 생성해주세요';
+    }
+  }
+  const charCard=document.getElementById('vmenu-char');
+  const createCard=document.getElementById('vmenu-create');
+  const charSub=document.getElementById('vmenu-char-sub');
+  const createSub=document.getElementById('vmenu-create-sub');
   if(myChar){
-    charCard.classList.add('has-char');
-    if(charSub) charSub.textContent = myChar.gender==='f'?'여자 캐릭터':'남자 캐릭터';
-    if(createCard){ createCard.style.opacity='0.5'; createCard.querySelector('.vm-sub').textContent='이미 생성됨'; }
+    if(charCard){charCard.classList.add('has-char');charCard.style.opacity='1';}
+    if(charSub) charSub.textContent='아이템 장착하기';
+    if(createCard) createCard.style.opacity='0.75';
+    if(createSub) createSub.textContent='다시 만들기';
   } else {
-    charCard.style.opacity='0.5';
+    if(charCard){charCard.style.opacity='0.4';}
     if(charSub) charSub.textContent='먼저 생성해주세요';
+    if(createCard) createCard.style.opacity='1';
+    if(createSub) createSub.textContent='새 캐릭터 만들기';
   }
 }
 
@@ -2895,254 +2875,15 @@ function confirmCreateChar(){
 }
 
 // ── SD 캐릭터 SVG ──
-function getCharSVGContent(gender, topColor, botColor, skinColor, equipped){
-  const sc=skinColor||'#FDDCB5';
-  const tc=equipped['상의']?getItemColor(equipped['상의']):topColor||'#E8B4CB';
-  const bc=equipped['하의']?getItemColor(equipped['하의']):botColor||'#7B9ED9';
-  const hc=equipped['머리']?getItemColor(equipped['머리']):(gender==='f'?'#4A2C0A':'#2C1A08');
-  const shoeC=equipped['신발']?getItemColor(equipped['신발']):(gender==='f'?'#C9748A':'#4A6080');
-  const isFemale=gender==='f';
-
-  // 모자
-  const hatSvg=equipped['모자']?`<text x="40" y="7" text-anchor="middle" font-size="16" font-family="serif">${getItemIco(equipped['모자'])}</text>`:'';
-
-  // ── 머리카락 ──
-  const hairBack = isFemale
-    ? `<ellipse cx="40" cy="25" rx="21" ry="22" fill="${hc}"/>
-       <path d="M19 28 Q16 42 18 55 Q22 62 25 58 Q22 48 24 35" fill="${hc}"/>
-       <path d="M61 28 Q64 42 62 55 Q58 62 55 58 Q58 48 56 35" fill="${hc}"/>`
-    : `<ellipse cx="40" cy="25" rx="20" ry="20" fill="${hc}"/>
-       <rect x="20" y="10" width="40" height="16" rx="6" fill="${hc}"/>`;
-
-  // ── 얼굴 ──
-  const face=`
-    <ellipse cx="40" cy="28" rx="18" ry="20" fill="${sc}"/>
-    <ellipse cx="23" cy="30" rx="4" ry="5.5" fill="${sc}"/>
-    <ellipse cx="57" cy="30" rx="4" ry="5.5" fill="${sc}"/>
-    <ellipse cx="23" cy="30" rx="2.5" ry="3.5" fill="#F0C090"/>
-    <ellipse cx="57" cy="30" rx="2.5" ry="3.5" fill="#F0C090"/>`;
-
-  // ── 눈 (아이러브커피: 크고 또렷, 속눈썹) ──
-  const eyeBaseY = 26;
-  const eyes = isFemale ? `
-    <!-- 눈 흰자 -->
-    <ellipse cx="33" cy="${eyeBaseY}" rx="6.5" ry="7" fill="white"/>
-    <ellipse cx="47" cy="${eyeBaseY}" rx="6.5" ry="7" fill="white"/>
-    <!-- 홍채 -->
-    <circle cx="33" cy="${eyeBaseY+1}" r="4.5" fill="#5B3A8C"/>
-    <circle cx="47" cy="${eyeBaseY+1}" r="4.5" fill="#5B3A8C"/>
-    <!-- 눈동자 -->
-    <circle cx="33" cy="${eyeBaseY+1}" r="2.8" fill="#1a0a2e"/>
-    <circle cx="47" cy="${eyeBaseY+1}" r="2.8" fill="#1a0a2e"/>
-    <!-- 하이라이트 -->
-    <circle cx="35" cy="${eyeBaseY-1}" r="1.5" fill="white"/>
-    <circle cx="49" cy="${eyeBaseY-1}" r="1.5" fill="white"/>
-    <circle cx="31.5" cy="${eyeBaseY+2}" r="0.8" fill="rgba(255,255,255,0.6)"/>
-    <circle cx="45.5" cy="${eyeBaseY+2}" r="0.8" fill="rgba(255,255,255,0.6)"/>
-    <!-- 속눈썹 (여자) -->
-    <path d="M27 ${eyeBaseY-6} Q29 ${eyeBaseY-9} 31 ${eyeBaseY-7}" stroke="#1a0a2e" stroke-width="1.3" fill="none"/>
-    <path d="M33 ${eyeBaseY-7} Q35 ${eyeBaseY-10} 37 ${eyeBaseY-7}" stroke="#1a0a2e" stroke-width="1.3" fill="none"/>
-    <path d="M39 ${eyeBaseY-6} Q41 ${eyeBaseY-8} 42 ${eyeBaseY-6}" stroke="#1a0a2e" stroke-width="1" fill="none"/>
-    <!-- 눈 아랫선 -->
-    <path d="M27 ${eyeBaseY+6} Q33 ${eyeBaseY+8} 39 ${eyeBaseY+6}" stroke="#1a0a2e" stroke-width="1" fill="none"/>
-    <path d="M41 ${eyeBaseY+6} Q47 ${eyeBaseY+8} 53 ${eyeBaseY+6}" stroke="#1a0a2e" stroke-width="1" fill="none"/>
-    <!-- 눈썹 -->
-    <path d="M27 ${eyeBaseY-9} Q33 ${eyeBaseY-13} 39 ${eyeBaseY-9}" stroke="${hc}" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <path d="M41 ${eyeBaseY-9} Q47 ${eyeBaseY-13} 53 ${eyeBaseY-9}" stroke="${hc}" stroke-width="2" fill="none" stroke-linecap="round"/>` : `
-    <!-- 눈 (남자: 좀 더 각지게) -->
-    <ellipse cx="33" cy="${eyeBaseY}" rx="5.5" ry="6" fill="white"/>
-    <ellipse cx="47" cy="${eyeBaseY}" rx="5.5" ry="6" fill="white"/>
-    <circle cx="33" cy="${eyeBaseY+1}" r="4" fill="#2E4A7C"/>
-    <circle cx="47" cy="${eyeBaseY+1}" r="4" fill="#2E4A7C"/>
-    <circle cx="33" cy="${eyeBaseY+1}" r="2.5" fill="#0a1a3e"/>
-    <circle cx="47" cy="${eyeBaseY+1}" r="2.5" fill="#0a1a3e"/>
-    <circle cx="34.5" cy="${eyeBaseY-1}" r="1.3" fill="white"/>
-    <circle cx="48.5" cy="${eyeBaseY-1}" r="1.3" fill="white"/>
-    <!-- 눈썹 (남자: 직선적) -->
-    <path d="M28 ${eyeBaseY-8} L38 ${eyeBaseY-10}" stroke="${hc}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-    <path d="M42 ${eyeBaseY-10} L52 ${eyeBaseY-8}" stroke="${hc}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`;
-
-  // ── 코 ──
-  const nose=`<path d="M38 35 Q40 37 42 35" stroke="#D4956A" stroke-width="1" fill="none"/>`;
-
-  // ── 입 ──
-  const mouth = isFemale
-    ? `<path d="M35 40 Q40 44 45 40" stroke="#D4607A" stroke-width="1.5" fill="#EDAABB"/>
-       <path d="M35 40 Q40 42 45 40" fill="#FF8FAA" opacity="0.6"/>`
-    : `<path d="M35 40 Q40 43 45 40" stroke="#C05A3A" stroke-width="1.5" fill="none"/>`;
-
-  // ── 볼 ──
-  const cheeks=`
-    <ellipse cx="27" cy="36" rx="6" ry="4" fill="#FFB8C8" opacity="0.5"/>
-    <ellipse cx="53" cy="36" rx="6" ry="4" fill="#FFB8C8" opacity="0.5"/>`;
-
-  // ── 안경 ──
-  const glasses=equipped['안경']?`
-    <rect x="26" y="${eyeBaseY-7}" width="13" height="12" rx="5" fill="none" stroke="${getItemColor(equipped['안경'])}" stroke-width="1.8"/>
-    <rect x="41" y="${eyeBaseY-7}" width="13" height="12" rx="5" fill="none" stroke="${getItemColor(equipped['안경'])}" stroke-width="1.8"/>
-    <line x1="39" y1="${eyeBaseY-1}" x2="41" y2="${eyeBaseY-1}" stroke="${getItemColor(equipped['안경'])}" stroke-width="1.5"/>
-    <line x1="20" y1="${eyeBaseY-2}" x2="26" y2="${eyeBaseY-2}" stroke="${getItemColor(equipped['안경'])}" stroke-width="1.2"/>
-    <line x1="54" y1="${eyeBaseY-2}" x2="60" y2="${eyeBaseY-2}" stroke="${getItemColor(equipped['안경'])}" stroke-width="1.2"/>`:'';
-
-  // ── 머리카락 앞 ──
-  const hairFront = isFemale
-    ? `<path d="M22 18 Q25 8 33 12 Q38 8 40 14 Q42 8 47 12 Q55 8 58 18" fill="${hc}"/>
-       <path d="M22 18 Q20 24 22 28" fill="${hc}"/>`
-    : `<path d="M20 18 Q22 6 40 8 Q58 6 60 18" fill="${hc}"/>
-       <path d="M20 18 Q18 14 20 22" fill="${hc}"/>`;
-
-  // ── 머리 장식 ──
-  const hairDeco = equipped['머리'] && isFemale
-    ? `<circle cx="23" cy="16" r="5" fill="${getItemColor(equipped['머리'])}"/>
-       <circle cx="57" cy="16" r="5" fill="${getItemColor(equipped['머리'])}"/>` : '';
-
-  // ── 목 ──
-  const neck=`<rect x="36" y="47" width="8" height="8" rx="3" fill="${sc}"/>`;
-
-  // ── 몸통 (날씬한 S라인) ──
-  const body = isFemale ? `
-    <!-- 상의 -->
-    <path d="M25 55 Q22 60 21 72 Q22 78 40 79 Q58 78 59 72 Q58 60 55 55 Q48 52 40 52 Q32 52 25 55Z" fill="${tc}"/>
-    <!-- 칼라/목깃 -->
-    <path d="M35 52 Q40 56 45 52" fill="rgba(255,255,255,0.3)"/>
-    <!-- 허리선 -->
-    <path d="M24 68 Q40 72 56 68" stroke="rgba(0,0,0,0.1)" stroke-width="1" fill="none"/>` : `
-    <!-- 상의 -->
-    <path d="M23 55 Q20 62 20 74 Q21 80 40 80 Q59 80 60 74 Q60 62 57 55 Q48 51 40 51 Q32 51 23 55Z" fill="${tc}"/>
-    <!-- 칼라 -->
-    <path d="M33 51 L40 58 L47 51" fill="rgba(255,255,255,0.25)"/>`;
-
-  // ── 팔 ──
-  const arms = isFemale ? `
-    <path d="M25 55 Q18 62 16 74 Q16 80 21 80 Q25 80 26 74 Q27 65 28 58Z" fill="${tc}"/>
-    <ellipse cx="18" cy="81" rx="5.5" ry="5" fill="${sc}"/>
-    <path d="M55 55 Q62 62 64 74 Q64 80 59 80 Q55 80 54 74 Q53 65 52 58Z" fill="${tc}"/>
-    <ellipse cx="62" cy="81" rx="5.5" ry="5" fill="${sc}"/>` : `
-    <path d="M23 55 Q15 63 14 76 Q14 82 20 82 Q24 82 25 75 Q26 66 27 59Z" fill="${tc}"/>
-    <ellipse cx="17" cy="83" rx="6" ry="5.5" fill="${sc}"/>
-    <path d="M57 55 Q65 63 66 76 Q66 82 60 82 Q56 82 55 75 Q54 66 53 59Z" fill="${tc}"/>
-    <ellipse cx="63" cy="83" rx="6" ry="5.5" fill="${sc}"/>`;
-
-  // ── 장갑 ──
-  const gloves=equipped['장갑']?`
-    <ellipse cx="18" cy="81" rx="5.5" ry="5" fill="${getItemColor(equipped['장갑'])}"/>
-    <ellipse cx="62" cy="81" rx="5.5" ry="5" fill="${getItemColor(equipped['장갑'])}"/>`:'';
-
-  // ── 가방 ──
-  const bag=equipped['가방']?`
-    <rect x="62" y="60" width="12" height="16" rx="4" fill="${getItemColor(equipped['가방'])}"/>
-    <rect x="64" y="57" width="3" height="6" rx="1.5" fill="${getItemColor(equipped['가방'])}"/>
-    <line x1="64" y1="67" x2="72" y2="67" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>`:'';
-
-  // ── 하의 ──
-  const bottom = isFemale ? `
-    <path d="M21 78 Q22 86 40 88 Q58 86 59 78 L62 104 Q62 110 40 110 Q18 110 18 104Z" fill="${bc}"/>
-    <!-- 치마 주름 -->
-    <path d="M28 82 L24 110" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-    <path d="M40 88 L40 110" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-    <path d="M52 82 L56 110" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-    <!-- 다리 -->
-    <rect x="26" y="106" width="10" height="9" rx="3" fill="${sc}"/>
-    <rect x="44" y="106" width="10" height="9" rx="3" fill="${sc}"/>` : `
-    <path d="M21 78 Q22 86 30 88 L34 108 L46 108 L50 88 Q58 86 59 78Z" fill="${bc}"/>
-    <line x1="40" y1="88" x2="40" y2="108" stroke="rgba(0,0,0,0.15)" stroke-width="2"/>
-    <!-- 다리 -->
-    <rect x="25" y="104" width="11" height="9" rx="3" fill="${sc}"/>
-    <rect x="44" y="104" width="11" height="9" rx="3" fill="${sc}"/>`;
-
-  // ── 신발 ──
-  const shoes = isFemale ? `
-    <path d="M22 114 Q31 118 36 115 Q36 112 26 111Z" fill="${shoeC}"/>
-    <path d="M44 115 Q49 118 58 114 L54 111 Q44 112 44 115Z" fill="${shoeC}"/>` : `
-    <path d="M21 112 Q32 117 37 114 L36 110 Q24 110 21 112Z" fill="${shoeC}"/>
-    <path d="M43 114 Q48 117 59 112 L56 110 Q44 110 43 114Z" fill="${shoeC}"/>`;
-
-  return `${hairBack}${face}${body}${arms}${gloves}${bag}${bottom}${shoes}${eyes}${nose}${mouth}${cheeks}${glasses}${hairFront}${hairDeco}${neck}${hatSvg}`;
-}
-
-function renderSDCharMini(gender, topColor, botColor){
-  const sc='#FDDCB5'; const hc='#4A2C0A'; const isFemale=gender==='f';
-  const shoeC=isFemale?'#C9748A':'#4A6080';
-  return `<svg width="60" height="84" viewBox="0 0 80 120">
-    ${isFemale?`
-      <ellipse cx="40" cy="28" rx="21" ry="22" fill="${hc}"/>
-      <path d="M19 30 Q16 44 18 57 Q22 63 25 59" fill="${hc}"/>
-      <path d="M61 30 Q64 44 62 57 Q58 63 55 59" fill="${hc}"/>
-      <path d="M24 20 Q27 10 35 13 Q40 9 45 13 Q53 10 56 20" fill="${hc}"/>
-      <path d="M24 20 Q22 26 24 30" fill="${hc}"/>`
-    :`
-      <ellipse cx="40" cy="28" rx="20" ry="20" fill="${hc}"/>
-      <rect x="20" y="11" width="40" height="16" rx="6" fill="${hc}"/>
-      <path d="M20 16 Q22 8 30 13" fill="${hc}"/>
-      <path d="M36 10 Q40 4 44 10" fill="${hc}"/>
-      <path d="M50 13 Q58 8 60 16" fill="${hc}"/>`}
-    <ellipse cx="40" cy="30" rx="18" ry="20" fill="${sc}"/>
-    <ellipse cx="23" cy="31" rx="4" ry="5.5" fill="${sc}"/>
-    <ellipse cx="57" cy="31" rx="4" ry="5.5" fill="${sc}"/>
-    ${isFemale?`
-      <ellipse cx="33" cy="26" rx="6.5" ry="7" fill="white"/>
-      <ellipse cx="47" cy="26" rx="6.5" ry="7" fill="white"/>
-      <circle cx="33" cy="27" r="4.5" fill="#5B3A8C"/>
-      <circle cx="47" cy="27" r="4.5" fill="#5B3A8C"/>
-      <circle cx="33" cy="27" r="2.8" fill="#1a0a2e"/>
-      <circle cx="47" cy="27" r="2.8" fill="#1a0a2e"/>
-      <circle cx="35" cy="25" r="1.5" fill="white"/>
-      <circle cx="49" cy="25" r="1.5" fill="white"/>
-      <path d="M27 17 Q33 13 39 17" stroke="${hc}" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M41 17 Q47 13 53 17" stroke="${hc}" stroke-width="2" fill="none" stroke-linecap="round"/>`
-    :`
-      <ellipse cx="33" cy="26" rx="5.5" ry="6" fill="white"/>
-      <ellipse cx="47" cy="26" rx="5.5" ry="6" fill="white"/>
-      <circle cx="33" cy="27" r="4" fill="#2E4A7C"/>
-      <circle cx="47" cy="27" r="4" fill="#2E4A7C"/>
-      <circle cx="33" cy="27" r="2.5" fill="#0a1a3e"/>
-      <circle cx="47" cy="27" r="2.5" fill="#0a1a3e"/>
-      <circle cx="34.5" cy="25" r="1.3" fill="white"/>
-      <circle cx="48.5" cy="25" r="1.3" fill="white"/>
-      <path d="M28 17 L38 15" stroke="${hc}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-      <path d="M42 15 L52 17" stroke="${hc}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`}
-    <path d="M38 35 Q40 37 42 35" stroke="#D4956A" stroke-width="1" fill="none"/>
-    <ellipse cx="27" cy="36" rx="6" ry="4" fill="#FFB8C8" opacity="0.5"/>
-    <ellipse cx="53" cy="36" rx="6" ry="4" fill="#FFB8C8" opacity="0.5"/>
-    ${isFemale
-      ?`<path d="M35 40 Q40 44 45 40" stroke="#D4607A" stroke-width="1.5" fill="#EDAABB"/>`
-      :`<path d="M35 40 Q40 43 45 40" stroke="#C05A3A" stroke-width="1.5" fill="none"/>`}
-    <rect x="36" y="48" width="8" height="7" rx="3" fill="${sc}"/>
-    ${isFemale?`
-      <path d="M25 55 Q22 60 21 72 Q22 78 40 79 Q58 78 59 72 Q58 60 55 55 Q48 52 40 52 Q32 52 25 55Z" fill="${topColor}"/>
-      <path d="M25 55 Q18 62 16 74 Q16 80 21 80 Q25 80 26 74" fill="${topColor}"/>
-      <path d="M55 55 Q62 62 64 74 Q64 80 59 80 Q55 80 54 74" fill="${topColor}"/>
-      <ellipse cx="18" cy="81" rx="5.5" ry="5" fill="${sc}"/>
-      <ellipse cx="62" cy="81" rx="5.5" ry="5" fill="${sc}"/>
-      <path d="M21 78 Q22 86 40 88 Q58 86 59 78 L62 104 Q62 110 40 110 Q18 110 18 104Z" fill="${botColor}"/>
-      <rect x="26" y="106" width="10" height="9" rx="3" fill="${sc}"/>
-      <rect x="44" y="106" width="10" height="9" rx="3" fill="${sc}"/>
-      <path d="M22 114 Q31 118 36 115 Q36 112 26 111Z" fill="${shoeC}"/>
-      <path d="M44 115 Q49 118 58 114 L54 111 Q44 112 44 115Z" fill="${shoeC}"/>`
-    :`
-      <path d="M23 55 Q20 62 20 74 Q21 80 40 80 Q59 80 60 74 Q60 62 57 55 Q48 51 40 51 Q32 51 23 55Z" fill="${topColor}"/>
-      <path d="M23 55 Q15 63 14 76 Q14 82 20 82" fill="${topColor}"/>
-      <path d="M57 55 Q65 63 66 76 Q66 82 60 82" fill="${topColor}"/>
-      <ellipse cx="17" cy="83" rx="6" ry="5.5" fill="${sc}"/>
-      <ellipse cx="63" cy="83" rx="6" ry="5.5" fill="${sc}"/>
-      <path d="M21 78 Q22 86 30 88 L34 108 L46 108 L50 88 Q58 86 59 78Z" fill="${botColor}"/>
-      <rect x="25" y="104" width="11" height="9" rx="3" fill="${sc}"/>
-      <rect x="44" y="104" width="11" height="9" rx="3" fill="${sc}"/>
-      <path d="M21 112 Q32 117 37 114 L36 110 Q24 110 21 112Z" fill="${shoeC}"/>
-      <path d="M43 114 Q48 117 59 112 L56 110 Q44 110 43 114Z" fill="${shoeC}"/>`}
-  </svg>`;
-}
 
 function getItemColor(itemId){ const item=ITEM_DB.find(i=>i.id===itemId); return item?item.color:'#aaa'; }
 function getItemIco(itemId){ const item=ITEM_DB.find(i=>i.id===itemId); return item?item.ico:'?'; }
 
 function renderCharSVG(svgId, equipped){
-  // 멍총 div 방식으로 통일
   const divId = svgId.replace('-svg','-div');
   const el = document.getElementById(divId) || document.getElementById(svgId);
   if(!el||!myChar) return;
-  const charData = {...myChar, equipped: equipped||myChar.equipped||{}};
-  el.innerHTML = getMungCharHTML(charData, 0.9);
+  el.innerHTML = getMungCharHTML({...myChar, equipped: equipped||myChar.equipped||{}}, 0.9);
 }
 
 // ── 캐릭터 꾸미기 ──
@@ -3151,10 +2892,13 @@ function openCharEdit(){
   if(!myChar){ alert('먼저 캐릭터를 생성해주세요!'); openCharCreate(); return; }
   previewEquip = {...(myChar.equipped||{})};
   document.getElementById('char-edit-bg').classList.add('show');
-  setTimeout(()=>renderCharSVG('ce-preview-div', previewEquip), 50);
   renderCESlots();
   renderCEInvTabs();
   renderCEInv('전체');
+  setTimeout(()=>{
+    const el=document.getElementById('ce-preview-div');
+    if(el&&myChar) el.innerHTML=getMungCharHTML({...myChar,equipped:previewEquip},0.9);
+  }, 80);
 }
 function closeCharEdit(){ document.getElementById('char-edit-bg').classList.remove('show'); }
 
@@ -3216,7 +2960,16 @@ function resetEquip(){
 }
 
 // ── 상점 ──
-function openShop(){ renderShopCatTabs(); renderShopGrid('전체'); document.getElementById('shop-bg').classList.add('show'); updateVillagePts(); }
+function openShop(){
+  renderShopCatTabs(); renderShopGrid('전체');
+  document.getElementById('shop-bg').classList.add('show');
+  updateVillagePts();
+  // 상점 상단에 내 캐릭터 미리보기 업데이트
+  setTimeout(()=>{
+    const el=document.getElementById('ce-preview-div');
+    if(el&&myChar) el.innerHTML=getMungCharHTML({...myChar,equipped:previewEquip||myChar.equipped||{}},0.9);
+  }, 80);
+}
 function closeShop(){ document.getElementById('shop-bg').classList.remove('show'); cancelPreview(); }
 function renderShopCatTabs(){
   const cats=['전체',...SLOT_TYPES];
@@ -3279,26 +3032,7 @@ function buyItem(){
 
 // ── 마을 꾸미기 (캔버스) ──
 let townCtx, townW, townH, townAnimId=null;
-// 캐릭터 이동 시스템
-let charX=4, charY=4;
-let charTargetX=4, charTargetY=4;
-let charDir=1;
-let charWalk=0;
-let charIdle=0;
-let charAutoTimer=0;
-let townObjects = [];
-let townTool = 'place'; // 기본 툴: 배치 (이동 툴 제거)
-let townFrame = 0;
-// 말풍선 시스템
-const CHAR_BUBBLES = [
-  '심심해~😪','피아노 치고 싶다🎹','오늘도 열심히!💪',
-  '배고파...🍙','날씨 좋다☀️','친구 어딨지?👀',
-  '연습해야지~🎵','졸려...😴','뭐하지?🤔',
-  '피아노 마을 최고!🏡','레벨 올려야지⭐','포인트 모으자💰',
-];
-let bubbleText = '';
-let bubbleTimer = 0;    // 말풍선 표시 중 남은 프레임
-let bubbleInterval = 0; // 다음 말풍선까지 대기 프레임
+// 마을 시스템 제거됨
 
 const TOWN_OBJECTS = [
   {id:'tree1',ico:'🌳',name:'나무',pts:30},
@@ -3313,262 +3047,7 @@ const TOWN_OBJECTS = [
   {id:'mailbox1',ico:'📮',name:'우체통',pts:20},
 ];
 
-function openTown(){
-  if(!currentStudent){alert('먼저 로그인해주세요!');return;}
-  document.getElementById('town-bg').classList.add('show');
-  setTimeout(initTownCanvas,100);
-}
-function closeTown(){
-  document.getElementById('town-bg').classList.remove('show');
-  cancelAnimationFrame(townAnimId);
-}
-function initTownCanvas(){
-  const canvas=document.getElementById('town-canvas');
-  const bg=document.getElementById('town-bg');
-  canvas.width=bg.offsetWidth;
-  canvas.height=bg.offsetHeight-52-80;
-  canvas.style.marginTop='52px';
-  townW=canvas.width; townH=canvas.height;
-  townCtx=canvas.getContext('2d');
-  charX=7; charY=7;       // 섬 중앙
-  charTargetX=7; charTargetY=7;
-  canvas.addEventListener('click',onTownClick);
-  townAnimId=requestAnimationFrame(townLoop);
-}
 // ── 아이소메트릭 좌표 변환 (넓은 섬 맵) ──
-function isoX(gx,gy){ return townW/2 + (gx-gy)*26; }
-function isoY(gx,gy){ return townH*0.22 + (gx+gy)*13; }
-
-function townLoop(){
-  if(!townCtx){return;}
-  townFrame++;
-
-  // ── 캐릭터 자동 이동 ──
-  const dx=charTargetX-charX, dy=charTargetY-charY;
-  const dist=Math.sqrt(dx*dx+dy*dy);
-  const speed=0.035; // 매우 천천히
-  if(dist>0.05){
-    charX+=dx/dist*speed; charY+=dy/dist*speed;
-    charDir=dx>0?1:-1;
-    charWalk++;
-  } else {
-    charX=charTargetX; charY=charTargetY;
-    charIdle++;
-    // 도착하면 바로 다음 목적지 설정 (쉬지 않고 걷기)
-    charAutoTimer++;
-    if(charAutoTimer>60){ // 잠깐 멈췄다 바로 이동
-      charAutoTimer=0;
-      charWalk=0;
-      // 섬 그리드 내 랜덤 이동 (섬 범위: 1.5~12.5)
-      charTargetX=1.8+Math.random()*10.4;
-      charTargetY=1.8+Math.random()*10.4;
-    }
-    // 말풍선 - 가끔 표시
-    bubbleInterval++;
-    if(bubbleInterval>300 && bubbleTimer===0){
-      bubbleInterval=0;
-      bubbleText=CHAR_BUBBLES[Math.floor(Math.random()*CHAR_BUBBLES.length)];
-      bubbleTimer=150;
-    }
-    if(bubbleTimer>0) bubbleTimer--;
-  }
-
-  // ── 배경 ──
-  // 하늘
-  const sky=townCtx.createLinearGradient(0,0,0,townH);
-  sky.addColorStop(0,'#87CEEB'); sky.addColorStop(0.5,'#C8E8F8'); sky.addColorStop(1,'#A8D8EA');
-  townCtx.fillStyle=sky; townCtx.fillRect(0,0,townW,townH);
-
-  // 바다 (전체 하단)
-  drawSea();
-
-  // 구름
-  drawIsoClouds();
-
-  // 원경 나무
-  drawIsoBackground();
-
-  // ── 섬 타일 바닥 ──
-  drawIsoFloor();
-
-  // ── 오브젝트 + 캐릭터 깊이순 정렬 ──
-  const charScreenX = isoX(charX,charY);
-  const charScreenY = isoY(charX,charY);
-  // 미리보기 오브젝트 임시 추가
-  const previewEntity = previewObj
-    ? [{ico:previewObj.ico, name:previewObj.name, gx:previewGX, gy:previewGY,
-        sx:isoX(previewGX,previewGY), sy:isoY(previewGX,previewGY), isChar:false, isPreview:true}]
-    : [];
-
-  const allEntities = [
-    ...townObjects.map(o=>({...o, sx:isoX(o.gx,o.gy), sy:isoY(o.gx,o.gy), isChar:false})),
-    ...previewEntity,
-    {sx:charScreenX, sy:charScreenY, isChar:true}
-  ];
-  allEntities.sort((a,b)=>a.sy-b.sy);
-  allEntities.forEach(e=>{
-    if(e.isChar) drawTownChar(charScreenX, charScreenY);
-    else drawIsoObj(e);
-  });
-
-  // 미리보기 확정 버튼 (화면에 그리기)
-  if(previewObj){
-    const px=isoX(previewGX,previewGY), py=isoY(previewGX,previewGY)-40;
-    townCtx.fillStyle='rgba(78,205,196,0.9)';
-    townCtx.fillRect(px-32,py-14,64,26);
-    townCtx.fillStyle='#fff';
-    townCtx.font='bold 12px sans-serif';townCtx.textAlign='center';
-    townCtx.fillText('✓ 여기에 배치',px,py+4);
-  }
-
-  // ── 말풍선 그리기 ──
-  if(bubbleTimer>0){
-    const bsx=isoX(charX,charY), bsy=isoY(charX,charY);
-    const alpha=bubbleTimer<30?bubbleTimer/30:bubbleTimer>140?1:(160-bubbleTimer)/20+0.8;
-    drawBubble(bsx, bsy-60, bubbleText, Math.min(1,alpha));
-  }
-
-  // ── UI 안내 ──
-  townCtx.fillStyle='rgba(80,50,20,0.65)';
-  const tw=160, tx=townW/2-tw/2;
-  townCtx.beginPath();
-  if(townCtx.roundRect) townCtx.roundRect(tx,8,tw,22,11);
-  else townCtx.rect(tx,8,tw,22);
-  townCtx.fill();
-  townCtx.fillStyle='rgba(255,240,200,0.9)';
-  townCtx.font='11px sans-serif'; townCtx.textAlign='center';
-  townCtx.fillText(
-    townTool==='place'?'📦 탭해서 오브젝트 배치':
-    '🗑 탭해서 제거', townW/2, 22);
-
-  townAnimId=requestAnimationFrame(townLoop);
-}
-
-function drawBubble(x, y, text, alpha){
-  townCtx.save();
-  townCtx.globalAlpha = alpha;
-  // 말풍선 배경
-  const pad=10, fSize=13;
-  townCtx.font=`bold ${fSize}px sans-serif`;
-  const tw=townCtx.measureText(text).width;
-  const bw=tw+pad*2, bh=28;
-  const bx=x-bw/2, by=y-bh;
-  // 배경 흰색 둥근 박스
-  townCtx.fillStyle='rgba(255,255,255,0.95)';
-  townCtx.strokeStyle='rgba(180,140,100,0.8)';
-  townCtx.lineWidth=1.5;
-  if(townCtx.roundRect){
-    townCtx.beginPath(); townCtx.roundRect(bx,by,bw,bh,10); townCtx.fill(); townCtx.stroke();
-  } else {
-    townCtx.fillRect(bx,by,bw,bh); townCtx.strokeRect(bx,by,bw,bh);
-  }
-  // 꼬리 삼각형
-  townCtx.fillStyle='rgba(255,255,255,0.95)';
-  townCtx.beginPath();
-  townCtx.moveTo(x-7, by+bh);
-  townCtx.lineTo(x+7, by+bh);
-  townCtx.lineTo(x, by+bh+10);
-  townCtx.closePath(); townCtx.fill();
-  townCtx.strokeStyle='rgba(180,140,100,0.8)'; townCtx.lineWidth=1.5;
-  townCtx.beginPath();
-  townCtx.moveTo(x-7, by+bh);
-  townCtx.lineTo(x, by+bh+10);
-  townCtx.lineTo(x+7, by+bh);
-  townCtx.stroke();
-  // 텍스트
-  townCtx.fillStyle='#5A3A1A';
-  townCtx.textAlign='center'; townCtx.textBaseline='middle';
-  townCtx.fillText(text, x, by+bh/2);
-  townCtx.restore();
-}
-
-function drawSea(){
-  // 바다 배경
-  const seaGrad=townCtx.createLinearGradient(0,townH*0.3,0,townH);
-  seaGrad.addColorStop(0,'#4ABBD5');
-  seaGrad.addColorStop(0.4,'#3AA8C5');
-  seaGrad.addColorStop(1,'#2A8FAF');
-  townCtx.fillStyle=seaGrad;
-  townCtx.fillRect(0,townH*0.25,townW,townH);
-
-  // 바다 물결 라인
-  for(let i=0;i<6;i++){
-    const waveY=townH*0.32 + i*28 + Math.sin(townFrame*0.03+i*1.2)*4;
-    const wAlpha=0.12+i*0.02;
-    townCtx.strokeStyle=`rgba(255,255,255,${wAlpha})`;
-    townCtx.lineWidth=1.5;
-    townCtx.beginPath();
-    for(let x=0;x<townW;x+=4){
-      const y=waveY+Math.sin(x*0.04+townFrame*0.04+i)*3;
-      x===0?townCtx.moveTo(x,y):townCtx.lineTo(x,y);
-    }
-    townCtx.stroke();
-  }
-
-  // 반짝임 효과
-  for(let i=0;i<8;i++){
-    const sx=(i*137+townFrame*0.8)%(townW*0.9)+townW*0.05;
-    const sy=townH*0.35+(i*73)%(townH*0.55);
-    const alpha=Math.max(0,Math.sin(townFrame*0.06+i*0.8))*0.4;
-    if(alpha>0.05){
-      townCtx.fillStyle=`rgba(255,255,255,${alpha})`;
-      townCtx.beginPath();townCtx.arc(sx,sy,2+i%2,0,Math.PI*2);townCtx.fill();
-    }
-  }
-}
-
-function drawIsoClouds(){
-  const clouds=[
-    {ox:0.2, oy:0.07, r:28},
-    {ox:0.6, oy:0.12, r:20},
-    {ox:0.85,oy:0.05, r:24},
-  ];
-  clouds.forEach((cl,i)=>{
-    const cx=(cl.ox*townW + (townFrame*(0.15+i*0.05))%townW)%townW;
-    const cy=townH*cl.oy;
-    townCtx.fillStyle='rgba(255,255,255,0.9)';
-    townCtx.beginPath();
-    townCtx.arc(cx,cy,cl.r,0,Math.PI*2);
-    townCtx.arc(cx+cl.r*1.1,cy-cl.r*0.25,cl.r*0.75,0,Math.PI*2);
-    townCtx.arc(cx-cl.r*0.9,cy-cl.r*0.2,cl.r*0.65,0,Math.PI*2);
-    townCtx.fill();
-  });
-}
-
-function drawIsoBackground(){
-  // 원경 나무 + 섬 원경
-  const bgTrees=[
-    {x:townW*0.03,y:townH*0.28,s:0.65},
-    {x:townW*0.09,y:townH*0.25,s:0.8},
-    {x:townW*0.87,y:townH*0.26,s:0.75},
-    {x:townW*0.93,y:townH*0.22,s:0.6},
-    {x:townW*0.96,y:townH*0.3,s:0.55},
-  ];
-  bgTrees.forEach(t=>{ drawBgTree(t.x,t.y,t.s); });
-
-  // 원경 섬 실루엣
-  townCtx.fillStyle='rgba(60,160,100,0.35)';
-  townCtx.beginPath();
-  townCtx.ellipse(townW*0.15,townH*0.35,40,14,0,0,Math.PI*2);
-  townCtx.fill();
-  townCtx.fillStyle='rgba(60,160,100,0.25)';
-  townCtx.beginPath();
-  townCtx.ellipse(townW*0.82,townH*0.38,32,11,0,0,Math.PI*2);
-  townCtx.fill();
-}
-
-function drawBgTree(x,y,s){
-  // 나무 기둥
-  townCtx.fillStyle='#7a5230';
-  townCtx.fillRect(x-4*s,y,8*s,24*s);
-  // 나뭇잎 3층
-  [[0,0,22],[0,-14,18],[0,-26,14]].forEach(([dx,dy,r])=>{
-    townCtx.fillStyle=`hsl(${115+Math.random()*10},55%,${32+Math.random()*8}%)`;
-    townCtx.beginPath();
-    townCtx.arc(x+dx,y+dy,r*s,0,Math.PI*2);
-    townCtx.fill();
-  });
-}
 
 // 섬 모양 정의 (타원형 섬, 14x14 그리드)
 const ISLAND_GRID = 15;
@@ -3587,410 +3066,10 @@ function isIslandEdge(gx, gy){
   return r>0.72 && r<=1.0;
 }
 
-function drawIsoFloor(){
-  const TW=26, TH=13;
-  for(let gy=0;gy<ISLAND_GRID;gy++){
-    for(let gx=0;gx<ISLAND_GRID;gx++){
-      if(!isIslandTile(gx,gy)) continue;
-      const sx=isoX(gx,gy), sy=isoY(gx,gy);
-      const edge=isIslandEdge(gx,gy);
-      const isDark=(gx+gy)%2===0;
-
-      // 모래 해변 (가장자리)
-      let tileColor;
-      if(edge){
-        tileColor=isDark?'#E8C97A':'#F0D890';
-      } else {
-        tileColor=isDark?'#7DC87A':'#8ED88A';
-      }
-
-      townCtx.beginPath();
-      townCtx.moveTo(sx,sy);
-      townCtx.lineTo(sx+TW,sy+TH);
-      townCtx.lineTo(sx,sy+TH*2);
-      townCtx.lineTo(sx-TW,sy+TH);
-      townCtx.closePath();
-      townCtx.fillStyle=tileColor;
-      townCtx.fill();
-      townCtx.strokeStyle='rgba(0,0,0,0.06)';
-      townCtx.lineWidth=0.5;
-      townCtx.stroke();
-
-      // 해변 모래 결 표시
-      if(edge && (gx+gy)%3===0){
-        townCtx.save();
-        townCtx.strokeStyle='rgba(180,140,60,0.25)';
-        townCtx.lineWidth=0.8;
-        townCtx.beginPath();
-        townCtx.moveTo(sx-8,sy+TH); townCtx.lineTo(sx+8,sy+TH);
-        townCtx.stroke();
-        townCtx.restore();
-      }
-    }
-  }
-
-  // 해변 물결 효과 (섬 경계)
-  drawIslandWaterEdge();
-}
-
-function drawIslandWaterEdge(){
-  // 섬 주변 바다 물결
-  const wave=Math.sin(townFrame*0.04)*3;
-  for(let gy=0;gy<ISLAND_GRID+2;gy++){
-    for(let gx=0;gx<ISLAND_GRID+2;gx++){
-      const dx=(gx-ISLAND_CX)/ISLAND_RX;
-      const dy=(gy-ISLAND_CY)/ISLAND_RY;
-      const r=dx*dx+dy*dy;
-      if(r>1.0 && r<1.35){
-        const sx=isoX(gx,gy), sy=isoY(gx,gy);
-        const wAlpha=0.35+0.15*Math.sin(gx*0.7+gy*0.5+townFrame*0.05);
-        townCtx.fillStyle=`rgba(100,200,240,${wAlpha})`;
-        townCtx.beginPath();
-        townCtx.moveTo(sx,sy+wave*0.3);
-        townCtx.lineTo(sx+26,sy+13+wave*0.3);
-        townCtx.lineTo(sx,sy+26+wave*0.3);
-        townCtx.lineTo(sx-26,sy+13+wave*0.3);
-        townCtx.closePath();
-        townCtx.fill();
-      }
-    }
-  }
-}
-
-function drawIsoObj(obj){
-  const sx=obj.sx, sy=obj.sy;
-  townCtx.save();
-  if(obj.isPreview) townCtx.globalAlpha=0.5;
-  // 그림자
-  if(!obj.isPreview){
-    townCtx.fillStyle='rgba(0,0,0,0.2)';
-    townCtx.beginPath();
-    townCtx.ellipse(sx,sy+4,20,7,0,0,Math.PI*2);
-    townCtx.fill();
-  }
-  // 오브젝트
-  townCtx.font='30px serif';
-  townCtx.textAlign='center';
-  townCtx.textBaseline='bottom';
-  townCtx.fillText(obj.ico,sx,sy);
-  if(!obj.isPreview){
-    townCtx.font='10px sans-serif';
-    townCtx.fillStyle='rgba(80,50,10,0.7)';
-    townCtx.textBaseline='top';
-    townCtx.fillText(obj.name||'',sx,sy+2);
-  }
-  // 미리보기 테두리
-  if(obj.isPreview){
-    townCtx.globalAlpha=0.8;
-    townCtx.strokeStyle='#4ECDC4';townCtx.lineWidth=2;
-    townCtx.beginPath();townCtx.arc(sx,sy-15,18,0,Math.PI*2);townCtx.stroke();
-  }
-  townCtx.restore();
-}
-function drawTownChar(sx,sy){
-  const tc=myChar?myChar.topColor:'#4ECDC4';
-  const bc=myChar?myChar.botColor:'#5C6BC0';
-  const sc='#FDDCB5';
-  const isFemale=!myChar||myChar.gender==='f';
-  const hairC=myChar&&myChar.equipped&&myChar.equipped['머리']?getItemColor(myChar.equipped['머리']):(isFemale?'#8B4513':'#1a1a1a');
-  const shoeC=myChar&&myChar.equipped&&myChar.equipped['신발']?getItemColor(myChar.equipped['신발']):(isFemale?'#FF4D7D':'#2C3E50');
-
-  // 걷기 애니
-  const isWalking=Math.abs(charTargetX-charX)>0.05||Math.abs(charTargetY-charY)>0.05;
-  const wCycle=Math.sin(charWalk*0.18);
-  const bobY=isWalking?Math.abs(Math.sin(charWalk*0.18))*2.5:0;
-
-  townCtx.save();
-  townCtx.translate(sx, sy-bobY);
-  if(charDir<0) townCtx.scale(-1,1);
-
-  const S=1.1;
-
-  // 그림자
-  townCtx.fillStyle='rgba(0,0,0,0.18)';
-  townCtx.beginPath();townCtx.ellipse(0,16*S,14*S,4*S,0,0,Math.PI*2);townCtx.fill();
-
-  // ── 다리 (짧고 통통) ──
-  const legAng=isWalking?wCycle*0.15:0;
-  townCtx.save();townCtx.translate(-6*S,4*S);townCtx.rotate(legAng);
-  townCtx.fillStyle=bc; townCtx.strokeStyle='#333'; townCtx.lineWidth=2;
-  townCtx.fillRect(-5*S,0,10*S,16*S);townCtx.strokeRect(-5*S,0,10*S,16*S);
-  // 신발
-  townCtx.fillStyle=shoeC;
-  townCtx.beginPath();townCtx.ellipse(0,17*S,7*S,4*S,0,0,Math.PI*2);townCtx.fill();townCtx.stroke();
-  townCtx.restore();
-
-  townCtx.save();townCtx.translate(6*S,4*S);townCtx.rotate(-legAng);
-  townCtx.fillStyle=bc; townCtx.strokeStyle='#333'; townCtx.lineWidth=2;
-  townCtx.fillRect(-5*S,0,10*S,16*S);townCtx.strokeRect(-5*S,0,10*S,16*S);
-  townCtx.fillStyle=shoeC;
-  townCtx.beginPath();townCtx.ellipse(0,17*S,7*S,4*S,0,0,Math.PI*2);townCtx.fill();townCtx.stroke();
-  townCtx.restore();
-
-  // ── 팔 (구부정하게) ──
-  const armAng=isWalking?-wCycle*0.2:0;
-  // 왼팔
-  townCtx.save();townCtx.translate(-14*S,-10*S);townCtx.rotate(-0.3+armAng);
-  townCtx.fillStyle=tc; townCtx.strokeStyle='#333'; townCtx.lineWidth=2;
-  townCtx.beginPath();townCtx.ellipse(0,8*S,5*S,10*S,0,0,Math.PI*2);townCtx.fill();townCtx.stroke();
-  // 손
-  const gc=myChar&&myChar.equipped&&myChar.equipped['장갑']?getItemColor(myChar.equipped['장갑']):sc;
-  townCtx.fillStyle=gc;townCtx.strokeStyle='#333';
-  townCtx.beginPath();townCtx.arc(2*S,17*S,5*S,0,Math.PI*2);townCtx.fill();townCtx.stroke();
-  townCtx.restore();
-  // 오른팔
-  townCtx.save();townCtx.translate(14*S,-10*S);townCtx.rotate(0.3-armAng);
-  townCtx.fillStyle=tc; townCtx.strokeStyle='#333'; townCtx.lineWidth=2;
-  townCtx.beginPath();townCtx.ellipse(0,8*S,5*S,10*S,0,0,Math.PI*2);townCtx.fill();townCtx.stroke();
-  townCtx.fillStyle=gc;townCtx.strokeStyle='#333';
-  townCtx.beginPath();townCtx.arc(-2*S,17*S,5*S,0,Math.PI*2);townCtx.fill();townCtx.stroke();
-  townCtx.restore();
-
-  // ── 가방 ──
-  if(myChar&&myChar.equipped&&myChar.equipped['가방']){
-    townCtx.fillStyle=getItemColor(myChar.equipped['가방']);
-    townCtx.strokeStyle='#333';townCtx.lineWidth=2;
-    townCtx.beginPath();
-    if(townCtx.roundRect) townCtx.roundRect(12*S,-12*S,11*S,14*S,3);
-    else townCtx.rect(12*S,-12*S,11*S,14*S);
-    townCtx.fill();townCtx.stroke();
-  }
-
-  // ── 몸통 (달걀형) ──
-  townCtx.fillStyle=tc; townCtx.strokeStyle='#333'; townCtx.lineWidth=2.5;
-  townCtx.beginPath();townCtx.ellipse(0,-8*S,14*S,20*S,0,0,Math.PI*2);townCtx.fill();townCtx.stroke();
-
-  // ── 머리 (크고 동글) ──
-  // 머리카락 뒤
-  townCtx.fillStyle=hairC; townCtx.strokeStyle='#333'; townCtx.lineWidth=2.5;
-  townCtx.beginPath();townCtx.arc(0,-34*S,17*S,0,Math.PI*2);townCtx.fill();townCtx.stroke();
-
-  // 여자 긴머리
-  if(isFemale){
-    townCtx.fillStyle=hairC;
-    townCtx.beginPath();townCtx.ellipse(-14*S,-28*S,5*S,12*S,0,0,Math.PI*2);townCtx.fill();townCtx.stroke();
-    townCtx.beginPath();townCtx.ellipse(14*S,-28*S,5*S,12*S,0,0,Math.PI*2);townCtx.fill();townCtx.stroke();
-  }
-
-  // 얼굴
-  townCtx.fillStyle=sc; townCtx.strokeStyle='#333'; townCtx.lineWidth=2.5;
-  townCtx.beginPath();townCtx.arc(0,-34*S,16*S,0,Math.PI*2);townCtx.fill();townCtx.stroke();
-
-  // 앞머리
-  townCtx.fillStyle=hairC; townCtx.strokeStyle='#333'; townCtx.lineWidth=2;
-  if(isFemale){
-    // 여자: 갈라진 앞머리
-    townCtx.beginPath();
-    townCtx.moveTo(-16*S,-38*S);
-    townCtx.lineTo(-16*S,-46*S);townCtx.quadraticCurveTo(-8*S,-52*S,0,-46*S);
-    townCtx.quadraticCurveTo(8*S,-52*S,16*S,-46*S);
-    townCtx.lineTo(16*S,-38*S);
-    townCtx.closePath();
-    townCtx.fill();townCtx.stroke();
-    // 리본
-    const ribC=myChar&&myChar.equipped&&myChar.equipped['머리']?getItemColor(myChar.equipped['머리']):'#FF6B6B';
-    townCtx.fillStyle=ribC;townCtx.strokeStyle='#333';townCtx.lineWidth=1.5;
-    townCtx.beginPath();townCtx.arc(13*S,-46*S,5*S,0,Math.PI*2);townCtx.fill();townCtx.stroke();
-    townCtx.beginPath();townCtx.arc(13*S,-46*S,2*S,0,Math.PI*2);
-    townCtx.fillStyle='#fff';townCtx.fill();
-  } else {
-    // 남자: 삐죽 앞머리
-    townCtx.beginPath();
-    townCtx.moveTo(-16*S,-38*S);
-    townCtx.quadraticCurveTo(-14*S,-50*S,-7*S,-44*S);
-    townCtx.quadraticCurveTo(-2*S,-54*S,4*S,-44*S);
-    townCtx.quadraticCurveTo(10*S,-52*S,16*S,-40*S);
-    townCtx.lineTo(16*S,-38*S);
-    townCtx.closePath();
-    townCtx.fill();townCtx.stroke();
-  }
-
-  // 모자
-  if(myChar&&myChar.equipped&&myChar.equipped['모자']){
-    townCtx.font=`${16*S}px serif`;townCtx.textAlign='center';townCtx.textBaseline='middle';
-    townCtx.fillText(getItemIco(myChar.equipped['모자']),0,-54*S);
-  }
-
-  // ── 눈 (ㅡ 선 두 개) ──
-  townCtx.strokeStyle='#333'; townCtx.lineWidth=2.5; townCtx.lineCap='round';
-  townCtx.beginPath();townCtx.moveTo(-7*S,-33*S);townCtx.lineTo(-2*S,-33*S);townCtx.stroke();
-  townCtx.beginPath();townCtx.moveTo(2*S,-33*S);townCtx.lineTo(7*S,-33*S);townCtx.stroke();
-
-  // 안경
-  if(myChar&&myChar.equipped&&myChar.equipped['안경']){
-    const gc2=getItemColor(myChar.equipped['안경']);
-    townCtx.strokeStyle=gc2;townCtx.lineWidth=1.8;
-    townCtx.strokeRect(-9*S,-37*S,8*S,8*S);
-    townCtx.strokeRect(1*S,-37*S,8*S,8*S);
-    townCtx.beginPath();townCtx.moveTo(-1*S,-33*S);townCtx.lineTo(1*S,-33*S);townCtx.stroke();
-  }
-
-  // ── 볼터치 ──
-  townCtx.fillStyle='rgba(255,150,130,0.38)';
-  townCtx.beginPath();townCtx.ellipse(-9*S,-28*S,6*S,3.5*S,0,0,Math.PI*2);townCtx.fill();
-  townCtx.beginPath();townCtx.ellipse(9*S,-28*S,6*S,3.5*S,0,0,Math.PI*2);townCtx.fill();
-
-  // ── 입 (삐뚤어진 선) ──
-  townCtx.strokeStyle='#333'; townCtx.lineWidth=2.2; townCtx.lineCap='round';
-  townCtx.save();townCtx.translate(1*S,-23*S);townCtx.rotate(0.15);
-  townCtx.beginPath();townCtx.moveTo(-5*S,0);townCtx.lineTo(5*S,0);townCtx.stroke();
-  townCtx.restore();
-
-  townCtx.restore();
-}
-function screenToIso(sx,sy){
-  const ox=sx-townW/2, oy=sy-townH*0.22;
-  const gx=(ox/26+oy/13)/2;
-  const gy=(oy/13-ox/26)/2;
-  return {gx:Math.max(1,Math.min(13,gx)), gy:Math.max(1,Math.min(13,gy))};
-}
-
-function onTownClick(e){
-  const rect=document.getElementById('town-canvas').getBoundingClientRect();
-  const sx=e.clientX-rect.left, sy=e.clientY-rect.top;
-  const {gx,gy}=screenToIso(sx,sy);
-  const snap_gx=Math.max(1,Math.min(13,Math.round(gx)));
-  const snap_gy=Math.max(1,Math.min(13,Math.round(gy)));
-
-  if(townTool==='place' && previewObj){
-    // 미리보기 확정 버튼 영역 클릭 체크
-    const px=isoX(previewGX,previewGY), py=isoY(previewGX,previewGY)-40;
-    const inBtn=sx>=px-32&&sx<=px+32&&sy>=py-14&&sy<=py+12;
-    if(inBtn){
-      // 확정! 배치
-      townObjects.push({
-        id:previewObj.id+'_'+Date.now(),
-        ico:previewObj.ico,
-        name:previewObj.name,
-        gx:previewGX, gy:previewGY,
-        sx:isoX(previewGX,previewGY),
-        sy:isoY(previewGX,previewGY)
-      });
-      previewObj=null;
-      townTool='remove';
-      document.getElementById('tt-remove')?.classList.add('active-tool');
-      document.getElementById('tt-place')?.classList.remove('active-tool');
-      updateTownInventoryUI();
-      return;
-    }
-    // 버튼 외 클릭 → 미리보기 위치 이동
-    previewGX=snap_gx; previewGY=snap_gy;
-  } else if(townTool==='remove'){
-    townObjects=townObjects.filter(o=>Math.sqrt((o.gx-gx)**2+(o.gy-gy)**2)>1);
-  }
-}
 let selectedTownObj=null;
 let myTownInventory=[]; // 구매한 마을 오브젝트 목록 [{id, ico, name, pts}]
 let previewObj=null;    // 반투명 미리보기 중인 오브젝트
 let previewGX=4, previewGY=4; // 미리보기 위치
-function setTownTool(tool){
-  townTool=tool;
-  document.querySelectorAll('.tt-item').forEach(el=>el.classList.remove('active-tool'));
-  document.getElementById('tt-'+tool)?.classList.add('active-tool');
-  if(tool==='place') openTownShop('inv');
-}
-function openTownShop(tab='inv'){
-  const m=document.getElementById('town-shop-modal');
-  if(m)m.remove();
-  const modal=document.createElement('div');
-  modal.id='town-shop-modal';
-  modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:3100;display:flex;align-items:flex-end;justify-content:center;';
-  modal.innerHTML=`
-  <div style="background:#1a2a3a;border-radius:22px 22px 0 0;padding:0 0 36px;width:100%;max-width:500px;max-height:75vh;display:flex;flex-direction:column;">
-    <!-- 탭 헤더 -->
-    <div style="display:flex;border-bottom:1px solid rgba(255,255,255,0.1);padding:16px 16px 0;">
-      <button id="ts-tab-inv" onclick="openTownShop('inv')" style="flex:1;padding:10px;border:none;background:none;font-family:'Jua',sans-serif;font-size:0.88rem;cursor:pointer;border-bottom:2px solid ${tab==='inv'?'#4ECDC4':'transparent'};color:${tab==='inv'?'#4ECDC4':'rgba(255,255,255,0.5)'};">🎒 소지품</button>
-      <button id="ts-tab-shop" onclick="openTownShop('shop')" style="flex:1;padding:10px;border:none;background:none;font-family:'Jua',sans-serif;font-size:0.88rem;cursor:pointer;border-bottom:2px solid ${tab==='shop'?'#FFE66D':'transparent'};color:${tab==='shop'?'#FFE66D':'rgba(255,255,255,0.5)'};">🏪 상점</button>
-    </div>
-    <!-- 보유 포인트 -->
-    <div style="padding:10px 16px 0;display:flex;justify-content:flex-end;">
-      <span style="font-family:'Jua',sans-serif;font-size:0.75rem;color:rgba(255,255,255,0.4);">보유 포인트: </span>
-      <span style="font-family:'Do Hyeon',sans-serif;font-size:0.88rem;color:#FFE66D;margin-left:4px;">${totalPoints}p</span>
-    </div>
-    <!-- 콘텐츠 -->
-    <div style="overflow-y:auto;padding:12px 16px;flex:1;" id="ts-content">
-      ${tab==='inv' ? renderTownInvHTML() : renderTownShopHTML()}
-    </div>
-    <div style="padding:0 16px;">
-      <button onclick="closeTownShop()" style="width:100%;padding:12px;border:none;border-radius:12px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.9rem;cursor:pointer;">닫기</button>
-    </div>
-  </div>`;
-  document.body.appendChild(modal);
-}
-
-function renderTownInvHTML(){
-  if(!myTownInventory.length) return '<div style="color:rgba(255,255,255,0.3);text-align:center;padding:24px;font-family:Jua,sans-serif;font-size:0.82rem;">소지품이 없어요<br>상점에서 구매해보세요!</div>';
-  // 아이템별로 그룹핑 (id 기준 개수 합산)
-  const grouped={};
-  myTownInventory.forEach((o,idx)=>{
-    if(!grouped[o.id]) grouped[o.id]={...o, cnt:0, firstIdx:idx};
-    grouped[o.id].cnt++;
-  });
-  return Object.values(grouped).map(o=>`
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.06);border-radius:10px;margin-bottom:8px;">
-      <span style="font-size:1.6rem;">${o.ico}</span>
-      <div style="flex:1">
-        <div style="font-family:'Jua',sans-serif;font-size:0.85rem;color:#fff;">${o.name}</div>
-        <div style="font-size:0.7rem;color:#4ECDC4;margin-top:2px;">${o.cnt}개 보유</div>
-      </div>
-      <button onclick="startPlaceFromInv('${o.id}')" style="padding:8px 14px;border:none;border-radius:10px;background:linear-gradient(135deg,#4ECDC4,#38d9cc);color:#fff;font-family:'Jua',sans-serif;font-size:0.78rem;cursor:pointer;">배치하기</button>
-    </div>`).join('');
-}
-
-function renderTownShopHTML(){
-  return TOWN_OBJECTS.map(o=>{
-    const ownedCnt = myTownInventory.filter(i=>i.id===o.id).length;
-    const canAfford = totalPoints>=o.pts;
-    return `
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.06);border-radius:10px;margin-bottom:8px;">
-      <span style="font-size:1.6rem;">${o.ico}</span>
-      <div style="flex:1">
-        <div style="font-family:'Jua',sans-serif;font-size:0.85rem;color:#fff;">${o.name}</div>
-        <div style="display:flex;align-items:center;gap:8px;margin-top:2px;">
-          <span style="font-family:'Do Hyeon',sans-serif;font-size:0.82rem;color:${canAfford?'#FFE66D':'#FF6B6B'};">${o.pts}p</span>
-          ${ownedCnt>0?`<span style="font-family:'Jua',sans-serif;font-size:0.68rem;color:#4ECDC4;">보유 ${ownedCnt}개</span>`:''}
-        </div>
-      </div>
-      <button onclick="buyTownObj('${o.id}')" style="padding:8px 14px;border:none;border-radius:10px;background:${canAfford?'linear-gradient(135deg,#f59f00,#FFE66D)':'rgba(255,255,255,0.1)'};color:${canAfford?'#2D3436':'rgba(255,255,255,0.3)'};font-family:'Jua',sans-serif;font-size:0.78rem;cursor:${canAfford?'pointer':'default'};">${ownedCnt>0?'추가 구매':'구매'}</button>
-    </div>`}).join('');
-}
-
-function closeTownShop(){
-  const m=document.getElementById('town-shop-modal');
-  if(m)m.remove();
-}
-
-function buyTownObj(id){
-  const obj=TOWN_OBJECTS.find(o=>o.id===id);
-  if(!obj) return;
-  if(totalPoints<obj.pts){ alert('포인트가 부족해요!\n(보유: '+totalPoints+'p / 필요: '+obj.pts+'p)'); return; }
-  totalPoints-=obj.pts;
-  if(currentStudent){currentStudent.pts=totalPoints;const idx=STUDENTS.findIndex(s=>s.id===currentStudent.id);if(idx>=0)STUDENTS[idx].pts=totalPoints;localStorage.setItem('jypiano_pts_'+currentStudent.id,totalPoints);}
-  myTownInventory.push({...obj});
-  saveTownLocal();
-  updateLevelUI();updateVillagePts();
-  openTownShop('inv'); // 소지품 탭으로 이동
-  alert(obj.name+' 구매 완료! (잔여 '+totalPoints+'p)');
-}
-
-function startPlaceFromInv(id){
-  const obj=myTownInventory.find(o=>o.id===id);
-  if(!obj) return;
-  previewObj=obj;
-  previewGX=4; previewGY=4;
-  townTool='place';
-  closeTownShop();
-}
-
-function updateTownInventoryUI(){
-  // 필요 시 소지품 UI 갱신
-}
-
-function saveTownLocal(){
-  if(!currentStudent) return;
-  localStorage.setItem('jypiano_town_inv_'+currentStudent.id, JSON.stringify(myTownInventory));
-  localStorage.setItem('jypiano_town_objs_'+currentStudent.id, JSON.stringify(townObjects));
-}
 
 // ── 포인트 선물 ──
 function openGiftModal(){
@@ -4107,10 +3186,6 @@ function loginAsStudent(id){
   myChar=savedChar?JSON.parse(savedChar):null;
   myInventory=savedInv?JSON.parse(savedInv):[];
   // 마을 소지품/배치 복원
-  const savedTownInv=localStorage.getItem('jypiano_town_inv_'+id);
-  const savedTownObjs=localStorage.getItem('jypiano_town_objs_'+id);
-  myTownInventory=savedTownInv?JSON.parse(savedTownInv):[];
-  townObjects=savedTownObjs?JSON.parse(savedTownObjs):[];
   closeLoginModal();
   updateCurrentUserBar();
   updateHomeTab();
@@ -4230,7 +3305,6 @@ function deleteStudent(id){
   renderAdminStudentList();
 }
 
-
 // ── 멍총 캐릭터 HTML 생성 ──
 function getMungCharHTML(char, scale=1.0){
   if(!char) return '<span style="font-size:3rem">🐣</span>';
@@ -4248,71 +3322,58 @@ function getMungCharHTML(char, scale=1.0){
   const s = scale;
   const w = Math.round(80*s), h = Math.round(130*s);
 
-  return `<div style="position:relative;width:${w}px;height:${h}px;animation:mungFloat 2.8s ease-in-out infinite;flex-shrink:0;">
+  // z-index 레이어 순서:
+  // 1=그림자, 2=다리, 3=팔, 4=몸통, 5=머리카락뒤, 6=얼굴, 7=앞머리, 8=리본, 9=모자
 
-    <!-- 그림자 -->
+  return `<div style="position:relative;width:${w}px;height:${h}px;animation:mungFloat 2.8s ease-in-out infinite;flex-shrink:0;isolation:isolate;">
+
     <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:${Math.round(44*s)}px;height:${Math.round(7*s)}px;background:rgba(0,0,0,0.13);border-radius:50%;z-index:1;"></div>
 
-    <!-- 신발+다리 왼쪽 -->
     <div style="position:absolute;bottom:${Math.round(11*s)}px;left:${Math.round(21*s)}px;z-index:2;">
       <div style="width:${Math.round(14*s)}px;height:${Math.round(18*s)}px;background:${bc};border:${Math.round(2.5*s)}px solid #333;border-top:none;border-radius:0 0 ${Math.round(7*s)}px ${Math.round(7*s)}px;"></div>
       <div style="width:${Math.round(19*s)}px;height:${Math.round(8*s)}px;background:${shoeC};border:${Math.round(2*s)}px solid #333;border-radius:50% 50% 40% 40%/60% 60% 40% 40%;margin-left:-${Math.round(2*s)}px;margin-top:-${Math.round(2*s)}px;"></div>
     </div>
-    <!-- 신발+다리 오른쪽 -->
     <div style="position:absolute;bottom:${Math.round(11*s)}px;right:${Math.round(21*s)}px;z-index:2;">
       <div style="width:${Math.round(14*s)}px;height:${Math.round(18*s)}px;background:${bc};border:${Math.round(2.5*s)}px solid #333;border-top:none;border-radius:0 0 ${Math.round(7*s)}px ${Math.round(7*s)}px;"></div>
       <div style="width:${Math.round(19*s)}px;height:${Math.round(8*s)}px;background:${shoeC};border:${Math.round(2*s)}px solid #333;border-radius:50% 50% 40% 40%/60% 60% 40% 40%;margin-left:-${Math.round(2*s)}px;margin-top:-${Math.round(2*s)}px;"></div>
     </div>
 
-    <!-- 왼팔 -->
     <div style="position:absolute;top:${Math.round(54*s)}px;left:${Math.round(1*s)}px;width:${Math.round(15*s)}px;height:${Math.round(26*s)}px;background:${tc};border:${Math.round(2.5*s)}px solid #333;border-radius:${Math.round(9*s)}px;transform:rotate(-22deg);z-index:3;">
       <div style="position:absolute;bottom:-${Math.round(7*s)}px;right:-${Math.round(4*s)}px;width:${Math.round(12*s)}px;height:${Math.round(12*s)}px;background:${gloveC||'#FDDCB5'};border:${Math.round(2*s)}px solid #333;border-radius:50%;"></div>
     </div>
-    <!-- 오른팔 -->
     <div style="position:absolute;top:${Math.round(54*s)}px;right:${Math.round(1*s)}px;width:${Math.round(15*s)}px;height:${Math.round(26*s)}px;background:${tc};border:${Math.round(2.5*s)}px solid #333;border-radius:${Math.round(9*s)}px;transform:rotate(22deg);z-index:3;">
       <div style="position:absolute;bottom:-${Math.round(7*s)}px;left:-${Math.round(4*s)}px;width:${Math.round(12*s)}px;height:${Math.round(12*s)}px;background:${gloveC||'#FDDCB5'};border:${Math.round(2*s)}px solid #333;border-radius:50%;"></div>
     </div>
 
-    ${bagC?`<!-- 가방 --><div style="position:absolute;top:${Math.round(52*s)}px;right:-${Math.round(3*s)}px;width:${Math.round(13*s)}px;height:${Math.round(17*s)}px;background:${bagC};border:${Math.round(2*s)}px solid #333;border-radius:${Math.round(4*s)}px;z-index:4;"></div>`:''}
+    ${bagC?`<div style="position:absolute;top:${Math.round(52*s)}px;right:-${Math.round(3*s)}px;width:${Math.round(13*s)}px;height:${Math.round(17*s)}px;background:${bagC};border:${Math.round(2*s)}px solid #333;border-radius:${Math.round(4*s)}px;z-index:3;"></div>`:''}
 
-    <!-- 몸통 -->
     <div style="position:absolute;top:${Math.round(50*s)}px;left:${Math.round(14*s)}px;width:${Math.round(52*s)}px;height:${Math.round(40*s)}px;background:${tc};border:${Math.round(2.5*s)}px solid #333;border-radius:50% 50% 45% 45%/35% 35% 55% 55%;z-index:4;"></div>
 
-    <!-- 머리카락 뒤 (z-index:5) -->
     <div style="position:absolute;top:${Math.round(2*s)}px;left:${Math.round(6*s)}px;width:${Math.round(68*s)}px;height:${Math.round(60*s)}px;background:${hairC};border:${Math.round(2.5*s)}px solid #333;border-radius:50%;z-index:5;">
       ${isFemale?`
       <div style="position:absolute;left:-${Math.round(8*s)}px;top:${Math.round(16*s)}px;width:${Math.round(12*s)}px;height:${Math.round(30*s)}px;background:${hairC};border:${Math.round(2*s)}px solid #333;border-radius:${Math.round(8*s)}px;"></div>
       <div style="position:absolute;right:-${Math.round(8*s)}px;top:${Math.round(16*s)}px;width:${Math.round(12*s)}px;height:${Math.round(30*s)}px;background:${hairC};border:${Math.round(2*s)}px solid #333;border-radius:${Math.round(8*s)}px;"></div>`:''}
     </div>
 
-    <!-- 얼굴 (z-index:6 - 머리카락 위에) -->
     <div style="position:absolute;top:${Math.round(4*s)}px;left:${Math.round(8*s)}px;width:${Math.round(64*s)}px;height:${Math.round(60*s)}px;background:#FDDCB5;border:${Math.round(2.5*s)}px solid #333;border-radius:50%;z-index:6;">
-      <!-- 볼 -->
       <div style="position:absolute;top:${Math.round(32*s)}px;left:${Math.round(4*s)}px;width:${Math.round(13*s)}px;height:${Math.round(7*s)}px;background:rgba(255,140,120,0.38);border-radius:50%;"></div>
       <div style="position:absolute;top:${Math.round(32*s)}px;right:${Math.round(4*s)}px;width:${Math.round(13*s)}px;height:${Math.round(7*s)}px;background:rgba(255,140,120,0.38);border-radius:50%;"></div>
-      <!-- 눈 (ㅡ 선) -->
       <div style="position:absolute;top:${Math.round(24*s)}px;left:${Math.round(12*s)}px;width:${Math.round(13*s)}px;height:${Math.round(3*s)}px;background:#333;border-radius:${Math.round(2*s)}px;"></div>
       <div style="position:absolute;top:${Math.round(24*s)}px;right:${Math.round(12*s)}px;width:${Math.round(13*s)}px;height:${Math.round(3*s)}px;background:#333;border-radius:${Math.round(2*s)}px;"></div>
-      <!-- 안경 -->
       ${hasGlasses?`
       <div style="position:absolute;top:${Math.round(20*s)}px;left:${Math.round(9*s)}px;width:${Math.round(18*s)}px;height:${Math.round(13*s)}px;border:${Math.round(2*s)}px solid ${glassC};border-radius:${Math.round(4*s)}px;background:rgba(100,200,255,0.1);"></div>
       <div style="position:absolute;top:${Math.round(20*s)}px;right:${Math.round(9*s)}px;width:${Math.round(18*s)}px;height:${Math.round(13*s)}px;border:${Math.round(2*s)}px solid ${glassC};border-radius:${Math.round(4*s)}px;background:rgba(100,200,255,0.1);"></div>
       <div style="position:absolute;top:${Math.round(25*s)}px;left:${Math.round(27*s)}px;width:${Math.round(10*s)}px;height:${Math.round(2*s)}px;background:${glassC};"></div>`:''}
-      <!-- 입 -->
       <div style="position:absolute;bottom:${Math.round(10*s)}px;left:${Math.round(21*s)}px;width:${Math.round(17*s)}px;height:${Math.round(3*s)}px;background:#333;border-radius:${Math.round(2*s)}px;transform:rotate(8deg);"></div>
     </div>
 
-    <!-- 앞머리 (z-index:7) -->
-    <div style="position:absolute;top:${Math.round(2*s)}px;left:${Math.round(8*s)}px;width:${Math.round(64*s)}px;height:${Math.round(22*s)}px;background:${hairC};border:${Math.round(2*s)}px solid #333;border-radius:50% 50% 0 0;z-index:7;clip-path:polygon(0 0,100% 0,100% 55%,88% 78%,74% 52%,60% 78%,46% 52%,32% 78%,18% 52%,0 78%);border-bottom:none;"></div>
+    <div style="position:absolute;top:${Math.round(2*s)}px;left:${Math.round(8*s)}px;width:${Math.round(64*s)}px;height:${Math.round(22*s)}px;background:${hairC};border:${Math.round(2*s)}px solid #333;border-radius:50% 50% 0 0;border-bottom:none;z-index:7;clip-path:polygon(0 0,100% 0,100% 55%,88% 78%,74% 52%,60% 78%,46% 52%,32% 78%,18% 52%,0 78%);"></div>
 
-    <!-- 리본 (여자, z-index:8) -->
-    ${isFemale?`<div style="position:absolute;top:${Math.round(-2*s)}px;right:${Math.round(10*s)}px;width:${Math.round(11*s)}px;height:${Math.round(11*s)}px;background:${accC};border:${Math.round(2*s)}px solid #333;border-radius:50%;z-index:8;"></div>`:''}
+    ${isFemale?`<div style="position:absolute;top:-${Math.round(2*s)}px;right:${Math.round(10*s)}px;width:${Math.round(11*s)}px;height:${Math.round(11*s)}px;background:${accC};border:${Math.round(2*s)}px solid #333;border-radius:50%;z-index:8;"></div>`:''}
 
-    <!-- 모자 (z-index:9) -->
     ${hatIco?`<div style="position:absolute;top:-${Math.round(10*s)}px;left:50%;transform:translateX(-50%);font-size:${Math.round(22*s)}px;z-index:9;line-height:1;">${hatIco}</div>`:''}
   </div>`;
 }
-
 
 // 단상용 캐릭터 SVG (작은 버전)
 function getPodiumCharSVG(student){
