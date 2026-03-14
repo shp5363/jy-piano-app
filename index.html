@@ -1507,6 +1507,7 @@ function addPracticeSession(){
     showTicketAlert();
   }
   updateRewardUI();
+  saveProgressLocal(); // 연습 진행상황 즉시 저장
 }
 
 function showTicketAlert(){
@@ -3331,6 +3332,14 @@ function saveCharLocal(){
   localStorage.setItem('jypiano_char_'+currentStudent.id, JSON.stringify(myChar));
   localStorage.setItem('jypiano_inv_'+currentStudent.id, JSON.stringify(myInventory));
 }
+
+function saveProgressLocal(){
+  // 게임권 + 연습 사이클 카운트 저장 (학생별)
+  const key = currentStudent ? currentStudent.id : 'guest';
+  localStorage.setItem('jypiano_tickets_'+key, tickets);
+  localStorage.setItem('jypiano_cycle_'+key, currentCycleCount);
+  localStorage.setItem('jypiano_practice_'+key, practiceCount);
+}
 function loginAsStudent(id){
   const student=STUDENTS.find(s=>s.id===id);
   if(!student) return;
@@ -3344,11 +3353,18 @@ function loginAsStudent(id){
   // 경험치 복원 (레벨/배지 기준)
   const savedExp=localStorage.getItem('jypiano_exp_'+id);
   totalPracticeExp=savedExp?parseInt(savedExp)||0:totalPoints; // 없으면 totalPoints로 초기화
-  // 마을 소지품/배치 복원
+  // 게임권 + 연습 사이클 복원
+  const savedTickets = localStorage.getItem('jypiano_tickets_'+id);
+  const savedCycle   = localStorage.getItem('jypiano_cycle_'+id);
+  const savedPCount  = localStorage.getItem('jypiano_practice_'+id);
+  tickets           = savedTickets ? parseInt(savedTickets)||0 : 0;
+  currentCycleCount = savedCycle   ? parseInt(savedCycle)||0   : 0;
+  practiceCount     = savedPCount  ? parseInt(savedPCount)||0  : 0;
   closeLoginModal();
   updateCurrentUserBar();
   updateHomeTab();
   updateLevelUI();
+  updateRewardUI();
   checkDailyBonus();
 }
 function loginAsGuest(){
