@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎹 피아노 연습 도우미</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vexflow/4.2.2/vexflow.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic:wght@400;700;800&display=swap');
+  :root {
+    --bg: #FFF9F0; --primary: #FF6B6B; --secondary: #4ECDC4;
+    --accent: #FFE66D; --correct: #51CF66; --wrong: #FF6B6B;
+    --waiting: #74C0FC; --text: #2D3436; --card: #FFFFFF;
+    --shadow: 0 8px 32px rgba(0,0,0,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nanum Gothic', sans-serif;
+    background: var(--bg); min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 24px 16px;
+    background-image: radial-gradient(circle at 10% 20%, rgba(78,205,196,0.13) 0%, transparent 50%), radial-gradient(circle at 90% 80%, rgba(255,107,107,0.10) 0%, transparent 50%);
+  }
+  h1 { font-family: 'Jua', sans-serif; font-size: 2rem; color: var(--primary); letter-spacing: -1px; margin-bottom: 4px; text-shadow: 3px 3px 0px rgba(255,107,107,0.15); }
+  .subtitle { font-size: 0.9rem; color: #888; margin-bottom: 24px; }
+  .card { background: var(--card); border-radius: 24px; box-shadow: var(--shadow); padding: 28px 28px 20px; width: 100%; max-width: 700px; margin-bottom: 18px; }
+  .section-title { font-family: 'Jua', sans-serif; font-size: 1.05rem; color: var(--text); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  #score-container { width: 100%; overflow-x: auto; border-radius: 16px; background: #f8f8f8; padding: 12px 8px; min-height: 140px; display: flex; justify-content: center; align-items: center; }
+  #score-container svg { display: block; }
+  .note-bar { display: flex; gap: 10px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+  .note-chip { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .note-dot { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Jua', sans-serif; font-size: 1rem; color: white; transition: all 0.3s cubic-bezier(.34,1.56,.64,1); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+  .note-dot.waiting { background: var(--waiting); }
+  .note-dot.current { background: var(--accent); color: var(--text); transform: scale(1.25); box-shadow: 0 0 0 4px rgba(255,230,109,0.4); animation: pulse 1s infinite; }
+  .note-dot.correct { background: var(--correct); }
+  .note-dot.wrong { background: var(--wrong); animation: shake 0.4s; }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 4px rgba(255,230,109,0.4)} 50%{box-shadow:0 0 0 8px rgba(255,230,109,0.15)} }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .note-label { font-size: 0.75rem; color: #999; font-weight: 700; }
+  .detect-area { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .detect-box { flex: 1; min-width: 140px; border-radius: 16px; padding: 18px 20px; text-align: center; background: linear-gradient(135deg, #f0f8ff, #e8f4fd); border: 2px solid #d0e8f8; }
+  .detect-box .big-note { font-family: 'Jua', sans-serif; font-size: 2.4rem; color: var(--secondary); line-height: 1.1; }
+  .detect-box .hz-label { font-size: 0.78rem; color: #aaa; margin-top: 2px; }
+  .status-box { flex: 1; min-width: 140px; border-radius: 16px; padding: 18px 20px; text-align: center; transition: all 0.3s; background: #f9f9f9; border: 2px solid #eee; }
+  .status-box.correct-state { background: linear-gradient(135deg, #d3f9d8, #b2f2bb); border-color: #69db7c; }
+  .status-box.wrong-state { background: linear-gradient(135deg, #ffe3e3, #ffc9c9); border-color: #ff8787; }
+  .status-box.listen-state { background: linear-gradient(135deg, #fff9db, #ffec99); border-color: #ffd43b; }
+  .status-box .status-emoji { font-size: 2rem; }
+  .status-box .status-text { font-family: 'Jua', sans-serif; font-size: 1rem; color: var(--text); margin-top: 4px; }
+  .controls { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn { font-family: 'Jua', sans-serif; font-size: 1rem; border: none; border-radius: 50px; padding: 13px 28px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 7px; box-shadow: 0 4px 14px rgba(0,0,0,0.10); }
+  .btn:active { transform: scale(0.96); }
+  .btn-start { background: linear-gradient(135deg, var(--secondary), #38d9cc); color: white; }
+  .btn-stop { background: linear-gradient(135deg, #868e96, #495057); color: white; }
+  .btn-reset { background: linear-gradient(135deg, var(--accent), #ffd43b); color: var(--text); }
+  .tuning-row { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+  .tuning-row label { font-size: 0.85rem; color: #666; white-space: nowrap; font-weight: 700; min-width: 80px; }
+  input[type=range] { flex: 1; accent-color: var(--secondary); }
+  .tuning-val { font-family: 'Jua', sans-serif; font-size: 0.9rem; color: var(--secondary); min-width: 50px; text-align: right; }
+  .progress-bar-wrap { width: 100%; height: 10px; background: #eee; border-radius: 99px; margin-top: 14px; overflow: hidden; }
+  .progress-bar { height: 100%; background: linear-gradient(90deg, var(--secondary), var(--correct)); border-radius: 99px; transition: width 0.4s; width: 0%; }
+  .mic-indicator { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #aaa; margin-top: 6px; }
+  .mic-dot { width: 10px; height: 10px; border-radius: 50%; background: #ddd; transition: background 0.2s; }
+  .mic-dot.active { background: #ff4444; animation: blink 0.8s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .complete-banner { display: none; background: linear-gradient(135deg, #51CF66, #38d9cc); color: white; font-family: 'Jua', sans-serif; font-size: 1.4rem; border-radius: 16px; padding: 20px; text-align: center; animation: pop 0.5s cubic-bezier(.34,1.56,.64,1); }
+  .complete-banner.show { display: block; }
+  @keyframes pop { from{transform:scale(0.7);opacity:0} to{transform:scale(1);opacity:1} }
+  @media(max-width:480px) { h1{font-size:1.5rem} .card{padding:18px 14px} .note-dot{width:38px;height:38px;font-size:0.9rem} }
+</style>
+</head>
+<body>
+<h1>🎹 피아노 연습 도우미</h1>
+<p class="subtitle">악보를 보고 피아노를 쳐보세요!</p>
+<div class="card">
+  <div class="section-title">🎼 오늘의 악보 <span style="font-size:0.8rem;color:#aaa;font-family:'Nanum Gothic'"> — 도레미파솔 (C장조)</span></div>
+  <div id="score-container"></div>
+  <div class="note-bar" id="note-bar"></div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+</div>
+<div class="card">
+  <div class="section-title">🎤 실시간 음정 감지</div>
+  <div class="detect-area">
+    <div class="detect-box">
+      <div class="big-note" id="detected-note">—</div>
+      <div class="hz-label" id="detected-hz">마이크를 켜주세요</div>
+      <div class="mic-indicator"><div class="mic-dot" id="mic-dot"></div><span id="mic-label">마이크 꺼짐</span></div>
+    </div>
+    <div class="status-box" id="status-box">
+      <div class="status-emoji" id="status-emoji">🎵</div>
+      <div class="status-text" id="status-text">연습 시작!</div>
+    </div>
+  </div>
+  <div class="complete-banner" id="complete-banner">🎉 완료! 모든 음을 연주했어요! 🎉</div>
+</div>
+<div class="card">
+  <div class="section-title">⚙️ 설정</div>
+  <div class="tuning-row">
+    <label>🎛 조율 보정</label>
+    <input type="range" id="tolerance" min="20" max="100" value="50">
+    <div class="tuning-val" id="tolerance-val">±50¢</div>
+  </div>
+  <div style="margin-top:20px">
+    <div class="controls">
+      <button class="btn btn-start" id="btn-start" onclick="startListening()">🎤 마이크 시작</button>
+      <button class="btn btn-stop" id="btn-stop" onclick="stopListening()" disabled>⏹ 중지</button>
+      <button class="btn btn-reset" onclick="resetAll()">🔄 처음부터</button>
+    </div>
+  </div>
+</div>
+<script>
+const NOTES_DATA=[{key:'c/4',label:'도',freq:261.63,vexKey:'c/4'},{key:'d/4',label:'레',freq:293.66,vexKey:'d/4'},{key:'e/4',label:'미',freq:329.63,vexKey:'e/4'},{key:'f/4',label:'파',freq:349.23,vexKey:'f/4'},{key:'g/4',label:'솔',freq:392.00,vexKey:'g/4'}];
+let noteStates=NOTES_DATA.map(()=>'waiting');
+let currentIdx=0,audioCtx=null,analyser=null,streamRef=null,rafId=null,isListening=false,wrongTimeout=null,lastCorrectTime=0;
+function renderScore(){
+  const container=document.getElementById('score-container');
+  container.innerHTML='';
+  const {Renderer,Stave,StaveNote,Voice,Formatter}=Vex.Flow;
+  const renderer=new Renderer(container,Renderer.Backends.SVG);
+  const width=Math.min(container.offsetWidth||620,620);
+  renderer.resize(width,140);
+  const ctx=renderer.getContext();
+  ctx.setFont('Arial',10);
+  const stave=new Stave(10,10,width-20);
+  stave.addClef('treble').addTimeSignature('5/4');
+  stave.setContext(ctx).draw();
+  const staveNotes=NOTES_DATA.map((n,i)=>{
+    const sn=new StaveNote({keys:[n.vexKey],duration:'q'});
+    const state=noteStates[i];
+    let color='#74C0FC';
+    if(state==='current')color='#f59f00';
+    if(state==='correct')color='#2f9e44';
+    if(state==='wrong')color='#e03131';
+    sn.setStyle({fillStyle:color,strokeStyle:color});
+    return sn;
+  });
+  const voice=new Voice({num_beats:5,beat_value:4});
+  voice.addTickables(staveNotes);
+  new Formatter().joinVoices([voice]).format([voice],width-80);
+  voice.draw(ctx,stave);
+}
+function renderNoteBar(){
+  const bar=document.getElementById('note-bar');
+  bar.innerHTML='';
+  NOTES_DATA.forEach((n,i)=>{
+    const chip=document.createElement('div');chip.className='note-chip';
+    const dot=document.createElement('div');dot.className=`note-dot ${noteStates[i]}`;dot.textContent=n.label;
+    const lbl=document.createElement('div');lbl.className='note-label';lbl.textContent=n.key.toUpperCase().replace('/','');
+    chip.appendChild(dot);chip.appendChild(lbl);bar.appendChild(chip);
+  });
+}
+function renderProgress(){
+  const done=noteStates.filter(s=>s==='correct').length;
+  document.getElementById('progress-bar').style.width=(done/NOTES_DATA.length*100)+'%';
+}
+function updateAll(){renderScore();renderNoteBar();renderProgress();}
+function getToleranceCents(){return parseInt(document.getElementById('tolerance').value);}
+function freqToNoteName(freq){
+  if(freq<=0)return null;
+  const noteNames=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+  const noteNum=12*(Math.log2(freq/440))+49;
+  const rounded=Math.round(noteNum);
+  const octave=Math.floor((rounded-1)/12);
+  const noteIdx=((rounded-1)%12+12)%12;
+  return `${noteNames[noteIdx]}${octave}`;
+}
+function freqToCents(detected,target){return 1200*Math.log2(detected/target);}
+function detectPitch(buffer,sampleRate){
+  const SIZE=buffer.length,MAX_SAMPLES=Math.floor(SIZE/2),threshold=0.15;
+  let rmsArr=new Float32Array(MAX_SAMPLES);
+  for(let i=0;i<MAX_SAMPLES;i++){let sum=0;for(let j=0;j<MAX_SAMPLES;j++){const d=buffer[j]-buffer[j+i];sum+=d*d;}rmsArr[i]=sum;}
+  rmsArr[0]=1;
+  const yinArr=new Float32Array(MAX_SAMPLES);yinArr[0]=1;
+  let running=0;
+  for(let i=1;i<MAX_SAMPLES;i++){running+=rmsArr[i];yinArr[i]=rmsArr[i]*i/running;}
+  let tau=-1;
+  for(let i=2;i<MAX_SAMPLES;i++){if(yinArr[i]<threshold){while(i+1<MAX_SAMPLES&&yinArr[i+1]<yinArr[i])i++;tau=i;break;}}
+  if(tau===-1)return -1;
+  return sampleRate/tau;
+}
+async function startListening(){
+  if(isListening)return;
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});
+    streamRef=stream;
+    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    analyser=audioCtx.createAnalyser();analyser.fftSize=2048;
+    const src=audioCtx.createMediaStreamSource(stream);src.connect(analyser);
+    isListening=true;
+    document.getElementById('btn-start').disabled=true;
+    document.getElementById('btn-stop').disabled=false;
+    document.getElementById('mic-dot').classList.add('active');
+    document.getElementById('mic-label').textContent='마이크 켜짐';
+    if(currentIdx<NOTES_DATA.length){noteStates[currentIdx]='current';updateAll();}
+    loopDetect();
+  }catch(e){alert('마이크 접근 권한이 필요해요!\n브라우저에서 마이크 허용을 눌러주세요 🎤');}
+}
+function stopListening(){
+  if(!isListening)return;
+  isListening=false;cancelAnimationFrame(rafId);
+  if(streamRef)streamRef.getTracks().forEach(t=>t.stop());
+  if(audioCtx)audioCtx.close();
+  document.getElementById('btn-start').disabled=false;
+  document.getElementById('btn-stop').disabled=true;
+  document.getElementById('mic-dot').classList.remove('active');
+  document.getElementById('mic-label').textContent='마이크 꺼짐';
+  document.getElementById('detected-note').textContent='—';
+  document.getElementById('detected-hz').textContent='마이크를 켜주세요';
+  setStatus('idle');
+}
+function loopDetect(){
+  if(!isListening)return;
+  const buffer=new Float32Array(analyser.fftSize);
+  analyser.getFloatTimeDomainData(buffer);
+  let rms=0;for(let i=0;i<buffer.length;i++)rms+=buffer[i]*buffer[i];rms=Math.sqrt(rms/buffer.length);
+  if(rms>0.01){
+    const freq=detectPitch(buffer,audioCtx.sampleRate);
+    if(freq>50&&freq<2000){
+      const noteName=freqToNoteName(freq);
+      document.getElementById('detected-note').textContent=noteName||'—';
+      document.getElementById('detected-hz').textContent=`${freq.toFixed(1)} Hz`;
+      if(currentIdx<NOTES_DATA.length){
+        const target=NOTES_DATA[currentIdx];
+        const cents=Math.abs(freqToCents(freq,target.freq));
+        const tolerance=getToleranceCents();
+        if(cents<=tolerance){
+          const now=Date.now();
+          if(now-lastCorrectTime>600){
+            lastCorrectTime=now;noteStates[currentIdx]='correct';currentIdx++;clearTimeout(wrongTimeout);
+            if(currentIdx<NOTES_DATA.length){noteStates[currentIdx]='current';setStatus('correct');setTimeout(()=>setStatus('listen'),800);}
+            else{setStatus('complete');document.getElementById('complete-banner').classList.add('show');stopListening();}
+            updateAll();
+          }
+        }else{
+          if(noteStates[currentIdx]==='current'){
+            noteStates[currentIdx]='wrong';setStatus('wrong');updateAll();clearTimeout(wrongTimeout);
+            wrongTimeout=setTimeout(()=>{if(currentIdx<NOTES_DATA.length){noteStates[currentIdx]='current';setStatus('listen');updateAll();}},800);
+          }
+        }
+      }
+    }else{document.getElementById('detected-note').textContent='—';document.getElementById('detected-hz').textContent='소리 감지 중...';}
+  }else{document.getElementById('detected-hz').textContent='피아노를 쳐보세요 🎵';}
+  rafId=requestAnimationFrame(loopDetect);
+}
+function setStatus(type){
+  const box=document.getElementById('status-box'),emoji=document.getElementById('status-emoji'),text=document.getElementById('status-text');
+  box.className='status-box';
+  if(type==='correct'){box.classList.add('correct-state');emoji.textContent='✅';text.textContent='맞아요!';}
+  else if(type==='wrong'){box.classList.add('wrong-state');emoji.textContent='❌';text.textContent='다시 해봐요';}
+  else if(type==='listen'){box.classList.add('listen-state');emoji.textContent='👂';text.textContent='듣고 있어요~';}
+  else if(type==='complete'){box.classList.add('correct-state');emoji.textContent='🎉';text.textContent='완료!';}
+  else{emoji.textContent='🎵';text.textContent='연습 시작!';}
+}
+function resetAll(){stopListening();currentIdx=0;noteStates=NOTES_DATA.map(()=>'waiting');document.getElementById('complete-banner').classList.remove('show');setStatus('idle');updateAll();}
+document.getElementById('tolerance').addEventListener('input',function(){document.getElementById('tolerance-val').textContent=`±${this.value}¢`;});
+updateAll();
+window.addEventListener('resize',renderScore);
+</script>
+</body>
+</html>
