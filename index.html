@@ -428,6 +428,61 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .lp-road-status.future{color:#aaa;}
 .lp-close{width:100%;padding:13px;border:none;border-radius:13px;background:#f1f3f5;font-family:'Jua',sans-serif;font-size:0.95rem;color:#868e96;cursor:pointer;margin-top:16px;}
 
+
+/* ── 랭킹 시상대 ── */
+.ranking-section{margin-bottom:14px;}
+.ranking-title{font-family:'Jua',sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:10px;text-align:center;}
+
+/* 시상대 */
+.podium-wrap{display:flex;align-items:flex-end;justify-content:center;gap:6px;margin-bottom:16px;}
+.podium-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;max-width:110px;}
+.podium-character{font-size:2rem;line-height:1;margin-bottom:2px;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.3));}
+.podium-name{font-family:'Jua',sans-serif;font-size:0.72rem;color:#fff;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px;}
+.podium-pts{font-size:0.62rem;color:rgba(255,255,255,0.5);margin-bottom:4px;}
+.podium-badge-mini{font-family:'Do Hyeon',sans-serif;font-size:0.65rem;padding:2px 7px;border-radius:99px;margin-bottom:4px;}
+.podium-stand{border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:center;width:100%;}
+.podium-stand span{font-family:'Do Hyeon',sans-serif;font-size:1.1rem;color:#fff;}
+/* 1등 */
+.podium-item.p1 .podium-stand{background:linear-gradient(180deg,#FFD700,#FFA500);height:70px;box-shadow:0 -4px 16px rgba(255,215,0,0.5);}
+.podium-item.p1 .podium-character{font-size:2.4rem;animation:podiumFloat 2s ease-in-out infinite;}
+/* 2등 */
+.podium-item.p2 .podium-stand{background:linear-gradient(180deg,#C0C0C0,#909090);height:52px;}
+/* 3등 */
+.podium-item.p3 .podium-stand{background:linear-gradient(180deg,#CD7F32,#A0522D);height:38px;}
+@keyframes podiumFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+
+/* 내 랭킹 표시 */
+.my-rank-card{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.my-rank-num{font-family:'Do Hyeon',sans-serif;font-size:2rem;color:#FFE66D;min-width:50px;text-align:center;}
+.my-rank-info{flex:1;}
+.my-rank-name{font-family:'Jua',sans-serif;font-size:0.9rem;color:#fff;}
+.my-rank-sub{font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:2px;}
+.my-rank-badge{font-size:0.75rem;}
+
+/* 전체 랭킹 리스트 */
+.rank-list{display:flex;flex-direction:column;gap:6px;}
+.rank-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:11px;background:rgba(255,255,255,0.06);}
+.rank-item.my-rank{background:rgba(255,230,109,0.15);border:1px solid rgba(255,230,109,0.3);}
+.rank-item .ri-num{font-family:'Do Hyeon',sans-serif;font-size:0.95rem;color:rgba(255,255,255,0.5);min-width:24px;text-align:center;}
+.rank-item .ri-char{font-size:1.1rem;}
+.rank-item .ri-info{flex:1;}
+.rank-item .ri-name{font-family:'Jua',sans-serif;font-size:0.82rem;color:#fff;}
+.rank-item .ri-pts{font-size:0.65rem;color:rgba(255,255,255,0.4);}
+.rank-item .ri-badge{font-size:0.65rem;}
+.rank-medal{font-size:1rem;}
+
+/* 레벨 팝업 내 랭킹 */
+.lp-rank-card{background:#f8f9fa;border-radius:12px;padding:12px;margin-bottom:12px;text-align:center;}
+.lp-my-ranking{font-family:'Do Hyeon',sans-serif;font-size:2.2rem;color:var(--primary);}
+.lp-my-ranking-sub{font-size:0.72rem;color:#aaa;}
+.lp-stat-row{display:flex;gap:7px;margin-bottom:12px;}
+.lp-stat-chip{flex:1;border-radius:10px;padding:9px 6px;text-align:center;}
+.lp-stat-chip.lower{background:#f1f3f5;border:1px solid #dee2e6;}
+.lp-stat-chip.same{background:linear-gradient(135deg,#fff9db,#ffec99);border:1px solid #ffd43b;}
+.lp-stat-chip.higher{background:linear-gradient(135deg,#ffe3e3,#ffc9c9);border:1px solid #ff8787;}
+.lp-stat-num{font-family:'Do Hyeon',sans-serif;font-size:1.3rem;color:#2D3436;}
+.lp-stat-lbl{font-family:'Jua',sans-serif;font-size:0.62rem;color:#868e96;margin-top:2px;line-height:1.3;}
+
 </style>
 </head>
 <body>
@@ -627,6 +682,27 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       <div class="level-exp-txt">다음 레벨까지 <span id="level-exp-need">50</span>포인트 남음</div>
     </div>
 
+    <!-- 시상대 랭킹 -->
+    <div class="ranking-section">
+      <div class="ranking-title">🏆 피아노 마을 랭킹</div>
+      <!-- 시상대 -->
+      <div class="podium-wrap" id="podium-wrap">
+        <!-- JS로 렌더링 -->
+        <div style="color:rgba(255,255,255,0.3);font-size:0.8rem;text-align:center;width:100%;padding:20px 0">
+          학생 등록 후 랭킹이 표시돼요
+        </div>
+      </div>
+      <!-- 내 랭킹 -->
+      <div class="my-rank-card" id="my-rank-card" style="display:none">
+        <div class="my-rank-num" id="my-rank-num">-</div>
+        <div class="my-rank-info">
+          <div class="my-rank-name" id="my-rank-name">나의 랭킹</div>
+          <div class="my-rank-sub" id="my-rank-sub">포인트 획득 후 랭킹에 참여해요</div>
+        </div>
+        <div class="my-rank-badge" id="my-rank-badge"></div>
+      </div>
+    </div>
+
     <!-- 게임권 현황 -->
     <div class="ticket-card">
       <div class="ticket-count" id="ticket-count">0</div>
@@ -678,19 +754,25 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       <div class="lp-my-exptxt" id="lp-my-exptxt">다음 레벨까지 50포인트 남음</div>
     </div>
 
-    <!-- 학생 현황 -->
-    <div class="lp-rank-row">
-      <div class="lp-rank-chip lower">
-        <div class="lp-rank-num" id="lp-lower">-</div>
-        <div class="lp-rank-lbl">나보다 낮은 레벨</div>
+    <!-- 내 랭킹 -->
+    <div class="lp-rank-card">
+      <div style="font-family:'Jua',sans-serif;font-size:0.78rem;color:#aaa;margin-bottom:4px;">나의 현재 랭킹</div>
+      <div class="lp-my-ranking" id="lp-my-ranking">-</div>
+      <div class="lp-my-ranking-sub" id="lp-my-ranking-sub">학생 등록 후 표시돼요</div>
+    </div>
+    <!-- 친구 현황 -->
+    <div class="lp-stat-row">
+      <div class="lp-stat-chip lower">
+        <div class="lp-stat-num" id="lp-lower">-</div>
+        <div class="lp-stat-lbl">나보다 낮은<br>레벨의 친구</div>
       </div>
-      <div class="lp-rank-chip same">
-        <div class="lp-rank-num" id="lp-same">-</div>
-        <div class="lp-rank-lbl">같은 레벨</div>
+      <div class="lp-stat-chip same">
+        <div class="lp-stat-num" id="lp-same">-</div>
+        <div class="lp-stat-lbl">나와 같은<br>레벨의 친구</div>
       </div>
-      <div class="lp-rank-chip higher">
-        <div class="lp-rank-num" id="lp-higher">-</div>
-        <div class="lp-rank-lbl">나보다 높은 레벨</div>
+      <div class="lp-stat-chip higher">
+        <div class="lp-stat-num" id="lp-higher">-</div>
+        <div class="lp-stat-lbl">나보다 높은<br>레벨의 친구</div>
       </div>
     </div>
 
@@ -2073,6 +2155,7 @@ function updateLevelUI() {
       ? '다음 레벨까지 <span id="level-exp-need">' + need + '</span>포인트 남음'
       : '<span style="color:var(--primary)">✨ 최고 레벨 달성!</span>';
   }
+  renderPodium();
 }
 
 
@@ -2153,6 +2236,7 @@ function openLevelPopup(){
     </div>`;
   }).join('');
 
+  updatePopupRanking();
   document.getElementById('level-popup-bg').classList.add('show');
 }
 
@@ -2161,11 +2245,107 @@ function closeLevelPopup(e){
   document.getElementById('level-popup-bg').classList.remove('show');
 }
 
+
+// ════════════════════════════════════════════════════════
+// 랭킹 시스템
+// 캐릭터는 나중에 키우기 게임 완성 후 교체 예정
+// ════════════════════════════════════════════════════════
+
+// 임시 캐릭터 (키우기 게임 연동 전)
+function getCharEmoji(pts){
+  if(pts>=3000) return '🧙';
+  if(pts>=2000) return '🦸';
+  if(pts>=1200) return '🧝';
+  if(pts>=700)  return '🧑‍🎤';
+  if(pts>=350)  return '🧑‍🎓';
+  if(pts>=150)  return '🧒';
+  if(pts>=50)   return '👦';
+  return '🐣';
+}
+
+function getMedalEmoji(rank){
+  if(rank===1) return '🥇';
+  if(rank===2) return '🥈';
+  if(rank===3) return '🥉';
+  return rank + '위';
+}
+
+// 현재 나의 포인트를 포함한 전체 랭킹 계산
+function getAllRanking(){
+  // 내 데이터 + 등록된 학생 데이터 합산
+  const me = {name:'나', pts:totalPoints, isMe:true};
+  const all = [me, ...studentPoints.map(s=>({...s, isMe:false}))];
+  // 포인트 내림차순 정렬
+  all.sort((a,b)=>b.pts - a.pts);
+  return all;
+}
+
+function renderPodium(){
+  const wrap = document.getElementById('podium-wrap');
+  if(!wrap) return;
+  const all = getAllRanking();
+  if(all.length === 0){ wrap.innerHTML='<div style="color:rgba(255,255,255,0.3);font-size:0.8rem;text-align:center;width:100%;padding:20px 0">학생 등록 후 랭킹이 표시돼요</div>'; return; }
+
+  // 시상대 순서: 2등 - 1등 - 3등
+  const top3 = [all[1], all[0], all[2]];
+  const classes = ['p2','p1','p3'];
+  const heights = ['52px','70px','38px'];
+  const medals = ['🥈','🥇','🥉'];
+  const ranks = [2,1,3];
+
+  wrap.innerHTML = top3.map((s,i)=>{
+    if(!s) return '<div class="podium-item" style="flex:1"></div>';
+    const info = getLevelInfo(s.pts);
+    const isMeStyle = s.isMe ? 'outline:2px solid #FFE66D;outline-offset:2px;border-radius:8px;' : '';
+    return `<div class="podium-item ${classes[i]}" style="${isMeStyle}">
+      <div class="podium-character">${getCharEmoji(s.pts)}</div>
+      <div class="podium-name">${s.isMe?'나 ('+s.name+')':s.name}</div>
+      <div class="podium-pts">${s.pts}p</div>
+      <div class="podium-badge-mini level-badge ${info.cur.cls}" style="font-size:0.6rem;padding:2px 7px;">${info.cur.icon} Lv.${info.cur.lv}</div>
+      <div class="podium-stand" style="height:${heights[i]}"><span>${medals[i]}</span></div>
+    </div>`;
+  }).join('');
+
+  // 내 랭킹 카드
+  const myRankIdx = all.findIndex(s=>s.isMe);
+  const myRank = myRankIdx + 1;
+  const myCard = document.getElementById('my-rank-card');
+  if(myCard){
+    myCard.style.display = 'flex';
+    document.getElementById('my-rank-num').textContent = getMedalEmoji(myRank);
+    document.getElementById('my-rank-name').textContent = myRank <= 3 ? '🎉 TOP 3!' : myRank + '등';
+    document.getElementById('my-rank-sub').textContent = '전체 ' + all.length + '명 중 ' + myRank + '위 · ' + totalPoints + 'p';
+    const info = getLevelInfo(totalPoints);
+    document.getElementById('my-rank-badge').textContent = info.cur.icon + ' ' + info.cur.name;
+  }
+}
+
+// 팝업에 랭킹 정보 업데이트
+function updatePopupRanking(){
+  const all = getAllRanking();
+  const myIdx = all.findIndex(s=>s.isMe);
+  const myRank = myIdx + 1;
+  const myLv = getLevelInfo(totalPoints).cur.lv;
+
+  document.getElementById('lp-my-ranking').textContent = getMedalEmoji(myRank);
+  document.getElementById('lp-my-ranking-sub').textContent =
+    all.length > 1 ? '전체 ' + all.length + '명 중 ' + myRank + '위' : '아직 다른 학생이 없어요';
+
+  const lower  = studentPoints.filter(s=>getLevelInfo(s.pts).cur.lv < myLv).length;
+  const same   = studentPoints.filter(s=>getLevelInfo(s.pts).cur.lv === myLv).length;
+  const higher = studentPoints.filter(s=>getLevelInfo(s.pts).cur.lv > myLv).length;
+
+  document.getElementById('lp-lower').textContent  = lower  > 0 ? lower+'명'  : '없음';
+  document.getElementById('lp-same').textContent   = same   > 0 ? same+'명'   : '없음';
+  document.getElementById('lp-higher').textContent = higher > 0 ? higher+'명' : '없음';
+}
+
 // ── 초기화 ──
 renderCatGrid('book');
 renderPrizesInfo();
 updateRewardUI();
 updateLevelUI();
+renderPodium();
 </script>
 </body>
 </html>
