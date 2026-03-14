@@ -6,43 +6,73 @@
 <title>🎹 피아노 연습 도우미</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Jua&family=Do+Hyeon&family=Nanum+Gothic:wght@400;700&display=swap');
-:root{--primary:#FF6B6B;--secondary:#4ECDC4;--accent:#FFE66D;--correct:#51CF66;--wrong:#FF6B6B;--waiting:#A5D8FF;--bg:#FFF8F0;--card:#FFFFFF;--text:#2D3436;--bar-h:64px;}
+:root{--primary:#FF6B6B;--secondary:#4ECDC4;--accent:#FFE66D;--correct:#51CF66;--wrong:#FF6B6B;--waiting:#A5D8FF;--bg:#FFF8F0;--card:#FFFFFF;--text:#2D3436;--bar-h:60px;}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Nanum Gothic',sans-serif;background:var(--bg);min-height:100vh;overflow-x:hidden;}
-#top-bar{position:fixed;top:0;left:0;right:0;height:var(--bar-h);background:linear-gradient(135deg,#FF6B6B,#FF8E53);display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:999;box-shadow:0 3px 16px rgba(255,107,107,0.35);}
-.bar-title{font-family:'Jua',sans-serif;font-size:1rem;color:#fff;display:flex;flex-direction:column;line-height:1.3;}
-.bar-title span{font-size:0.68rem;opacity:0.85;}
-.bar-right{display:flex;align-items:center;gap:8px;}
-#bar-timer{font-family:'Do Hyeon',sans-serif;font-size:1.25rem;color:#fff;min-width:52px;text-align:center;letter-spacing:1px;}
-#bar-count{background:rgba(255,255,255,0.25);border-radius:20px;padding:4px 10px;font-family:'Jua',sans-serif;font-size:0.78rem;color:#fff;white-space:nowrap;}
-.bar-btn{width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+#top-bar{position:fixed;top:0;left:0;right:0;height:var(--bar-h);background:linear-gradient(135deg,#FF6B6B,#FF8E53);display:flex;align-items:center;justify-content:space-between;padding:0 14px;z-index:999;box-shadow:0 3px 16px rgba(255,107,107,0.35);}
+.bar-title{font-family:'Jua',sans-serif;font-size:0.95rem;color:#fff;display:flex;flex-direction:column;line-height:1.3;}
+.bar-title span{font-size:0.65rem;opacity:0.85;}
+.bar-right{display:flex;align-items:center;gap:6px;}
+#bar-timer{font-family:'Do Hyeon',sans-serif;font-size:1.2rem;color:#fff;min-width:50px;text-align:center;letter-spacing:1px;}
+#bar-count{background:rgba(255,255,255,0.25);border-radius:20px;padding:3px 9px;font-family:'Jua',sans-serif;font-size:0.75rem;color:#fff;white-space:nowrap;}
+.bar-btn{width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
 .bar-btn:active{transform:scale(0.88);}
 #bbPlay{background:#fff;color:var(--primary);}
-#bbPause{background:rgba(255,255,255,0.28);color:#fff;font-size:1rem;}
+#bbPause{background:rgba(255,255,255,0.28);color:#fff;}
 #bbStop{background:rgba(255,255,255,0.18);color:#fff;}
-.page{display:none;padding-top:calc(var(--bar-h)+20px);padding-bottom:36px;min-height:100vh;}
+.page{display:none;min-height:100vh;padding-top:var(--bar-h);}
 .page.active{display:block;}
-#pg-select{background:linear-gradient(160deg,#FFF0E6,#E8F8F7);}
-.hero{padding:calc(var(--bar-h)+24px) 16px 20px;text-align:center;}
-.hero h1{font-family:'Jua',sans-serif;font-size:1.9rem;color:var(--primary);margin-bottom:6px;}
-.hero p{font-size:0.85rem;color:#888;}
-.song-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 14px 16px;max-width:580px;margin:0 auto;}
-.song-card{background:#fff;border-radius:18px;padding:18px 12px;text-align:center;cursor:pointer;border:3px solid transparent;transition:all 0.2s;box-shadow:0 4px 14px rgba(0,0,0,0.07);}
-.song-card:active{transform:scale(0.95);}
-.song-card.sel{border-color:var(--secondary);background:#F0FDFB;}
-.sc-emoji{font-size:2rem;margin-bottom:7px;}
-.sc-name{font-family:'Jua',sans-serif;font-size:0.92rem;color:var(--text);}
-.sc-lv{display:inline-block;margin-top:5px;font-size:0.68rem;padding:2px 8px;border-radius:99px;font-weight:700;}
-.lv1{background:#D3F9D8;color:#2f9e44;}.lv2{background:#FFF3BF;color:#e67700;}.lv3{background:#FFE3E3;color:#c92a2a;}
-.next-btn{display:block;width:calc(100% - 28px);max-width:552px;margin:0 auto;padding:16px;border:none;border-radius:18px;background:linear-gradient(135deg,var(--primary),#FF8E53);color:#fff;font-family:'Jua',sans-serif;font-size:1.2rem;cursor:pointer;box-shadow:0 5px 18px rgba(255,107,107,0.3);transition:all 0.2s;}
-.next-btn:active{transform:scale(0.97);}
+.page-inner{padding:20px 14px 50px;}
+.back-btn{display:inline-flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;font-family:'Jua',sans-serif;font-size:0.88rem;color:#888;padding:6px 2px;margin-bottom:14px;}
+.big-btn{width:100%;padding:16px;border:none;border-radius:18px;color:#fff;font-family:'Jua',sans-serif;font-size:1.15rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;}
+.big-btn:active{transform:scale(0.97);}
+.btn-primary{background:linear-gradient(135deg,var(--primary),#FF8E53);box-shadow:0 5px 18px rgba(255,107,107,0.3);}
+.section-title{font-family:'Jua',sans-serif;font-size:1.1rem;color:var(--text);margin-bottom:14px;}
+.empty-msg{text-align:center;padding:32px;color:#bbb;font-size:0.88rem;}
+.tag{display:inline-block;padding:3px 9px;border-radius:99px;font-size:0.65rem;font-weight:700;margin:2px;}
+.tag-book{background:#E3F2FD;color:#1565C0;}
+.tag-genre{background:#F3E5F5;color:#6A1B9A;}
+.tag-level{background:#E8F5E9;color:#2E7D32;}
+.tag-level.lv1{background:#D3F9D8;color:#2f9e44;}
+.tag-level.lv2{background:#FFF3BF;color:#e67700;}
+.tag-level.lv3{background:#FFE3E3;color:#c92a2a;}
+#pg-home{background:linear-gradient(160deg,#FFF0E6,#E8F8F7);}
+.home-hero{text-align:center;padding:24px 16px 16px;}
+.home-hero h1{font-family:'Jua',sans-serif;font-size:1.8rem;color:var(--primary);margin-bottom:6px;}
+.home-hero p{font-size:0.82rem;color:#888;}
+.search-bar{position:relative;margin-bottom:16px;}
+.search-bar input{width:100%;padding:13px 44px 13px 16px;border:2px solid #eee;border-radius:14px;font-family:'Nanum Gothic',sans-serif;font-size:0.92rem;background:#fff;outline:none;transition:border-color 0.2s;}
+.search-bar input:focus{border-color:var(--secondary);}
+.search-bar .s-ico{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:1.1rem;background:none;border:none;}
+.cat-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px;-webkit-overflow-scrolling:touch;}
+.cat-tabs::-webkit-scrollbar{display:none;}
+.cat-tab{flex-shrink:0;padding:8px 16px;border-radius:99px;border:2px solid #eee;background:#fff;font-family:'Jua',sans-serif;font-size:0.82rem;color:#888;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.cat-tab.active{border-color:var(--primary);background:var(--primary);color:#fff;}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.cat-card{background:#fff;border-radius:16px;padding:18px 12px;text-align:center;cursor:pointer;border:2px solid transparent;transition:all 0.2s;box-shadow:0 3px 12px rgba(0,0,0,0.07);}
+.cat-card:active{transform:scale(0.95);}
+.cat-card .cc-icon{font-size:1.8rem;margin-bottom:6px;}
+.cat-card .cc-name{font-family:'Jua',sans-serif;font-size:0.88rem;color:var(--text);}
+.cat-card .cc-cnt{font-size:0.68rem;color:#aaa;margin-top:3px;}
+#pg-songs{background:var(--bg);}
+.filter-chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;-webkit-overflow-scrolling:touch;}
+.filter-chips::-webkit-scrollbar{display:none;}
+.filter-chip{flex-shrink:0;padding:6px 13px;border-radius:99px;border:2px solid #eee;background:#fff;font-family:'Jua',sans-serif;font-size:0.75rem;color:#888;cursor:pointer;transition:all 0.2s;}
+.filter-chip.on{border-color:var(--secondary);background:var(--secondary);color:#fff;}
+.song-item{background:#fff;border-radius:14px;padding:13px 14px;display:flex;align-items:center;gap:11px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;box-shadow:0 3px 10px rgba(0,0,0,0.06);margin-bottom:9px;}
+.song-item:active{transform:scale(0.98);}
+.song-item.sel{border-color:var(--secondary);background:#F0FDFB;}
+.si-emoji{font-size:1.5rem;}
+.si-info{flex:1;min-width:0;}
+.si-name{font-family:'Jua',sans-serif;font-size:0.9rem;color:var(--text);}
+.si-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px;}
+.search-result-item{background:#fff;border-radius:14px;padding:13px 14px;display:flex;align-items:center;gap:11px;cursor:pointer;transition:all 0.2s;box-shadow:0 3px 10px rgba(0,0,0,0.06);margin-bottom:9px;}
+.search-result-item:active{transform:scale(0.97);}
 #pg-set{background:linear-gradient(160deg,#F0FDFB,#FFF8F0);}
-.set-wrap{max-width:480px;margin:0 auto;padding:0 14px;}
-.set-wrap h2{font-family:'Jua',sans-serif;font-size:1.3rem;color:var(--text);margin-bottom:18px;}
 .scard{background:#fff;border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,0.07);}
 .scard h3{font-family:'Jua',sans-serif;font-size:0.95rem;color:var(--text);margin-bottom:12px;}
 .count-row{display:flex;align-items:center;gap:14px;justify-content:center;}
-.cnt-btn{width:42px;height:42px;border-radius:50%;border:none;font-size:1.4rem;cursor:pointer;background:var(--secondary);color:#fff;box-shadow:0 3px 10px rgba(78,205,196,0.3);display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.cnt-btn{width:42px;height:42px;border-radius:50%;border:none;font-size:1.4rem;cursor:pointer;background:var(--secondary);color:#fff;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 3px 10px rgba(78,205,196,0.3);}
 .cnt-btn:active{transform:scale(0.88);}
 #cnt-disp{font-family:'Jua',sans-serif;font-size:2rem;color:var(--primary);min-width:56px;text-align:center;}
 .tol-row{display:flex;align-items:center;gap:10px;}
@@ -50,16 +80,13 @@ body{font-family:'Nanum Gothic',sans-serif;background:var(--bg);min-height:100vh
 input[type=range]{flex:1;accent-color:var(--secondary);}
 .tol-v{font-family:'Jua',sans-serif;font-size:0.82rem;color:var(--secondary);min-width:42px;text-align:right;}
 .prev-box{background:#f8f8f8;border-radius:10px;padding:12px;margin-top:8px;}
-.prev-name{font-family:'Jua',sans-serif;font-size:0.95rem;color:var(--text);margin-bottom:3px;}
-.prev-info{font-size:0.75rem;color:#aaa;}
-.back-btn{display:inline-flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;font-family:'Jua',sans-serif;font-size:0.88rem;color:#888;padding:6px 2px;margin-bottom:10px;}
-.start-btn{width:100%;padding:16px;border:none;border-radius:18px;background:linear-gradient(135deg,var(--primary),#FF8E53);color:#fff;font-family:'Jua',sans-serif;font-size:1.2rem;cursor:pointer;box-shadow:0 5px 18px rgba(255,107,107,0.3);transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px;}
-.start-btn:active{transform:scale(0.97);}
+.prev-name{font-family:'Jua',sans-serif;font-size:0.95rem;color:var(--text);margin-bottom:5px;}
+.prev-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px;}
+.prev-info{font-size:0.73rem;color:#aaa;}
 #pg-prac{background:var(--bg);}
-.prac-wrap{max-width:700px;margin:0 auto;padding:0 12px;}
 .pcard{background:#fff;border-radius:18px;box-shadow:0 4px 16px rgba(0,0,0,0.07);padding:16px;margin-bottom:12px;}
 .pcard-t{font-family:'Jua',sans-serif;font-size:0.9rem;color:var(--text);margin-bottom:10px;}
-#score-wrap{width:100%;background:#f9f9f9;border-radius:12px;padding:8px 6px;overflow:visible;}
+#score-wrap{width:100%;background:#f9f9f9;border-radius:12px;padding:8px 6px;}
 #score-wrap svg{display:block;width:100%;}
 .note-bar{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px;}
 .note-chip{display:flex;flex-direction:column;align-items:center;gap:2px;}
@@ -101,26 +128,46 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 </head>
 <body>
 <div id="top-bar">
-  <div class="bar-title">🎹 피아노 연습<span id="bar-song">곡을 선택하세요</span></div>
+  <div class="bar-title">🎹 피아노 연습<span id="bar-song">홈</span></div>
   <div class="bar-right">
-    <div id="bar-count" style="display:none">1 / 3회</div>
+    <div id="bar-count" style="display:none">1/3회</div>
     <div id="bar-timer" style="display:none">00:00</div>
-    <div id="bar-ctrl" style="display:flex;gap:6px;align-items:center;visibility:hidden">
+    <div id="bar-ctrl" style="display:flex;gap:5px;align-items:center;visibility:hidden">
       <button class="bar-btn" id="bbPlay" onclick="bbPlay()">▶</button>
       <button class="bar-btn" id="bbPause" onclick="bbPause()">⏸</button>
       <button class="bar-btn" id="bbStop" onclick="bbStop()">⏹</button>
     </div>
   </div>
 </div>
-<div id="pg-select" class="page active">
-  <div class="hero"><h1>🎵 어떤 곡 연습할까요?</h1><p>연습하고 싶은 곡을 골라보세요!</p></div>
-  <div class="song-grid" id="song-grid"></div>
-  <button class="next-btn" onclick="gotoSet()">다음 →</button>
+<div id="pg-home" class="page active">
+  <div class="home-hero"><h1>🎹 피아노 연습</h1><p>카테고리를 선택하거나 곡을 검색해보세요!</p></div>
+  <div class="page-inner" style="padding-top:8px">
+    <div class="search-bar">
+      <input id="home-search" type="text" placeholder="곡 이름으로 검색..." oninput="liveSearch()">
+      <button class="s-ico">🔍</button>
+    </div>
+    <div id="live-results" style="margin-bottom:12px"></div>
+    <div class="cat-tabs" id="cat-tabs">
+      <div class="cat-tab active" onclick="switchCatTab('book',this)">📚 교재</div>
+      <div class="cat-tab" onclick="switchCatTab('genre',this)">🎵 장르</div>
+      <div class="cat-tab" onclick="switchCatTab('level',this)">⭐ 난이도</div>
+    </div>
+    <div class="cat-grid" id="cat-grid"></div>
+  </div>
+</div>
+<div id="pg-songs" class="page">
+  <div class="page-inner">
+    <button class="back-btn" onclick="gotoHome()">← 홈으로</button>
+    <div class="section-title" id="songs-title">곡 목록</div>
+    <div class="filter-chips" id="filter-chips"></div>
+    <div id="song-list"></div>
+    <button class="big-btn btn-primary" onclick="gotoSet()">다음 →</button>
+  </div>
 </div>
 <div id="pg-set" class="page">
-  <div class="set-wrap">
-    <button class="back-btn" onclick="gotoSel()">← 곡 선택으로</button>
-    <h2>⚙️ 연습 설정</h2>
+  <div class="page-inner">
+    <button class="back-btn" onclick="gotoHome()">← 뒤로</button>
+    <div class="section-title">⚙️ 연습 설정</div>
     <div class="scard"><h3>🔁 연습 횟수</h3>
       <div class="count-row">
         <button class="cnt-btn" onclick="chgCnt(-1)">−</button>
@@ -138,12 +185,12 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       <p style="font-size:0.72rem;color:#aaa;margin-top:7px">피아노 조율이 약간 안맞을 때 올려주세요</p>
     </div>
     <div class="scard"><h3>🎼 선택한 곡</h3><div class="prev-box" id="prev-box"></div></div>
-    <button class="start-btn" onclick="goPrac()">🎹 연습 시작!</button>
+    <button class="big-btn btn-primary" onclick="goPrac()">🎹 연습 시작!</button>
   </div>
 </div>
 <div id="pg-prac" class="page">
-  <div class="prac-wrap">
-    <button class="back-btn" onclick="gotoSel()">← 곡 선택으로</button>
+  <div class="page-inner">
+    <button class="back-btn" onclick="gotoHome()">← 홈으로</button>
     <div class="pcard">
       <div class="pcard-t">📋 연습 진행</div>
       <div class="ses-row" id="ses-row"></div>
@@ -173,8 +220,8 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
   </div>
 </div>
 <script>
-const SONGS=[
-  {id:'butterfly',name:'나비야',emoji:'🦋',level:1,lvTxt:'입문',bpm:4,notes:[
+const SONG_DB=[
+  {id:'butterfly',name:'나비야',emoji:'🦋',tags:{book:'동요',genre:'동요',level:'입문'},bpm:4,notes:[
     {vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'h'},
     {vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'h'},
     {vex:'c/4',lb:'도',freq:261.63,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'h'},
@@ -182,127 +229,152 @@ const SONGS=[
     {vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'q'},
     {vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'h'}
   ]},
-  {id:'twinkle',name:'반짝반짝',emoji:'⭐',level:1,lvTxt:'입문',bpm:4,notes:[
+  {id:'twinkle',name:'반짝반짝',emoji:'⭐',tags:{book:'동요',genre:'동요',level:'입문'},bpm:4,notes:[
     {vex:'c/4',lb:'도',freq:261.63,dur:'q'},{vex:'c/4',lb:'도',freq:261.63,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'q'},
     {vex:'a/4',lb:'라',freq:440.00,dur:'q'},{vex:'a/4',lb:'라',freq:440.00,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'h'},
     {vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},
     {vex:'d/4',lb:'레',freq:293.66,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'q'},{vex:'c/4',lb:'도',freq:261.63,dur:'h'}
   ]},
-  {id:'mary',name:'메리의 양',emoji:'🐑',level:2,lvTxt:'초급',bpm:4,notes:[
+  {id:'cuckoo',name:'뻐꾸기',emoji:'🐦',tags:{book:'동요',genre:'동요',level:'초급'},bpm:3,notes:[
+    {vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'h'},
+    {vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'h'},
+    {vex:'a/4',lb:'라',freq:440.00,dur:'q'},{vex:'a/4',lb:'라',freq:440.00,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'q'},
+    {vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'q'},{vex:'c/4',lb:'도',freq:261.63,dur:'h'}
+  ]},
+  {id:'scale_c',name:'C장조 음계',emoji:'🎼',tags:{book:'바이엘',genre:'연습곡',level:'입문'},bpm:4,notes:[
+    {vex:'c/4',lb:'도',freq:261.63,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'f/4',lb:'파',freq:349.23,dur:'q'},
+    {vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'a/4',lb:'라',freq:440.00,dur:'q'},{vex:'b/4',lb:'시',freq:493.88,dur:'q'},{vex:'c/5',lb:'도↑',freq:523.25,dur:'q'}
+  ]},
+  {id:'mary',name:'메리의 양',emoji:'🐑',tags:{book:'바이엘',genre:'동요',level:'초급'},bpm:4,notes:[
     {vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'q'},{vex:'c/4',lb:'도',freq:261.63,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'q'},
     {vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'h'},
     {vex:'d/4',lb:'레',freq:293.66,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'h'},
     {vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'h'}
   ]},
-  {id:'cuckoo',name:'뻐꾸기',emoji:'🐦',level:2,lvTxt:'초급',bpm:3,notes:[
-    {vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'h'},
-    {vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'h'},
-    {vex:'a/4',lb:'라',freq:440.00,dur:'q'},{vex:'a/4',lb:'라',freq:440.00,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'q'},
-    {vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'q'},{vex:'c/4',lb:'도',freq:261.63,dur:'h'}
-  ]}
+  {id:'czerny1',name:'체르니 100 No.1',emoji:'🎹',tags:{book:'체르니',genre:'연습곡',level:'중급'},bpm:4,notes:[
+    {vex:'c/4',lb:'도',freq:261.63,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'c/5',lb:'도↑',freq:523.25,dur:'q'},
+    {vex:'b/4',lb:'시',freq:493.88,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'c/4',lb:'도',freq:261.63,dur:'q'},
+    {vex:'d/4',lb:'레',freq:293.66,dur:'q'},{vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'a/4',lb:'라',freq:440.00,dur:'q'},{vex:'c/5',lb:'도↑',freq:523.25,dur:'q'},
+    {vex:'b/4',lb:'시',freq:493.88,dur:'q'},{vex:'a/4',lb:'라',freq:440.00,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'h'}
+  ]},
+  {id:'ode',name:'기쁨의 송가',emoji:'🎻',tags:{book:'기타',genre:'클래식',level:'초급'},bpm:4,notes:[
+    {vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'q'},
+    {vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'q'},
+    {vex:'c/4',lb:'도',freq:261.63,dur:'q'},{vex:'c/4',lb:'도',freq:261.63,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},
+    {vex:'e/4',lb:'미',freq:329.63,dur:'h'},{vex:'d/4',lb:'레',freq:293.66,dur:'h'}
+  ]},
 ];
-let curSong=SONGS[0],totalSes=3,curSes=1,states=[],cur=0;
+const CAT_META={
+  book:{label:'교재',icon:'📚',items:[{key:'동요',icon:'🎵',color:'#4ECDC4'},{key:'바이엘',icon:'📖',color:'#FF6B6B'},{key:'체르니',icon:'🎹',color:'#9775FA'},{key:'기타',icon:'🌟',color:'#FFE66D'}]},
+  genre:{label:'장르',icon:'🎵',items:[{key:'동요',icon:'🌸',color:'#FF8FAB'},{key:'클래식',icon:'🎻',color:'#9775FA'},{key:'연습곡',icon:'📝',color:'#74C0FC'},{key:'OST',icon:'🎬',color:'#FF922B'}]},
+  level:{label:'난이도',icon:'⭐',items:[{key:'입문',icon:'🌱',color:'#51CF66'},{key:'초급',icon:'⭐',color:'#FFE66D'},{key:'중급',icon:'🌟',color:'#FF922B'},{key:'고급',icon:'💎',color:'#CC5DE8'}]}
+};
+let curSong=SONG_DB[0],curCatType='book',activeFilters={};
+let totalSes=3,curSes=1,states=[],cur=0;
 let listening=false,paused=false;
 let audioCtx=null,analyser=null,micStream=null,rafId=null;
 let wrongTid=null,lastOkT=0,timerSec=0,timerTid=null;
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
-function gotoSel(){doStopMic();clearTimer();document.getElementById('bar-ctrl').style.visibility='hidden';document.getElementById('bar-timer').style.display='none';document.getElementById('bar-count').style.display='none';document.getElementById('bar-song').textContent='곡을 선택하세요';showPage('pg-select');}
-function gotoSet(){updatePrev();showPage('pg-set');}
-function goPrac(){
-  totalSes=parseInt(document.getElementById('cnt-disp').textContent)||3;
-  curSes=1;initSes();showPage('pg-prac');
-  document.getElementById('bar-song').textContent=curSong.name;
-  document.getElementById('bar-ctrl').style.visibility='visible';
-  document.getElementById('bar-timer').style.display='block';
-  document.getElementById('bar-count').style.display='block';
-  updBarCount();loadVex();
+
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function gotoHome(){doStopMic();clearTimer();document.getElementById('bar-ctrl').style.visibility='hidden';document.getElementById('bar-timer').style.display='none';document.getElementById('bar-count').style.display='none';document.getElementById('bar-song').textContent='홈';activeFilters={};renderCatGrid('book');showPage('pg-home');}
+function gotoSongList(fk,fv,title){activeFilters={[fk]:fv};document.getElementById('songs-title').textContent=title;renderFilterChips();renderSongList();showPage('pg-songs');document.getElementById('bar-song').textContent=fv;}
+function gotoSet(){
+  const s=curSong;
+  document.getElementById('prev-box').innerHTML=`<div class="prev-name">${s.emoji} ${s.name}</div><div class="prev-tags"><span class="tag tag-book">${s.tags.book}</span><span class="tag tag-genre">${s.tags.genre}</span><span class="tag tag-level lv${lvNum(s.tags.level)}">${s.tags.level}</span></div><div class="prev-info">음표 ${s.notes.length}개 · ${s.bpm}/4박자</div>`;
+  showPage('pg-set');document.getElementById('bar-song').textContent='설정';
 }
-function renderGrid(){
-  const g=document.getElementById('song-grid');g.innerHTML='';
-  SONGS.forEach(s=>{
-    const d=document.createElement('div');
-    d.className='song-card'+(s.id===curSong.id?' sel':'');
-    d.innerHTML=`<div class="sc-emoji">${s.emoji}</div><div class="sc-name">${s.name}</div><span class="sc-lv lv${s.level}">${s.lvTxt}</span>`;
-    d.onclick=()=>{curSong=s;document.querySelectorAll('.song-card').forEach(c=>c.classList.remove('sel'));d.classList.add('sel');};
-    g.appendChild(d);
+function goPrac(){totalSes=parseInt(document.getElementById('cnt-disp').textContent)||3;curSes=1;initSes();showPage('pg-prac');document.getElementById('bar-song').textContent=curSong.name;document.getElementById('bar-ctrl').style.visibility='visible';document.getElementById('bar-timer').style.display='block';document.getElementById('bar-count').style.display='block';updBarCount();loadVex();}
+
+function liveSearch(){
+  const q=document.getElementById('home-search').value.trim().toLowerCase();
+  const el=document.getElementById('live-results');
+  if(!q){el.innerHTML='';return;}
+  const res=SONG_DB.filter(s=>s.name.toLowerCase().includes(q));
+  if(!res.length){el.innerHTML='<div style="color:#bbb;font-size:0.82rem;padding:6px 4px">검색 결과 없음</div>';return;}
+  el.innerHTML=res.map(s=>`<div class="search-result-item" onclick="pickSong('${s.id}')"><div class="si-emoji">${s.emoji}</div><div class="si-info"><div class="si-name">${s.name}</div><div class="si-tags"><span class="tag tag-book">${s.tags.book}</span><span class="tag tag-genre">${s.tags.genre}</span><span class="tag tag-level lv${lvNum(s.tags.level)}">${s.tags.level}</span></div></div></div>`).join('');
+}
+
+function switchCatTab(type,el){curCatType=type;document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');renderCatGrid(type);}
+function renderCatGrid(type){
+  const meta=CAT_META[type];
+  document.getElementById('cat-grid').innerHTML=meta.items.map(item=>{
+    const cnt=SONG_DB.filter(s=>s.tags[type]===item.key).length;
+    if(!cnt)return'';
+    return`<div class="cat-card" onclick="gotoSongList('${type}','${item.key}','${item.icon} ${item.key}')" style="border-color:${item.color}40"><div class="cc-icon">${item.icon}</div><div class="cc-name">${item.key}</div><div class="cc-cnt">곡 ${cnt}개</div></div>`;
+  }).join('');
+}
+
+function filterSongs(){return SONG_DB.filter(s=>Object.entries(activeFilters).every(([k,v])=>s.tags[k]===v));}
+function renderFilterChips(){
+  const el=document.getElementById('filter-chips');
+  let html='';
+  Object.keys(CAT_META).forEach(type=>{
+    if(activeFilters[type]){html+=`<div class="filter-chip on" onclick="removeFilter('${type}')">✕ ${activeFilters[type]}</div>`;}
+    else{const vals=[...new Set(filterSongs().map(s=>s.tags[type]))];vals.forEach(v=>{html+=`<div class="filter-chip" onclick="addFilter('${type}','${v}')">${v}</div>`;});}
   });
+  el.innerHTML=html;
 }
-let pCount=3;
-function chgCnt(d){pCount=Math.max(1,Math.min(10,pCount+d));document.getElementById('cnt-disp').textContent=pCount;}
-function updatePrev(){document.getElementById('prev-box').innerHTML=`<div class="prev-name">${curSong.emoji} ${curSong.name}</div><div class="prev-info">음표 ${curSong.notes.length}개 · 난이도 ${curSong.lvTxt} · ${curSong.bpm}/4박자</div>`;}
+function addFilter(type,val){activeFilters[type]=val;renderFilterChips();renderSongList();}
+function removeFilter(type){delete activeFilters[type];renderFilterChips();renderSongList();}
+function renderSongList(){
+  const el=document.getElementById('song-list');
+  const songs=filterSongs();
+  if(!songs.length){el.innerHTML='<div class="empty-msg">해당 조건의 곡이 없어요 😢</div>';return;}
+  el.innerHTML=songs.map(s=>`<div class="song-item${s.id===curSong.id?' sel':''}" onclick="pickSong('${s.id}')"><div class="si-emoji">${s.emoji}</div><div class="si-info"><div class="si-name">${s.name}</div><div class="si-tags"><span class="tag tag-book">${s.tags.book}</span><span class="tag tag-genre">${s.tags.genre}</span><span class="tag tag-level lv${lvNum(s.tags.level)}">${s.tags.level}</span></div></div></div>`).join('');
+}
+function pickSong(id){curSong=SONG_DB.find(s=>s.id===id);document.getElementById('home-search').value='';document.getElementById('live-results').innerHTML='';gotoSet();}
+
+function chgCnt(d){const v=Math.max(1,Math.min(10,parseInt(document.getElementById('cnt-disp').textContent)+d));document.getElementById('cnt-disp').textContent=v;}
 document.getElementById('tol').addEventListener('input',function(){document.getElementById('tol-v').textContent='±'+this.value+'¢';});
-function initSes(){
-  states=curSong.notes.map(()=>'waiting');cur=0;
-  document.getElementById('done-banner').classList.remove('show');
-  document.getElementById('mic-go-btn').disabled=false;
-  document.getElementById('mic-go-btn').textContent='🎤 마이크 켜고 연습 시작';
-  setStatus('idle');renderSesDots();drawNoteBar();updBarCount();
-  if(typeof Vex!=='undefined')drawScore();
-}
-function renderSesDots(){
-  const r=document.getElementById('ses-row');r.innerHTML='';
-  for(let i=1;i<=totalSes;i++){const d=document.createElement('div');d.className='ses-dot'+(i<curSes?' done':i===curSes?' curr':'');d.textContent=i;r.appendChild(d);}
-}
-function updBarCount(){document.getElementById('bar-count').textContent=curSes+' / '+totalSes+'회';}
+
+function initSes(){states=curSong.notes.map(()=>'waiting');cur=0;document.getElementById('done-banner').classList.remove('show');document.getElementById('mic-go-btn').disabled=false;document.getElementById('mic-go-btn').textContent='🎤 마이크 켜고 연습 시작';setStatus('idle');renderSesDots();drawNoteBar();updBarCount();if(typeof Vex!=='undefined')drawScore();}
+function renderSesDots(){const r=document.getElementById('ses-row');r.innerHTML='';for(let i=1;i<=totalSes;i++){const d=document.createElement('div');d.className='ses-dot'+(i<curSes?' done':i===curSes?' curr':'');d.textContent=i;r.appendChild(d);}}
+function updBarCount(){document.getElementById('bar-count').textContent=curSes+'/'+totalSes+'회';}
 function startTimer(){if(timerTid)return;timerTid=setInterval(()=>{if(!paused){timerSec++;document.getElementById('bar-timer').textContent=String(Math.floor(timerSec/60)).padStart(2,'0')+':'+String(timerSec%60).padStart(2,'0');}},1000);}
 function clearTimer(){clearInterval(timerTid);timerTid=null;timerSec=0;document.getElementById('bar-timer').textContent='00:00';}
 function bbPlay(){if(!listening){startMic();return;}paused=false;document.getElementById('bbPause').textContent='⏸';}
 function bbPause(){paused=!paused;document.getElementById('bbPause').textContent=paused?'▶':'⏸';document.getElementById('bbPause').style.background=paused?'rgba(255,255,255,0.6)':'rgba(255,255,255,0.28)';}
 function bbStop(){doStopMic();initSes();}
+function lvNum(l){return l==='입문'?1:l==='초급'?2:l==='중급'?3:4;}
+
 function drawScore(){
-  const wrap=document.getElementById('score-wrap');
-  wrap.innerHTML='';
+  const wrap=document.getElementById('score-wrap');wrap.innerHTML='';
   if(typeof Vex==='undefined'){wrap.innerHTML='<p style="color:#bbb;padding:14px">악보 로딩 중...</p>';return;}
   try{
     const VF=Vex.Flow,song=curSong,bpm=song.bpm||4;
     const measures=[];let mArr=[],mBeats=0;
-    song.notes.forEach((n,i)=>{
-      const v=n.dur==='h'?2:n.dur==='w'?4:1;
-      mArr.push(i);mBeats+=v;
-      if(mBeats>=bpm){measures.push([...mArr]);mArr=[];mBeats=0;}
-    });
+    song.notes.forEach((n,i)=>{const v=n.dur==='h'?2:n.dur==='w'?4:1;mArr.push(i);mBeats+=v;if(mBeats>=bpm){measures.push([...mArr]);mArr=[];mBeats=0;}});
     if(mArr.length)measures.push(mArr);
-    const containerW=Math.max(wrap.clientWidth||320,300);
-    const CLEF_W=30,TIMESIG_W=26,MARGIN=6,MEA_MIN_W=110;
-    const firstExtra=CLEF_W+TIMESIG_W+MARGIN*2;
-    const measPerRow=Math.max(1,Math.floor((containerW-firstExtra)/MEA_MIN_W));
-    const rows=[];
-    for(let i=0;i<measures.length;i+=measPerRow)rows.push(measures.slice(i,i+measPerRow));
-    const ROW_H=100,totalH=rows.length*ROW_H+24;
+    const cW=Math.max(wrap.clientWidth||320,300);
+    const CW=30,TW=26,MG=6,MW=110;
+    const mpr=Math.max(1,Math.floor((cW-CW-TW-MG*2)/MW));
+    const rows=[];for(let i=0;i<measures.length;i+=mpr)rows.push(measures.slice(i,i+mpr));
+    const RH=100,totalH=rows.length*RH+24;
     const renderer=new VF.Renderer(wrap,VF.Renderer.Backends.SVG);
-    renderer.resize(containerW,totalH);
-    const ctx=renderer.getContext();
-    rows.forEach((rowMeasures,ri)=>{
-      const y=ri*ROW_H+12,isFirstRow=ri===0;
-      const headerW=isFirstRow?CLEF_W+TIMESIG_W:CLEF_W;
-      const availW=containerW-MARGIN*2-headerW;
-      const meaW=Math.floor(availW/rowMeasures.length);
-      let x=MARGIN;
-      rowMeasures.forEach((idxArr,mi)=>{
-        const isFirstMea=mi===0;
-        const sw=isFirstMea?meaW+headerW:meaW;
+    renderer.resize(cW,totalH);const ctx=renderer.getContext();
+    rows.forEach((rowM,ri)=>{
+      const y=ri*RH+12,first=ri===0;
+      const hW=first?CW+TW:CW;
+      const aW=cW-MG*2-hW;const mW=Math.floor(aW/rowM.length);let x=MG;
+      rowM.forEach((idxArr,mi)=>{
+        const fm=mi===0,sw=fm?mW+hW:mW;
         const stave=new VF.Stave(x,y,sw);
-        // 각 줄의 첫 마디에만 음자리표, 첫 줄 첫 마디에만 박자표
-        if(isFirstMea)stave.addClef('treble');
-        if(isFirstRow&&isFirstMea)stave.addTimeSignature(bpm+'/4');
+        if(fm)stave.addClef('treble');
+        if(first&&fm)stave.addTimeSignature(bpm+'/4');
         stave.setContext(ctx).draw();
-        let beatSum=0;
-        idxArr.forEach(i=>{beatSum+=song.notes[i].dur==='h'?2:song.notes[i].dur==='w'?4:1;});
-        const staveNotes=idxArr.map(i=>{
-          const n=song.notes[i];
-          const sn=new VF.StaveNote({clef:'treble',keys:[n.vex],duration:n.dur});
+        let bs=0;idxArr.forEach(i=>{bs+=song.notes[i].dur==='h'?2:song.notes[i].dur==='w'?4:1;});
+        const sn=idxArr.map(i=>{
+          const n=song.notes[i];const s=new VF.StaveNote({clef:'treble',keys:[n.vex],duration:n.dur});
           const c=states[i]==='current'?'#f59f00':states[i]==='correct'?'#2f9e44':states[i]==='wrong'?'#e03131':'#74C0FC';
-          sn.setStyle({fillStyle:c,strokeStyle:c});return sn;
+          s.setStyle({fillStyle:c,strokeStyle:c});return s;
         });
-        const voice=new VF.Voice({num_beats:beatSum,beat_value:4}).setStrict(false);
-        voice.addTickables(staveNotes);
-        new VF.Formatter().joinVoices([voice]).format([voice],sw-20);
-        voice.draw(ctx,stave);
-        x+=sw;
+        const v=new VF.Voice({num_beats:bs,beat_value:4}).setStrict(false);
+        v.addTickables(sn);new VF.Formatter().joinVoices([v]).format([v],sw-20);
+        v.draw(ctx,stave);x+=sw;
       });
     });
     document.getElementById('score-t').textContent='🎼 '+song.name+' ('+song.notes.length+'음)';
-  }catch(e){wrap.innerHTML='<p style="color:#e03131;padding:14px;font-size:0.78rem">악보 오류: '+e.message+'</p>';console.error(e);}
+  }catch(e){wrap.innerHTML='<p style="color:#e03131;padding:14px;font-size:0.78rem">악보 오류: '+e.message+'</p>';}
 }
 function drawNoteBar(){
   const bar=document.getElementById('note-bar');bar.innerHTML='';
@@ -315,12 +387,7 @@ function drawNoteBar(){
   document.getElementById('prog-bar').style.width=(states.filter(s=>s==='correct').length/curSong.notes.length*100)+'%';
 }
 function redraw(){drawScore();drawNoteBar();}
-function detectPitch(buf,sr){
-  const half=buf.length>>1;const yin=new Float32Array(half);yin[0]=1;let run=0;
-  for(let t=1;t<half;t++){let s=0;for(let j=0;j<half;j++){const d=buf[j]-buf[j+t];s+=d*d;}run+=s;yin[t]=s*t/run;}
-  for(let t=2;t<half;t++){if(yin[t]<0.15){while(t+1<half&&yin[t+1]<yin[t])t++;return sr/t;}}
-  return -1;
-}
+function detectPitch(buf,sr){const half=buf.length>>1;const yin=new Float32Array(half);yin[0]=1;let run=0;for(let t=1;t<half;t++){let s=0;for(let j=0;j<half;j++){const d=buf[j]-buf[j+t];s+=d*d;}run+=s;yin[t]=s*t/run;}for(let t=2;t<half;t++){if(yin[t]<0.15){while(t+1<half&&yin[t+1]<yin[t])t++;return sr/t;}}return -1;}
 function noteFromFreq(f){const n=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];const m=Math.round(12*Math.log2(f/440)+49);return n[((m-1)%12+12)%12]+Math.floor((m-1)/12);}
 function detectLoop(){
   if(!listening)return;
@@ -335,29 +402,14 @@ function detectLoop(){
       if(cur<curSong.notes.length){
         const cents=Math.abs(1200*Math.log2(freq/curSong.notes[cur].freq));
         const tol=+document.getElementById('tol').value;
-        if(cents<=tol){
-          const now=Date.now();
-          if(now-lastOkT>500){
-            lastOkT=now;states[cur]='correct';cur++;clearTimeout(wrongTid);
-            if(cur<curSong.notes.length){states[cur]='current';setStatus('ok');setTimeout(()=>setStatus('go'),600);}
-            else onComplete();
-            redraw();
-          }
-        }else if(states[cur]==='current'){
-          states[cur]='wrong';setStatus('ng');redraw();clearTimeout(wrongTid);
-          wrongTid=setTimeout(()=>{if(cur<curSong.notes.length){states[cur]='current';setStatus('go');redraw();}},700);
-        }
+        if(cents<=tol){const now=Date.now();if(now-lastOkT>500){lastOkT=now;states[cur]='correct';cur++;clearTimeout(wrongTid);if(cur<curSong.notes.length){states[cur]='current';setStatus('ok');setTimeout(()=>setStatus('go'),600);}else onComplete();redraw();}}
+        else if(states[cur]==='current'){states[cur]='wrong';setStatus('ng');redraw();clearTimeout(wrongTid);wrongTid=setTimeout(()=>{if(cur<curSong.notes.length){states[cur]='current';setStatus('go');redraw();}},700);}
       }
     }else{document.getElementById('det-note').textContent='—';document.getElementById('det-hz').textContent='소리 감지 중...';}
   }else{document.getElementById('det-hz').textContent='피아노를 쳐보세요 🎵';}
   rafId=requestAnimationFrame(detectLoop);
 }
-function onComplete(){
-  const b=document.getElementById('done-banner');
-  b.textContent=curSes<totalSes?`🎉 ${curSes}회 완료! 잠깐 쉬고 계속해요!`:`🏆 ${totalSes}회 모두 완료! 정말 잘했어요!`;
-  b.classList.add('show');setStatus('done');doStopMic();
-  if(curSes<totalSes)setTimeout(()=>{curSes++;initSes();},2500);
-}
+function onComplete(){const b=document.getElementById('done-banner');b.textContent=curSes<totalSes?`🎉 ${curSes}회 완료! 잠깐 쉬고 계속해요!`:`🏆 ${totalSes}회 모두 완료! 정말 잘했어요!`;b.classList.add('show');setStatus('done');doStopMic();if(curSes<totalSes)setTimeout(()=>{curSes++;initSes();},2500);}
 async function startMic(){
   if(listening)return;
   try{
@@ -372,18 +424,14 @@ async function startMic(){
     document.getElementById('mic-lbl').textContent='켜짐';
     if(cur<curSong.notes.length){states[cur]='current';redraw();}
     setStatus('go');startTimer();detectLoop();
-  }catch(e){alert('마이크 권한을 허용해주세요 🎤\n브라우저 주소창 자물쇠 아이콘을 눌러 마이크를 허용해주세요.');}
+  }catch(e){alert('마이크 권한을 허용해주세요 🎤');}
 }
 function doStopMic(){
   listening=false;cancelAnimationFrame(rafId);
   if(micStream){micStream.getTracks().forEach(t=>t.stop());micStream=null;}
   if(audioCtx){audioCtx.close();audioCtx=null;}
-  const btn=document.getElementById('mic-go-btn');
-  if(btn){btn.disabled=false;btn.textContent='🎤 마이크 켜고 연습 시작';}
-  const dot=document.getElementById('mic-dot');if(dot)dot.classList.remove('on');
-  const lbl=document.getElementById('mic-lbl');if(lbl)lbl.textContent='꺼짐';
-  const dn=document.getElementById('det-note');if(dn)dn.textContent='—';
-  const dh=document.getElementById('det-hz');if(dh)dh.textContent='마이크를 켜주세요';
+  const btn=document.getElementById('mic-go-btn');if(btn){btn.disabled=false;btn.textContent='🎤 마이크 켜고 연습 시작';}
+  ['mic-dot','mic-lbl','det-note','det-hz'].forEach(id=>{const el=document.getElementById(id);if(!el)return;if(id==='mic-dot')el.classList.remove('on');else if(id==='mic-lbl')el.textContent='꺼짐';else if(id==='det-note')el.textContent='—';else el.textContent='마이크를 켜주세요';});
   clearTimer();
 }
 function setStatus(t){
@@ -404,7 +452,7 @@ function loadVex(){
   document.head.appendChild(s);
 }
 window.addEventListener('resize',()=>{if(typeof Vex!=='undefined'&&document.getElementById('pg-prac').classList.contains('active'))drawScore();});
-renderGrid();
+renderCatGrid('book');
 </script>
 </body>
 </html>
