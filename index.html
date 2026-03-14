@@ -39,9 +39,9 @@ body{font-family:'Nanum Gothic',sans-serif;background:var(--bg);min-height:100vh
 .tab-ico-wrap{position:relative;display:inline-block;}
 
 /* ── 페이지 공통 ── */
-.page{display:none;min-height:100vh;padding-top:var(--bar-h);padding-bottom:calc(var(--tab-h)+48px);}
+.page{display:none;min-height:100vh;padding-top:var(--bar-h);padding-bottom:0;}
 .page.active{display:block;}
-.page-inner{padding:16px 14px calc(var(--tab-h)+52px);}
+.page-inner{padding:16px 14px 120px;}
 .back-btn{display:inline-flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;font-family:'Jua',sans-serif;font-size:0.88rem;color:#888;padding:4px 2px;margin-bottom:8px;}
 .big-btn{width:100%;padding:15px;border:none;border-radius:16px;color:#fff;font-family:'Jua',sans-serif;font-size:1.1rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;}
 .big-btn:active{transform:scale(0.97);}
@@ -177,7 +177,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
    보상 탭
 ══════════════════════════════════════ */
 #pg-reward{background:linear-gradient(160deg,#1a1a2e,#16213e,#0f3460);}
-.reward-inner{padding:16px 14px calc(var(--tab-h)+52px);}
+.reward-inner{padding:16px 14px 120px;}
 .reward-header{text-align:center;padding:14px 0 18px;}
 .reward-header .r-title{font-family:'Do Hyeon',sans-serif;font-size:1.7rem;color:#FFE66D;letter-spacing:2px;text-shadow:0 0 20px rgba(255,230,109,0.4);}
 .reward-header .r-sub{font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:3px;}
@@ -219,7 +219,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
    핀볼 가챠 게임
 ══════════════════════════════════════ */
 #pg-pinball{background:linear-gradient(160deg,#1a1a2e,#0f3460);}
-.pb-wrap{max-width:480px;margin:0 auto;padding:6px 14px calc(var(--tab-h)+52px);text-align:center;}
+.pb-wrap{max-width:480px;margin:0 auto;padding:6px 14px 120px;text-align:center;}
 .pb-title{font-family:'Do Hyeon',sans-serif;font-size:1.15rem;color:#FFE66D;letter-spacing:1px;margin-bottom:1px;text-shadow:0 0 20px rgba(255,230,109,0.4);}
 .pb-sub{font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;}
 .pb-score-row{display:flex;justify-content:center;gap:7px;margin-bottom:6px;flex-wrap:wrap;}
@@ -277,7 +277,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .admin-header{background:linear-gradient(135deg,#2D3436,#636e72);padding:20px 14px 16px;text-align:center;margin-top:0;}
 .admin-header .ah-title{font-family:'Do Hyeon',sans-serif;font-size:1.3rem;color:#fff;letter-spacing:1px;}
 .admin-header .ah-sub{font-size:0.7rem;color:rgba(255,255,255,0.5);margin-top:2px;}
-.admin-inner{padding:16px 14px calc(var(--tab-h)+80px);}
+.admin-inner{padding:16px 14px 120px;}
 
 /* 관리자 섹션 */
 .admin-section{background:#fff;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 3px 12px rgba(0,0,0,0.07);}
@@ -1643,10 +1643,13 @@ let adminLoggedIn=false,editingId=null;
 
 function openAdminModal(){
   if(adminLoggedIn){switchTabAdmin();return;}
+  const modal=document.getElementById('admin-pw-modal');
   const inp=document.getElementById('admin-pw-input');
-  inp.value='';inp.className='admin-pw-input';
-  document.getElementById('admin-pw-modal').classList.add('show');
-  setTimeout(()=>inp.focus(),200);
+  if(!modal||!inp){console.error('모달 요소 없음');return;}
+  inp.value='';
+  inp.className='admin-pw-input';
+  modal.classList.add('show');
+  setTimeout(()=>{try{inp.focus();}catch(e){}},300);
 }
 function closeAdminModal(){document.getElementById('admin-pw-modal').classList.remove('show');}
 function onPwInput(){if(document.getElementById('admin-pw-input').value.length===4)checkAdminPw();}
