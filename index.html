@@ -42,7 +42,7 @@ body{font-family:'Nanum Gothic',sans-serif;background:var(--bg);min-height:100vh
 .page{display:none;min-height:100vh;padding-top:var(--bar-h);padding-bottom:calc(var(--tab-h)+32px);}
 .page.active{display:block;}
 .page-inner{padding:18px 14px calc(var(--tab-h)+40px);}
-.back-btn{display:inline-flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;font-family:'Jua',sans-serif;font-size:0.88rem;color:#888;padding:6px 2px;margin-bottom:12px;}
+.back-btn{display:inline-flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;font-family:'Jua',sans-serif;font-size:0.88rem;color:#888;padding:4px 2px;margin-bottom:8px;}
 .big-btn{width:100%;padding:15px;border:none;border-radius:16px;color:#fff;font-family:'Jua',sans-serif;font-size:1.1rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;}
 .big-btn:active{transform:scale(0.97);}
 .btn-primary{background:linear-gradient(135deg,var(--primary),#FF8E53);box-shadow:0 4px 16px rgba(255,107,107,0.3);}
@@ -221,20 +221,20 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
    핀볼 가챠 게임
 ══════════════════════════════════════ */
 #pg-pinball{background:linear-gradient(160deg,#1a1a2e,#0f3460);}
-.pb-wrap{max-width:480px;margin:0 auto;padding:8px 14px calc(var(--tab-h)+20px);text-align:center;}
-.pb-title{font-family:'Do Hyeon',sans-serif;font-size:1.3rem;color:#FFE66D;letter-spacing:2px;margin-bottom:1px;text-shadow:0 0 20px rgba(255,230,109,0.4);}
-.pb-sub{font-size:0.72rem;color:rgba(255,255,255,0.4);margin-bottom:7px;}
-.pb-score-row{display:flex;justify-content:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.pb-wrap{max-width:480px;margin:0 auto;padding:6px 14px calc(var(--tab-h)+16px);text-align:center;}
+.pb-title{font-family:'Do Hyeon',sans-serif;font-size:1.15rem;color:#FFE66D;letter-spacing:1px;margin-bottom:1px;text-shadow:0 0 20px rgba(255,230,109,0.4);}
+.pb-sub{font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:4px;}
+.pb-score-row{display:flex;justify-content:center;gap:7px;margin-bottom:6px;flex-wrap:wrap;}
 .pb-chip{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:11px;padding:5px 11px;text-align:center;}
 .pb-chip .pbc-val{font-family:'Do Hyeon',sans-serif;font-size:1.3rem;color:#FFE66D;}
 .pb-chip .pbc-lbl{font-size:0.62rem;color:rgba(255,255,255,0.4);}
 #pinball-canvas{border-radius:14px;background:#0d1117;box-shadow:0 0 30px rgba(255,107,107,0.15);display:block;margin:0 auto;}
-.pb-balls-left{font-family:'Do Hyeon',sans-serif;font-size:0.8rem;color:rgba(255,255,255,0.4);margin-top:4px;}
-.pb-result{display:none;margin-top:8px;padding:12px;border-radius:14px;font-family:'Jua',sans-serif;font-size:1rem;}
+.pb-balls-left{font-family:'Do Hyeon',sans-serif;font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:2px;}
+.pb-result{display:none;margin-top:6px;padding:10px;border-radius:12px;font-family:'Jua',sans-serif;font-size:0.95rem;}
 .pb-result.win{background:linear-gradient(135deg,#f59f00,#FFE66D);color:#2D3436;}
 .pb-result.lose{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.65);}
 .pb-result.show{display:block;animation:pop 0.5s;}
-.pb-action-row{display:flex;gap:8px;justify-content:center;margin-top:8px;flex-wrap:wrap;}
+.pb-action-row{display:flex;gap:7px;justify-content:center;margin-top:6px;flex-wrap:wrap;}
 .pb-btn{padding:12px 22px;border:none;border-radius:50px;font-family:'Jua',sans-serif;font-size:0.92rem;cursor:pointer;transition:all 0.2s;}
 .pb-btn:active{transform:scale(0.95);}
 .pb-btn-start{background:linear-gradient(135deg,#FF6B6B,#FF8E53);color:#fff;box-shadow:0 3px 12px rgba(255,107,107,0.35);}
@@ -248,12 +248,12 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 @keyframes bubblePop{from{transform:translateX(-50%) scale(0.7);opacity:0}to{transform:translateX(-50%) scale(1);opacity:1}}
 
 /* ── 핀볼 가이드 ── */
-.pb-guide{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:10px 14px;margin-bottom:8px;text-align:left;}
+.pb-guide{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:7px 12px;margin-bottom:6px;text-align:left;}
 .pb-guide-title{font-family:'Jua',sans-serif;font-size:0.75rem;color:rgba(255,255,255,0.6);margin-bottom:6px;}
-.pb-guide-row{display:flex;align-items:center;gap:8px;padding:3px 0;}
+.pb-guide-row{display:flex;align-items:center;gap:8px;padding:2px 0;}
 .pb-guide-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .pb-guide-txt{font-family:'Jua',sans-serif;font-size:0.72rem;color:rgba(255,255,255,0.75);}
-.pb-guide-last{font-family:'Jua',sans-serif;font-size:0.72rem;color:#FFE66D;margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.1);}
+.pb-guide-last{font-family:'Jua',sans-serif;font-size:0.7rem;color:#FFE66D;margin-top:3px;padding-top:3px;border-top:1px solid rgba(255,255,255,0.1);}
 
 .test-badge{display:inline-block;background:rgba(255,230,109,0.2);border:1px solid rgba(255,230,109,0.4);border-radius:99px;padding:2px 8px;font-size:0.65rem;color:#FFE66D;font-family:'Jua',sans-serif;margin-bottom:4px;}
 </style>
@@ -1096,7 +1096,7 @@ function initPinball(){
   pbCtx=pbCanvas.getContext('2d');
   const wrap=document.querySelector('.pb-wrap');
   const w=Math.min((wrap?.offsetWidth||360)-28,400);
-  pbCanvas.width=w; pbCanvas.height=Math.round(w*1.05);
+  pbCanvas.width=w; pbCanvas.height=Math.round(w*0.75);
   pbBalls=[]; pbBallsDone=0; pbTotalScore=0; pbRunning=false; pbDropTimer=0;
   pbPrizePool=buildPrizePool();
   buildPegs(); buildSlots(); buildObstacles();
