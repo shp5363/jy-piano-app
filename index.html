@@ -59,6 +59,7 @@ body{font-family:'Nanum Gothic',sans-serif;background:var(--bg);min-height:100vh
    연습 탭 홈
 ══════════════════════════════════════ */
 #pg-practice{background:linear-gradient(160deg,#FFF0E6,#E8F8F7);}
+#pg-home{background:linear-gradient(160deg,#FFF8F0,#E8F8F7);}
 .practice-hero{text-align:center;padding:20px 16px 14px;}
 .practice-hero .logo{font-family:'Do Hyeon',sans-serif;font-size:1.9rem;color:var(--primary);letter-spacing:2px;}
 .practice-hero .sub{font-size:0.78rem;color:#aaa;letter-spacing:1px;margin-bottom:4px;}
@@ -561,63 +562,63 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .char-preview{display:flex;justify-content:center;align-items:center;padding:20px;background:rgba(255,255,255,0.04);border-radius:16px;margin-bottom:14px;}
 
 /* ── 캐릭터 꾸미기 화면 ── */
-.char-edit-bg{display:none;position:fixed;inset:0;background:#0f1923;z-index:3000;overflow-y:auto;}
+.char-edit-bg{display:none;position:fixed;inset:0;background:#F8F9FA;z-index:3000;overflow-y:auto;}
 .char-edit-bg.show{display:block;}
 .char-edit-wrap{max-width:500px;margin:0 auto;padding:16px 14px 80px;}
 .ce-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-top:8px;}
-.ce-back{background:none;border:none;color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.88rem;cursor:pointer;}
-.ce-title{font-family:'Do Hyeon',sans-serif;font-size:1.1rem;color:#fff;flex:1;}
+.ce-back{background:none;border:none;color:#636e72;font-family:'Jua',sans-serif;font-size:0.88rem;cursor:pointer;}
+.ce-title{font-family:'Do Hyeon',sans-serif;font-size:1.1rem;color:#2D3436;flex:1;}
 .ce-shop-btn{padding:7px 14px;border:none;border-radius:99px;background:linear-gradient(135deg,#f59f00,#FFE66D);color:#2D3436;font-family:'Jua',sans-serif;font-size:0.78rem;cursor:pointer;}
 
 /* 캐릭터 + 장착 아이템 */
 .ce-main{display:flex;gap:14px;margin-bottom:14px;}
-.ce-char-area{background:rgba(255,255,255,0.05);border-radius:16px;padding:16px;flex:0 0 130px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.ce-char-area{background:#fff;border:1px solid #eee;border-radius:16px;padding:16px;flex:0 0 130px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
 .ce-char-preview{width:90px;height:120px;}
 .ce-reset-btn{width:100%;padding:6px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:none;font-family:'Jua',sans-serif;font-size:0.7rem;color:rgba(255,255,255,0.5);cursor:pointer;}
 
 /* 슬롯 그리드 */
 .ce-slots{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:6px;}
-.ce-slot{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
+.ce-slot{background:#f8f9fa;border:1px solid #eee;border-radius:10px;padding:8px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
 .ce-slot:active{transform:scale(0.95);}
 .ce-slot.equipped{border-color:rgba(78,205,196,0.5);background:rgba(78,205,196,0.08);}
 .ce-slot .slot-ico{font-size:1.1rem;}
-.ce-slot .slot-name{font-family:'Jua',sans-serif;font-size:0.6rem;color:rgba(255,255,255,0.5);margin-top:2px;}
-.ce-slot .slot-item{font-size:0.65rem;color:#4ECDC4;margin-top:1px;}
+.ce-slot .slot-name{font-family:'Jua',sans-serif;font-size:0.6rem;color:#aaa;margin-top:2px;}
+.ce-slot .slot-item{font-size:0.65rem;color:var(--secondary);margin-top:1px;}
 
 /* 소지품 목록 */
-.ce-inv-title{font-family:'Jua',sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:8px;}
+.ce-inv-title{font-family:'Jua',sans-serif;font-size:0.85rem;color:#636e72;margin-bottom:8px;}
 .ce-inv-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px;-webkit-overflow-scrolling:touch;}
 .ce-inv-tabs::-webkit-scrollbar{display:none;}
-.ce-inv-tab{flex-shrink:0;padding:5px 12px;border-radius:99px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);font-family:'Jua',sans-serif;font-size:0.72rem;color:rgba(255,255,255,0.5);cursor:pointer;white-space:nowrap;}
+.ce-inv-tab{flex-shrink:0;padding:5px 12px;border-radius:99px;border:1px solid #ddd;background:#f8f9fa;font-family:'Jua',sans-serif;font-size:0.72rem;color:#888;cursor:pointer;white-space:nowrap;}
 .ce-inv-tab.active{border-color:#4ECDC4;background:rgba(78,205,196,0.15);color:#4ECDC4;}
 .ce-inv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-.ce-item{background:rgba(255,255,255,0.06);border:2px solid transparent;border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;transition:all 0.2s;}
+.ce-item{background:#f8f9fa;border:2px solid #eee;border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;transition:all 0.2s;}
 .ce-item:active{transform:scale(0.95);}
 .ce-item.equipped{border-color:#4ECDC4;}
 .ce-item.preview{border-color:#FFE66D;}
 .ce-item .ci-ico{font-size:1.3rem;}
-.ce-item .ci-name{font-family:'Jua',sans-serif;font-size:0.6rem;color:rgba(255,255,255,0.6);margin-top:3px;}
-.ce-item .ci-type{font-size:0.55rem;color:rgba(255,255,255,0.35);}
-.ce-empty{color:rgba(255,255,255,0.3);font-size:0.8rem;text-align:center;padding:20px;grid-column:span 4;}
+.ce-item .ci-name{font-family:'Jua',sans-serif;font-size:0.6rem;color:#888;margin-top:3px;}
+.ce-item .ci-type{font-size:0.55rem;color:#bbb;}
+.ce-empty{color:#bbb;font-size:0.8rem;text-align:center;padding:20px;grid-column:span 4;}
 
 /* ── 상점 화면 ── */
-.shop-bg{display:none;position:fixed;inset:0;background:#0f1923;z-index:3100;overflow-y:auto;}
+.shop-bg{display:none;position:fixed;inset:0;background:#F8F9FA;z-index:3100;overflow-y:auto;}
 .shop-bg.show{display:block;}
 .shop-wrap{max-width:500px;margin:0 auto;padding:16px 14px 80px;}
 .shop-header{display:flex;align-items:center;gap:10px;margin-bottom:6px;padding-top:8px;}
-.shop-back{background:none;border:none;color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.88rem;cursor:pointer;}
-.shop-title{font-family:'Do Hyeon',sans-serif;font-size:1.1rem;color:#fff;flex:1;}
+.shop-back{background:none;border:none;color:#636e72;font-family:'Jua',sans-serif;font-size:0.88rem;cursor:pointer;}
+.shop-title{font-family:'Do Hyeon',sans-serif;font-size:1.1rem;color:#2D3436;flex:1;}
 .shop-pts{font-family:'Do Hyeon',sans-serif;font-size:1rem;color:#FFE66D;}
 .shop-cat-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;-webkit-overflow-scrolling:touch;}
 .shop-cat-tabs::-webkit-scrollbar{display:none;}
-.shop-cat-tab{flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);font-family:'Jua',sans-serif;font-size:0.75rem;color:rgba(255,255,255,0.5);cursor:pointer;white-space:nowrap;}
+.shop-cat-tab{flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid #ddd;background:#f8f9fa;font-family:'Jua',sans-serif;font-size:0.75rem;color:#888;cursor:pointer;white-space:nowrap;}
 .shop-cat-tab.active{border-color:#FFE66D;background:rgba(255,230,109,0.15);color:#FFE66D;}
 .shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.shop-item{background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.1);border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
+.shop-item{background:#fff;border:2px solid #eee;border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;box-shadow:0 2px 6px rgba(0,0,0,0.05);}
 .shop-item.owned{border-color:rgba(78,205,196,0.4);background:rgba(78,205,196,0.06);}
 .shop-item.previewing{border-color:#FFE66D;background:rgba(255,230,109,0.08);}
 .shop-item .si-ico{font-size:2rem;margin-bottom:6px;}
-.shop-item .si-name{font-family:'Jua',sans-serif;font-size:0.8rem;color:#fff;margin-bottom:4px;}
+.shop-item .si-name{font-family:'Jua',sans-serif;font-size:0.8rem;color:#2D3436;margin-bottom:4px;}
 .shop-item .si-pts{font-family:'Do Hyeon',sans-serif;font-size:0.9rem;color:#FFE66D;}
 .shop-item .si-owned{font-family:'Jua',sans-serif;font-size:0.7rem;color:#4ECDC4;}
 .shop-item .si-preview{font-size:0.65rem;color:rgba(255,255,255,0.4);margin-top:3px;}
@@ -669,6 +670,11 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .gm-send{flex:1;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#4ECDC4,#38d9cc);color:#fff;font-family:'Jua',sans-serif;font-size:0.95rem;cursor:pointer;}
 .gm-cancel{padding:13px 18px;border:none;border-radius:12px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);font-family:'Jua',sans-serif;font-size:0.95rem;cursor:pointer;}
 
+
+@keyframes mungFloat{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-5px);}
+}
 </style>
 </head>
 <body>
@@ -1093,7 +1099,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 
 <!-- 홈 탭 -->
 <div id="pg-home" class="page active">
-  <div style="background:linear-gradient(160deg,#FFF8F0,#E8F8F7);min-height:100%;">
+  <div style="min-height:100%;">
     <div style="padding:18px 14px 120px;">
 
       <!-- 현재 접속자 바 -->
@@ -2650,11 +2656,11 @@ function updateHomeTab(){
   const info = getLevelInfo(totalPoints);
   const { cur, next, pct, need } = info;
 
-  // 캐릭터 - 생성된 캐릭터 있으면 SVG, 없으면 이모지
+  // 홈 캐릭터 - 멍총 CSS 캐릭터
   const hc = document.getElementById('home-char');
   if(hc){
     if(myChar){
-      hc.innerHTML = `<svg width="80" height="110" viewBox="0 0 80 110">${getCharSVGContent(myChar.gender,myChar.topColor,myChar.botColor,'#FFE0B2',myChar.equipped||{})}</svg>`;
+      hc.innerHTML = getMungCharHTML(myChar, 1.0);
     } else {
       hc.innerHTML = '<span style="font-size:3.5rem">🐣</span>';
     }
@@ -2711,7 +2717,7 @@ function renderPodiumTo(targetId){
     const info = getLevelInfo(s.pts);
     const isMeStyle = s.isMe ? 'outline:2px solid #FFE66D;outline-offset:2px;border-radius:8px;' : '';
     return `<div class="podium-item ${classes[i]}" style="${isMeStyle}">
-      <div class="podium-character">${getCharEmoji(s.pts)}</div>
+      <div class="podium-character">${getPodiumCharSVG(s)}</div>
       <div class="podium-name">${s.isMe?'나':s.name}</div>
       <div class="podium-pts">${s.pts}p</div>
       <div class="podium-badge-mini level-badge ${info.cur.cls}" style="font-size:0.6rem;padding:2px 7px;">${info.cur.icon} Lv.${info.cur.lv}</div>
@@ -4219,6 +4225,96 @@ function deleteStudent(id){
   STUDENTS=STUDENTS.filter(s=>s.id!==id);
   if(currentStudent&&currentStudent.id===id){currentStudent=null;totalPoints=0;updateCurrentUserBar();}
   renderAdminStudentList();
+}
+
+
+// ── 멍총 캐릭터 HTML 생성 ──
+function getMungCharHTML(char, scale=1.0){
+  if(!char) return '<span style="font-size:3rem">🐣</span>';
+  const tc = char.topColor||'#4ECDC4';
+  const bc = char.botColor||'#5C6BC0';
+  const hairC = char.equipped&&char.equipped['머리']?getItemColor(char.equipped['머리']):(char.gender==='f'?'#8B4513':'#1a1a1a');
+  const shoeC = char.equipped&&char.equipped['신발']?getItemColor(char.equipped['신발']):(char.gender==='f'?'#FF4D7D':'#2C3E50');
+  const isFemale = char.gender==='f';
+  const accC = char.equipped&&char.equipped['머리']?getItemColor(char.equipped['머리']):'#FF6B6B';
+  const bagC = char.equipped&&char.equipped['가방']?getItemColor(char.equipped['가방']):null;
+  const hatIco = char.equipped&&char.equipped['모자']?getItemIco(char.equipped['모자']):null;
+  const hasGlasses = !!(char.equipped&&char.equipped['안경']);
+  const glassC = hasGlasses?getItemColor(char.equipped['안경']):'#333';
+  const gloveC = char.equipped&&char.equipped['장갑']?getItemColor(char.equipped['장갑']):null;
+
+  const w=80*scale, h=130*scale;
+  const s=scale;
+
+  return `<div style="position:relative;width:${w}px;height:${h}px;animation:mungFloat 2.8s ease-in-out infinite;">
+    <!-- 그림자 -->
+    <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:${44*s}px;height:${8*s}px;background:rgba(0,0,0,0.12);border-radius:50%;"></div>
+
+    <!-- 다리 -->
+    <div style="position:absolute;bottom:${12*s}px;left:${22*s}px;width:${14*s}px;height:${18*s}px;background:${bc};border:${2.5*s}px solid #333;border-top:none;border-radius:0 0 ${8*s}px ${8*s}px;">
+      <div style="position:absolute;bottom:-${5*s}px;left:-${2*s}px;width:${18*s}px;height:${8*s}px;background:${shoeC};border:${2*s}px solid #333;border-radius:50% 50% 40% 40% / 60% 60% 40% 40%;"></div>
+    </div>
+    <div style="position:absolute;bottom:${12*s}px;right:${22*s}px;width:${14*s}px;height:${18*s}px;background:${bc};border:${2.5*s}px solid #333;border-top:none;border-radius:0 0 ${8*s}px ${8*s}px;">
+      <div style="position:absolute;bottom:-${5*s}px;left:-${2*s}px;width:${18*s}px;height:${8*s}px;background:${shoeC};border:${2*s}px solid #333;border-radius:50% 50% 40% 40% / 60% 60% 40% 40%;"></div>
+    </div>
+
+    <!-- 왼팔 -->
+    <div style="position:absolute;top:${54*s}px;left:${2*s}px;width:${16*s}px;height:${26*s}px;background:${tc};border:${2.5*s}px solid #333;border-radius:${10*s}px;transform:rotate(-20deg);">
+      <div style="position:absolute;bottom:-${7*s}px;right:-${5*s}px;width:${12*s}px;height:${12*s}px;background:${gloveC||'#FDDCB5'};border:${2*s}px solid #333;border-radius:50%;"></div>
+    </div>
+    <!-- 오른팔 -->
+    <div style="position:absolute;top:${54*s}px;right:${2*s}px;width:${16*s}px;height:${26*s}px;background:${tc};border:${2.5*s}px solid #333;border-radius:${10*s}px;transform:rotate(20deg);">
+      <div style="position:absolute;bottom:-${7*s}px;left:-${5*s}px;width:${12*s}px;height:${12*s}px;background:${gloveC||'#FDDCB5'};border:${2*s}px solid #333;border-radius:50%;"></div>
+    </div>
+
+    ${bagC?`<div style="position:absolute;top:${54*s}px;right:${-4*s}px;width:${14*s}px;height:${18*s}px;background:${bagC};border:${2.5*s}px solid #333;border-radius:${4*s}px;z-index:5;"></div>`:''}
+
+    <!-- 몸통 -->
+    <div style="position:absolute;top:${50*s}px;left:${14*s}px;width:${52*s}px;height:${40*s}px;background:${tc};border:${2.5*s}px solid #333;border-radius:50% 50% 45% 45% / 35% 35% 55% 55%;"></div>
+
+    <!-- 머리카락 뒤 -->
+    <div style="position:absolute;top:${2*s}px;left:${6*s}px;width:${68*s}px;height:${60*s}px;background:${hairC};border:${2.5*s}px solid #333;border-radius:50%;z-index:2;">
+    ${isFemale?`
+      <div style="position:absolute;left:-${8*s}px;top:${16*s}px;width:${12*s}px;height:${32*s}px;background:${hairC};border:${2*s}px solid #333;border-radius:${8*s}px;"></div>
+      <div style="position:absolute;right:-${8*s}px;top:${16*s}px;width:${12*s}px;height:${32*s}px;background:${hairC};border:${2*s}px solid #333;border-radius:${8*s}px;"></div>`:''}
+    </div>
+
+    <!-- 얼굴 -->
+    <div style="position:absolute;top:${4*s}px;left:${8*s}px;width:${64*s}px;height:${60*s}px;background:#FDDCB5;border:${2.5*s}px solid #333;border-radius:50%;z-index:3;">
+      <!-- 볼 -->
+      <div style="position:absolute;top:${32*s}px;left:${5*s}px;width:${12*s}px;height:${7*s}px;background:rgba(255,150,130,0.38);border-radius:50%;"></div>
+      <div style="position:absolute;top:${32*s}px;right:${5*s}px;width:${12*s}px;height:${7*s}px;background:rgba(255,150,130,0.38);border-radius:50%;"></div>
+      <!-- 눈 -->
+      ${hasGlasses?`
+        <div style="position:absolute;top:${22*s}px;left:${9*s}px;width:${16*s}px;height:${13*s}px;border:${2*s}px solid ${glassC};border-radius:${4*s}px;background:rgba(100,200,255,0.12);z-index:6;"></div>
+        <div style="position:absolute;top:${22*s}px;right:${9*s}px;width:${16*s}px;height:${13*s}px;border:${2*s}px solid ${glassC};border-radius:${4*s}px;background:rgba(100,200,255,0.12);z-index:6;"></div>
+        <div style="position:absolute;top:${27*s}px;left:${25*s}px;width:${14*s}px;height:${2*s}px;background:${glassC};z-index:6;"></div>
+      `:''}
+      <div style="position:absolute;top:${25*s}px;left:${13*s}px;width:${11*s}px;height:${3*s}px;background:#333;border-radius:${2*s}px;"></div>
+      <div style="position:absolute;top:${25*s}px;right:${13*s}px;width:${11*s}px;height:${3*s}px;background:#333;border-radius:${2*s}px;"></div>
+      <!-- 입 -->
+      <div style="position:absolute;bottom:${10*s}px;left:${20*s}px;width:${18*s}px;height:${3*s}px;background:#333;border-radius:${2*s}px;transform:rotate(8deg);"></div>
+    </div>
+
+    <!-- 앞머리 -->
+    <div style="position:absolute;top:${2*s}px;left:${8*s}px;width:${64*s}px;height:${22*s}px;background:${hairC};border-top:${2.5*s}px solid #333;border-radius:50% 50% 0 0;z-index:4;clip-path:polygon(0 0,100% 0,100% 55%,88% 75%,75% 55%,60% 75%,45% 55%,30% 75%,15% 55%,0 75%);"></div>
+
+    ${isFemale?`<!-- 리본 -->
+    <div style="position:absolute;top:${0}px;right:${8*s}px;z-index:5;">
+      <div style="width:${10*s}px;height:${10*s}px;background:${accC};border:${2*s}px solid #333;border-radius:50%;"></div>
+    </div>`:''}
+
+    ${hatIco?`<div style="position:absolute;top:-${8*s}px;left:50%;transform:translateX(-50%);font-size:${22*s}px;z-index:6;">${hatIco}</div>`:''}
+  </div>`;
+}
+
+// 단상용 캐릭터 SVG (작은 버전)
+function getPodiumCharSVG(student){
+  // 현재 로그인한 학생이면 myChar, 아니면 기본 캐릭터
+  const isMe = currentStudent && student.isMe;
+  const charData = isMe && myChar ? myChar : null;
+  if(!charData) return getMungCharHTML({gender:'f',topColor:'#4ECDC4',botColor:'#5C6BC0',equipped:{}}, 0.45);
+  return getMungCharHTML(charData, 0.45);
 }
 
 // ── 초기화 ──
