@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="color-scheme" content="light only">
 <title>🎹 JY PIANO 연습실</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Jua&family=Do+Hyeon&family=Nanum+Gothic:wght@400;700&display=swap');
@@ -662,6 +663,20 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
   0%,100%{transform:translateY(0);}
   50%{transform:translateY(-5px);}
 }
+
+/* ── 라이트모드 강제 (폰 다크모드 무시) ── */
+:root { color-scheme: light only; }
+html, body {
+  background-color: #FFF8F0 !important;
+  color: #2D3436 !important;
+  -webkit-text-fill-color: #2D3436;
+}
+/* 다크모드 완전 차단 */
+@media (prefers-color-scheme: dark) {
+  html, body { background-color: #FFF8F0 !important; color: #2D3436 !important; }
+  input, button, select, textarea { background-color: inherit; color: inherit; }
+}
+
 </style>
 </head>
 <body>
@@ -1261,6 +1276,19 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       <button class="shop-back" onclick="closeShop()">← 뒤로</button>
       <div class="shop-title">아이템 상점</div>
       <div class="shop-pts" id="shop-pts-display">0p</div>
+    </div>
+    <!-- 캐릭터 미리보기 영역 -->
+    <div id="shop-char-preview-area" style="display:flex;align-items:center;gap:16px;background:#fff;border:1px solid #eee;border-radius:16px;padding:14px 16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div id="shop-char-preview" style="display:flex;justify-content:center;align-items:center;min-width:80px;min-height:100px;">
+        <span style="font-size:2.5rem;">🐣</span>
+      </div>
+      <div style="flex:1;">
+        <div style="font-family:'Jua',sans-serif;font-size:0.85rem;color:#2D3436;margin-bottom:4px;" id="shop-preview-title">내 캐릭터</div>
+        <div style="font-size:0.72rem;color:#aaa;line-height:1.5;" id="shop-preview-hint">아이템을 탭하면<br>미리 입어볼 수 있어요 👗</div>
+        <div id="shop-preview-item-name" style="display:none;margin-top:6px;">
+          <span style="background:linear-gradient(135deg,#f59f00,#FFE66D);color:#2D3436;font-family:'Jua',sans-serif;font-size:0.72rem;padding:3px 10px;border-radius:99px;" id="shop-preview-item-text"></span>
+        </div>
+      </div>
     </div>
     <div class="shop-cat-tabs" id="shop-cat-tabs"></div>
     <div class="shop-grid" id="shop-grid"></div>
@@ -2964,11 +2992,8 @@ function openShop(){
   renderShopCatTabs(); renderShopGrid('전체');
   document.getElementById('shop-bg').classList.add('show');
   updateVillagePts();
-  // 상점 상단에 내 캐릭터 미리보기 업데이트
-  setTimeout(()=>{
-    const el=document.getElementById('ce-preview-div');
-    if(el&&myChar) el.innerHTML=getMungCharHTML({...myChar,equipped:previewEquip||myChar.equipped||{}},0.9);
-  }, 80);
+  // 상점 캐릭터 미리보기 초기화
+  updateShopCharPreview(null);
 }
 function closeShop(){ document.getElementById('shop-bg').classList.remove('show'); cancelPreview(); }
 function renderShopCatTabs(){
@@ -2991,16 +3016,58 @@ function renderShopGrid(cat){
     </div>`;
   }).join('');
 }
+function updateShopCharPreview(itemId){
+  const el = document.getElementById('shop-char-preview');
+  const titleEl = document.getElementById('shop-preview-title');
+  const hintEl = document.getElementById('shop-preview-hint');
+  const itemNameEl = document.getElementById('shop-preview-item-name');
+  const itemTextEl = document.getElementById('shop-preview-item-text');
+  if(!el) return;
+
+  if(!myChar){
+    el.innerHTML = '<span style="font-size:2.5rem;">🐣</span>';
+    if(titleEl) titleEl.textContent = '캐릭터 없음';
+    if(hintEl) hintEl.textContent = '먼저 캐릭터를 생성해주세요';
+    return;
+  }
+
+  // 미리보기용 장착 상태
+  let previewData = {...myChar, equipped:{...(myChar.equipped||{})}};
+  if(itemId){
+    const item = ITEM_DB.find(i=>i.id===itemId);
+    if(item) previewData.equipped[item.type] = itemId;
+  }
+
+  el.innerHTML = getMungCharHTML(previewData, 0.82);
+
+  if(itemId){
+    const item = ITEM_DB.find(i=>i.id===itemId);
+    if(titleEl) titleEl.textContent = '미리보기 중';
+    if(hintEl) hintEl.style.display='none';
+    if(itemNameEl){ itemNameEl.style.display='block'; }
+    if(itemTextEl && item){ itemTextEl.textContent = item.ico+' '+item.name+' 입어보는 중...'; }
+  } else {
+    if(titleEl) titleEl.textContent = '내 캐릭터';
+    if(hintEl){ hintEl.style.display='block'; hintEl.innerHTML='아이템을 탭하면<br>미리 입어볼 수 있어요 👗'; }
+    if(itemNameEl) itemNameEl.style.display='none';
+  }
+}
+
 function selectShopItem(itemId){
   const item=ITEM_DB.find(i=>i.id===itemId);
   if(!item) return;
+
   if(myInventory.includes(itemId)){
-    if(myChar){ previewEquip[item.type]=itemId; myChar.equipped={...previewEquip}; renderCharSVG('ce-preview-div',previewEquip); renderCESlots(); renderCEInv(invCurrentCat); }
+    // 이미 보유 → 꾸미기 화면에서 바로 장착
+    if(myChar){ previewEquip[item.type]=itemId; myChar.equipped={...previewEquip}; saveCharLocal(); renderCharSVG('ce-preview-div',previewEquip); renderCESlots(); renderCEInv(invCurrentCat); }
+    updateShopCharPreview(null); // 상점 미리보기도 갱신
     return;
   }
+
   selectedShopItem=itemId;
-  // 미리입기
-  if(myChar){ previewEquip[item.type]=itemId; renderCharSVG('ce-preview-div',previewEquip); }
+  // 상점 미리보기 업데이트
+  updateShopCharPreview(itemId);
+  // 하단 구매 바
   document.getElementById('sbb-name').textContent=item.name;
   document.getElementById('sbb-pts').textContent=item.pts+'p';
   document.getElementById('shop-buy-bar').classList.add('show');
@@ -3009,6 +3076,7 @@ function selectShopItem(itemId){
 function cancelPreview(){
   selectedShopItem=null;
   if(myChar){ previewEquip={...(myChar.equipped||{})}; renderCharSVG('ce-preview-div',previewEquip); }
+  updateShopCharPreview(null);
   document.getElementById('shop-buy-bar').classList.remove('show');
   renderShopGrid(shopCurrentCat);
 }
@@ -3026,6 +3094,7 @@ function buyItem(){
   updateVillagePts();
   updateLevelUI();
   document.getElementById('shop-buy-bar').classList.remove('show');
+  updateShopCharPreview(null);
   renderShopGrid(shopCurrentCat);
   alert(item.name+' 구매 완료! (잔여 '+totalPoints+'p)');
 }
