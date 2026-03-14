@@ -601,7 +601,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       </div>
       <div class="form-group">
         <label>연주방식</label>
-        <select class="form-select" id="f-hands">
+        <select class="form-select" id="f-hands" onchange="toggleLeftNotes()">
           <option value="right">오른손</option>
           <option value="both">양손</option>
         </select>
@@ -615,9 +615,14 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
         </select>
       </div>
       <div class="form-group">
-        <label>오른손 음표 데이터</label>
+        <label>🤚 오른손 음표 데이터</label>
         <textarea class="form-textarea" id="f-notes-right" placeholder='[{"vex":"c/4","lb":"도","freq":261.63,"dur":"q"}, ...]'></textarea>
-        <div class="form-hint">💡 Firebase 연동 후 악보 편집기로 쉽게 입력 가능해져요</div>
+        <div class="form-hint">음표 형식: vex=악보위치, lb=한글이름, freq=주파수, dur=길이(q=4분/h=2분)</div>
+      </div>
+      <div class="form-group" id="f-left-group" style="display:none">
+        <label>🤙 왼손 음표 데이터</label>
+        <textarea class="form-textarea" id="f-notes-left" placeholder='[{"vex":"c/3","lb":"도","freq":130.81,"dur":"h"}, ...]'></textarea>
+        <div class="form-hint">양손 곡일 때만 입력하세요</div>
       </div>
       <div class="form-btns">
         <button class="form-btn cancel-form" onclick="hideForm()">취소</button>
@@ -1641,6 +1646,12 @@ function showPinballResult(){
 const ADMIN_PW='5363';
 let adminLoggedIn=false,editingId=null;
 
+
+function toggleLeftNotes(){
+  const hands = document.getElementById('f-hands').value;
+  const grp = document.getElementById('f-left-group');
+  if(grp) grp.style.display = hands==='both' ? 'block' : 'none';
+}
 function openAdminModal(){
   if(adminLoggedIn){switchTabAdmin();return;}
   const modal=document.getElementById('admin-pw-modal');
@@ -1683,9 +1694,13 @@ function renderAdminCatGrid(){
 }
 function showAddForm(){
   editingId=null;
-  document.getElementById('form-title').textContent='➕ 곡 추가';
-  ['f-name','f-emoji','f-notes-right'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('form-title').textContent='+ 곡 추가';
+  ['f-name','f-emoji','f-notes-right','f-notes-left'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
   document.getElementById('f-emoji').value='🎵';
+  document.getElementById('f-hands').value='right';
+  toggleLeftNotes();
   document.getElementById('song-form').classList.add('show');
   document.getElementById('song-form').scrollIntoView({behavior:'smooth'});
 }
@@ -1701,6 +1716,9 @@ function editSong(id){
   document.getElementById('f-hands').value=s.hands;
   document.getElementById('f-bpm').value=s.bpm;
   document.getElementById('f-notes-right').value=JSON.stringify(s.right);
+  const leftEl=document.getElementById('f-notes-left');
+  if(leftEl) leftEl.value = s.left&&s.left.length ? JSON.stringify(s.left) : '';
+  toggleLeftNotes();
   document.getElementById('song-form').classList.add('show');
   document.getElementById('song-form').scrollIntoView({behavior:'smooth'});
 }
@@ -1716,15 +1734,23 @@ function saveSong(){
   const notesRaw=document.getElementById('f-notes-right').value.trim();
   if(!name){alert('곡 이름을 입력해주세요!');return;}
   let notes=[];
-  if(notesRaw){try{notes=JSON.parse(notesRaw);}catch(e){alert('음표 데이터 형식이 잘못됐어요!');return;}}
+  if(notesRaw){try{notes=JSON.parse(notesRaw);}catch(e){alert('오른손 음표 형식이 잘못됐어요!');return;}}
+  const leftEl=document.getElementById('f-notes-left');
+  const leftRaw=leftEl?leftEl.value.trim():'';
+  let leftNotes=[];
+  if(leftRaw){try{leftNotes=JSON.parse(leftRaw);}catch(e){alert('왼손 음표 형식이 잘못됐어요!');return;}}
   const hl=hands==='both'?'양손':'오른손';
   if(editingId){
     const idx=SONG_DB.findIndex(s=>s.id===editingId);
-    if(idx>=0)SONG_DB[idx]={...SONG_DB[idx],name,emoji,bpm,hands,tags:{...SONG_DB[idx].tags,book,genre,level,hands:hl},right:notes.length?notes:SONG_DB[idx].right};
-    alert('✅ 수정됐어요!');
+    if(idx>=0)SONG_DB[idx]={...SONG_DB[idx],name,emoji,bpm,hands,
+      tags:{...SONG_DB[idx].tags,book,genre,level,hands:hl},
+      right:notes.length?notes:SONG_DB[idx].right,
+      left:leftNotes.length?leftNotes:(SONG_DB[idx].left||[])
+    };
+    alert('수정됐어요!');
   }else{
-    SONG_DB.push({id:'song_'+Date.now(),name,emoji,bpm,hands,tags:{book,genre,level,hands:hl},right:notes,left:[]});
-    alert('✅ 추가됐어요!\n(새로고침 시 초기화됩니다)');
+    SONG_DB.push({id:'song_'+Date.now(),name,emoji,bpm,hands,tags:{book,genre,level,hands:hl},right:notes,left:leftNotes});
+    alert('추가됐어요!\n(새로고침 시 초기화됩니다)');
   }
   hideForm();renderAdminSongList();renderAdminCatGrid();renderCatGrid('book');
 }
