@@ -435,11 +435,10 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
     <div class="pb-sub">100번째 마지막 공이 당첨을 결정해요!</div>
     <div class="pb-guide">
       <div class="pb-guide-title">🎯 당첨 안내</div>
-      <div class="pb-guide-row"><div class="pb-guide-dot" style="background:#FFD700"></div><div class="pb-guide-txt">⭐ 500점 — 2개 (2%)</div></div>
-      <div class="pb-guide-row"><div class="pb-guide-dot" style="background:#FF6B6B"></div><div class="pb-guide-txt">🎯 300점 — 4개 (4%)</div></div>
-      <div class="pb-guide-row"><div class="pb-guide-dot" style="background:#4ECDC4"></div><div class="pb-guide-txt">💎 100점 — 6개 (6%)</div></div>
-      <div class="pb-guide-row"><div class="pb-guide-dot" style="background:#74C0FC"></div><div class="pb-guide-txt">🎵 50점 — 18개 (18%)</div></div>
-      <div class="pb-guide-row"><div class="pb-guide-dot" style="background:#555"></div><div class="pb-guide-txt">꽝 — 70개 (70%)</div></div>
+      <div class="pb-guide-row"><div class="pb-guide-dot" style="background:#FFD700"></div><div class="pb-guide-txt">🏆 1000점 — 1개 (0.5%)</div></div>
+      <div class="pb-guide-row"><div class="pb-guide-dot" style="background:#FF6B6B"></div><div class="pb-guide-txt">⭐ 300점 — 2개 (1.5%)</div></div>
+      <div class="pb-guide-row"><div class="pb-guide-dot" style="background:#4ECDC4"></div><div class="pb-guide-txt">💎 100점 — 7개 (8%)</div></div>
+      <div class="pb-guide-row"><div class="pb-guide-dot" style="background:#555"></div><div class="pb-guide-txt">꽝 — 90개 (90%)</div></div>
       <div class="pb-guide-last">💡 100번째 공 색깔로 당첨 확인!</div>
     </div>
     <div class="pb-score-row">
@@ -611,11 +610,10 @@ function startTestMode(){
 
 // 상품 목록 렌더
 const PRIZES=[
-  {score:500,color:'#FFD700',label:'⭐ 500점',prob:'2%',count:2},
-  {score:300,color:'#FF6B6B',label:'🎯 300점',prob:'4%',count:4},
-  {score:100,color:'#4ECDC4',label:'💎 100점',prob:'6%',count:6},
-  {score:50, color:'#74C0FC',label:'🎵 50점', prob:'18%',count:18},
-  {score:0,  color:'#666',   label:'꽝',       prob:'70%',count:70},
+  {score:1000,color:'#FFD700',label:'🏆 1000점',prob:'0.5%',count:1},
+  {score:300, color:'#FF6B6B',label:'⭐ 300점', prob:'1.5%',count:2},
+  {score:100, color:'#4ECDC4',label:'💎 100점', prob:'8%',  count:7},
+  {score:0,   color:'#555',   label:'꽝',        prob:'90%', count:90},
 ];
 
 function renderPrizesInfo(){
@@ -1102,7 +1100,6 @@ function initPinball(){
   pbBalls=[]; pbBallsDone=0; pbTotalScore=0; pbRunning=false; pbDropTimer=0;
   pbPrizePool=buildPrizePool();
   buildPegs(); buildSlots(); buildObstacles();
-  document.getElementById('pb-total').textContent='0';
   document.getElementById('pb-done').textContent='0';
   document.getElementById('pb-left').textContent='시작 버튼을 눌러주세요 🎮';
   document.getElementById('pb-result').className='pb-result';
@@ -1212,7 +1209,7 @@ function pbLoop(){
       document.getElementById('pb-done').textContent=pbBallsDone;
       // 마지막 공이면 색 표시
       if(pbBallsDone===TOTAL_BALLS && ball.prize){
-        const emoji = ball.prize.score>=500?'⭐':ball.prize.score>=300?'🎯':ball.prize.score>=100?'💎':ball.prize.score>=50?'🎵':'💔';
+        const emoji = ball.prize.score>=1000?'🏆':ball.prize.score>=300?'⭐':ball.prize.score>=100?'💎':'💔';
         document.getElementById('pb-last-color').textContent=emoji;
       }
       const left=TOTAL_BALLS-pbBallsDone;
@@ -1288,12 +1285,15 @@ function showPinballResult(){
   const lastPrize=pbPrizePool[TOTAL_BALLS-1];
   const el=document.getElementById('pb-result');
   document.getElementById('pb-left').textContent='🎰 게임 종료!';
-  if(lastPrize.score>0){
+  if(lastPrize.score>=1000){
     el.className='pb-result win show';
-    el.innerHTML=`🎊 ${lastPrize.label}!<br><span style="font-size:0.8rem">마지막 공 당첨! 총 ${pbTotalScore}점</span>`;
+    el.innerHTML=`🏆 대박!! ${lastPrize.label}!<br><span style="font-size:0.8rem">마지막 공 당첨!</span>`;
+  } else if(lastPrize.score>0){
+    el.className='pb-result win show';
+    el.innerHTML=`🎊 ${lastPrize.label} 당첨!<br><span style="font-size:0.8rem">마지막 공 당첨!</span>`;
   } else {
     el.className='pb-result lose show';
-    el.innerHTML=`😢 꽝...<br><span style="font-size:0.8rem">총 ${pbTotalScore}점 · 다음엔 행운을!</span>`;
+    el.innerHTML=`😢 꽝...<br><span style="font-size:0.8rem">다음엔 행운을 빌어요!</span>`;
   }
   document.getElementById('pb-start-btn').textContent = isTestMode ? '🔧 다시 체험하기' : '🔄 다시 하기';
   document.getElementById('pb-start-btn').style.display='inline-block';
