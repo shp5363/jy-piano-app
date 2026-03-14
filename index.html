@@ -176,11 +176,11 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 /* ══════════════════════════════════════
    보상 탭
 ══════════════════════════════════════ */
-#pg-reward{background:linear-gradient(160deg,#1a1a2e,#16213e,#0f3460);}
+#pg-reward{background:linear-gradient(160deg,#FFF8F0,#FFF0E6);}
 .reward-inner{padding:16px 14px 120px;}
 .reward-header{text-align:center;padding:14px 0 18px;}
-.reward-header .r-title{font-family:'Do Hyeon',sans-serif;font-size:1.7rem;color:#FFE66D;letter-spacing:2px;text-shadow:0 0 20px rgba(255,230,109,0.4);}
-.reward-header .r-sub{font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:3px;}
+.reward-header .r-title{font-family:'Do Hyeon',sans-serif;font-size:1.7rem;color:var(--primary);letter-spacing:2px;}
+.reward-header .r-sub{font-size:0.75rem;color:#aaa;margin-top:3px;}
 
 /* 게임권 카드 */
 .ticket-card{background:linear-gradient(135deg,rgba(255,230,109,0.12),rgba(255,107,107,0.08));border:2px solid rgba(255,230,109,0.3);border-radius:20px;padding:20px;margin-bottom:14px;text-align:center;}
@@ -423,7 +423,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 
 /* ── 랭킹 시상대 ── */
 .ranking-section{margin-bottom:14px;}
-.ranking-title{font-family:'Jua',sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:10px;text-align:center;}
+.ranking-title{font-family:'Jua',sans-serif;font-size:0.85rem;color:#aaa;margin-bottom:10px;text-align:center;}
 
 /* 시상대 */
 .podium-wrap{display:flex;align-items:flex-end;justify-content:center;gap:6px;margin-bottom:16px;}
@@ -444,11 +444,11 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 @keyframes podiumFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
 
 /* 내 랭킹 표시 */
-.my-rank-card{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:14px;}
-.my-rank-num{font-family:'Do Hyeon',sans-serif;font-size:2rem;color:#FFE66D;min-width:50px;text-align:center;}
+.my-rank-card{background:#fff;border:1px solid #eee;border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.my-rank-num{font-family:'Do Hyeon',sans-serif;font-size:2rem;color:var(--primary);min-width:50px;text-align:center;}
 .my-rank-info{flex:1;}
-.my-rank-name{font-family:'Jua',sans-serif;font-size:0.9rem;color:#fff;}
-.my-rank-sub{font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:2px;}
+.my-rank-name{font-family:'Jua',sans-serif;font-size:0.9rem;color:var(--text);}
+.my-rank-sub{font-size:0.7rem;color:#aaa;margin-top:2px;}
 .my-rank-badge{font-size:0.75rem;}
 
 /* 전체 랭킹 리스트 */
@@ -499,35 +499,35 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .guest-btn{width:100%;padding:13px;border:2px dashed #ddd;border-radius:13px;background:none;font-family:'Jua',sans-serif;font-size:0.9rem;color:#aaa;cursor:pointer;transition:all 0.2s;}
 .guest-btn:active{background:#f8f9fa;}
 /* 현재 접속자 표시 */
-.current-user-bar{background:linear-gradient(135deg,rgba(78,205,196,0.25),rgba(78,205,196,0.1));border:1px solid rgba(78,205,196,0.5);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:12px;cursor:pointer;}
+.current-user-bar{background:linear-gradient(135deg,rgba(78,205,196,0.12),rgba(78,205,196,0.05));border:1px solid rgba(78,205,196,0.35);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:12px;cursor:pointer;}
 .cub-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--secondary),#38d9cc);display:flex;align-items:center;justify-content:center;font-size:0.9rem;color:#fff;font-family:'Do Hyeon',sans-serif;}
 .cub-info{flex:1;}
 .cub-name{font-family:'Jua',sans-serif;font-size:0.85rem;color:#fff;font-weight:700;}
-.cub-sub{font-size:0.68rem;color:rgba(255,255,255,0.6);}
+.cub-sub{font-size:0.68rem;color:#aaa;}
 .cub-change{font-family:'Jua',sans-serif;font-size:0.7rem;color:var(--secondary);}
 
 
 /* ── 마을 탭 ── */
-#pg-village{background:linear-gradient(160deg,#0f3460,#16213e,#1a1a2e);}
+#pg-village{background:linear-gradient(160deg,#E8F5E9,#F1F8E9);}
 .village-inner{padding:16px 14px 120px;}
 .village-header{text-align:center;padding:16px 0 14px;}
-.village-header-title{font-family:'Do Hyeon',sans-serif;font-size:1.5rem;color:#FFE66D;letter-spacing:1px;}
-.village-header-sub{font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:4px;}
+.village-header-title{font-family:'Do Hyeon',sans-serif;font-size:1.5rem;color:var(--primary);letter-spacing:1px;}
+.village-header-sub{font-size:0.72rem;color:#aaa;margin-top:4px;}
 
 /* 메뉴 그리드 */
 .village-menu{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
-.vmenu-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:18px;padding:18px 14px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
+.vmenu-card{background:#fff;border:1px solid #eee;border-radius:18px;padding:18px 14px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;box-shadow:0 3px 10px rgba(0,0,0,0.06);}
 .vmenu-card:active{transform:scale(0.96);}
 .vmenu-card.disabled{opacity:0.4;cursor:default;}
 .vmenu-card .vm-ico{font-size:2rem;margin-bottom:8px;}
-.vmenu-card .vm-name{font-family:'Jua',sans-serif;font-size:0.88rem;color:#fff;}
-.vmenu-card .vm-sub{font-size:0.65rem;color:rgba(255,255,255,0.4);margin-top:3px;}
+.vmenu-card .vm-name{font-family:'Jua',sans-serif;font-size:0.88rem;color:var(--text);}
+.vmenu-card .vm-sub{font-size:0.65rem;color:#aaa;margin-top:3px;}
 .vmenu-card .vm-badge{position:absolute;top:10px;right:10px;background:#FF6B6B;color:#fff;border-radius:99px;font-size:0.6rem;padding:2px 7px;font-family:'Jua',sans-serif;}
-.vmenu-card.has-char{border-color:rgba(78,205,196,0.4);background:rgba(78,205,196,0.08);}
+.vmenu-card.has-char{border-color:var(--secondary);background:rgba(78,205,196,0.08);}
 
 /* 포인트 표시 */
-.village-pts-bar{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.vpb-label{font-family:'Jua',sans-serif;font-size:0.78rem;color:rgba(255,255,255,0.5);}
+.village-pts-bar{background:#fff;border:1px solid #eee;border-radius:12px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.vpb-label{font-family:'Jua',sans-serif;font-size:0.78rem;color:#636e72;}
 .vpb-pts{font-family:'Do Hyeon',sans-serif;font-size:1.2rem;color:#FFE66D;}
 .vpb-daily{font-size:0.65rem;color:rgba(255,255,255,0.35);margin-top:1px;text-align:right;}
 
@@ -1093,7 +1093,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 
 <!-- 홈 탭 -->
 <div id="pg-home" class="page active">
-  <div style="background:linear-gradient(160deg,#1a1a2e,#16213e,#0f3460);min-height:100%;">
+  <div style="background:linear-gradient(160deg,#FFF8F0,#E8F8F7);min-height:100%;">
     <div style="padding:18px 14px 120px;">
 
       <!-- 현재 접속자 바 -->
@@ -1108,40 +1108,40 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       <!-- 학생 프로필 -->
       <div style="text-align:center;padding:12px 0 14px;">
         <div id="home-char" style="font-size:3.5rem;line-height:1;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));">🐣</div>
-        <div id="home-student-name" style="font-family:'Do Hyeon',sans-serif;font-size:1.4rem;color:#fff;letter-spacing:1px;">---</div>
-        <div id="home-student-sub" style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:4px;">피아노 마을 주민</div>
+        <div id="home-student-name" style="font-family:'Do Hyeon',sans-serif;font-size:1.4rem;color:var(--text);letter-spacing:1px;">---</div>
+        <div id="home-student-sub" style="font-size:0.75rem;color:#aaa;margin-top:4px;">피아노 마을 주민</div>
       </div>
 
       <!-- 레벨 카드 -->
-      <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:18px;padding:16px;margin-bottom:12px;">
+      <div style="background:#fff;border:1px solid #eee;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 3px 12px rgba(0,0,0,0.06);">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
           <div>
-            <div style="font-family:'Do Hyeon',sans-serif;font-size:1.3rem;color:#fff;" id="home-level-title">Lv.1 새싹</div>
-            <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:2px;" id="home-total-pts">총 0 포인트</div>
+            <div style="font-family:'Do Hyeon',sans-serif;font-size:1.3rem;color:var(--text);" id="home-level-title">Lv.1 새싹</div>
+            <div style="font-size:0.72rem;color:#aaa;margin-top:2px;" id="home-total-pts">총 0 포인트</div>
           </div>
           <div class="level-badge lv-1" id="home-level-badge2" onclick="openLevelPopup()" style="cursor:pointer;">🌱 Lv.1 새싹</div>
         </div>
-        <div style="height:10px;background:rgba(255,255,255,0.1);border-radius:99px;overflow:hidden;margin-bottom:6px;">
+        <div style="height:10px;background:#f1f3f5;border-radius:99px;overflow:hidden;margin-bottom:6px;">
           <div id="home-exp-bar" style="height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,#51CF66,#94d82d);transition:width 0.6s;"></div>
         </div>
-        <div style="font-family:'Jua',sans-serif;font-size:0.72rem;color:rgba(255,255,255,0.4);text-align:right;" id="home-exp-txt">다음 레벨까지 50포인트 남음</div>
+        <div style="font-family:'Jua',sans-serif;font-size:0.72rem;color:#aaa;text-align:right;" id="home-exp-txt">다음 레벨까지 50포인트 남음</div>
       </div>
 
       <!-- 연습 통계 -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-        <div style="background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;text-align:center;">
+        <div style="background:#fff;border-radius:14px;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
           <div style="font-family:'Do Hyeon',sans-serif;font-size:1.8rem;color:#FFE66D;" id="home-total-practice">0</div>
-          <div style="font-family:'Jua',sans-serif;font-size:0.7rem;color:rgba(255,255,255,0.4);margin-top:2px;">총 연습 횟수</div>
+          <div style="font-family:'Jua',sans-serif;font-size:0.7rem;color:#aaa;margin-top:2px;">총 연습 횟수</div>
         </div>
-        <div style="background:rgba(255,255,255,0.07);border-radius:14px;padding:14px;text-align:center;">
+        <div style="background:#fff;border-radius:14px;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
           <div style="font-family:'Do Hyeon',sans-serif;font-size:1.8rem;color:#4ECDC4;" id="home-rank-display">-</div>
-          <div style="font-family:'Jua',sans-serif;font-size:0.7rem;color:rgba(255,255,255,0.4);margin-top:2px;">현재 랭킹</div>
+          <div style="font-family:'Jua',sans-serif;font-size:0.7rem;color:#aaa;margin-top:2px;">현재 랭킹</div>
         </div>
       </div>
 
       <!-- 시상대 -->
-      <div style="background:rgba(255,255,255,0.05);border-radius:16px;padding:14px;">
-        <div style="font-family:'Jua',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.5);margin-bottom:10px;text-align:center;">🏆 피아노 마을 랭킹</div>
+      <div style="background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+        <div style="font-family:'Jua',sans-serif;font-size:0.82rem;color:#aaa;margin-bottom:10px;text-align:center;">🏆 피아노 마을 랭킹</div>
         <div class="podium-wrap" id="podium-wrap-home">
           <div style="color:rgba(255,255,255,0.3);font-size:0.78rem;text-align:center;width:100%;padding:16px 0;">학생 등록 후 랭킹이 표시돼요</div>
         </div>
@@ -3141,6 +3141,7 @@ function openCharEdit(){
   if(!currentStudent){ alert('먼저 로그인해주세요!'); return; }
   if(!myChar){ alert('먼저 캐릭터를 생성해주세요!'); openCharCreate(); return; }
   previewEquip = {...(myChar.equipped||{})};
+  document.getElementById('char-edit-bg').classList.add('show');
   setTimeout(()=>renderCharSVG('ce-preview-svg', previewEquip), 50);
   renderCESlots();
   renderCEInvTabs();
@@ -3320,60 +3321,65 @@ function initTownCanvas(){
   canvas.style.marginTop='52px';
   townW=canvas.width; townH=canvas.height;
   townCtx=canvas.getContext('2d');
-  charX=4; charY=4;       // 그리드 중앙
-  charTargetX=4; charTargetY=4;
+  charX=7; charY=7;       // 섬 중앙
+  charTargetX=7; charTargetY=7;
   canvas.addEventListener('click',onTownClick);
   townAnimId=requestAnimationFrame(townLoop);
 }
-// ── 아이소메트릭 좌표 변환 ──
-function isoX(gx,gy){ return townW/2 + (gx-gy)*32; }
-function isoY(gx,gy){ return townH*0.28 + (gx+gy)*16; }
+// ── 아이소메트릭 좌표 변환 (넓은 섬 맵) ──
+function isoX(gx,gy){ return townW/2 + (gx-gy)*26; }
+function isoY(gx,gy){ return townH*0.22 + (gx+gy)*13; }
 
 function townLoop(){
   if(!townCtx){return;}
   townFrame++;
 
-  // ── 캐릭터 자동 이동 (아이소 그리드 기준) ──
+  // ── 캐릭터 자동 이동 ──
   const dx=charTargetX-charX, dy=charTargetY-charY;
   const dist=Math.sqrt(dx*dx+dy*dy);
-  const speed=0.9; // 천천히 걷기
-  if(dist>speed){
+  const speed=0.035; // 매우 천천히
+  if(dist>0.05){
     charX+=dx/dist*speed; charY+=dy/dist*speed;
     charDir=dx>0?1:-1;
     charWalk++;
   } else {
     charX=charTargetX; charY=charTargetY;
-    charWalk=0; charIdle++;
+    charIdle++;
+    // 도착하면 바로 다음 목적지 설정 (쉬지 않고 걷기)
     charAutoTimer++;
-    if(charAutoTimer>280){
+    if(charAutoTimer>60){ // 잠깐 멈췄다 바로 이동
       charAutoTimer=0;
-      // 아이소 그리드 내 랜덤 이동 (천천히)
-      const tgx=1.5+Math.random()*6, tgy=1.5+Math.random()*6;
-      charTargetX=tgx; charTargetY=tgy;
+      charWalk=0;
+      // 섬 그리드 내 랜덤 이동 (섬 범위: 1.5~12.5)
+      charTargetX=1.8+Math.random()*10.4;
+      charTargetY=1.8+Math.random()*10.4;
     }
-    // 말풍선 - 가만히 있을 때 가끔 표시
+    // 말풍선 - 가끔 표시
     bubbleInterval++;
-    if(bubbleInterval > 360 && bubbleTimer===0){
+    if(bubbleInterval>300 && bubbleTimer===0){
       bubbleInterval=0;
       bubbleText=CHAR_BUBBLES[Math.floor(Math.random()*CHAR_BUBBLES.length)];
-      bubbleTimer=160; // 약 2.5초 표시
+      bubbleTimer=150;
     }
     if(bubbleTimer>0) bubbleTimer--;
   }
 
   // ── 배경 ──
-  // 하늘 그라데이션
-  const sky=townCtx.createLinearGradient(0,0,0,townH*0.35);
-  sky.addColorStop(0,'#6BB8E8'); sky.addColorStop(1,'#B8DFF5');
+  // 하늘
+  const sky=townCtx.createLinearGradient(0,0,0,townH);
+  sky.addColorStop(0,'#87CEEB'); sky.addColorStop(0.5,'#C8E8F8'); sky.addColorStop(1,'#A8D8EA');
   townCtx.fillStyle=sky; townCtx.fillRect(0,0,townW,townH);
+
+  // 바다 (전체 하단)
+  drawSea();
 
   // 구름
   drawIsoClouds();
 
-  // 원경 건물/나무
+  // 원경 나무
   drawIsoBackground();
 
-  // ── 아이소메트릭 타일 바닥 ──
+  // ── 섬 타일 바닥 ──
   drawIsoFloor();
 
   // ── 오브젝트 + 캐릭터 깊이순 정렬 ──
@@ -3400,9 +3406,7 @@ function townLoop(){
   if(previewObj){
     const px=isoX(previewGX,previewGY), py=isoY(previewGX,previewGY)-40;
     townCtx.fillStyle='rgba(78,205,196,0.9)';
-    if(townCtx.roundRect) townCtx.roundRect(px-32,py-14,64,26,13);
-    else townCtx.rect(px-32,py-14,64,26);
-    townCtx.fill();
+    townCtx.fillRect(px-32,py-14,64,26);
     townCtx.fillStyle='#fff';
     townCtx.font='bold 12px sans-serif';townCtx.textAlign='center';
     townCtx.fillText('✓ 여기에 배치',px,py+4);
@@ -3469,6 +3473,41 @@ function drawBubble(x, y, text, alpha){
   townCtx.restore();
 }
 
+function drawSea(){
+  // 바다 배경
+  const seaGrad=townCtx.createLinearGradient(0,townH*0.3,0,townH);
+  seaGrad.addColorStop(0,'#4ABBD5');
+  seaGrad.addColorStop(0.4,'#3AA8C5');
+  seaGrad.addColorStop(1,'#2A8FAF');
+  townCtx.fillStyle=seaGrad;
+  townCtx.fillRect(0,townH*0.25,townW,townH);
+
+  // 바다 물결 라인
+  for(let i=0;i<6;i++){
+    const waveY=townH*0.32 + i*28 + Math.sin(townFrame*0.03+i*1.2)*4;
+    const wAlpha=0.12+i*0.02;
+    townCtx.strokeStyle=`rgba(255,255,255,${wAlpha})`;
+    townCtx.lineWidth=1.5;
+    townCtx.beginPath();
+    for(let x=0;x<townW;x+=4){
+      const y=waveY+Math.sin(x*0.04+townFrame*0.04+i)*3;
+      x===0?townCtx.moveTo(x,y):townCtx.lineTo(x,y);
+    }
+    townCtx.stroke();
+  }
+
+  // 반짝임 효과
+  for(let i=0;i<8;i++){
+    const sx=(i*137+townFrame*0.8)%(townW*0.9)+townW*0.05;
+    const sy=townH*0.35+(i*73)%(townH*0.55);
+    const alpha=Math.max(0,Math.sin(townFrame*0.06+i*0.8))*0.4;
+    if(alpha>0.05){
+      townCtx.fillStyle=`rgba(255,255,255,${alpha})`;
+      townCtx.beginPath();townCtx.arc(sx,sy,2+i%2,0,Math.PI*2);townCtx.fill();
+    }
+  }
+}
+
 function drawIsoClouds(){
   const clouds=[
     {ox:0.2, oy:0.07, r:28},
@@ -3488,14 +3527,25 @@ function drawIsoClouds(){
 }
 
 function drawIsoBackground(){
-  // 원경 나무들
+  // 원경 나무 + 섬 원경
   const bgTrees=[
-    {x:townW*0.05,y:townH*0.22,s:0.7},
-    {x:townW*0.12,y:townH*0.25,s:0.9},
-    {x:townW*0.88,y:townH*0.23,s:0.8},
-    {x:townW*0.94,y:townH*0.2,s:0.6},
+    {x:townW*0.03,y:townH*0.28,s:0.65},
+    {x:townW*0.09,y:townH*0.25,s:0.8},
+    {x:townW*0.87,y:townH*0.26,s:0.75},
+    {x:townW*0.93,y:townH*0.22,s:0.6},
+    {x:townW*0.96,y:townH*0.3,s:0.55},
   ];
   bgTrees.forEach(t=>{ drawBgTree(t.x,t.y,t.s); });
+
+  // 원경 섬 실루엣
+  townCtx.fillStyle='rgba(60,160,100,0.35)';
+  townCtx.beginPath();
+  townCtx.ellipse(townW*0.15,townH*0.35,40,14,0,0,Math.PI*2);
+  townCtx.fill();
+  townCtx.fillStyle='rgba(60,160,100,0.25)';
+  townCtx.beginPath();
+  townCtx.ellipse(townW*0.82,townH*0.38,32,11,0,0,Math.PI*2);
+  townCtx.fill();
 }
 
 function drawBgTree(x,y,s){
@@ -3511,18 +3561,39 @@ function drawBgTree(x,y,s){
   });
 }
 
+// 섬 모양 정의 (타원형 섬, 14x14 그리드)
+const ISLAND_GRID = 15;
+const ISLAND_CX = 7.5, ISLAND_CY = 7.5;
+const ISLAND_RX = 6.2, ISLAND_RY = 6.2;
+
+function isIslandTile(gx, gy){
+  const dx=(gx-ISLAND_CX)/ISLAND_RX;
+  const dy=(gy-ISLAND_CY)/ISLAND_RY;
+  return dx*dx+dy*dy <= 1.0;
+}
+function isIslandEdge(gx, gy){
+  const dx=(gx-ISLAND_CX)/ISLAND_RX;
+  const dy=(gy-ISLAND_CY)/ISLAND_RY;
+  const r=dx*dx+dy*dy;
+  return r>0.72 && r<=1.0;
+}
+
 function drawIsoFloor(){
-  const GRID=9;
-  for(let gy=0;gy<GRID;gy++){
-    for(let gx=0;gx<GRID;gx++){
+  const TW=26, TH=13;
+  for(let gy=0;gy<ISLAND_GRID;gy++){
+    for(let gx=0;gx<ISLAND_GRID;gx++){
+      if(!isIslandTile(gx,gy)) continue;
       const sx=isoX(gx,gy), sy=isoY(gx,gy);
-      const TW=32, TH=16;
-      // 타일 색상 (체크무늬 + 테두리)
-      const isEdge=(gx===0||gy===0||gx===GRID-1||gy===GRID-1);
+      const edge=isIslandEdge(gx,gy);
       const isDark=(gx+gy)%2===0;
+
+      // 모래 해변 (가장자리)
       let tileColor;
-      if(isEdge) tileColor=isDark?'#8EB86A':'#A0CC7A';
-      else tileColor=isDark?'#F5E6C8':'#EDD8A8';
+      if(edge){
+        tileColor=isDark?'#E8C97A':'#F0D890';
+      } else {
+        tileColor=isDark?'#7DC87A':'#8ED88A';
+      }
 
       townCtx.beginPath();
       townCtx.moveTo(sx,sy);
@@ -3532,30 +3603,49 @@ function drawIsoFloor(){
       townCtx.closePath();
       townCtx.fillStyle=tileColor;
       townCtx.fill();
-      // 타일 테두리
-      townCtx.strokeStyle='rgba(0,0,0,0.08)';
+      townCtx.strokeStyle='rgba(0,0,0,0.06)';
       townCtx.lineWidth=0.5;
       townCtx.stroke();
+
+      // 해변 모래 결 표시
+      if(edge && (gx+gy)%3===0){
+        townCtx.save();
+        townCtx.strokeStyle='rgba(180,140,60,0.25)';
+        townCtx.lineWidth=0.8;
+        townCtx.beginPath();
+        townCtx.moveTo(sx-8,sy+TH); townCtx.lineTo(sx+8,sy+TH);
+        townCtx.stroke();
+        townCtx.restore();
+      }
     }
   }
-  // 잔디 테두리 장식
-  for(let i=0;i<9;i++){
-    drawIsoGrassBorder(i,0); drawIsoGrassBorder(i,8);
-    drawIsoGrassBorder(0,i); drawIsoGrassBorder(8,i);
-  }
+
+  // 해변 물결 효과 (섬 경계)
+  drawIslandWaterEdge();
 }
 
-function drawIsoGrassBorder(gx,gy){
-  const sx=isoX(gx,gy), sy=isoY(gx,gy);
-  // 통나무 울타리
-  townCtx.fillStyle='#8B6914';
-  townCtx.beginPath();
-  townCtx.moveTo(sx,sy+14);
-  townCtx.lineTo(sx+32,sy+30);
-  townCtx.lineTo(sx+32,sy+26);
-  townCtx.lineTo(sx,sy+10);
-  townCtx.closePath();
-  townCtx.fill();
+function drawIslandWaterEdge(){
+  // 섬 주변 바다 물결
+  const wave=Math.sin(townFrame*0.04)*3;
+  for(let gy=0;gy<ISLAND_GRID+2;gy++){
+    for(let gx=0;gx<ISLAND_GRID+2;gx++){
+      const dx=(gx-ISLAND_CX)/ISLAND_RX;
+      const dy=(gy-ISLAND_CY)/ISLAND_RY;
+      const r=dx*dx+dy*dy;
+      if(r>1.0 && r<1.35){
+        const sx=isoX(gx,gy), sy=isoY(gx,gy);
+        const wAlpha=0.35+0.15*Math.sin(gx*0.7+gy*0.5+townFrame*0.05);
+        townCtx.fillStyle=`rgba(100,200,240,${wAlpha})`;
+        townCtx.beginPath();
+        townCtx.moveTo(sx,sy+wave*0.3);
+        townCtx.lineTo(sx+26,sy+13+wave*0.3);
+        townCtx.lineTo(sx,sy+26+wave*0.3);
+        townCtx.lineTo(sx-26,sy+13+wave*0.3);
+        townCtx.closePath();
+        townCtx.fill();
+      }
+    }
+  }
 }
 
 function drawIsoObj(obj){
@@ -3589,257 +3679,169 @@ function drawIsoObj(obj){
   townCtx.restore();
 }
 function drawTownChar(sx,sy){
-  // sx,sy는 이미 아이소 스크린 좌표
-  const tc=myChar?myChar.topColor:'#E8B4CB';
-  const bc=myChar?myChar.botColor:'#7B9ED9';
+  const tc=myChar?myChar.topColor:'#4ECDC4';
+  const bc=myChar?myChar.botColor:'#5C6BC0';
   const sc='#FDDCB5';
   const isFemale=!myChar||myChar.gender==='f';
-  const hc='#4A2C0A';
-  const shoeC=myChar&&myChar.equipped&&myChar.equipped['신발']?getItemColor(myChar.equipped['신발']):(isFemale?'#C9748A':'#4A6080');
+  const hairC=myChar&&myChar.equipped&&myChar.equipped['머리']?getItemColor(myChar.equipped['머리']):(isFemale?'#8B4513':'#1a1a1a');
+  const shoeC=myChar&&myChar.equipped&&myChar.equipped['신발']?getItemColor(myChar.equipped['신발']):(isFemale?'#FF4D7D':'#2C3E50');
 
   // 걷기 애니
-  const isWalking=Math.abs(charTargetX-charX)>0.1||Math.abs(charTargetY-charY)>0.1;
-  const walkCycle=Math.sin(charWalk*0.3)*0.18;
-  const bobY=isWalking?Math.abs(Math.sin(charWalk*0.3))*3:0;
-  const y=sy-bobY;
+  const isWalking=Math.abs(charTargetX-charX)>0.05||Math.abs(charTargetY-charY)>0.05;
+  const wCycle=Math.sin(charWalk*0.18);
+  const bobY=isWalking?Math.abs(Math.sin(charWalk*0.18))*2.5:0;
 
   townCtx.save();
-  townCtx.translate(sx,y);
-  // 방향에 따라 좌우 반전
+  townCtx.translate(sx, sy-bobY);
   if(charDir<0) townCtx.scale(-1,1);
 
-  const S=1.0; // 스케일
+  const S=1.1;
 
   // 그림자
-  townCtx.fillStyle='rgba(0,0,0,0.22)';
-  townCtx.beginPath();townCtx.ellipse(0,18*S,16*S,5*S,0,0,Math.PI*2);townCtx.fill();
+  townCtx.fillStyle='rgba(0,0,0,0.18)';
+  townCtx.beginPath();townCtx.ellipse(0,16*S,14*S,4*S,0,0,Math.PI*2);townCtx.fill();
 
-  // ── 하의 ──
-  townCtx.fillStyle=bc;
-  if(isFemale){
-    // 치마
-    townCtx.beginPath();
-    townCtx.moveTo(-14*S,2*S);townCtx.lineTo(14*S,2*S);
-    townCtx.lineTo(18*S,20*S);townCtx.lineTo(-18*S,20*S);townCtx.closePath();
-    townCtx.fill();
-    // 치마 주름 하이라이트
-    townCtx.strokeStyle='rgba(255,255,255,0.25)'; townCtx.lineWidth=1;
-    townCtx.beginPath();townCtx.moveTo(-6*S,4*S);townCtx.lineTo(-8*S,20*S);townCtx.stroke();
-    townCtx.beginPath();townCtx.moveTo(6*S,4*S);townCtx.lineTo(8*S,20*S);townCtx.stroke();
-    // 다리
-    townCtx.fillStyle=sc;
-    townCtx.fillRect(-10*S,18*S,7*S,9*S);
-    townCtx.fillRect(3*S,18*S,7*S,9*S);
-  } else {
-    // 바지
-    townCtx.beginPath();
-    townCtx.moveTo(-12*S,2*S);townCtx.lineTo(12*S,2*S);
-    townCtx.lineTo(13*S,20*S);townCtx.lineTo(4*S,20*S);
-    townCtx.lineTo(0,14*S);townCtx.lineTo(-4*S,20*S);
-    townCtx.lineTo(-13*S,20*S);townCtx.closePath();
-    townCtx.fill();
-    // 바지선
-    townCtx.strokeStyle='rgba(0,0,0,0.15)'; townCtx.lineWidth=1;
-    townCtx.beginPath();townCtx.moveTo(0,14*S);townCtx.lineTo(0,4*S);townCtx.stroke();
-    // 다리
-    townCtx.fillStyle=sc;
-    townCtx.fillRect(-11*S,18*S,8*S,8*S);
-    townCtx.fillRect(3*S,18*S,8*S,8*S);
-  }
-
-  // ── 신발 ──
+  // ── 다리 (짧고 통통) ──
+  const legAng=isWalking?wCycle*0.15:0;
+  townCtx.save();townCtx.translate(-6*S,4*S);townCtx.rotate(legAng);
+  townCtx.fillStyle=bc; townCtx.strokeStyle='#333'; townCtx.lineWidth=2;
+  townCtx.fillRect(-5*S,0,10*S,16*S);townCtx.strokeRect(-5*S,0,10*S,16*S);
+  // 신발
   townCtx.fillStyle=shoeC;
-  if(isFemale){
-    // 뒷굽 구두
-    townCtx.beginPath();townCtx.ellipse(-6*S,27*S,7*S,3.5*S,0,0,Math.PI*2);townCtx.fill();
-    townCtx.beginPath();townCtx.ellipse(6*S,27*S,7*S,3.5*S,0,0,Math.PI*2);townCtx.fill();
-  } else {
-    townCtx.beginPath();townCtx.ellipse(-6*S,26*S,8*S,4*S,0,0,Math.PI*2);townCtx.fill();
-    townCtx.beginPath();townCtx.ellipse(6*S,26*S,8*S,4*S,0,0,Math.PI*2);townCtx.fill();
-  }
+  townCtx.beginPath();townCtx.ellipse(0,17*S,7*S,4*S,0,0,Math.PI*2);townCtx.fill();townCtx.stroke();
+  townCtx.restore();
 
-  // ── 팔 (걷기 애니) ──
-  const la=walkCycle, ra=-walkCycle;
-  townCtx.fillStyle=tc;
+  townCtx.save();townCtx.translate(6*S,4*S);townCtx.rotate(-legAng);
+  townCtx.fillStyle=bc; townCtx.strokeStyle='#333'; townCtx.lineWidth=2;
+  townCtx.fillRect(-5*S,0,10*S,16*S);townCtx.strokeRect(-5*S,0,10*S,16*S);
+  townCtx.fillStyle=shoeC;
+  townCtx.beginPath();townCtx.ellipse(0,17*S,7*S,4*S,0,0,Math.PI*2);townCtx.fill();townCtx.stroke();
+  townCtx.restore();
+
+  // ── 팔 (구부정하게) ──
+  const armAng=isWalking?-wCycle*0.2:0;
   // 왼팔
-  townCtx.save();townCtx.translate(-14*S,-12*S);townCtx.rotate(la);
-  townCtx.beginPath();
-  townCtx.ellipse(0,8*S,4*S,10*S,0,0,Math.PI*2);townCtx.fill();
-  townCtx.fillStyle=sc;townCtx.beginPath();townCtx.arc(0,18*S,4*S,0,Math.PI*2);townCtx.fill();
-  if(myChar&&myChar.equipped&&myChar.equipped['장갑']){
-    townCtx.fillStyle=getItemColor(myChar.equipped['장갑']);
-    townCtx.beginPath();townCtx.arc(0,18*S,4*S,0,Math.PI*2);townCtx.fill();
-  }
+  townCtx.save();townCtx.translate(-14*S,-10*S);townCtx.rotate(-0.3+armAng);
+  townCtx.fillStyle=tc; townCtx.strokeStyle='#333'; townCtx.lineWidth=2;
+  townCtx.beginPath();townCtx.ellipse(0,8*S,5*S,10*S,0,0,Math.PI*2);townCtx.fill();townCtx.stroke();
+  // 손
+  const gc=myChar&&myChar.equipped&&myChar.equipped['장갑']?getItemColor(myChar.equipped['장갑']):sc;
+  townCtx.fillStyle=gc;townCtx.strokeStyle='#333';
+  townCtx.beginPath();townCtx.arc(2*S,17*S,5*S,0,Math.PI*2);townCtx.fill();townCtx.stroke();
   townCtx.restore();
   // 오른팔
-  townCtx.fillStyle=tc;
-  townCtx.save();townCtx.translate(14*S,-12*S);townCtx.rotate(ra);
-  townCtx.beginPath();townCtx.ellipse(0,8*S,4*S,10*S,0,0,Math.PI*2);townCtx.fill();
-  townCtx.fillStyle=sc;townCtx.beginPath();townCtx.arc(0,18*S,4*S,0,Math.PI*2);townCtx.fill();
-  if(myChar&&myChar.equipped&&myChar.equipped['장갑']){
-    townCtx.fillStyle=getItemColor(myChar.equipped['장갑']);
-    townCtx.beginPath();townCtx.arc(0,18*S,4*S,0,Math.PI*2);townCtx.fill();
-  }
+  townCtx.save();townCtx.translate(14*S,-10*S);townCtx.rotate(0.3-armAng);
+  townCtx.fillStyle=tc; townCtx.strokeStyle='#333'; townCtx.lineWidth=2;
+  townCtx.beginPath();townCtx.ellipse(0,8*S,5*S,10*S,0,0,Math.PI*2);townCtx.fill();townCtx.stroke();
+  townCtx.fillStyle=gc;townCtx.strokeStyle='#333';
+  townCtx.beginPath();townCtx.arc(-2*S,17*S,5*S,0,Math.PI*2);townCtx.fill();townCtx.stroke();
   townCtx.restore();
 
   // ── 가방 ──
   if(myChar&&myChar.equipped&&myChar.equipped['가방']){
     townCtx.fillStyle=getItemColor(myChar.equipped['가방']);
-    townCtx.beginPath();townCtx.roundRect?
-      townCtx.roundRect(12*S,-14*S,10*S,13*S,3):
-      townCtx.rect(12*S,-14*S,10*S,13*S);
-    townCtx.fill();
-    townCtx.strokeStyle='rgba(0,0,0,0.2)';townCtx.lineWidth=0.8;townCtx.stroke();
+    townCtx.strokeStyle='#333';townCtx.lineWidth=2;
+    townCtx.beginPath();
+    if(townCtx.roundRect) townCtx.roundRect(12*S,-12*S,11*S,14*S,3);
+    else townCtx.rect(12*S,-12*S,11*S,14*S);
+    townCtx.fill();townCtx.stroke();
   }
 
-  // ── 몸통 ──
-  townCtx.fillStyle=tc;
-  townCtx.beginPath();
+  // ── 몸통 (달걀형) ──
+  townCtx.fillStyle=tc; townCtx.strokeStyle='#333'; townCtx.lineWidth=2.5;
+  townCtx.beginPath();townCtx.ellipse(0,-8*S,14*S,20*S,0,0,Math.PI*2);townCtx.fill();townCtx.stroke();
+
+  // ── 머리 (크고 동글) ──
+  // 머리카락 뒤
+  townCtx.fillStyle=hairC; townCtx.strokeStyle='#333'; townCtx.lineWidth=2.5;
+  townCtx.beginPath();townCtx.arc(0,-34*S,17*S,0,Math.PI*2);townCtx.fill();townCtx.stroke();
+
+  // 여자 긴머리
   if(isFemale){
-    townCtx.moveTo(-14*S,-20*S);townCtx.bezierCurveTo(-16*S,-10*S,-15*S,0,-13*S,2*S);
-    townCtx.lineTo(13*S,2*S);townCtx.bezierCurveTo(15*S,0,16*S,-10*S,14*S,-20*S);
+    townCtx.fillStyle=hairC;
+    townCtx.beginPath();townCtx.ellipse(-14*S,-28*S,5*S,12*S,0,0,Math.PI*2);townCtx.fill();townCtx.stroke();
+    townCtx.beginPath();townCtx.ellipse(14*S,-28*S,5*S,12*S,0,0,Math.PI*2);townCtx.fill();townCtx.stroke();
+  }
+
+  // 얼굴
+  townCtx.fillStyle=sc; townCtx.strokeStyle='#333'; townCtx.lineWidth=2.5;
+  townCtx.beginPath();townCtx.arc(0,-34*S,16*S,0,Math.PI*2);townCtx.fill();townCtx.stroke();
+
+  // 앞머리
+  townCtx.fillStyle=hairC; townCtx.strokeStyle='#333'; townCtx.lineWidth=2;
+  if(isFemale){
+    // 여자: 갈라진 앞머리
+    townCtx.beginPath();
+    townCtx.moveTo(-16*S,-38*S);
+    townCtx.lineTo(-16*S,-46*S);townCtx.quadraticCurveTo(-8*S,-52*S,0,-46*S);
+    townCtx.quadraticCurveTo(8*S,-52*S,16*S,-46*S);
+    townCtx.lineTo(16*S,-38*S);
     townCtx.closePath();
+    townCtx.fill();townCtx.stroke();
+    // 리본
+    const ribC=myChar&&myChar.equipped&&myChar.equipped['머리']?getItemColor(myChar.equipped['머리']):'#FF6B6B';
+    townCtx.fillStyle=ribC;townCtx.strokeStyle='#333';townCtx.lineWidth=1.5;
+    townCtx.beginPath();townCtx.arc(13*S,-46*S,5*S,0,Math.PI*2);townCtx.fill();townCtx.stroke();
+    townCtx.beginPath();townCtx.arc(13*S,-46*S,2*S,0,Math.PI*2);
+    townCtx.fillStyle='#fff';townCtx.fill();
   } else {
-    townCtx.moveTo(-14*S,-20*S);townCtx.lineTo(-15*S,2*S);
-    townCtx.lineTo(15*S,2*S);townCtx.lineTo(14*S,-20*S);townCtx.closePath();
-  }
-  townCtx.fill();
-  // 몸통 음영
-  townCtx.fillStyle='rgba(0,0,0,0.07)';
-  townCtx.beginPath();townCtx.ellipse(8*S,-10*S,5*S,12*S,0,0,Math.PI*2);townCtx.fill();
-
-  // ── 목 ──
-  townCtx.fillStyle=sc;
-  townCtx.fillRect(-4*S,-24*S,8*S,6*S);
-
-  // ── 머리카락 뒤 ──
-  townCtx.fillStyle=hc;
-  townCtx.beginPath();townCtx.ellipse(0,-36*S,16*S,17*S,0,0,Math.PI*2);townCtx.fill();
-  if(isFemale){
-    // 긴머리 옆
-    townCtx.beginPath();townCtx.ellipse(-15*S,-30*S,5*S,14*S,0,0,Math.PI*2);townCtx.fill();
-    townCtx.beginPath();townCtx.ellipse(15*S,-30*S,5*S,14*S,0,0,Math.PI*2);townCtx.fill();
-  }
-
-  // ── 얼굴 ──
-  townCtx.fillStyle=sc;
-  townCtx.beginPath();townCtx.ellipse(0,-36*S,14*S,16*S,0,0,Math.PI*2);townCtx.fill();
-  // 귀
-  townCtx.beginPath();townCtx.ellipse(-14*S,-36*S,3.5*S,5*S,0,0,Math.PI*2);townCtx.fill();
-  townCtx.beginPath();townCtx.ellipse(14*S,-36*S,3.5*S,5*S,0,0,Math.PI*2);townCtx.fill();
-
-  // ── 머리카락 앞 ──
-  townCtx.fillStyle=hc;
-  if(isFemale){
-    townCtx.beginPath();townCtx.moveTo(-15*S,-44*S);
-    townCtx.quadraticCurveTo(-8*S,-54*S,0,-52*S);
-    townCtx.quadraticCurveTo(8*S,-54*S,15*S,-44*S);
-    townCtx.quadraticCurveTo(10*S,-40*S,0,-42*S);
-    townCtx.quadraticCurveTo(-10*S,-40*S,-15*S,-44*S);
-    townCtx.fill();
-  } else {
-    townCtx.fillRect(-15*S,-52*S,30*S,12*S);
-    // 삐죽 앞머리
-    townCtx.beginPath();townCtx.moveTo(-8*S,-50*S);townCtx.quadraticCurveTo(-4*S,-58*S,0,-50*S);townCtx.fill();
-    townCtx.beginPath();townCtx.moveTo(4*S,-52*S);townCtx.quadraticCurveTo(8*S,-60*S,12*S,-52*S);townCtx.fill();
-  }
-
-  // 머리 장식 (여자)
-  if(isFemale && myChar&&myChar.equipped&&myChar.equipped['머리']){
-    townCtx.fillStyle=getItemColor(myChar.equipped['머리']);
-    townCtx.beginPath();townCtx.arc(-13*S,-40*S,4*S,0,Math.PI*2);townCtx.fill();
-    townCtx.beginPath();townCtx.arc(13*S,-40*S,4*S,0,Math.PI*2);townCtx.fill();
+    // 남자: 삐죽 앞머리
+    townCtx.beginPath();
+    townCtx.moveTo(-16*S,-38*S);
+    townCtx.quadraticCurveTo(-14*S,-50*S,-7*S,-44*S);
+    townCtx.quadraticCurveTo(-2*S,-54*S,4*S,-44*S);
+    townCtx.quadraticCurveTo(10*S,-52*S,16*S,-40*S);
+    townCtx.lineTo(16*S,-38*S);
+    townCtx.closePath();
+    townCtx.fill();townCtx.stroke();
   }
 
   // 모자
   if(myChar&&myChar.equipped&&myChar.equipped['모자']){
-    townCtx.font=`${18*S}px serif`;townCtx.textAlign='center';
+    townCtx.font=`${16*S}px serif`;townCtx.textAlign='center';townCtx.textBaseline='middle';
     townCtx.fillText(getItemIco(myChar.equipped['모자']),0,-54*S);
   }
 
-  // ── 눈 (아이러브커피 스타일: 크고 또렷) ──
-  const ey=-38*S;
-  // 눈 흰자
-  townCtx.fillStyle='white';
-  townCtx.beginPath();townCtx.ellipse(-5*S,ey,5*S,5.5*S,0,0,Math.PI*2);townCtx.fill();
-  townCtx.beginPath();townCtx.ellipse(5*S,ey,5*S,5.5*S,0,0,Math.PI*2);townCtx.fill();
-  // 홍채
-  const irisC=isFemale?'#6B4AAC':'#2E4A7C';
-  townCtx.fillStyle=irisC;
-  townCtx.beginPath();townCtx.arc(-5*S,ey+S,3.5*S,0,Math.PI*2);townCtx.fill();
-  townCtx.beginPath();townCtx.arc(5*S,ey+S,3.5*S,0,Math.PI*2);townCtx.fill();
-  // 눈동자
-  townCtx.fillStyle='#0a0a1a';
-  townCtx.beginPath();townCtx.arc(-5*S,ey+S,2.2*S,0,Math.PI*2);townCtx.fill();
-  townCtx.beginPath();townCtx.arc(5*S,ey+S,2.2*S,0,Math.PI*2);townCtx.fill();
-  // 하이라이트
-  townCtx.fillStyle='white';
-  townCtx.beginPath();townCtx.arc(-3.5*S,ey-0.5*S,1.2*S,0,Math.PI*2);townCtx.fill();
-  townCtx.beginPath();townCtx.arc(6.5*S,ey-0.5*S,1.2*S,0,Math.PI*2);townCtx.fill();
-  // 속눈썹 (여자)
-  if(isFemale){
-    townCtx.strokeStyle='#1a0a2e'; townCtx.lineWidth=1.2; townCtx.lineCap='round';
-    [[-9,-5],[-5,-7],[-1,-6]].forEach(([ex,ey2])=>{
-      townCtx.beginPath();townCtx.moveTo(ex*S,(ey+ey2)*S);
-      townCtx.lineTo((ex-1)*S,(ey+ey2-3)*S);townCtx.stroke();
-    });
-    [[1,-6],[5,-7],[9,-5]].forEach(([ex,ey2])=>{
-      townCtx.beginPath();townCtx.moveTo(ex*S,(ey+ey2)*S);
-      townCtx.lineTo((ex+1)*S,(ey+ey2-3)*S);townCtx.stroke();
-    });
-  }
-  // 눈썹
-  townCtx.strokeStyle=hc; townCtx.lineWidth=isFemale?1.6:2.2; townCtx.lineCap='round';
-  if(isFemale){
-    townCtx.beginPath();townCtx.moveTo(-9*S,ey-8*S);townCtx.quadraticCurveTo(-5*S,ey-12*S,-1*S,ey-9*S);townCtx.stroke();
-    townCtx.beginPath();townCtx.moveTo(9*S,ey-8*S);townCtx.quadraticCurveTo(5*S,ey-12*S,1*S,ey-9*S);townCtx.stroke();
-  } else {
-    townCtx.beginPath();townCtx.moveTo(-9*S,ey-9*S);townCtx.lineTo(-1*S,ey-11*S);townCtx.stroke();
-    townCtx.beginPath();townCtx.moveTo(9*S,ey-9*S);townCtx.lineTo(1*S,ey-11*S);townCtx.stroke();
-  }
+  // ── 눈 (ㅡ 선 두 개) ──
+  townCtx.strokeStyle='#333'; townCtx.lineWidth=2.5; townCtx.lineCap='round';
+  townCtx.beginPath();townCtx.moveTo(-7*S,-33*S);townCtx.lineTo(-2*S,-33*S);townCtx.stroke();
+  townCtx.beginPath();townCtx.moveTo(2*S,-33*S);townCtx.lineTo(7*S,-33*S);townCtx.stroke();
+
   // 안경
   if(myChar&&myChar.equipped&&myChar.equipped['안경']){
-    const gc=getItemColor(myChar.equipped['안경']);
-    townCtx.strokeStyle=gc; townCtx.lineWidth=1.5;
-    townCtx.strokeRect(-10*S,ey-6*S,9*S,9*S);
-    townCtx.strokeRect(1*S,ey-6*S,9*S,9*S);
-    townCtx.beginPath();townCtx.moveTo(-1*S,ey-1.5*S);townCtx.lineTo(1*S,ey-1.5*S);townCtx.stroke();
+    const gc2=getItemColor(myChar.equipped['안경']);
+    townCtx.strokeStyle=gc2;townCtx.lineWidth=1.8;
+    townCtx.strokeRect(-9*S,-37*S,8*S,8*S);
+    townCtx.strokeRect(1*S,-37*S,8*S,8*S);
+    townCtx.beginPath();townCtx.moveTo(-1*S,-33*S);townCtx.lineTo(1*S,-33*S);townCtx.stroke();
   }
-  // 코
-  townCtx.strokeStyle='#D4956A'; townCtx.lineWidth=1.2;
-  townCtx.beginPath();townCtx.moveTo(-2*S,ey+6*S);townCtx.quadraticCurveTo(0,ey+8*S,2*S,ey+6*S);townCtx.stroke();
-  // 볼터치
-  townCtx.fillStyle='rgba(255,160,180,0.42)';
-  townCtx.beginPath();townCtx.ellipse(-9*S,ey+5*S,6*S,3.5*S,0,0,Math.PI*2);townCtx.fill();
-  townCtx.beginPath();townCtx.ellipse(9*S,ey+5*S,6*S,3.5*S,0,0,Math.PI*2);townCtx.fill();
-  // 입
-  if(isFemale){
-    townCtx.fillStyle='#EDAABB';
-    townCtx.beginPath();townCtx.moveTo(-5*S,ey+11*S);townCtx.quadraticCurveTo(0,ey+15*S,5*S,ey+11*S);
-    townCtx.quadraticCurveTo(0,ey+13*S,-5*S,ey+11*S);townCtx.fill();
-    townCtx.strokeStyle='#D4607A'; townCtx.lineWidth=1.3;
-    townCtx.beginPath();townCtx.moveTo(-5*S,ey+11*S);townCtx.quadraticCurveTo(0,ey+15*S,5*S,ey+11*S);townCtx.stroke();
-  } else {
-    townCtx.strokeStyle='#B05030'; townCtx.lineWidth=1.5;
-    townCtx.beginPath();townCtx.moveTo(-4*S,ey+12*S);townCtx.quadraticCurveTo(0,ey+15*S,4*S,ey+12*S);townCtx.stroke();
-  }
+
+  // ── 볼터치 ──
+  townCtx.fillStyle='rgba(255,150,130,0.38)';
+  townCtx.beginPath();townCtx.ellipse(-9*S,-28*S,6*S,3.5*S,0,0,Math.PI*2);townCtx.fill();
+  townCtx.beginPath();townCtx.ellipse(9*S,-28*S,6*S,3.5*S,0,0,Math.PI*2);townCtx.fill();
+
+  // ── 입 (삐뚤어진 선) ──
+  townCtx.strokeStyle='#333'; townCtx.lineWidth=2.2; townCtx.lineCap='round';
+  townCtx.save();townCtx.translate(1*S,-23*S);townCtx.rotate(0.15);
+  townCtx.beginPath();townCtx.moveTo(-5*S,0);townCtx.lineTo(5*S,0);townCtx.stroke();
+  townCtx.restore();
 
   townCtx.restore();
 }
 function screenToIso(sx,sy){
-  // 스크린 좌표 → 그리드 좌표
-  const ox=sx-townW/2, oy=sy-townH*0.28;
-  const gx=(ox/32+oy/16)/2;
-  const gy=(oy/16-ox/32)/2;
-  return {gx:Math.max(1,Math.min(7,gx)), gy:Math.max(1,Math.min(7,gy))};
+  const ox=sx-townW/2, oy=sy-townH*0.22;
+  const gx=(ox/26+oy/13)/2;
+  const gy=(oy/13-ox/26)/2;
+  return {gx:Math.max(1,Math.min(13,gx)), gy:Math.max(1,Math.min(13,gy))};
 }
 
 function onTownClick(e){
   const rect=document.getElementById('town-canvas').getBoundingClientRect();
   const sx=e.clientX-rect.left, sy=e.clientY-rect.top;
   const {gx,gy}=screenToIso(sx,sy);
-  const snap_gx=Math.max(1,Math.min(7,Math.round(gx)));
-  const snap_gy=Math.max(1,Math.min(7,Math.round(gy)));
+  const snap_gx=Math.max(1,Math.min(13,Math.round(gx)));
+  const snap_gy=Math.max(1,Math.min(13,Math.round(gy)));
 
   if(townTool==='place' && previewObj){
     // 미리보기 확정 버튼 영역 클릭 체크
