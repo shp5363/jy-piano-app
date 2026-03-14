@@ -343,6 +343,20 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 .hand-indicator.right-hand{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);color:#1565C0;}
 .hand-indicator.left-hand{background:linear-gradient(135deg,#FFF3E0,#FFE0B2);color:#E65100;}
 
+
+/* 티켓 추가 모달 */
+.ticket-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2000;align-items:center;justify-content:center;}
+.ticket-modal-bg.show{display:flex;}
+.ticket-modal{background:#fff;border-radius:20px;padding:26px 22px;width:85%;max-width:320px;text-align:center;}
+.ticket-modal h3{font-family:'Jua',sans-serif;font-size:1.05rem;color:#2D3436;margin-bottom:4px;}
+.ticket-modal p{font-size:0.78rem;color:#aaa;margin-bottom:14px;}
+.ticket-count-row{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:16px;}
+.ticket-cnt-btn{width:38px;height:38px;border-radius:50%;border:none;font-size:1.2rem;cursor:pointer;background:var(--secondary);color:#fff;display:flex;align-items:center;justify-content:center;}
+.ticket-cnt-disp{font-family:'Do Hyeon',sans-serif;font-size:2rem;color:var(--primary);min-width:44px;text-align:center;}
+.ticket-pw-input{width:100%;padding:11px 16px;border:2px solid #eee;border-radius:12px;font-family:'Do Hyeon',sans-serif;font-size:1.3rem;text-align:center;letter-spacing:8px;outline:none;margin-bottom:12px;transition:border-color 0.2s;}
+.ticket-pw-input:focus{border-color:var(--secondary);}
+.ticket-pw-input.error{border-color:var(--wrong);animation:shake 0.4s;}
+
 </style>
 </head>
 <body>
@@ -384,6 +398,25 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
 </div>
 <!-- 말풍선 (탭바 위 고정) -->
 <div class="speech-bubble" id="reward-speech">연습 10회 → 가챠권 🎟</div>
+
+
+<!-- 티켓 추가 모달 -->
+<div class="ticket-modal-bg" id="ticket-add-modal">
+  <div class="ticket-modal">
+    <h3>🎟 게임권 추가</h3>
+    <p>추가할 게임권 수량과 비밀번호를 입력해주세요</p>
+    <div class="ticket-count-row">
+      <button class="ticket-cnt-btn" onclick="chgTicketAdd(-1)">−</button>
+      <div class="ticket-cnt-disp" id="ticket-add-cnt">1</div>
+      <button class="ticket-cnt-btn" onclick="chgTicketAdd(1)">+</button>
+    </div>
+    <input class="ticket-pw-input" id="ticket-add-pw" type="password" maxlength="4" placeholder="••••">
+    <div class="admin-modal-btns">
+      <button class="admin-modal-btn cancel" onclick="closeTicketModal()">취소</button>
+      <button class="admin-modal-btn confirm" onclick="confirmTicketAdd()">추가</button>
+    </div>
+  </div>
+</div>
 
 <!-- ① 연습 홈 -->
 <div id="pg-practice" class="page active">
@@ -438,7 +471,7 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
     <div class="scard"><h3>🔁 연습 횟수</h3>
       <div class="count-row">
         <button class="cnt-btn" onclick="chgCnt(-1)">−</button>
-        <div id="cnt-disp">3</div>
+        <div id="cnt-disp">10</div>
         <button class="cnt-btn" onclick="chgCnt(1)">+</button>
       </div>
       <p style="text-align:center;font-size:0.7rem;color:#aaa;margin-top:6px">같은 곡을 반복 연습할 횟수</p>
@@ -631,6 +664,19 @@ input[type=range]{flex:1;accent-color:var(--secondary);}
       <div class="firebase-notice">
         🔥 Firebase 연동 전까지는 추가한 곡이 새로고침 시 초기화돼요.<br>연동 후에는 영구 저장됩니다!
       </div>
+    </div>
+
+    <!-- 게임권 관리 -->
+    <div class="admin-section">
+      <div class="admin-section-title">🎟 게임권 관리</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:#f8f9fa;border-radius:10px;margin-bottom:8px;">
+        <div>
+          <div style="font-family:Jua,sans-serif;font-size:0.85rem;color:#2D3436;">현재 보유 게임권</div>
+          <div style="font-family:'Do Hyeon',sans-serif;font-size:1.6rem;color:var(--primary);" id="admin-ticket-count">0</div>
+        </div>
+        <button onclick="openTicketModal()" style="padding:10px 16px;border:none;border-radius:12px;background:linear-gradient(135deg,#f59f00,#FFE66D);color:#2D3436;font-family:Jua,sans-serif;font-size:0.9rem;cursor:pointer;">+ 게임권 추가</button>
+      </div>
+      <div class="firebase-notice">관리자 비밀번호 확인 후 게임권이 추가돼요</div>
     </div>
 
     <!-- 곡 목록 관리 -->
@@ -829,7 +875,10 @@ function useTicketAndPlay(){
 }
 
 function startTestMode(){
-  isTestMode = true;
+  const pw=prompt('테스트 모드 비밀번호를 입력하세요');
+  if(pw===null) return; // 취소
+  if(pw!==ADMIN_PW){alert('비밀번호가 틀렸어요!');return;}
+  isTestMode=true;
   document.getElementById('pb-test-badge').style.display='inline-block';
   showPage('pg-pinball');
   document.getElementById('bar-song').textContent='테스트 모드';
@@ -1669,6 +1718,41 @@ function toggleLeftNotes(){
   const grp = document.getElementById('f-left-group');
   if(grp) grp.style.display = hands==='both' ? 'block' : 'none';
 }
+
+// 티켓 추가 모달
+let ticketAddCount = 1;
+function openTicketModal(){
+  ticketAddCount=1;
+  document.getElementById('ticket-add-cnt').textContent='1';
+  document.getElementById('ticket-add-pw').value='';
+  document.getElementById('ticket-add-pw').className='ticket-pw-input';
+  document.getElementById('admin-ticket-count').textContent=tickets;
+  document.getElementById('ticket-add-modal').classList.add('show');
+}
+function closeTicketModal(){
+  document.getElementById('ticket-add-modal').classList.remove('show');
+}
+function chgTicketAdd(d){
+  ticketAddCount=Math.max(1,Math.min(10,ticketAddCount+d));
+  document.getElementById('ticket-add-cnt').textContent=ticketAddCount;
+}
+function confirmTicketAdd(){
+  const pw=document.getElementById('ticket-add-pw').value;
+  if(pw!==ADMIN_PW){
+    const inp=document.getElementById('ticket-add-pw');
+    inp.className='ticket-pw-input error';
+    inp.value='';
+    setTimeout(()=>{inp.className='ticket-pw-input';},600);
+    return;
+  }
+  tickets+=ticketAddCount;
+  updateRewardUI();
+  closeTicketModal();
+  // 관리자 페이지 티켓 수 갱신
+  const el=document.getElementById('admin-ticket-count');
+  if(el) el.textContent=tickets;
+  alert(`게임권 ${ticketAddCount}장이 추가됐어요! (총 ${tickets}장)`);
+}
 function openAdminModal(){
   if(adminLoggedIn){switchTabAdmin();return;}
   const modal=document.getElementById('admin-pw-modal');
@@ -1695,7 +1779,10 @@ function switchTabAdmin(){
   document.getElementById('bar-timer').style.display='none';
   document.getElementById('bar-count').style.display='none';
   document.getElementById('bar-song').textContent='관리자';
-  hideForm();renderAdminSongList();renderAdminCatGrid();showPage('pg-admin');
+  hideForm();renderAdminSongList();renderAdminCatGrid();
+  const atc=document.getElementById('admin-ticket-count');
+  if(atc) atc.textContent=tickets;
+  showPage('pg-admin');
 }
 function renderAdminSongList(){
   const el=document.getElementById('admin-song-list');if(!el)return;
