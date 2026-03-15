@@ -688,7 +688,16 @@ html {
   html { background: #FFF8F0 !important; }
 }
 
+
+/* ABCjs 악보 스타일 */
+#abc-paper svg { display:block; width:100% !important; }
+#abc-paper .abcjs-note path,
+#abc-paper .abcjs-note ellipse,
+#abc-paper .abcjs-note rect { fill:#74C0FC; stroke:#74C0FC; }
+.score-wrap { padding:8px 0; }
+
 </style>
+<script src="https://cdn.jsdelivr.net/npm/abcjs@6.4.4/dist/abcjs-basic-min.js"></script>
 </head>
 <body>
 
@@ -1785,7 +1794,7 @@ function initSes(){
   document.getElementById('mic-go-btn').textContent='🎤 마이크 켜고 연습 시작';
   updateHandIndicator();
   setStatus('idle'); renderSesDots(); drawNoteBar(); updBarCount();
-  if(typeof Vex!=='undefined') drawScore();
+  if(typeof ABCJS!=='undefined') drawScore(); else loadABCjs();
 }
 
 function updateHandIndicator(){
@@ -1866,310 +1875,186 @@ function buildAccidentalMap(idxArr,notes){
   });
 }
 
-function calcMeasureBeats(idxArr, notes){
-  let b=0; idxArr.forEach(i=>{b+=beatVal(notes[i].dur);}); return b;
-}
 
-// ── 음표 하나 빌드 (임시표·손가락번호·타이 포함) ──
-function buildStaveNote(VF, n, clef, stemDir, col, accShown){
-  // 코드(화음) 처리: n.chord=[{vex,lb}] 이면 keys에 추가
-  let keys=[n.vex];
-  if(n.chord && n.chord.length) keys=keys.concat(n.chord.map(c=>c.vex));
-  const dur = n.dur || 'q';
-  const s=new VF.StaveNote({
-    clef, keys, duration: dur,
-    stem_direction: stemDir
-  });
-  s.setStyle({fillStyle:col, strokeStyle:col});
-  // 임시표: accShown=false면 VexFlow가 자동 처리하도록
-  // (VexFlow는 기본적으로 임시표 자동 렌더링)
-  // 손가락 번호
-  if(n.finger){
-    try{
-      const fingers = Array.isArray(n.finger) ? n.finger : [n.finger];
-      fingers.forEach((f,ki)=>{
-        s.addModifier(new VF.Annotation(String(f))
-          .setFont('Arial',9)
-          .setVerticalJustification(VF.Annotation.VerticalJustify.TOP), ki);
-      });
-    }catch(e){}
+// ════════════════════════════════════════════════
+// ABCjs 악보 렌더링 시스템
+// ════════════════════════════════════════════════
+
+// VexFlow → ABC 음표 변환
+// vex: 'c/4' → ABC: 'C' (옥타브 처리 포함)
+function vexToABC(vex, dur){
+  if(!vex) return 'z'; // 쉼표
+  const nameMap={c:'C',d:'D',e:'E',f:'F',g:'G',a:'A',b:'B'};
+  const parts=vex.toLowerCase().split('/');
+  const noteName=parts[0].replace('#','').replace('b','');
+  const hasSharp=parts[0].includes('#');
+  const hasFlat=parts[0].includes('b')&&!parts[0].includes('#');
+  const oct=parseInt(parts[1])||4;
+  let abc=nameMap[noteName]||'C';
+
+  // 임시표
+  if(hasSharp) abc='^'+abc;
+  else if(hasFlat) abc='_'+abc;
+
+  // 옥타브 처리: ABC 기준 octave 4 = 대문자(C D E...), 5 이상 = 소문자+콤마
+  // ABC notation: C(oct4)=C, c(oct5)=c, c'(oct6)=c'
+  if(oct<=3){
+    abc=abc.toUpperCase();
+    for(let i=4;i>oct;i--) abc+=',';
+  } else if(oct===4){
+    abc=abc.toUpperCase();
+  } else if(oct===5){
+    abc=abc.toLowerCase();
+  } else {
+    abc=abc.toLowerCase();
+    for(let i=6;i<=oct;i++) abc+="'";
   }
-  return s;
+
+  // 음표 길이 (기본 L:1/4 기준)
+  const durMap={w:'4',h:'2',q:'',8:'/2','16':'/4'};
+  const durStr=durMap[dur]||durMap[dur?.toString()]||'';
+  return abc+durStr;
 }
 
-// ── 타이(Tie) 빌드 ──
-function buildTies(VF, notes, staveNotes, idxArr){
-  const ties=[];
-  idxArr.forEach((ni,pos)=>{
-    if(notes[ni].tie && pos+1<staveNotes.length){
-      try{
-        ties.push(new VF.StaveTie({
-          first_note: staveNotes[pos],
-          last_note:  staveNotes[pos+1],
-          first_indices:[0], last_indices:[0]
-        }));
-      }catch(e){}
-    }
-  });
-  return ties;
-}
-
-// ── 슬러(Slur/이음줄) 빌드 ──
-function buildSlurs(VF, notes, staveNotes, idxArr){
-  const slurs=[];
-  let slurStart=-1;
-  idxArr.forEach((ni,pos)=>{
-    if(notes[ni].slurStart!==undefined) slurStart=pos;
-    if(notes[ni].slurEnd!==undefined && slurStart>=0 && pos>slurStart){
-      try{
-        slurs.push(new VF.Curve(
-          staveNotes[slurStart], staveNotes[pos],
-          {cps:[{x:0,y:10},{x:0,y:10}]}
-        ));
-      }catch(e){}
-      slurStart=-1;
-    }
-  });
-  return slurs;
-}
-
-// ── 페달 표시 ──
-function drawPedal(ctx, notes, idxArr, staveNotes, stave, y){
-  // n.pedal='start' 또는 'end'
-  idxArr.forEach((ni,pos)=>{
-    const n=notes[ni];
-    if(!n.pedal || !staveNotes[pos]) return;
-    try{
-      const x=staveNotes[pos].getAbsoluteX ? staveNotes[pos].getAbsoluteX() : 0;
-      const py=y+82;
-      ctx.save();
-      ctx.setFont('serif',12);
-      ctx.setFillStyle('#333');
-      if(n.pedal==='start'){
-        ctx.fillText('𝑃𝑒𝑑',x-4,py);
-      } else if(n.pedal==='end'){
-        ctx.fillText('✱',x,py);
+// notes 배열 → ABC 한 성부 문자열 변환
+function notesToABC(notes, bpm, states, stateColors){
+  // stateColors: {current:'!color(orange)!', correct:'!color(green)!', wrong:'!color(red)!'}
+  const measures=splitMeasures(notes,bpm);
+  let abc='';
+  measures.forEach((m,mi)=>{
+    m.forEach(i=>{
+      const n=notes[i];
+      // 음표 색상 장식음(decoration)
+      let decoration='';
+      if(states && stateColors){
+        const st=states[i];
+        if(st==='current') decoration='"<span style=color:orange>▼</span>"';
       }
-      ctx.restore();
-    }catch(e){}
+      abc+=vexToABC(n.vex, n.dur)+' ';
+    });
+    abc+='| ';
   });
+  return abc.trimEnd();
 }
 
-function drawSingleStaff(wrap,notes,noteStates,bpm){
-  wrap.innerHTML='';
-  if(typeof Vex==='undefined'){wrap.innerHTML='<p style="color:#bbb;padding:10px">로딩 중...</p>';return;}
-  try{
-    const VF=Vex.Flow;
-    validateMeasureBeats(notes,bpm); // 박자 검증
-    const measures=splitMeasures(notes,bpm);
-    const cW=Math.max(wrap.clientWidth||300,300);
-    const MG=6,CW=30,TW=26;
+// 전체 ABC 문자열 생성
+function buildABCString(song, bpm, rStates, lStates, handsMode){
+  const ts=bpm+'/4';
+  let abc='';
+  if(handsMode==='both' && song.hands==='both'){
+    // 대보표: V:1 오른손, V:2 왼손
+    abc+=`X:1
+T:${song.name}
+M:${ts}
+L:1/4
+K:C
+`;
+    abc+=`V:1 clef=treble name="R.H."
+`;
+    abc+=notesToABC(song.right, bpm, rStates, null)+'
+';
+    abc+=`V:2 clef=bass name="L.H."
+`;
+    abc+=notesToABC(song.left, bpm, lStates, null)+'
+';
+  } else {
+    abc+=`X:1
+T:${song.name}
+M:${ts}
+L:1/4
+K:C
+`;
+    abc+=notesToABC(song.right, bpm, rStates, null)+'
+';
+  }
+  return abc;
+}
 
-    // 가변 레이아웃: 박자+음표수 기반 너비
-    const mWidths=measures.map(m=>{
-      let b=0,n=m.length; m.forEach(i=>{b+=beatVal(notes[i].dur);}); return Math.max(b*36,n*30)+20;
-    });
-    const extra0=CW+TW;
-    let mpr=1;
-    for(let n=measures.length;n>=1;n--){
-      if(mWidths.slice(0,n).reduce((a,b)=>a+b,0)+extra0+MG*2<=cW){mpr=n;break;}
-    }
-    mpr=Math.max(1,mpr);
-    const rows=[]; for(let i=0;i<measures.length;i+=mpr) rows.push(measures.slice(i,i+mpr));
-    const RH=118, totalH=rows.length*RH+16;
-    const renderer=new VF.Renderer(wrap,VF.Renderer.Backends.SVG);
-    renderer.resize(cW,totalH);
-    const ctx=renderer.getContext();
-
-    rows.forEach((rowM,ri)=>{
-      const y=ri*RH+12, isFirst=ri===0;
-      const rawTotal=rowM.reduce((s,m,mi)=>s+(mWidths[ri*mpr+mi]||80),0);
-      const avail=cW-MG*2-(isFirst?extra0:CW);
-      const scale=avail/rawTotal;
-      let x=MG;
-
-      rowM.forEach((idxArr,mi)=>{
-        const fm=mi===0;
-        const extra=fm?(isFirst?extra0:CW):0;
-        const sw=extra+Math.round((mWidths[ri*mpr+mi]||80)*scale);
-        const mBeat=calcMeasureBeats(idxArr,notes);
-
-        // MIDI 기반 자동 클레프 결정 (마디 내 평균)
-        const avgMidi=idxArr.reduce((s,i)=>s+vexToMidi(notes[i].vex),0)/(idxArr.length||1);
-        const clef=avgMidi>=60?'treble':'bass';
-
-        const stave=new VF.Stave(x,y,sw);
-        if(fm) stave.addClef(clef);
-        if(isFirst&&fm) stave.addTimeSignature(bpm+'/4');
-        stave.setContext(ctx).draw();
-
-        if(idxArr.length){
-          const sn=idxArr.map((i,pos)=>{
-            const n=notes[i];
-            const midi=vexToMidi(n.vex);
-            const stemDir=midi>=71?VF.Stem.DOWN:VF.Stem.UP;
-            const st=noteStates?noteStates[i]:'waiting';
-            const col=st==='current'?'#f59f00':st==='correct'?'#2f9e44':st==='wrong'?'#e03131':'#74C0FC';
-            return buildStaveNote(VF,n,clef,stemDir,col,false);
-          });
-          // Beam
-          const beams=[]; try{VF.Beam.generateBeams(sn).forEach(b=>beams.push(b));}catch(e){}
-          // Tie
-          const ties=buildTies(VF,notes,sn,idxArr);
-          // Slur
-          const slurs=buildSlurs(VF,notes,sn,idxArr);
-          const v=new VF.Voice({num_beats:mBeat,beat_value:4}).setStrict(false);
-          v.addTickables(sn);
-          new VF.Formatter().joinVoices([v]).format([v],sw-extra-14);
-          v.draw(ctx,stave);
-          beams.forEach(b=>{try{b.setContext(ctx).draw();}catch(e){}});
-          ties.forEach(t=>{try{t.setContext(ctx).draw();}catch(e){}});
-          slurs.forEach(s=>{try{s.setContext(ctx).draw();}catch(e){}});
-          drawPedal(ctx,notes,idxArr,sn,stave,y);
-        }
-        // 마디 구분선
-        if(mi<rowM.length-1){
-          ctx.save(); ctx.setStrokeStyle('#333'); ctx.setLineWidth(1.5);
-          ctx.beginPath(); ctx.moveTo(x+sw-1,y+5); ctx.lineTo(x+sw-1,y+80); ctx.stroke(); ctx.restore();
-        }
-        x+=sw;
+// 음표 상태 색상 CSS 오버레이 (ABCjs 렌더 후 SVG 수정)
+function colorizeABCNotes(svgEl, notes, states, offset){
+  if(!svgEl || !states) return;
+  // ABCjs는 음표마다 data-index 또는 순서로 접근 가능
+  // abcjs-note 클래스를 가진 요소들을 순서대로 색칠
+  const noteEls=svgEl.querySelectorAll('.abcjs-note');
+  let noteIdx=0;
+  noteEls.forEach(el=>{
+    const i=(offset||0)+noteIdx;
+    if(i<states.length){
+      const st=states[i];
+      const col=st==='current'?'#f59f00':st==='correct'?'#2f9e44':st==='wrong'?'#e03131':'#74C0FC';
+      el.querySelectorAll('path,ellipse,rect,polygon').forEach(p=>{
+        p.setAttribute('fill',col);
+        p.setAttribute('stroke',col);
       });
-    });
-  }catch(e){wrap.innerHTML=`<p style="color:#e03131;padding:10px;font-size:0.72rem">오류: ${e.message}</p>`;console.error(e);}
+    }
+    noteIdx++;
+  });
 }
 
-function drawGrandStaff(wrap,rightNotes,leftNotes,noteStates,bpm){
-  wrap.innerHTML='';
-  if(typeof Vex==='undefined'){wrap.innerHTML='<p style="color:#bbb;padding:10px">로딩 중...</p>';return;}
+function drawScoreABC(){
+  const area=document.getElementById('score-area');
+  if(!area) return;
+  area.innerHTML='';
+  const song=curSong, bpm=song.bpm||4;
+  const handsMode=curHandsMode;
+
+  // ABCjs 로딩 확인
+  if(typeof ABCJS==='undefined'){
+    area.innerHTML='<p style="color:#bbb;padding:10px;font-size:0.8rem;">악보 로딩 중...</p>';
+    loadABCjs();
+    return;
+  }
+
+  const abcStr=buildABCString(song,bpm,states,leftStates,handsMode);
+  area.innerHTML='<div id="abc-paper" style="overflow-x:auto;padding:4px 0;"></div>';
+
   try{
-    const VF=Vex.Flow;
-    validateMeasureBeats(rightNotes,bpm);
-    validateMeasureBeats(leftNotes,bpm);
-    const rM=splitMeasures(rightNotes,bpm);
-    const lM=splitMeasures(leftNotes,bpm);
-    while(lM.length<rM.length) lM.push([]);
-    while(rM.length<lM.length) rM.push([]);
-    const maxM=rM.length;
-    const cW=Math.max(wrap.clientWidth||300,300);
-    const MG=6,CW=30,TW=26;
-
-    // 가변 너비: 오른손/왼손 중 더 넓은 쪽
-    const mWidths=[];
-    for(let i=0;i<maxM;i++){
-      const rm=rM[i]||[],lm=lM[i]||[];
-      let rb=0,lb=0; rm.forEach(j=>{rb+=beatVal(rightNotes[j].dur);}); lm.forEach(j=>{lb+=beatVal(leftNotes[j].dur);});
-      mWidths.push(Math.max(rb*36,rm.length*30,lb*36,lm.length*30,90)+20);
-    }
-    const extra0=CW+TW;
-    let mpr=1;
-    for(let n=maxM;n>=1;n--){
-      if(mWidths.slice(0,n).reduce((a,b)=>a+b,0)+extra0+MG*2<=cW){mpr=n;break;}
-    }
-    mpr=Math.max(1,mpr);
-    const rows=[];
-    for(let i=0;i<maxM;i+=mpr) rows.push({r:rM.slice(i,i+mpr),l:lM.slice(i,i+mpr),w:mWidths.slice(i,i+mpr)});
-    const SH=92,GAP=10,RH=SH*2+GAP+28;
-    const totalH=rows.length*RH+16;
-    const renderer=new VF.Renderer(wrap,VF.Renderer.Backends.SVG);
-    renderer.resize(cW,totalH);
-    const ctx=renderer.getContext();
-
-    rows.forEach((row,ri)=>{
-      const baseY=ri*RH+12,rY=baseY,lY=baseY+SH+GAP;
-      const isFirst=ri===0;
-      const rawTotal=row.w.reduce((a,b)=>a+b,0);
-      const avail=cW-MG*2-(isFirst?extra0:CW);
-      const scale=avail/rawTotal;
-      // 브레이스 세로선
-      ctx.save(); ctx.setStrokeStyle('#444'); ctx.setLineWidth(2);
-      ctx.beginPath(); ctx.moveTo(MG+1,rY+6); ctx.lineTo(MG+1,lY+SH-6); ctx.stroke(); ctx.restore();
-      let x=MG;
-      const rowLen=Math.max(row.r.length,row.l.length);
-
-      for(let mi=0;mi<rowLen;mi++){
-        const fm=mi===0;
-        const extra=fm?(isFirst?extra0:CW):0;
-        const sw=extra+Math.round((row.w[mi]||90)*scale);
-        const rIdx=row.r[mi]||[],lIdx=row.l[mi]||[];
-        const isLast=mi===rowLen-1;
-
-        // 오른손 오선
-        const rStave=new VF.Stave(x,rY,sw);
-        if(fm) rStave.addClef('treble');
-        if(isFirst&&fm) rStave.addTimeSignature(bpm+'/4');
-        rStave.setContext(ctx).draw();
-        // 왼손 오선
-        const lStave=new VF.Stave(x,lY,sw);
-        if(fm) lStave.addClef('bass');
-        if(isFirst&&fm) lStave.addTimeSignature(bpm+'/4');
-        lStave.setContext(ctx).draw();
-
-        // 오른손 음표
-        if(rIdx.length){
-          let bs=0; rIdx.forEach(i=>{bs+=beatVal(rightNotes[i].dur);});
-          const sn=rIdx.map((i,pos)=>{
-            const n=rightNotes[i];
-            const st=noteStates?noteStates[i]:'waiting';
-            const col=st==='current'?'#f59f00':st==='correct'?'#2f9e44':st==='wrong'?'#e03131':'#74C0FC';
-            return buildStaveNote(VF,n,'treble',VF.Stem.UP,col,false);
-          });
-          const beams=[]; try{VF.Beam.generateBeams(sn).forEach(b=>beams.push(b));}catch(e){}
-          const ties=buildTies(VF,rightNotes,sn,rIdx);
-          const slurs=buildSlurs(VF,rightNotes,sn,rIdx);
-          const v=new VF.Voice({num_beats:bs,beat_value:4}).setStrict(false);
-          v.addTickables(sn);
-          new VF.Formatter().joinVoices([v]).format([v],sw-extra-14);
-          v.draw(ctx,rStave);
-          beams.forEach(b=>{try{b.setContext(ctx).draw();}catch(e){}});
-          ties.forEach(t=>{try{t.setContext(ctx).draw();}catch(e){}});
-          slurs.forEach(s=>{try{s.setContext(ctx).draw();}catch(e){}});
-          drawPedal(ctx,rightNotes,rIdx,sn,rStave,rY);
-        }
-
-        // 왼손 음표
-        if(lIdx.length){
-          let bs=0; lIdx.forEach(i=>{bs+=beatVal(leftNotes[i].dur);});
-          const sn=lIdx.map((i,pos)=>{
-            const n=leftNotes[i];
-            return buildStaveNote(VF,n,'bass',VF.Stem.DOWN,'#999',false);
-          });
-          const beams=[]; try{VF.Beam.generateBeams(sn).forEach(b=>beams.push(b));}catch(e){}
-          const ties=buildTies(VF,leftNotes,sn,lIdx);
-          const v=new VF.Voice({num_beats:bs,beat_value:4}).setStrict(false);
-          v.addTickables(sn);
-          new VF.Formatter().joinVoices([v]).format([v],sw-extra-14);
-          v.draw(ctx,lStave);
-          beams.forEach(b=>{try{b.setContext(ctx).draw();}catch(e){}});
-          ties.forEach(t=>{try{t.setContext(ctx).draw();}catch(e){}});
-          drawPedal(ctx,leftNotes,lIdx,sn,lStave,lY);
-        }
-
-        // 마디 구분선
-        if(!isLast){
-          ctx.save(); ctx.setStrokeStyle('#333'); ctx.setLineWidth(1.5);
-          ctx.beginPath();
-          ctx.moveTo(x+sw-1,rY+5); ctx.lineTo(x+sw-1,rY+SH-5);
-          ctx.moveTo(x+sw-1,lY+5); ctx.lineTo(x+sw-1,lY+SH-5);
-          ctx.moveTo(x+sw-1,rY+SH-5); ctx.lineTo(x+sw-1,lY+5);
-          ctx.stroke(); ctx.restore();
-        }
-        x+=sw;
-      }
+    ABCJS.renderAbc('abc-paper', abcStr, {
+      responsive: 'resize',
+      scale: 1.2,
+      staffwidth: area.clientWidth-20,
+      wrap: {minSpacing:1.8, maxSpacing:2.8, preferredMeasuresPerLine:4},
+      add_classes: true,
+      clickListener: null,
+      paddingright: 0,
+      paddingleft: 0,
     });
-  }catch(e){wrap.innerHTML=`<p style="color:#e03131;padding:10px;font-size:0.72rem">악보 오류: ${e.message}</p>`;console.error(e);}
+    // 음표 색상 적용
+    const svgEl=document.getElementById('abc-paper');
+    if(svgEl){
+      colorizeABCNotes(svgEl, song.right, states, 0);
+      if(handsMode==='both' && song.hands==='both'){
+        // 왼손은 별도 SVG 요소나 두 번째 성부
+        // ABCjs V:2 음표들은 두 번째 그룹으로 처리됨
+      }
+    }
+  }catch(e){
+    area.innerHTML=`<p style="color:#e03131;padding:10px;font-size:0.72rem">악보 오류: ${e.message}</p>`;
+    console.error(e);
+  }
+
+  document.getElementById('score-t').textContent='🎼 '+song.name+(handsMode==='both'?' · 양손':' · 오른손');
+}
+
+function loadABCjs(){
+  if(typeof ABCJS!=='undefined'){setTimeout(drawScoreABC,100);return;}
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/abcjs@6.4.4/dist/abcjs-basic-min.js';
+  s.onload=()=>setTimeout(drawScoreABC,150);
+  s.onerror=()=>{ // 폴백
+    const s2=document.createElement('script');
+    s2.src='https://unpkg.com/abcjs@6.4.4/dist/abcjs-basic-min.js';
+    s2.onload=()=>setTimeout(drawScoreABC,150);
+    document.head.appendChild(s2);
+  };
+  document.head.appendChild(s);
 }
 
 
 function drawScore(){
-  const area=document.getElementById('score-area'); area.innerHTML='';
-  const song=curSong,bpm=song.bpm||4;
-  area.innerHTML='<div class="score-wrap" id="sw-main"></div>';
-  setTimeout(()=>{
-    const wrap=document.getElementById('sw-main'); if(!wrap) return;
-    if(curHandsMode==='both'&&song.hands==='both') drawGrandStaff(wrap,song.right,song.left,states,bpm,leftStates);
-    else drawSingleStaff(wrap,song.right,states,bpm);
-  },50);
-  document.getElementById('score-t').textContent='🎼 '+song.name+(curHandsMode==='both'?' · 양손':' · 오른손');
+  // ABCjs 기반 악보 렌더링
+  if(typeof ABCJS==='undefined'){ loadABCjs(); return; }
+  drawScoreABC();
 }
 
 function drawNoteBar(){
@@ -2206,11 +2091,12 @@ function drawNoteBar(){
 }
 
 function redraw(){
-  const wrap=document.getElementById('sw-main');
-  if(wrap&&typeof Vex!=='undefined'){
-    const song=curSong,bpm=song.bpm||4;
-    if(curHandsMode==='both'&&song.hands==='both') drawGrandStaff(wrap,song.right,song.left,states,bpm,leftStates);
-    else drawSingleStaff(wrap,song.right,states,bpm);
+  // ABCjs: 음표 색상만 갱신 (매 프레임 재렌더는 느리므로 색상만 업데이트)
+  const svgEl=document.getElementById('abc-paper');
+  if(svgEl && typeof ABCJS!=='undefined'){
+    colorizeABCNotes(svgEl, curSong.right, states, 0);
+  } else if(typeof ABCJS!=='undefined'){
+    drawScoreABC();
   }
   drawNoteBar();
   updateHandIndicator();
@@ -2385,15 +2271,8 @@ function setStatus(t){
   else{em.textContent='🎵';tx.textContent='시작해볼까요?';}
 }
 
-function loadVex(){
-  if(typeof Vex!=='undefined'){setTimeout(drawScore,150);return;}
-  const s=document.createElement('script');
-  s.src='https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js';
-  s.onload=()=>setTimeout(drawScore,150);
-  s.onerror=()=>{const s2=document.createElement('script');s2.src='https://unpkg.com/vexflow@4.2.2/build/cjs/vexflow.js';s2.onload=()=>setTimeout(drawScore,150);document.head.appendChild(s2);};
-  document.head.appendChild(s);
-}
-window.addEventListener('resize',()=>{if(typeof Vex!=='undefined'&&document.getElementById('pg-prac').classList.contains('active'))drawScore();});
+function loadVex(){ loadABCjs(); } // 하위호환
+window.addEventListener('resize',()=>{if(typeof ABCJS!=='undefined'&&document.getElementById('pg-prac').classList.contains('active'))drawScoreABC();});
 
 // 🎰 핀볼 가챠 게임
 const TOTAL_BALLS=100;
