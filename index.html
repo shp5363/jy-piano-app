@@ -699,6 +699,8 @@ html {
 
 </style>
 
+<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+<script>new VConsole();</script>
 </head>
 <body>
 
@@ -1437,6 +1439,20 @@ html {
 </div>
 
 <script>
+// ── 전역 에러 캐처 ──
+window.addEventListener('error', function(e){
+  var d=document.createElement('div');
+  d.style.cssText='position:fixed;top:0;left:0;right:0;padding:12px;background:#c0392b;color:#fff;z-index:99999;font-size:13px;word-break:break-all;white-space:pre-wrap;max-height:50vh;overflow-y:auto;';
+  d.textContent='❌ JS 에러\n줄: '+(e.lineno||'?')+'\n'+e.message+'\n\n'+(e.filename||'');
+  document.body&&document.body.appendChild(d);
+});
+window.addEventListener('unhandledrejection', function(e){
+  var d=document.createElement('div');
+  d.style.cssText='position:fixed;top:0;left:0;right:0;padding:12px;background:#8e44ad;color:#fff;z-index:99999;font-size:13px;word-break:break-all;';
+  d.textContent='❌ Promise 에러\n'+(e.reason||'');
+  document.body&&document.body.appendChild(d);
+});
+
 // ── 전역 에러 캐처 (디버깅용) ──
 window.onerror = function(msg, src, line, col, err) {
   var div = document.createElement('div');
