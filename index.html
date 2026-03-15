@@ -1831,6 +1831,10 @@ function splitMeasures(notes,bpm){
   return measures;
 }
 
+function calcMeasureBeats(idxArr, notes){
+  let b=0; idxArr.forEach(i=>{b+=beatVal(notes[i].dur);}); return b;
+}
+
 function drawSingleStaff(wrap,notes,noteStates,bpm){
   wrap.innerHTML='';
   if(typeof Vex==='undefined'){wrap.innerHTML='<p style="color:#bbb;padding:10px">로딩 중...</p>';return;}
@@ -1838,41 +1842,53 @@ function drawSingleStaff(wrap,notes,noteStates,bpm){
     const VF=Vex.Flow;
     const measures=splitMeasures(notes,bpm);
     const cW=Math.max(wrap.clientWidth||300,300);
-    const CW=28,TW=24,MG=5;
-    // 마디당 최소 너비: 음표 수 × 28px (음표 간격 충분히 확보)
-    // 마디 너비 = 마디 내 박자 합산 × 픽셀 (2분음표가 4분음표보다 넓게)
-    const minMW=Math.max(120, Math.max(...measures.map(m=>{
-      let b=0; m.forEach(i=>{b+=beatVal(notes[i].dur);}); return b*36+20;
-    })));
-    const mpr=Math.max(1,Math.floor((cW-CW-TW-MG*2)/minMW));
+    const MG=6, CW=30, TW=26, BS=36; // BS=박자당픽셀
+    // 각 마디의 필요 너비 계산 (박자 기반)
+    const mBeats=measures.map(m=>calcMeasureBeats(m,notes));
+    // 한 줄에 들어갈 마디 수 계산
+    const firstRowExtra=CW+TW;
+    let mpr=1;
+    for(let n=measures.length;n>=1;n--){
+      const w=mBeats.slice(0,n).reduce((a,b)=>a+b,0)*BS+firstRowExtra+MG*2;
+      if(w<=cW){mpr=n;break;}
+    }
+    mpr=Math.max(1,mpr);
     const rows=[]; for(let i=0;i<measures.length;i+=mpr) rows.push(measures.slice(i,i+mpr));
-    const RH=100,totalH=rows.length*RH+16;
+    const RH=104, totalH=rows.length*RH+16;
     const renderer=new VF.Renderer(wrap,VF.Renderer.Backends.SVG);
-    renderer.resize(cW,totalH); const ctx=renderer.getContext();
+    renderer.resize(cW,totalH);
+    const ctx=renderer.getContext();
     rows.forEach((rowM,ri)=>{
-      const y=ri*RH+10,isFirst=ri===0;
-      const hW=isFirst?CW+TW:CW; const aW=cW-MG*2-hW;
-      const mW=Math.floor(aW/rowM.length); let x=MG;
+      const y=ri*RH+10, isFirst=ri===0;
+      // 이 줄의 마디별 너비 = 박자 비례 배분
+      const rowBeats=rowM.reduce((a,m)=>a+calcMeasureBeats(m,notes),0);
+      const avail=cW-MG*2-(isFirst?CW+TW:CW);
+      let x=MG;
       rowM.forEach((idxArr,mi)=>{
-        const fm=mi===0,sw=fm?mW+hW:mW;
+        const fm=mi===0;
+        const mBeat=calcMeasureBeats(idxArr,notes);
+        // 박자 비례로 너비 계산
+        const sw=(fm?(isFirst?CW+TW:CW):0)+Math.floor(avail*mBeat/rowBeats);
         const stave=new VF.Stave(x,y,sw);
         if(fm) stave.addClef('treble');
         if(isFirst&&fm) stave.addTimeSignature(bpm+'/4');
+        // 마지막 마디가 아니면 끝선 추가
+        if(mi<rowM.length-1) stave.setEndBarType(VF.Barline.type.SINGLE);
         stave.setContext(ctx).draw();
-        let bs=0; idxArr.forEach(i=>{bs+=beatVal(notes[i].dur);});
-        const sn=idxArr.map(i=>{
-          const n=notes[i]; const s=new VF.StaveNote({clef:'treble',keys:[n.vex],duration:n.dur});
-          const st=noteStates?noteStates[i]:'waiting';
-          const c=st==='current'?'#f59f00':st==='correct'?'#2f9e44':st==='wrong'?'#e03131':'#74C0FC';
-          s.setStyle({fillStyle:c,strokeStyle:c}); return s;
-        });
-        const v=new VF.Voice({num_beats:bs,beat_value:4}).setStrict(false);
-        v.addTickables(sn);
-        // 박자 비례 간격: 2분음표는 4분음표의 2배 폭
-        const beatSpacing = 32; // 4분음표 1박자당 픽셀
-        const propWidth = Math.max(sw-22, bs*beatSpacing);
-        new VF.Formatter().joinVoices([v]).format([v], propWidth);
-        v.draw(ctx,stave); x+=sw;
+        if(idxArr.length){
+          const sn=idxArr.map(i=>{
+            const n=notes[i];
+            const s=new VF.StaveNote({clef:'treble',keys:[n.vex],duration:n.dur});
+            const st=noteStates?noteStates[i]:'waiting';
+            const col=st==='current'?'#f59f00':st==='correct'?'#2f9e44':st==='wrong'?'#e03131':'#74C0FC';
+            s.setStyle({fillStyle:col,strokeStyle:col}); return s;
+          });
+          const v=new VF.Voice({num_beats:mBeat,beat_value:4}).setStrict(false);
+          v.addTickables(sn);
+          new VF.Formatter().joinVoices([v]).format([v], sw-(fm?(isFirst?CW+TW:CW):0)-10);
+          v.draw(ctx,stave);
+        }
+        x+=sw;
       });
     });
   }catch(e){wrap.innerHTML='<p style="color:#e03131;padding:10px;font-size:0.72rem">오류: '+e.message+'</p>';}
@@ -1889,67 +1905,95 @@ function drawGrandStaff(wrap,rightNotes,leftNotes,noteStates,bpm){
     while(rM.length<lM.length) rM.push([]);
     const maxM=rM.length;
     const cW=Math.max(wrap.clientWidth||300,300);
-    const CW=28,TW=24,MG=5;
-    const allMeasures=[...rM,...lM];
-    const minMW=Math.max(120, Math.max(...allMeasures.map(m=>{
-      if(!m||!m.length) return 120;
-      let b=0; m.forEach(i=>{b+=beatVal(rightNotes[i]?rightNotes[i].dur:leftNotes[i]?.dur||'q');});
-      return b*36+20;
-    })));
-    const mpr=Math.max(1,Math.floor((cW-CW-TW-MG*2)/minMW));
-    const rows=[]; for(let i=0;i<maxM;i+=mpr) rows.push({r:rM.slice(i,i+mpr),l:lM.slice(i,i+mpr)});
-    const SH=90,GAP=6,RH=SH*2+GAP+18;
+    const MG=6, CW=30, TW=26, BS=36;
+    // 마디별 박자 (오른손 기준)
+    const mBeats=rM.map(m=>{let b=0;m.forEach(i=>{b+=beatVal(rightNotes[i]?.dur||'q');});return b||4;});
+    // 한 줄 마디 수
+    const firstExtra=CW+TW;
+    let mpr=1;
+    for(let n=maxM;n>=1;n--){
+      const w=mBeats.slice(0,n).reduce((a,b)=>a+b,0)*BS+firstExtra+MG*2;
+      if(w<=cW){mpr=n;break;}
+    }
+    mpr=Math.max(1,mpr);
+    const rows=[];
+    for(let i=0;i<maxM;i+=mpr) rows.push({r:rM.slice(i,i+mpr),l:lM.slice(i,i+mpr),b:mBeats.slice(i,i+mpr)});
+    const SH=92, GAP=8, RH=SH*2+GAP+22;
     const totalH=rows.length*RH+16;
     const renderer=new VF.Renderer(wrap,VF.Renderer.Backends.SVG);
-    renderer.resize(cW,totalH); const ctx=renderer.getContext();
+    renderer.resize(cW,totalH);
+    const ctx=renderer.getContext();
     rows.forEach((row,ri)=>{
-      const baseY=ri*RH+10,rY=baseY,lY=baseY+SH+GAP;
+      const baseY=ri*RH+10, rY=baseY, lY=baseY+SH+GAP;
       const isFirst=ri===0;
-      const hW=isFirst?CW+TW:CW; const aW=cW-MG*2-hW;
-      const rowLen=Math.max(row.r.length,row.l.length);
-      const mW=Math.floor(aW/rowLen);
-      // 세로 연결선
-      ctx.save();ctx.setStrokeStyle('#555');ctx.setLineWidth(2);
-      ctx.beginPath();ctx.moveTo(MG+1,rY+6);ctx.lineTo(MG+1,lY+SH-6);ctx.stroke();ctx.restore();
+      const rowBeats=row.b.reduce((a,b)=>a+b,0);
+      const avail=cW-MG*2-(isFirst?CW+TW:CW);
+      // 세로 연결선 (왼쪽)
+      ctx.save();
+      ctx.setStrokeStyle('#555'); ctx.setLineWidth(2);
+      ctx.beginPath();
+      ctx.moveTo(MG+1, rY+6);
+      ctx.lineTo(MG+1, lY+SH-6);
+      ctx.stroke();
+      ctx.restore();
       let x=MG;
+      const rowLen=Math.max(row.r.length,row.l.length);
       for(let mi=0;mi<rowLen;mi++){
-        const fm=mi===0,sw=fm?mW+hW:mW;
+        const fm=mi===0;
+        const mBeat=row.b[mi]||4;
+        const extra=fm?(isFirst?CW+TW:CW):0;
+        const sw=extra+Math.floor(avail*mBeat/rowBeats);
         const rIdx=row.r[mi]||[]; const lIdx=row.l[mi]||[];
-        // 오른손
+        const isLast=mi===rowLen-1;
+        // 오른손 오선
         const rStave=new VF.Stave(x,rY,sw);
         if(fm) rStave.addClef('treble');
         if(isFirst&&fm) rStave.addTimeSignature(bpm+'/4');
+        if(!isLast) rStave.setEndBarType(VF.Barline.type.SINGLE);
         rStave.setContext(ctx).draw();
-        // 왼손
+        // 왼손 오선
         const lStave=new VF.Stave(x,lY,sw);
         if(fm) lStave.addClef('bass');
         if(isFirst&&fm) lStave.addTimeSignature(bpm+'/4');
+        if(!isLast) lStave.setEndBarType(VF.Barline.type.SINGLE);
         lStave.setContext(ctx).draw();
         // 오른손 음표
         if(rIdx.length){
           let bs=0; rIdx.forEach(i=>{bs+=beatVal(rightNotes[i].dur);});
           const sn=rIdx.map(i=>{
-            const n=rightNotes[i]; const s=new VF.StaveNote({clef:'treble',keys:[n.vex],duration:n.dur});
+            const n=rightNotes[i];
+            const s=new VF.StaveNote({clef:'treble',keys:[n.vex],duration:n.dur});
             const st=noteStates?noteStates[i]:'waiting';
-            const c=st==='current'?'#f59f00':st==='correct'?'#2f9e44':st==='wrong'?'#e03131':'#74C0FC';
-            s.setStyle({fillStyle:c,strokeStyle:c}); return s;
+            const col=st==='current'?'#f59f00':st==='correct'?'#2f9e44':st==='wrong'?'#e03131':'#74C0FC';
+            s.setStyle({fillStyle:col,strokeStyle:col}); return s;
           });
           const v=new VF.Voice({num_beats:bs,beat_value:4}).setStrict(false);
           v.addTickables(sn);
-          new VF.Formatter().joinVoices([v]).format([v], Math.max(sw-22, bs*32));
+          new VF.Formatter().joinVoices([v]).format([v], sw-extra-10);
           v.draw(ctx,rStave);
         }
         // 왼손 음표
         if(lIdx.length){
           let bs=0; lIdx.forEach(i=>{bs+=beatVal(leftNotes[i].dur);});
           const sn=lIdx.map(i=>{
-            const n=leftNotes[i]; const s=new VF.StaveNote({clef:'bass',keys:[n.vex],duration:n.dur});
-            s.setStyle({fillStyle:'#888',strokeStyle:'#888'}); return s;
+            const n=leftNotes[i];
+            const s=new VF.StaveNote({clef:'bass',keys:[n.vex],duration:n.dur});
+            s.setStyle({fillStyle:'#999',strokeStyle:'#999'}); return s;
           });
           const v=new VF.Voice({num_beats:bs,beat_value:4}).setStrict(false);
           v.addTickables(sn);
-          new VF.Formatter().joinVoices([v]).format([v], Math.max(sw-22, bs*32));
+          new VF.Formatter().joinVoices([v]).format([v], sw-extra-10);
           v.draw(ctx,lStave);
+        }
+        // 마디 사이 세로 연결선
+        if(!isLast){
+          ctx.save();
+          ctx.setStrokeStyle('#bbb'); ctx.setLineWidth(1);
+          ctx.beginPath();
+          ctx.moveTo(x+sw, rY+6);
+          ctx.lineTo(x+sw, lY+SH-6);
+          ctx.stroke();
+          ctx.restore();
         }
         x+=sw;
       }
