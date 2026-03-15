@@ -1437,16 +1437,6 @@ html {
 </div>
 
 <script>
-// ── 전역 에러 캐처 (디버깅용) ──
-window.onerror = function(msg, src, line, col, err) {
-  var div = document.createElement('div');
-  div.style.cssText = 'position:fixed;top:0;left:0;right:0;background:red;color:white;padding:10px;z-index:99999;font-size:12px;word-break:break-all;';
-  div.textContent = 'JS 에러 L'+line+': '+msg;
-  document.body && document.body.appendChild(div);
-  console.error('JS ERROR L'+line+':', msg, err);
-  return false;
-};
-
 // 곡 DB
 const SONG_DB=[
   {id:'butterfly',name:'나비야',emoji:'🦋',tags:{book:'동요',genre:'동요',level:'입문',hands:'오른손'},bpm:4,hands:'right',right:[
@@ -3180,11 +3170,9 @@ function equipItem(itemId){
   if(previewEquip[item.type]===itemId){ delete previewEquip[item.type]; }
   else previewEquip[item.type] = itemId;
   myChar.equipped = {...previewEquip};
-  saveCharLocal(); // 장착 즉시 저장
   renderCharSVG('ce-preview-div', previewEquip);
   renderCESlots();
   renderCEInv(invCurrentCat);
-  renderPodiumTo('podium-wrap-home'); // 시상대 갱신
 }
 function resetEquip(){
   previewEquip = {};
@@ -3301,22 +3289,27 @@ function buyItem(){
   updateVillagePts();
   updateLevelUI();
   document.getElementById('shop-buy-bar').classList.remove('show');
-  updateShopCharPreview(null); // 상점 미리보기 갱신
+  updateShopCharPreview(null);
   renderShopGrid(shopCurrentCat);
-  // 캐릭터 탭 미리보기도 즉시 갱신
-  if(document.getElementById('ce-preview-div')){
-    previewEquip={...(myChar.equipped||{})};
-    renderCharSVG('ce-preview-div', previewEquip);
-    renderCESlots();
-  }
-  // 홈 시상대도 갱신
-  renderPodiumTo('podium-wrap-home');
   alert(item.name+' 구매 완료! (잔여 '+totalPoints+'p)');
 }
 
 // ── 마을 꾸미기 (캔버스) ──
 let townCtx, townW, townH, townAnimId=null;
+// 마을 시스템 제거됨
 
+const TOWN_OBJECTS = [
+  {id:'tree1',ico:'🌳',name:'나무',pts:30},
+  {id:'flower1',ico:'🌸',name:'벚꽃나무',pts:40},
+  {id:'bench1',ico:'🪑',name:'벤치',pts:25},
+  {id:'lamp1',ico:'💡',name:'가로등',pts:20},
+  {id:'fountain1',ico:'⛲',name:'분수대',pts:80},
+  {id:'pond1',ico:'🫧',name:'연못',pts:60},
+  {id:'piano1',ico:'🎹',name:'야외 피아노',pts:100},
+  {id:'note1',ico:'🎵',name:'음표 조각',pts:35},
+  {id:'flag1',ico:'🚩',name:'깃발',pts:15},
+  {id:'mailbox1',ico:'📮',name:'우체통',pts:20},
+];
 
 // ── 아이소메트릭 좌표 변환 (넓은 섬 맵) ──
 
@@ -3603,43 +3596,73 @@ function deleteStudent(id){
 function getMungCharHTML(char, scale){
   scale=scale||1.0;
   if(!char) return '<span style="font-size:3rem">🐣</span>';
-  var s=scale;
-  var tc=char.topColor||'#4ECDC4';
-  var bc=char.botColor||'#5C6BC0';
-  var eq=char.equipped||{};
-  var _i=function(id){var it=ITEM_DB&&ITEM_DB.find(function(x){return x.id===id;});return it?it.ico:'';};
-  var _c=function(id){var it=ITEM_DB&&ITEM_DB.find(function(x){return x.id===id;});return it?it.color:'#aaa';};
-  var hairC=eq['머리']?_c(eq['머리']):(char.gender==='f'?'#8B4513':'#1a1a1a');
-  var shoeC=eq['신발']?_c(eq['신발']):(char.gender==='f'?'#FF4D7D':'#2C3E50');
-  var gloveC=eq['장갑']?_c(eq['장갑']):null;
-  var bagC=eq['가방']?_c(eq['가방']):null;
-  var hatIco=eq['모자']?_i(eq['모자']):null;
-  var hasGlasses=!!(eq['안경']);
-  var glassC=hasGlasses?_c(eq['안경']):'#333';
-  var accC=eq['머리']?_c(eq['머리']):'#FF6B6B';
-  var isFemale=char.gender==='f';
-  var R=function(n){return Math.round(n*s);};
-  var w=R(80), h=R(130);
+  const s=scale;
+  const tc=char.topColor||'#4ECDC4';
+  const bc=char.botColor||'#5C6BC0';
+  const hairC=char.hairColor||'#4A3728';
+  const skinC=char.skinColor||'#FDBCB4';
+  const isFemale=char.gender==='f';
+  const eq=char.equipped||{};
+  const bagC=eq['가방']?getItemColor(eq['가방']):null;
+  const hatIco=eq['모자']?getItemIco(eq['모자']):null;
+  const hasGlasses=!!(eq['안경']);
+  const glassC=hasGlasses?getItemColor(eq['안경']):'#333';
+  const w=Math.round(80*s), h=Math.round(110*s);
 
-  var shadow='<div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:'+R(44)+'px;height:'+R(7)+'px;background:rgba(0,0,0,0.13);border-radius:50%;z-index:1;"></div>';
-  var legL='<div style="position:absolute;bottom:'+R(11)+'px;left:'+R(21)+'px;z-index:2;"><div style="width:'+R(14)+'px;height:'+R(18)+'px;background:'+bc+';border:'+R(2.5)+'px solid #333;border-top:none;border-radius:0 0 '+R(7)+'px '+R(7)+'px;"></div><div style="width:'+R(19)+'px;height:'+R(8)+'px;background:'+shoeC+';border:'+R(2)+'px solid #333;border-radius:50% 50% 40% 40%/60% 60% 40% 40%;margin-left:-'+R(2)+'px;margin-top:-'+R(2)+'px;"></div></div>';
-  var legR='<div style="position:absolute;bottom:'+R(11)+'px;right:'+R(21)+'px;z-index:2;"><div style="width:'+R(14)+'px;height:'+R(18)+'px;background:'+bc+';border:'+R(2.5)+'px solid #333;border-top:none;border-radius:0 0 '+R(7)+'px '+R(7)+'px;"></div><div style="width:'+R(19)+'px;height:'+R(8)+'px;background:'+shoeC+';border:'+R(2)+'px solid #333;border-radius:50% 50% 40% 40%/60% 60% 40% 40%;margin-left:-'+R(2)+'px;margin-top:-'+R(2)+'px;"></div></div>';
-  var gloveSkin=gloveC||'#FDDCB5';
-  var armL='<div style="position:absolute;top:'+R(54)+'px;left:'+R(1)+'px;width:'+R(15)+'px;height:'+R(26)+'px;background:'+tc+';border:'+R(2.5)+'px solid #333;border-radius:'+R(9)+'px;transform:rotate(-22deg);z-index:3;"><div style="position:absolute;bottom:-'+R(7)+'px;right:-'+R(4)+'px;width:'+R(12)+'px;height:'+R(12)+'px;background:'+gloveSkin+';border:'+R(2)+'px solid #333;border-radius:50%;"></div></div>';
-  var armR='<div style="position:absolute;top:'+R(54)+'px;right:'+R(1)+'px;width:'+R(15)+'px;height:'+R(26)+'px;background:'+tc+';border:'+R(2.5)+'px solid #333;border-radius:'+R(9)+'px;transform:rotate(22deg);z-index:3;"><div style="position:absolute;bottom:-'+R(7)+'px;left:-'+R(4)+'px;width:'+R(12)+'px;height:'+R(12)+'px;background:'+gloveSkin+';border:'+R(2)+'px solid #333;border-radius:50%;"></div></div>';
-  var bag=bagC?'<div style="position:absolute;top:'+R(52)+'px;right:-'+R(3)+'px;width:'+R(13)+'px;height:'+R(17)+'px;background:'+bagC+';border:'+R(2)+'px solid #333;border-radius:'+R(4)+'px;z-index:3;"></div>':'';
-  var body='<div style="position:absolute;top:'+R(50)+'px;left:'+R(14)+'px;width:'+R(52)+'px;height:'+R(40)+'px;background:'+tc+';border:'+R(2.5)+'px solid #333;border-radius:50% 50% 45% 45%/35% 35% 55% 55%;z-index:4;"></div>';
-  var hairBack='<div style="position:absolute;top:'+R(2)+'px;left:'+R(6)+'px;width:'+R(68)+'px;height:'+R(60)+'px;background:'+hairC+';border:'+R(2.5)+'px solid #333;border-radius:50%;z-index:5;">'+(isFemale?'<div style="position:absolute;left:-'+R(8)+'px;top:'+R(16)+'px;width:'+R(12)+'px;height:'+R(30)+'px;background:'+hairC+';border:'+R(2)+'px solid #333;border-radius:'+R(8)+'px;"></div><div style="position:absolute;right:-'+R(8)+'px;top:'+R(16)+'px;width:'+R(12)+'px;height:'+R(30)+'px;background:'+hairC+';border:'+R(2)+'px solid #333;border-radius:'+R(8)+'px;"></div>':'')+'</div>';
-  var glasses=hasGlasses?'<div style="position:absolute;top:'+R(20)+'px;left:'+R(9)+'px;width:'+R(18)+'px;height:'+R(13)+'px;border:'+R(2)+'px solid '+glassC+';border-radius:'+R(4)+'px;background:rgba(100,200,255,0.1);"></div><div style="position:absolute;top:'+R(20)+'px;right:'+R(9)+'px;width:'+R(18)+'px;height:'+R(13)+'px;border:'+R(2)+'px solid '+glassC+';border-radius:'+R(4)+'px;background:rgba(100,200,255,0.1);"></div><div style="position:absolute;top:'+R(25)+'px;left:'+R(27)+'px;width:'+R(10)+'px;height:'+R(2)+'px;background:'+glassC+';"></div>':'';
-  var face='<div style="position:absolute;top:'+R(4)+'px;left:'+R(8)+'px;width:'+R(64)+'px;height:'+R(60)+'px;background:#FDDCB5;border:'+R(2.5)+'px solid #333;border-radius:50%;z-index:6;"><div style="position:absolute;top:'+R(32)+'px;left:'+R(4)+'px;width:'+R(13)+'px;height:'+R(7)+'px;background:rgba(255,140,120,0.38);border-radius:50%;"></div><div style="position:absolute;top:'+R(32)+'px;right:'+R(4)+'px;width:'+R(13)+'px;height:'+R(7)+'px;background:rgba(255,140,120,0.38);border-radius:50%;"></div><div style="position:absolute;top:'+R(24)+'px;left:'+R(12)+'px;width:'+R(13)+'px;height:'+R(3)+'px;background:#333;border-radius:'+R(2)+'px;"></div><div style="position:absolute;top:'+R(24)+'px;right:'+R(12)+'px;width:'+R(13)+'px;height:'+R(3)+'px;background:#333;border-radius:'+R(2)+'px;"></div>'+glasses+'<div style="position:absolute;bottom:'+R(10)+'px;left:'+R(21)+'px;width:'+R(17)+'px;height:'+R(3)+'px;background:#333;border-radius:'+R(2)+'px;transform:rotate(8deg);"></div></div>';
-  var hairFront='<div style="position:absolute;top:'+R(2)+'px;left:'+R(8)+'px;width:'+R(64)+'px;height:'+R(22)+'px;background:'+hairC+';border:'+R(2)+'px solid #333;border-radius:50% 50% 0 0;border-bottom:none;z-index:7;clip-path:polygon(0 0,100% 0,100% 55%,88% 78%,74% 52%,60% 78%,46% 52%,32% 78%,18% 52%,0 78%);"></div>';
-  var ribbon=isFemale?'<div style="position:absolute;top:-'+R(2)+'px;right:'+R(10)+'px;width:'+R(11)+'px;height:'+R(11)+'px;background:'+accC+';border:'+R(2)+'px solid #333;border-radius:50%;z-index:8;"></div>':'';
-  var hat=hatIco?'<div style="position:absolute;top:-'+R(10)+'px;left:50%;transform:translateX(-50%);font-size:'+R(22)+'px;z-index:9;line-height:1;">'+hatIco+'</div>':'';
+  // 각 파트를 개행 없는 문자열로 조합
+  const shadow='<div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:'+Math.round(60*s)+'px;height:'+Math.round(8*s)+'px;background:rgba(0,0,0,0.10);border-radius:50%;z-index:1;"></div>';
 
-  return '<div style="position:relative;width:'+w+'px;height:'+h+'px;animation:mungFloat 2.8s ease-in-out infinite;flex-shrink:0;isolation:isolate;">'
-    +shadow+legL+legR+armL+armR+bag+body+hairBack+face+hairFront+ribbon+hat
-    +'</div>';
+  const bootL='<div style="position:absolute;bottom:0;left:'+Math.round(14*s)+'px;width:'+Math.round(18*s)+'px;height:'+Math.round(22*s)+'px;background:#333;border-radius:'+Math.round(4*s)+'px '+Math.round(4*s)+'px 0 0;z-index:2;"></div>';
+  const bootR='<div style="position:absolute;bottom:0;right:'+Math.round(14*s)+'px;width:'+Math.round(18*s)+'px;height:'+Math.round(22*s)+'px;background:#333;border-radius:'+Math.round(4*s)+'px '+Math.round(4*s)+'px 0 0;z-index:2;"></div>';
+
+  const legL='<div style="position:absolute;bottom:'+Math.round(18*s)+'px;left:'+Math.round(18*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(22*s)+'px;background:'+bc+';z-index:2;"></div>';
+  const legR='<div style="position:absolute;bottom:'+Math.round(18*s)+'px;right:'+Math.round(18*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(22*s)+'px;background:'+bc+';z-index:2;"></div>';
+
+  const armL='<div style="position:absolute;top:'+Math.round(35*s)+'px;left:-'+Math.round(6*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(28*s)+'px;background:'+tc+';border-radius:'+Math.round(5*s)+'px;z-index:3;border:'+Math.round(2*s)+'px solid #333;"></div>';
+  const armR='<div style="position:absolute;top:'+Math.round(35*s)+'px;right:-'+Math.round(6*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(28*s)+'px;background:'+tc+';border-radius:'+Math.round(5*s)+'px;z-index:3;border:'+Math.round(2*s)+'px solid #333;"></div>';
+
+  const body='<div style="position:absolute;bottom:'+Math.round(36*s)+'px;left:'+Math.round(10*s)+'px;width:'+Math.round(60*s)+'px;height:'+Math.round(42*s)+'px;background:'+tc+';border-radius:'+Math.round(8*s)+'px '+Math.round(8*s)+'px 0 0;z-index:4;border:'+Math.round(2*s)+'px solid #333;">'+armL+armR+'</div>';
+
+  const faceBase='background:'+skinC+';border-radius:50%;border:'+Math.round(2*s)+'px solid #333;';
+  const eyeL='<div style="position:absolute;top:'+Math.round(10*s)+'px;left:'+Math.round(10*s)+'px;width:'+Math.round(12*s)+'px;height:'+Math.round(3*s)+'px;background:#333;border-radius:2px;"></div>';
+  const eyeR='<div style="position:absolute;top:'+Math.round(10*s)+'px;right:'+Math.round(10*s)+'px;width:'+Math.round(12*s)+'px;height:'+Math.round(3*s)+'px;background:#333;border-radius:2px;"></div>';
+  const mouth='<div style="position:absolute;bottom:'+Math.round(8*s)+'px;left:50%;transform:translateX(-50%) rotate(-5deg);width:'+Math.round(16*s)+'px;height:'+Math.round(2*s)+'px;background:#333;border-radius:2px;"></div>';
+  const glasses=hasGlasses?'<div style="position:absolute;top:'+Math.round(9*s)+'px;left:'+Math.round(8*s)+'px;width:'+Math.round(18*s)+'px;height:'+Math.round(13*s)+'px;border:'+Math.round(2*s)+'px solid '+glassC+';border-radius:'+Math.round(4*s)+'px;background:rgba(100,200,255,0.1);"></div>':'';
+  const face='<div style="position:absolute;top:'+Math.round(4*s)+'px;left:'+Math.round(8*s)+'px;width:'+Math.round(64*s)+'px;height:'+Math.round(64*s)+'px;'+faceBase+'z-index:6;">'+eyeL+eyeR+mouth+glasses+'</div>';
+
+  const hairBack=isFemale?'<div style="position:absolute;top:0;left:'+Math.round(6*s)+'px;width:'+Math.round(68*s)+'px;height:'+Math.round(50*s)+'px;background:'+hairC+';border-radius:'+Math.round(20*s)+'px '+Math.round(20*s)+'px 0 0;z-index:5;border:'+Math.round(2*s)+'px solid #333;"></div>':'';
+  const hairFront=isFemale
+    ?'<div style="position:absolute;top:-'+Math.round(2*s)+'px;left:'+Math.round(5*s)+'px;width:'+Math.round(70*s)+'px;height:'+Math.round(28*s)+'px;background:'+hairC+';border-radius:'+Math.round(16*s)+'px '+Math.round(16*s)+'px 0 0;z-index:7;border:'+Math.round(2*s)+'px solid #333;"></div>'
+    :'<div style="position:absolute;top:-'+Math.round(4*s)+'px;left:50%;transform:translateX(-50%);width:'+Math.round(24*s)+'px;height:'+Math.round(18*s)+'px;background:'+hairC+';border-radius:'+Math.round(6*s)+'px;z-index:7;border:'+Math.round(2*s)+'px solid #333;"></div>';
+  const ribbon=isFemale?'<div style="position:absolute;top:-'+Math.round(6*s)+'px;right:'+Math.round(4*s)+'px;font-size:'+Math.round(14*s)+'px;z-index:8;">🎀</div>':'';
+  const hat=hatIco?'<div style="position:absolute;top:-'+Math.round(10*s)+'px;left:50%;transform:translateX(-50%);font-size:'+Math.round(22*s)+'px;z-index:9;line-height:1;">'+hatIco+'</div>':'';
+
+  const bagDiv=bagC?'<div style="position:absolute;top:'+Math.round(40*s)+'px;right:-'+Math.round(3*s)+'px;width:'+Math.round(13*s)+'px;height:'+Math.round(17*s)+'px;background:'+bagC+';border:'+Math.round(2*s)+'px solid #333;border-radius:'+Math.round(4*s)+'px;z-index:3;"></div>':'';
+  const hairLong=isFemale?'<div style="position:absolute;top:'+Math.round(50*s)+'px;left:'+Math.round(14*s)+'px;width:'+Math.round(52*s)+'px;height:'+Math.round(40*s)+'px;background:'+hairC+';border-radius:0 0 '+Math.round(10*s)+'px '+Math.round(10*s)+'px;z-index:5;border:'+Math.round(2*s)+'px solid #333;"></div>':'';
+  const accDiv=isFemale?'<div style="position:absolute;top:'+Math.round(30*s)+'px;right:'+Math.round(10*s)+'px;width:'+Math.round(11*s)+'px;height:'+Math.round(11*s)+'px;background:#FF6B6B;border:'+Math.round(2*s)+'px solid #333;border-radius:50%;z-index:8;"></div>':'';
+
+  return '<div style="position:relative;width:'+w+'px;height:'+h+'px;animation:mungFloat 2.8s ease-in-out infinite;flex-shrink:0;isolation:isolate;">'+shadow+bootL+bootR+legL+legR+body+hairBack+hairLong+face+hairFront+ribbon+hat+bagDiv+accDiv+'</div>';
 }
 
 
+// 단상용 캐릭터 SVG (작은 버전)
+function getPodiumCharSVG(student){
+  // 현재 로그인한 학생이면 myChar, 아니면 기본 캐릭터
+  const isMe = currentStudent && student.isMe;
+  const charData = isMe && myChar ? myChar : null;
+  if(!charData) return getMungCharHTML({gender:'f',topColor:'#4ECDC4',botColor:'#5C6BC0',equipped:{}}, 0.45);
+  return getMungCharHTML(charData, 0.45);
+}
 
+// ── 초기화 ──
+renderCatGrid('book');
+renderPrizesInfo();
+updateRewardUI();
+updateLevelUI();
+renderPodium();
+document.getElementById('bar-song').textContent='홈';
+updateHomeTab();
+setTimeout(()=>openLoginModal(), 400);
+</script>
+</body>
+</html>
