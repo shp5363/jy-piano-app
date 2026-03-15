@@ -3170,9 +3170,11 @@ function equipItem(itemId){
   if(previewEquip[item.type]===itemId){ delete previewEquip[item.type]; }
   else previewEquip[item.type] = itemId;
   myChar.equipped = {...previewEquip};
+  saveCharLocal(); // 장착 즉시 저장
   renderCharSVG('ce-preview-div', previewEquip);
   renderCESlots();
   renderCEInv(invCurrentCat);
+  renderPodiumTo('podium-wrap-home'); // 시상대 갱신
 }
 function resetEquip(){
   previewEquip = {};
@@ -3289,8 +3291,16 @@ function buyItem(){
   updateVillagePts();
   updateLevelUI();
   document.getElementById('shop-buy-bar').classList.remove('show');
-  updateShopCharPreview(null);
+  updateShopCharPreview(null); // 상점 미리보기 갱신
   renderShopGrid(shopCurrentCat);
+  // 캐릭터 탭 미리보기도 즉시 갱신
+  if(document.getElementById('ce-preview-div')){
+    previewEquip={...(myChar.equipped||{})};
+    renderCharSVG('ce-preview-div', previewEquip);
+    renderCESlots();
+  }
+  // 홈 시상대도 갱신
+  renderPodiumTo('podium-wrap-home');
   alert(item.name+' 구매 완료! (잔여 '+totalPoints+'p)');
 }
 
@@ -3597,72 +3607,60 @@ function getMungCharHTML(char, scale){
   scale=scale||1.0;
   if(!char) return '<span style="font-size:3rem">🐣</span>';
   const s=scale;
+  const isFemale=char.gender==='f';
   const tc=char.topColor||'#4ECDC4';
   const bc=char.botColor||'#5C6BC0';
-  const hairC=char.hairColor||'#4A3728';
-  const skinC=char.skinColor||'#FDBCB4';
-  const isFemale=char.gender==='f';
+  const skinC=char.skinColor||(isFemale?'#FDBCB4':'#D4956A');
+  const hairC=char.hairColor||(isFemale?'#8B4513':'#1a1a1a');
   const eq=char.equipped||{};
-  const bagC=eq['가방']?getItemColor(eq['가방']):null;
   const hatIco=eq['모자']?getItemIco(eq['모자']):null;
   const hasGlasses=!!(eq['안경']);
   const glassC=hasGlasses?getItemColor(eq['안경']):'#333';
-  const w=Math.round(80*s), h=Math.round(110*s);
+  const bagC=eq['가방']?getItemColor(eq['가방']):null;
+  const w=Math.round(72*s), h=Math.round(100*s);
+  const R=n=>Math.round(n*s);
 
-  // 각 파트를 개행 없는 문자열로 조합
-  const shadow='<div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:'+Math.round(60*s)+'px;height:'+Math.round(8*s)+'px;background:rgba(0,0,0,0.10);border-radius:50%;z-index:1;"></div>';
+  const shadow='<div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:'+R(54)+'px;height:'+R(7)+'px;background:rgba(0,0,0,0.12);border-radius:50%;z-index:1;"></div>';
+  const bootL='<div style="position:absolute;bottom:0;left:'+R(10)+'px;width:'+R(16)+'px;height:'+R(20)+'px;background:#222;border-radius:'+R(4)+'px '+R(4)+'px 0 0;z-index:2;"></div>';
+  const bootR='<div style="position:absolute;bottom:0;right:'+R(10)+'px;width:'+R(16)+'px;height:'+R(20)+'px;background:#222;border-radius:'+R(4)+'px '+R(4)+'px 0 0;z-index:2;"></div>';
+  const legL='<div style="position:absolute;bottom:'+R(18)+'px;left:'+R(14)+'px;width:'+R(13)+'px;height:'+R(20)+'px;background:'+bc+';border:'+R(1.5)+'px solid #333;z-index:2;"></div>';
+  const legR='<div style="position:absolute;bottom:'+R(18)+'px;right:'+R(14)+'px;width:'+R(13)+'px;height:'+R(20)+'px;background:'+bc+';border:'+R(1.5)+'px solid #333;z-index:2;"></div>';
+  const armL='<div style="position:absolute;top:'+R(36)+'px;left:-'+R(8)+'px;width:'+R(13)+'px;height:'+R(26)+'px;background:'+tc+';border-radius:'+R(5)+'px;border:'+R(1.5)+'px solid #333;z-index:3;transform:rotate(10deg);"></div>';
+  const armR='<div style="position:absolute;top:'+R(36)+'px;right:-'+R(8)+'px;width:'+R(13)+'px;height:'+R(26)+'px;background:'+tc+';border-radius:'+R(5)+'px;border:'+R(1.5)+'px solid #333;z-index:3;transform:rotate(-10deg);"></div>';
+  const body='<div style="position:absolute;bottom:'+R(34)+'px;left:'+R(8)+'px;width:'+R(56)+'px;height:'+R(40)+'px;background:'+tc+';border-radius:'+R(8)+'px '+R(8)+'px 0 0;border:'+R(1.5)+'px solid #333;z-index:4;">'+armL+armR+'</div>';
 
-  const bootL='<div style="position:absolute;bottom:0;left:'+Math.round(14*s)+'px;width:'+Math.round(18*s)+'px;height:'+Math.round(22*s)+'px;background:#333;border-radius:'+Math.round(4*s)+'px '+Math.round(4*s)+'px 0 0;z-index:2;"></div>';
-  const bootR='<div style="position:absolute;bottom:0;right:'+Math.round(14*s)+'px;width:'+Math.round(18*s)+'px;height:'+Math.round(22*s)+'px;background:#333;border-radius:'+Math.round(4*s)+'px '+Math.round(4*s)+'px 0 0;z-index:2;"></div>';
+  // 눈
+  const eyeL='<div style="position:absolute;top:'+R(22)+'px;left:'+R(12)+'px;width:'+R(13)+'px;height:'+R(3)+'px;background:#333;border-radius:2px;"></div>';
+  const eyeR='<div style="position:absolute;top:'+R(22)+'px;right:'+R(12)+'px;width:'+R(13)+'px;height:'+R(3)+'px;background:#333;border-radius:2px;"></div>';
+  // 입
+  const mouth='<div style="position:absolute;bottom:'+R(12)+'px;left:50%;transform:translateX(-50%) rotate(-4deg);width:'+R(14)+'px;height:'+R(2.5)+'px;background:#555;border-radius:2px;"></div>';
+  // 안경
+  const glasses=hasGlasses
+    ?'<div style="position:absolute;top:'+R(20)+'px;left:'+R(9)+'px;width:'+R(20)+'px;height:'+R(12)+'px;border:'+R(2)+'px solid '+glassC+';border-radius:'+R(4)+'px;background:rgba(100,200,255,0.15);"></div>'
+    :'';
+  // 얼굴
+  const face='<div style="position:absolute;top:'+R(6)+'px;left:'+R(6)+'px;width:'+R(60)+'px;height:'+R(58)+'px;background:'+skinC+';border-radius:50%;border:'+R(2)+'px solid #333;z-index:6;">'+eyeL+eyeR+mouth+glasses+'</div>';
 
-  const legL='<div style="position:absolute;bottom:'+Math.round(18*s)+'px;left:'+Math.round(18*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(22*s)+'px;background:'+bc+';z-index:2;"></div>';
-  const legR='<div style="position:absolute;bottom:'+Math.round(18*s)+'px;right:'+Math.round(18*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(22*s)+'px;background:'+bc+';z-index:2;"></div>';
-
-  const armL='<div style="position:absolute;top:'+Math.round(35*s)+'px;left:-'+Math.round(6*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(28*s)+'px;background:'+tc+';border-radius:'+Math.round(5*s)+'px;z-index:3;border:'+Math.round(2*s)+'px solid #333;"></div>';
-  const armR='<div style="position:absolute;top:'+Math.round(35*s)+'px;right:-'+Math.round(6*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(28*s)+'px;background:'+tc+';border-radius:'+Math.round(5*s)+'px;z-index:3;border:'+Math.round(2*s)+'px solid #333;"></div>';
-
-  const body='<div style="position:absolute;bottom:'+Math.round(36*s)+'px;left:'+Math.round(10*s)+'px;width:'+Math.round(60*s)+'px;height:'+Math.round(42*s)+'px;background:'+tc+';border-radius:'+Math.round(8*s)+'px '+Math.round(8*s)+'px 0 0;z-index:4;border:'+Math.round(2*s)+'px solid #333;">'+armL+armR+'</div>';
-
-  const faceBase='background:'+skinC+';border-radius:50%;border:'+Math.round(2*s)+'px solid #333;';
-  const eyeL='<div style="position:absolute;top:'+Math.round(10*s)+'px;left:'+Math.round(10*s)+'px;width:'+Math.round(12*s)+'px;height:'+Math.round(3*s)+'px;background:#333;border-radius:2px;"></div>';
-  const eyeR='<div style="position:absolute;top:'+Math.round(10*s)+'px;right:'+Math.round(10*s)+'px;width:'+Math.round(12*s)+'px;height:'+Math.round(3*s)+'px;background:#333;border-radius:2px;"></div>';
-  const mouth='<div style="position:absolute;bottom:'+Math.round(8*s)+'px;left:50%;transform:translateX(-50%) rotate(-5deg);width:'+Math.round(16*s)+'px;height:'+Math.round(2*s)+'px;background:#333;border-radius:2px;"></div>';
-  const glasses=hasGlasses?'<div style="position:absolute;top:'+Math.round(9*s)+'px;left:'+Math.round(8*s)+'px;width:'+Math.round(18*s)+'px;height:'+Math.round(13*s)+'px;border:'+Math.round(2*s)+'px solid '+glassC+';border-radius:'+Math.round(4*s)+'px;background:rgba(100,200,255,0.1);"></div>':'';
-  const face='<div style="position:absolute;top:'+Math.round(4*s)+'px;left:'+Math.round(8*s)+'px;width:'+Math.round(64*s)+'px;height:'+Math.round(64*s)+'px;'+faceBase+'z-index:6;">'+eyeL+eyeR+mouth+glasses+'</div>';
-
-  const hairBack=isFemale?'<div style="position:absolute;top:0;left:'+Math.round(6*s)+'px;width:'+Math.round(68*s)+'px;height:'+Math.round(50*s)+'px;background:'+hairC+';border-radius:'+Math.round(20*s)+'px '+Math.round(20*s)+'px 0 0;z-index:5;border:'+Math.round(2*s)+'px solid #333;"></div>':'';
+  // 머리카락
+  const hairBackBase='position:absolute;background:'+hairC+';border:'+R(1.5)+'px solid #333;z-index:5;';
+  const hairBack=isFemale
+    ?'<div style="'+hairBackBase+'top:0;left:'+R(4)+'px;width:'+R(64)+'px;height:'+R(46)+'px;border-radius:'+R(18)+'px '+R(18)+'px 0 0;"></div>'
+    :'<div style="'+hairBackBase+'top:0;left:'+R(4)+'px;width:'+R(64)+'px;height:'+R(38)+'px;border-radius:'+R(16)+'px '+R(16)+'px 0 0;"></div>';
+  const hairLong=isFemale
+    ?'<div style="position:absolute;top:'+R(46)+'px;left:'+R(8)+'px;width:'+R(56)+'px;height:'+R(34)+'px;background:'+hairC+';border-radius:0 0 '+R(10)+'px '+R(10)+'px;border:'+R(1.5)+'px solid #333;z-index:5;"></div>'
+    :'';
   const hairFront=isFemale
-    ?'<div style="position:absolute;top:-'+Math.round(2*s)+'px;left:'+Math.round(5*s)+'px;width:'+Math.round(70*s)+'px;height:'+Math.round(28*s)+'px;background:'+hairC+';border-radius:'+Math.round(16*s)+'px '+Math.round(16*s)+'px 0 0;z-index:7;border:'+Math.round(2*s)+'px solid #333;"></div>'
-    :'<div style="position:absolute;top:-'+Math.round(4*s)+'px;left:50%;transform:translateX(-50%);width:'+Math.round(24*s)+'px;height:'+Math.round(18*s)+'px;background:'+hairC+';border-radius:'+Math.round(6*s)+'px;z-index:7;border:'+Math.round(2*s)+'px solid #333;"></div>';
-  const ribbon=isFemale?'<div style="position:absolute;top:-'+Math.round(6*s)+'px;right:'+Math.round(4*s)+'px;font-size:'+Math.round(14*s)+'px;z-index:8;">🎀</div>':'';
-  const hat=hatIco?'<div style="position:absolute;top:-'+Math.round(10*s)+'px;left:50%;transform:translateX(-50%);font-size:'+Math.round(22*s)+'px;z-index:9;line-height:1;">'+hatIco+'</div>':'';
+    ?'<div style="position:absolute;top:0;left:'+R(4)+'px;width:'+R(64)+'px;height:'+R(26)+'px;background:'+hairC+';border-radius:'+R(14)+'px '+R(14)+'px 0 0;border:'+R(1.5)+'px solid #333;z-index:7;"></div>'
+    :'<div style="position:absolute;top:-'+R(3)+'px;left:50%;transform:translateX(-50%);width:'+R(20)+'px;height:'+R(16)+'px;background:'+hairC+';border-radius:'+R(5)+'px;border:'+R(1.5)+'px solid #333;z-index:7;"></div>';
+  const ribbon=isFemale
+    ?'<div style="position:absolute;top:-'+R(4)+'px;right:'+R(2)+'px;font-size:'+R(13)+'px;z-index:8;line-height:1;">🎀</div>'
+    :'';
+  const hat=hatIco?'<div style="position:absolute;top:-'+R(12)+'px;left:50%;transform:translateX(-50%);font-size:'+R(20)+'px;z-index:9;line-height:1;filter:drop-shadow(0 1px 1px rgba(0,0,0,0.3));">'+hatIco+'</div>':'';
+  const bag=bagC?'<div style="position:absolute;top:'+R(38)+'px;right:-'+R(4)+'px;width:'+R(12)+'px;height:'+R(16)+'px;background:'+bagC+';border:'+R(1.5)+'px solid #333;border-radius:'+R(3)+'px;z-index:3;"></div>':'';
 
-  const bagDiv=bagC?'<div style="position:absolute;top:'+Math.round(40*s)+'px;right:-'+Math.round(3*s)+'px;width:'+Math.round(13*s)+'px;height:'+Math.round(17*s)+'px;background:'+bagC+';border:'+Math.round(2*s)+'px solid #333;border-radius:'+Math.round(4*s)+'px;z-index:3;"></div>':'';
-  const hairLong=isFemale?'<div style="position:absolute;top:'+Math.round(50*s)+'px;left:'+Math.round(14*s)+'px;width:'+Math.round(52*s)+'px;height:'+Math.round(40*s)+'px;background:'+hairC+';border-radius:0 0 '+Math.round(10*s)+'px '+Math.round(10*s)+'px;z-index:5;border:'+Math.round(2*s)+'px solid #333;"></div>':'';
-  const accDiv=isFemale?'<div style="position:absolute;top:'+Math.round(30*s)+'px;right:'+Math.round(10*s)+'px;width:'+Math.round(11*s)+'px;height:'+Math.round(11*s)+'px;background:#FF6B6B;border:'+Math.round(2*s)+'px solid #333;border-radius:50%;z-index:8;"></div>':'';
-
-  return '<div style="position:relative;width:'+w+'px;height:'+h+'px;animation:mungFloat 2.8s ease-in-out infinite;flex-shrink:0;isolation:isolate;">'+shadow+bootL+bootR+legL+legR+body+hairBack+hairLong+face+hairFront+ribbon+hat+bagDiv+accDiv+'</div>';
+  return '<div style="position:relative;width:'+w+'px;height:'+h+'px;flex-shrink:0;isolation:isolate;">'
+    +shadow+bootL+bootR+legL+legR+body+hairBack+hairLong+face+hairFront+ribbon+hat+bag
+    +'</div>';
 }
 
 
-// 단상용 캐릭터 SVG (작은 버전)
-function getPodiumCharSVG(student){
-  // 현재 로그인한 학생이면 myChar, 아니면 기본 캐릭터
-  const isMe = currentStudent && student.isMe;
-  const charData = isMe && myChar ? myChar : null;
-  if(!charData) return getMungCharHTML({gender:'f',topColor:'#4ECDC4',botColor:'#5C6BC0',equipped:{}}, 0.45);
-  return getMungCharHTML(charData, 0.45);
-}
-
-// ── 초기화 ──
-renderCatGrid('book');
-renderPrizesInfo();
-updateRewardUI();
-updateLevelUI();
-renderPodium();
-document.getElementById('bar-song').textContent='홈';
-updateHomeTab();
-setTimeout(()=>openLoginModal(), 400);
-</script>
-</body>
-</html>
