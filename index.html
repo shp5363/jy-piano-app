@@ -1952,7 +1952,7 @@ function notesToABC(notes, bpm, states, stateColors){
 }
 
 // 전체 ABC 문자열 생성
-functionfunction buildABCString(song, bpm, rStates, lStates, handsMode){
+function buildABCString(song, bpm, rStates, lStates, handsMode){
   const nl='\n';
   const ts=bpm+'/4';
   let abc='';
@@ -1967,7 +1967,8 @@ functionfunction buildABCString(song, bpm, rStates, lStates, handsMode){
     abc+=notesToABC(song.right, bpm, rStates, null)+nl;
   }
   return abc;
-}상태 색상 CSS 오버레이 (ABCjs 렌더 후 SVG 수정)
+}
+// 음표 상태 색상 CSS 오버레이 (ABCjs 렌더 후 SVG 수정)
 function colorizeABCNotes(svgEl, notes, states, offset){
   if(!svgEl || !states) return;
   // ABCjs는 음표마다 data-index 또는 순서로 접근 가능
