@@ -1054,6 +1054,10 @@ html {
       <div class="form-group">
         <label>🤚 오른손 음표 데이터</label>
         <textarea class="form-textarea" id="f-notes-right" placeholder='[{"vex":"c/4","lb":"도","freq":261.63,"dur":"q"}, ...]'></textarea>
+        <div style="font-size:0.65rem;color:#aaa;margin-top:4px;line-height:1.6;">
+          📌 선택 필드: finger(손가락번호 1-5), tie:true(붙임줄), slurStart/slurEnd:true(이음줄), pedal:"start"/"end"(페달), chord:[{vex,lb}](화음)<br>
+          예) {"vex":"c/4","lb":"도","freq":261.63,"dur":"q","finger":1,"tie":true}
+        </div>
         <div class="form-hint">음표 형식: vex=악보위치, lb=한글이름, freq=주파수, dur=길이(q=4분/h=2분)</div>
       </div>
       <div class="form-group" id="f-left-group" style="display:none">
@@ -1434,10 +1438,10 @@ const SONG_DB=[
     {vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'h'}
   ]},
   {id:'twinkle',name:'반짝반짝',emoji:'⭐',tags:{book:'동요',genre:'동요',level:'입문',hands:'오른손'},bpm:4,hands:'right',right:[
-    {vex:'c/4',lb:'도',freq:261.63,dur:'q'},{vex:'c/4',lb:'도',freq:261.63,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'q'},
-    {vex:'a/4',lb:'라',freq:440.00,dur:'q'},{vex:'a/4',lb:'라',freq:440.00,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'h'},
-    {vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'f/4',lb:'파',freq:349.23,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},{vex:'e/4',lb:'미',freq:329.63,dur:'q'},
-    {vex:'d/4',lb:'레',freq:293.66,dur:'q'},{vex:'d/4',lb:'레',freq:293.66,dur:'q'},{vex:'c/4',lb:'도',freq:261.63,dur:'h'}
+    {vex:'c/4',lb:'도',freq:261.63,dur:'q',finger:1},{vex:'c/4',lb:'도',freq:261.63,dur:'q',finger:1},{vex:'g/4',lb:'솔',freq:392.00,dur:'q',finger:4},{vex:'g/4',lb:'솔',freq:392.00,dur:'q',finger:4},
+    {vex:'a/4',lb:'라',freq:440.00,dur:'q',finger:5},{vex:'a/4',lb:'라',freq:440.00,dur:'q',finger:5},{vex:'g/4',lb:'솔',freq:392.00,dur:'h',finger:4},
+    {vex:'f/4',lb:'파',freq:349.23,dur:'q',finger:3},{vex:'f/4',lb:'파',freq:349.23,dur:'q',finger:3},{vex:'e/4',lb:'미',freq:329.63,dur:'q',finger:2},{vex:'e/4',lb:'미',freq:329.63,dur:'q',finger:2},
+    {vex:'d/4',lb:'레',freq:293.66,dur:'q',finger:2},{vex:'d/4',lb:'레',freq:293.66,dur:'q',finger:2},{vex:'c/4',lb:'도',freq:261.63,dur:'h',finger:1}
   ]},
   {id:'mary',name:'메리의 양',emoji:'🐑',tags:{book:'바이엘',genre:'동요',level:'초급',hands:'양손'},bpm:4,hands:'both',
     right:[
@@ -1709,20 +1713,14 @@ function pickSong(id){
   openHandsModal();
 }
 
-// 한손/양손 모달
+// 손 선택 팝업 제거 - 곡 종류에 따라 자동 설정
 function openHandsModal(){
-  if(curSong.hands==='right'){curHandsMode='right';gotoSet();return;}
-  document.getElementById('hc-right').classList.remove('sel');
-  document.getElementById('hc-both').classList.remove('sel');
-  document.getElementById('hands-modal').classList.add('show');
+  // 팝업 없이 바로 설정: 양손 곡이면 양손, 아니면 오른손
+  curHandsMode = curSong.hands==='both' ? 'both' : 'right';
+  gotoSet();
 }
-function closeHandsModal(){document.getElementById('hands-modal').classList.remove('show');}
-function selectHands(mode){
-  curHandsMode=mode;
-  document.getElementById('hc-right').classList.toggle('sel',mode==='right');
-  document.getElementById('hc-both').classList.toggle('sel',mode==='both');
-  closeHandsModal(); gotoSet();
-}
+function closeHandsModal(){} // 미사용 (하위호환 유지)
+function selectHands(mode){ curHandsMode=mode; gotoSet(); } // 미사용
 
 function selectScoreMode(mode){
   // 오른손만 있는 곡은 양손채점 불가
@@ -1824,6 +1822,17 @@ function lvNum(l){return l==='입문'?1:l==='초급'?2:l==='중급'?3:4;}
 
 // 그랜드 스태프 악보
 function beatVal(dur){return dur==='w'?4:dur==='h'?2:dur==='8'?0.5:1;}
+
+// vex 표기(예:'e/4')를 MIDI 번호로 변환 (Stem 방향 결정용)
+function vexToMidi(vex){
+  if(!vex) return 60;
+  const noteMap={c:0,'c#':1,db:1,d:2,'d#':3,eb:3,e:4,f:5,'f#':6,gb:6,g:7,'g#':8,ab:8,a:9,'a#':10,bb:10,b:11};
+  const parts=vex.toLowerCase().split('/');
+  const note=parts[0].replace('b','').replace('#','');
+  const acc=parts[0].includes('#')?1:parts[0].includes('b')?-1:0;
+  const oct=parseInt(parts[1])||4;
+  return (noteMap[note]||0)+acc+(oct+1)*12;
+}
 function splitMeasures(notes,bpm){
   const measures=[]; let arr=[],beats=0;
   notes.forEach((n,i)=>{arr.push(i);beats+=beatVal(n.dur);if(beats>=bpm){measures.push([...arr]);arr=[];beats=0;}});
@@ -1835,63 +1844,172 @@ function calcMeasureBeats(idxArr, notes){
   let b=0; idxArr.forEach(i=>{b+=beatVal(notes[i].dur);}); return b;
 }
 
+// ── 음표 하나 빌드 (임시표·손가락번호·타이 포함) ──
+function buildStaveNote(VF, n, clef, stemDir, col, accShown){
+  // 코드(화음) 처리: n.chord=[{vex,lb}] 이면 keys에 추가
+  let keys=[n.vex];
+  if(n.chord && n.chord.length) keys=keys.concat(n.chord.map(c=>c.vex));
+  const dur = n.dur || 'q';
+  const s=new VF.StaveNote({
+    clef, keys, duration: dur,
+    stem_direction: stemDir
+  });
+  s.setStyle({fillStyle:col, strokeStyle:col});
+  // 임시표: accShown=false면 VexFlow가 자동 처리하도록
+  // (VexFlow는 기본적으로 임시표 자동 렌더링)
+  // 손가락 번호
+  if(n.finger){
+    try{
+      const fingers = Array.isArray(n.finger) ? n.finger : [n.finger];
+      fingers.forEach((f,ki)=>{
+        s.addModifier(new VF.Annotation(String(f))
+          .setFont('Arial',9)
+          .setVerticalJustification(VF.Annotation.VerticalJustify.TOP), ki);
+      });
+    }catch(e){}
+  }
+  return s;
+}
+
+// ── 타이(Tie) 빌드 ──
+function buildTies(VF, notes, staveNotes, idxArr){
+  const ties=[];
+  idxArr.forEach((ni,pos)=>{
+    if(notes[ni].tie && pos+1<staveNotes.length){
+      try{
+        ties.push(new VF.StaveTie({
+          first_note: staveNotes[pos],
+          last_note:  staveNotes[pos+1],
+          first_indices:[0], last_indices:[0]
+        }));
+      }catch(e){}
+    }
+  });
+  return ties;
+}
+
+// ── 슬러(Slur/이음줄) 빌드 ──
+function buildSlurs(VF, notes, staveNotes, idxArr){
+  const slurs=[];
+  let slurStart=-1;
+  idxArr.forEach((ni,pos)=>{
+    if(notes[ni].slurStart!==undefined) slurStart=pos;
+    if(notes[ni].slurEnd!==undefined && slurStart>=0 && pos>slurStart){
+      try{
+        slurs.push(new VF.Curve(
+          staveNotes[slurStart], staveNotes[pos],
+          {cps:[{x:0,y:10},{x:0,y:10}]}
+        ));
+      }catch(e){}
+      slurStart=-1;
+    }
+  });
+  return slurs;
+}
+
+// ── 페달 표시 ──
+function drawPedal(ctx, notes, idxArr, staveNotes, stave, y){
+  // n.pedal='start' 또는 'end'
+  idxArr.forEach((ni,pos)=>{
+    const n=notes[ni];
+    if(!n.pedal || !staveNotes[pos]) return;
+    try{
+      const x=staveNotes[pos].getAbsoluteX ? staveNotes[pos].getAbsoluteX() : 0;
+      const py=y+82;
+      ctx.save();
+      ctx.setFont('serif',12);
+      ctx.setFillStyle('#333');
+      if(n.pedal==='start'){
+        ctx.fillText('𝑃𝑒𝑑',x-4,py);
+      } else if(n.pedal==='end'){
+        ctx.fillText('✱',x,py);
+      }
+      ctx.restore();
+    }catch(e){}
+  });
+}
+
 function drawSingleStaff(wrap,notes,noteStates,bpm){
   wrap.innerHTML='';
   if(typeof Vex==='undefined'){wrap.innerHTML='<p style="color:#bbb;padding:10px">로딩 중...</p>';return;}
   try{
     const VF=Vex.Flow;
+    validateMeasureBeats(notes,bpm); // 박자 검증
     const measures=splitMeasures(notes,bpm);
     const cW=Math.max(wrap.clientWidth||300,300);
-    const MG=6, CW=30, TW=26, BS=36; // BS=박자당픽셀
-    // 각 마디의 필요 너비 계산 (박자 기반)
-    const mBeats=measures.map(m=>calcMeasureBeats(m,notes));
-    // 한 줄에 들어갈 마디 수 계산
-    const firstRowExtra=CW+TW;
+    const MG=6,CW=30,TW=26;
+
+    // 가변 레이아웃: 박자+음표수 기반 너비
+    const mWidths=measures.map(m=>{
+      let b=0,n=m.length; m.forEach(i=>{b+=beatVal(notes[i].dur);}); return Math.max(b*36,n*30)+20;
+    });
+    const extra0=CW+TW;
     let mpr=1;
     for(let n=measures.length;n>=1;n--){
-      const w=mBeats.slice(0,n).reduce((a,b)=>a+b,0)*BS+firstRowExtra+MG*2;
-      if(w<=cW){mpr=n;break;}
+      if(mWidths.slice(0,n).reduce((a,b)=>a+b,0)+extra0+MG*2<=cW){mpr=n;break;}
     }
     mpr=Math.max(1,mpr);
     const rows=[]; for(let i=0;i<measures.length;i+=mpr) rows.push(measures.slice(i,i+mpr));
-    const RH=104, totalH=rows.length*RH+16;
+    const RH=118, totalH=rows.length*RH+16;
     const renderer=new VF.Renderer(wrap,VF.Renderer.Backends.SVG);
     renderer.resize(cW,totalH);
     const ctx=renderer.getContext();
+
     rows.forEach((rowM,ri)=>{
-      const y=ri*RH+10, isFirst=ri===0;
-      // 이 줄의 마디별 너비 = 박자 비례 배분
-      const rowBeats=rowM.reduce((a,m)=>a+calcMeasureBeats(m,notes),0);
-      const avail=cW-MG*2-(isFirst?CW+TW:CW);
+      const y=ri*RH+12, isFirst=ri===0;
+      const rawTotal=rowM.reduce((s,m,mi)=>s+(mWidths[ri*mpr+mi]||80),0);
+      const avail=cW-MG*2-(isFirst?extra0:CW);
+      const scale=avail/rawTotal;
       let x=MG;
+
       rowM.forEach((idxArr,mi)=>{
         const fm=mi===0;
+        const extra=fm?(isFirst?extra0:CW):0;
+        const sw=extra+Math.round((mWidths[ri*mpr+mi]||80)*scale);
         const mBeat=calcMeasureBeats(idxArr,notes);
-        // 박자 비례로 너비 계산
-        const sw=(fm?(isFirst?CW+TW:CW):0)+Math.floor(avail*mBeat/rowBeats);
+
+        // MIDI 기반 자동 클레프 결정 (마디 내 평균)
+        const avgMidi=idxArr.reduce((s,i)=>s+vexToMidi(notes[i].vex),0)/(idxArr.length||1);
+        const clef=avgMidi>=60?'treble':'bass';
+
         const stave=new VF.Stave(x,y,sw);
-        if(fm) stave.addClef('treble');
+        if(fm) stave.addClef(clef);
         if(isFirst&&fm) stave.addTimeSignature(bpm+'/4');
-        // 마지막 마디가 아니면 끝선 추가
-        if(mi<rowM.length-1) stave.setEndBarType(VF.Barline.type.SINGLE);
         stave.setContext(ctx).draw();
+
         if(idxArr.length){
-          const sn=idxArr.map(i=>{
+          const sn=idxArr.map((i,pos)=>{
             const n=notes[i];
-            const s=new VF.StaveNote({clef:'treble',keys:[n.vex],duration:n.dur});
+            const midi=vexToMidi(n.vex);
+            const stemDir=midi>=71?VF.Stem.DOWN:VF.Stem.UP;
             const st=noteStates?noteStates[i]:'waiting';
             const col=st==='current'?'#f59f00':st==='correct'?'#2f9e44':st==='wrong'?'#e03131':'#74C0FC';
-            s.setStyle({fillStyle:col,strokeStyle:col}); return s;
+            return buildStaveNote(VF,n,clef,stemDir,col,false);
           });
+          // Beam
+          const beams=[]; try{VF.Beam.generateBeams(sn).forEach(b=>beams.push(b));}catch(e){}
+          // Tie
+          const ties=buildTies(VF,notes,sn,idxArr);
+          // Slur
+          const slurs=buildSlurs(VF,notes,sn,idxArr);
           const v=new VF.Voice({num_beats:mBeat,beat_value:4}).setStrict(false);
           v.addTickables(sn);
-          new VF.Formatter().joinVoices([v]).format([v], sw-(fm?(isFirst?CW+TW:CW):0)-10);
+          new VF.Formatter().joinVoices([v]).format([v],sw-extra-14);
           v.draw(ctx,stave);
+          beams.forEach(b=>{try{b.setContext(ctx).draw();}catch(e){}});
+          ties.forEach(t=>{try{t.setContext(ctx).draw();}catch(e){}});
+          slurs.forEach(s=>{try{s.setContext(ctx).draw();}catch(e){}});
+          drawPedal(ctx,notes,idxArr,sn,stave,y);
+        }
+        // 마디 구분선
+        if(mi<rowM.length-1){
+          ctx.save(); ctx.setStrokeStyle('#333'); ctx.setLineWidth(1.5);
+          ctx.beginPath(); ctx.moveTo(x+sw-1,y+5); ctx.lineTo(x+sw-1,y+80); ctx.stroke(); ctx.restore();
         }
         x+=sw;
       });
     });
-  }catch(e){wrap.innerHTML='<p style="color:#e03131;padding:10px;font-size:0.72rem">오류: '+e.message+'</p>';}
+  }catch(e){wrap.innerHTML=`<p style="color:#e03131;padding:10px;font-size:0.72rem">오류: ${e.message}</p>`;console.error(e);}
 }
 
 function drawGrandStaff(wrap,rightNotes,leftNotes,noteStates,bpm){
@@ -1899,107 +2017,122 @@ function drawGrandStaff(wrap,rightNotes,leftNotes,noteStates,bpm){
   if(typeof Vex==='undefined'){wrap.innerHTML='<p style="color:#bbb;padding:10px">로딩 중...</p>';return;}
   try{
     const VF=Vex.Flow;
+    validateMeasureBeats(rightNotes,bpm);
+    validateMeasureBeats(leftNotes,bpm);
     const rM=splitMeasures(rightNotes,bpm);
     const lM=splitMeasures(leftNotes,bpm);
     while(lM.length<rM.length) lM.push([]);
     while(rM.length<lM.length) rM.push([]);
     const maxM=rM.length;
     const cW=Math.max(wrap.clientWidth||300,300);
-    const MG=6, CW=30, TW=26, BS=36;
-    // 마디별 박자 (오른손 기준)
-    const mBeats=rM.map(m=>{let b=0;m.forEach(i=>{b+=beatVal(rightNotes[i]?.dur||'q');});return b||4;});
-    // 한 줄 마디 수
-    const firstExtra=CW+TW;
+    const MG=6,CW=30,TW=26;
+
+    // 가변 너비: 오른손/왼손 중 더 넓은 쪽
+    const mWidths=[];
+    for(let i=0;i<maxM;i++){
+      const rm=rM[i]||[],lm=lM[i]||[];
+      let rb=0,lb=0; rm.forEach(j=>{rb+=beatVal(rightNotes[j].dur);}); lm.forEach(j=>{lb+=beatVal(leftNotes[j].dur);});
+      mWidths.push(Math.max(rb*36,rm.length*30,lb*36,lm.length*30,90)+20);
+    }
+    const extra0=CW+TW;
     let mpr=1;
     for(let n=maxM;n>=1;n--){
-      const w=mBeats.slice(0,n).reduce((a,b)=>a+b,0)*BS+firstExtra+MG*2;
-      if(w<=cW){mpr=n;break;}
+      if(mWidths.slice(0,n).reduce((a,b)=>a+b,0)+extra0+MG*2<=cW){mpr=n;break;}
     }
     mpr=Math.max(1,mpr);
     const rows=[];
-    for(let i=0;i<maxM;i+=mpr) rows.push({r:rM.slice(i,i+mpr),l:lM.slice(i,i+mpr),b:mBeats.slice(i,i+mpr)});
-    const SH=92, GAP=8, RH=SH*2+GAP+22;
+    for(let i=0;i<maxM;i+=mpr) rows.push({r:rM.slice(i,i+mpr),l:lM.slice(i,i+mpr),w:mWidths.slice(i,i+mpr)});
+    const SH=92,GAP=10,RH=SH*2+GAP+28;
     const totalH=rows.length*RH+16;
     const renderer=new VF.Renderer(wrap,VF.Renderer.Backends.SVG);
     renderer.resize(cW,totalH);
     const ctx=renderer.getContext();
+
     rows.forEach((row,ri)=>{
-      const baseY=ri*RH+10, rY=baseY, lY=baseY+SH+GAP;
+      const baseY=ri*RH+12,rY=baseY,lY=baseY+SH+GAP;
       const isFirst=ri===0;
-      const rowBeats=row.b.reduce((a,b)=>a+b,0);
-      const avail=cW-MG*2-(isFirst?CW+TW:CW);
-      // 세로 연결선 (왼쪽)
-      ctx.save();
-      ctx.setStrokeStyle('#555'); ctx.setLineWidth(2);
-      ctx.beginPath();
-      ctx.moveTo(MG+1, rY+6);
-      ctx.lineTo(MG+1, lY+SH-6);
-      ctx.stroke();
-      ctx.restore();
+      const rawTotal=row.w.reduce((a,b)=>a+b,0);
+      const avail=cW-MG*2-(isFirst?extra0:CW);
+      const scale=avail/rawTotal;
+      // 브레이스 세로선
+      ctx.save(); ctx.setStrokeStyle('#444'); ctx.setLineWidth(2);
+      ctx.beginPath(); ctx.moveTo(MG+1,rY+6); ctx.lineTo(MG+1,lY+SH-6); ctx.stroke(); ctx.restore();
       let x=MG;
       const rowLen=Math.max(row.r.length,row.l.length);
+
       for(let mi=0;mi<rowLen;mi++){
         const fm=mi===0;
-        const mBeat=row.b[mi]||4;
-        const extra=fm?(isFirst?CW+TW:CW):0;
-        const sw=extra+Math.floor(avail*mBeat/rowBeats);
-        const rIdx=row.r[mi]||[]; const lIdx=row.l[mi]||[];
+        const extra=fm?(isFirst?extra0:CW):0;
+        const sw=extra+Math.round((row.w[mi]||90)*scale);
+        const rIdx=row.r[mi]||[],lIdx=row.l[mi]||[];
         const isLast=mi===rowLen-1;
+
         // 오른손 오선
         const rStave=new VF.Stave(x,rY,sw);
         if(fm) rStave.addClef('treble');
         if(isFirst&&fm) rStave.addTimeSignature(bpm+'/4');
-        if(!isLast) rStave.setEndBarType(VF.Barline.type.SINGLE);
         rStave.setContext(ctx).draw();
         // 왼손 오선
         const lStave=new VF.Stave(x,lY,sw);
         if(fm) lStave.addClef('bass');
         if(isFirst&&fm) lStave.addTimeSignature(bpm+'/4');
-        if(!isLast) lStave.setEndBarType(VF.Barline.type.SINGLE);
         lStave.setContext(ctx).draw();
+
         // 오른손 음표
         if(rIdx.length){
           let bs=0; rIdx.forEach(i=>{bs+=beatVal(rightNotes[i].dur);});
-          const sn=rIdx.map(i=>{
+          const sn=rIdx.map((i,pos)=>{
             const n=rightNotes[i];
-            const s=new VF.StaveNote({clef:'treble',keys:[n.vex],duration:n.dur});
             const st=noteStates?noteStates[i]:'waiting';
             const col=st==='current'?'#f59f00':st==='correct'?'#2f9e44':st==='wrong'?'#e03131':'#74C0FC';
-            s.setStyle({fillStyle:col,strokeStyle:col}); return s;
+            return buildStaveNote(VF,n,'treble',VF.Stem.UP,col,false);
           });
+          const beams=[]; try{VF.Beam.generateBeams(sn).forEach(b=>beams.push(b));}catch(e){}
+          const ties=buildTies(VF,rightNotes,sn,rIdx);
+          const slurs=buildSlurs(VF,rightNotes,sn,rIdx);
           const v=new VF.Voice({num_beats:bs,beat_value:4}).setStrict(false);
           v.addTickables(sn);
-          new VF.Formatter().joinVoices([v]).format([v], sw-extra-10);
+          new VF.Formatter().joinVoices([v]).format([v],sw-extra-14);
           v.draw(ctx,rStave);
+          beams.forEach(b=>{try{b.setContext(ctx).draw();}catch(e){}});
+          ties.forEach(t=>{try{t.setContext(ctx).draw();}catch(e){}});
+          slurs.forEach(s=>{try{s.setContext(ctx).draw();}catch(e){}});
+          drawPedal(ctx,rightNotes,rIdx,sn,rStave,rY);
         }
+
         // 왼손 음표
         if(lIdx.length){
           let bs=0; lIdx.forEach(i=>{bs+=beatVal(leftNotes[i].dur);});
-          const sn=lIdx.map(i=>{
+          const sn=lIdx.map((i,pos)=>{
             const n=leftNotes[i];
-            const s=new VF.StaveNote({clef:'bass',keys:[n.vex],duration:n.dur});
-            s.setStyle({fillStyle:'#999',strokeStyle:'#999'}); return s;
+            return buildStaveNote(VF,n,'bass',VF.Stem.DOWN,'#999',false);
           });
+          const beams=[]; try{VF.Beam.generateBeams(sn).forEach(b=>beams.push(b));}catch(e){}
+          const ties=buildTies(VF,leftNotes,sn,lIdx);
           const v=new VF.Voice({num_beats:bs,beat_value:4}).setStrict(false);
           v.addTickables(sn);
-          new VF.Formatter().joinVoices([v]).format([v], sw-extra-10);
+          new VF.Formatter().joinVoices([v]).format([v],sw-extra-14);
           v.draw(ctx,lStave);
+          beams.forEach(b=>{try{b.setContext(ctx).draw();}catch(e){}});
+          ties.forEach(t=>{try{t.setContext(ctx).draw();}catch(e){}});
+          drawPedal(ctx,leftNotes,lIdx,sn,lStave,lY);
         }
-        // 마디 사이 세로 연결선
+
+        // 마디 구분선
         if(!isLast){
-          ctx.save();
-          ctx.setStrokeStyle('#bbb'); ctx.setLineWidth(1);
+          ctx.save(); ctx.setStrokeStyle('#333'); ctx.setLineWidth(1.5);
           ctx.beginPath();
-          ctx.moveTo(x+sw, rY+6);
-          ctx.lineTo(x+sw, lY+SH-6);
-          ctx.stroke();
-          ctx.restore();
+          ctx.moveTo(x+sw-1,rY+5); ctx.lineTo(x+sw-1,rY+SH-5);
+          ctx.moveTo(x+sw-1,lY+5); ctx.lineTo(x+sw-1,lY+SH-5);
+          ctx.moveTo(x+sw-1,rY+SH-5); ctx.lineTo(x+sw-1,lY+5);
+          ctx.stroke(); ctx.restore();
         }
         x+=sw;
       }
     });
-  }catch(e){wrap.innerHTML='<p style="color:#e03131;padding:10px;font-size:0.72rem">악보 오류: '+e.message+'</p>';console.error(e);}
+  }catch(e){wrap.innerHTML=`<p style="color:#e03131;padding:10px;font-size:0.72rem">악보 오류: ${e.message}</p>`;console.error(e);}
 }
+
 
 function drawScore(){
   const area=document.getElementById('score-area'); area.innerHTML='';
