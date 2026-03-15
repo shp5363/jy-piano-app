@@ -1954,39 +1954,22 @@ function notesToABC(notes, bpm, states, stateColors){
 }
 
 // 전체 ABC 문자열 생성
-function buildABCString(song, bpm, rStates, lStates, handsMode){
+functionfunction buildABCString(song, bpm, rStates, lStates, handsMode){
+  const nl='\n';
   const ts=bpm+'/4';
   let abc='';
   if(handsMode==='both' && song.hands==='both'){
-    // 대보표: V:1 오른손, V:2 왼손
-    abc+=`X:1
-T:${song.name}
-M:${ts}
-L:1/4
-K:C
-`;
-    abc+=`V:1 clef=treble name="R.H."
-`;
-    abc+=notesToABC(song.right, bpm, rStates, null)+'
-';
-    abc+=`V:2 clef=bass name="L.H."
-`;
-    abc+=notesToABC(song.left, bpm, lStates, null)+'
-';
+    abc+='X:1'+nl+'T:'+song.name+nl+'M:'+ts+nl+'L:1/4'+nl+'K:C'+nl;
+    abc+='V:1 clef=treble name="R.H."'+nl;
+    abc+=notesToABC(song.right, bpm, rStates, null)+nl;
+    abc+='V:2 clef=bass name="L.H."'+nl;
+    abc+=notesToABC(song.left, bpm, lStates, null)+nl;
   } else {
-    abc+=`X:1
-T:${song.name}
-M:${ts}
-L:1/4
-K:C
-`;
-    abc+=notesToABC(song.right, bpm, rStates, null)+'
-';
+    abc+='X:1'+nl+'T:'+song.name+nl+'M:'+ts+nl+'L:1/4'+nl+'K:C'+nl;
+    abc+=notesToABC(song.right, bpm, rStates, null)+nl;
   }
   return abc;
-}
-
-// 음표 상태 색상 CSS 오버레이 (ABCjs 렌더 후 SVG 수정)
+}상태 색상 CSS 오버레이 (ABCjs 렌더 후 SVG 수정)
 function colorizeABCNotes(svgEl, notes, states, offset){
   if(!svgEl || !states) return;
   // ABCjs는 음표마다 data-index 또는 순서로 접근 가능
