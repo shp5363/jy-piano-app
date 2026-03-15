@@ -1835,9 +1835,35 @@ function vexToMidi(vex){
 }
 function splitMeasures(notes,bpm){
   const measures=[]; let arr=[],beats=0;
-  notes.forEach((n,i)=>{arr.push(i);beats+=beatVal(n.dur);if(beats>=bpm){measures.push([...arr]);arr=[];beats=0;}});
+  notes.forEach((n,i)=>{arr.push(i);beats+=beatVal(n.dur);if(beats>=bpm-0.001){measures.push([...arr]);arr=[];beats=0;}});
   if(arr.length) measures.push(arr);
   return measures;
+}
+
+function validateMeasureBeats(notes,bpm){
+  if(!notes||!notes.length) return [];
+  const issues=[];
+  splitMeasures(notes,bpm).forEach((m,i)=>{
+    let b=0; m.forEach(j=>{b+=beatVal(notes[j].dur);});
+    if(Math.abs(b-bpm)>0.01) issues.push({measure:i+1,beats:b,expected:bpm});
+  });
+  if(issues.length) console.warn('박자 불일치:',issues);
+  return issues;
+}
+
+function buildAccidentalMap(idxArr,notes){
+  const acc={};
+  return idxArr.map(i=>{
+    const vex=notes[i].vex||'';
+    const hasSharp=vex.includes('#');
+    const hasFlat=!hasSharp&&vex.split('/')[0].length>1;
+    const base=vex.split('/')[0].replace('#','').replace('b','')+'/'+vex.split('/')[1];
+    let show=false;
+    if(hasSharp&&acc[base]!=='#'){acc[base]='#';show=true;}
+    else if(hasFlat&&acc[base]!=='b'){acc[base]='b';show=true;}
+    else if(!hasSharp&&!hasFlat&&acc[base]){acc[base]=null;show=true;}
+    return show;
+  });
 }
 
 function calcMeasureBeats(idxArr, notes){
