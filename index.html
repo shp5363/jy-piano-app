@@ -699,6 +699,8 @@ html {
 
 </style>
 <script src="https://cdn.jsdelivr.net/npm/abcjs@6.4.4/dist/abcjs-basic-min.js" async></script>
+<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+<script>var vConsole = new VConsole();</script>
 </head>
 <body>
 
@@ -1876,6 +1878,19 @@ function buildAccidentalMap(idxArr,notes){
   });
 }
 
+
+
+function calcMeasureBeats(idxArr, notes){
+  let b=0; idxArr.forEach(i=>{b+=beatVal(notes[i].dur);}); return b;
+}
+
+// ── 이하 VexFlow 함수는 사용되지 않지만 참조 오류 방지용으로 유지 ──
+function buildStaveNote(){ return null; }
+function buildTies(){ return []; }
+function buildSlurs(){ return []; }
+function drawPedal(){}
+function drawSingleStaff(wrap){ if(wrap) wrap.innerHTML=''; drawScoreABC(); }
+function drawGrandStaff(wrap){ if(wrap) wrap.innerHTML=''; drawScoreABC(); }
 
 // ════════════════════════════════════════════════
 // ABCjs 악보 렌더링 시스템
