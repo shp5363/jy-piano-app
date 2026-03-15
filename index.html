@@ -698,9 +698,7 @@ html {
 .score-wrap { padding:8px 0; }
 
 </style>
-<script src="https://cdn.jsdelivr.net/npm/abcjs@6.4.4/dist/abcjs-basic-min.js" async></script>
-<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
-<script>var vConsole = new VConsole();</script>
+
 </head>
 <body>
 
@@ -3594,74 +3592,57 @@ function deleteStudent(id){
 }
 
 // ── 멍총 캐릭터 HTML 생성 ──
-function getMungCharHTML(char, scale=1.0){
+function getMungCharHTML(char, scale){
+  scale=scale||1.0;
   if(!char) return '<span style="font-size:3rem">🐣</span>';
-  const tc = char.topColor||'#4ECDC4';
-  const bc = char.botColor||'#5C6BC0';
-  const hairC = char.equipped&&char.equipped['머리']?getItemColor(char.equipped['머리']):(char.gender==='f'?'#8B4513':'#1a1a1a');
-  const shoeC = char.equipped&&char.equipped['신발']?getItemColor(char.equipped['신발']):(char.gender==='f'?'#FF4D7D':'#2C3E50');
-  const isFemale = char.gender==='f';
-  const accC = char.equipped&&char.equipped['머리']?getItemColor(char.equipped['머리']):'#FF6B6B';
-  const bagC = char.equipped&&char.equipped['가방']?getItemColor(char.equipped['가방']):null;
-  const hatIco = char.equipped&&char.equipped['모자']?getItemIco(char.equipped['모자']):null;
-  const hasGlasses = !!(char.equipped&&char.equipped['안경']);
-  const glassC = hasGlasses?getItemColor(char.equipped['안경']):'#333';
-  const gloveC = char.equipped&&char.equipped['장갑']?getItemColor(char.equipped['장갑']):null;
-  const s = scale;
-  const w = Math.round(80*s), h = Math.round(130*s);
+  const s=scale;
+  const tc=char.topColor||'#4ECDC4';
+  const bc=char.botColor||'#5C6BC0';
+  const hairC=char.hairColor||'#4A3728';
+  const skinC=char.skinColor||'#FDBCB4';
+  const isFemale=char.gender==='f';
+  const eq=char.equipped||{};
+  const bagC=eq['가방']?getItemColor(eq['가방']):null;
+  const hatIco=eq['모자']?getItemIco(eq['모자']):null;
+  const hasGlasses=!!(eq['안경']);
+  const glassC=hasGlasses?getItemColor(eq['안경']):'#333';
+  const w=Math.round(80*s), h=Math.round(110*s);
 
-  // z-index 레이어 순서:
-  // 1=그림자, 2=다리, 3=팔, 4=몸통, 5=머리카락뒤, 6=얼굴, 7=앞머리, 8=리본, 9=모자
+  // 각 파트를 개행 없는 문자열로 조합
+  const shadow='<div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:'+Math.round(60*s)+'px;height:'+Math.round(8*s)+'px;background:rgba(0,0,0,0.10);border-radius:50%;z-index:1;"></div>';
 
-  return `<div style="position:relative;width:${w}px;height:${h}px;animation:mungFloat 2.8s ease-in-out infinite;flex-shrink:0;isolation:isolate;">
+  const bootL='<div style="position:absolute;bottom:0;left:'+Math.round(14*s)+'px;width:'+Math.round(18*s)+'px;height:'+Math.round(22*s)+'px;background:#333;border-radius:'+Math.round(4*s)+'px '+Math.round(4*s)+'px 0 0;z-index:2;"></div>';
+  const bootR='<div style="position:absolute;bottom:0;right:'+Math.round(14*s)+'px;width:'+Math.round(18*s)+'px;height:'+Math.round(22*s)+'px;background:#333;border-radius:'+Math.round(4*s)+'px '+Math.round(4*s)+'px 0 0;z-index:2;"></div>';
 
-    <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:${Math.round(44*s)}px;height:${Math.round(7*s)}px;background:rgba(0,0,0,0.13);border-radius:50%;z-index:1;"></div>
+  const legL='<div style="position:absolute;bottom:'+Math.round(18*s)+'px;left:'+Math.round(18*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(22*s)+'px;background:'+bc+';z-index:2;"></div>';
+  const legR='<div style="position:absolute;bottom:'+Math.round(18*s)+'px;right:'+Math.round(18*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(22*s)+'px;background:'+bc+';z-index:2;"></div>';
 
-    <div style="position:absolute;bottom:${Math.round(11*s)}px;left:${Math.round(21*s)}px;z-index:2;">
-      <div style="width:${Math.round(14*s)}px;height:${Math.round(18*s)}px;background:${bc};border:${Math.round(2.5*s)}px solid #333;border-top:none;border-radius:0 0 ${Math.round(7*s)}px ${Math.round(7*s)}px;"></div>
-      <div style="width:${Math.round(19*s)}px;height:${Math.round(8*s)}px;background:${shoeC};border:${Math.round(2*s)}px solid #333;border-radius:50% 50% 40% 40%/60% 60% 40% 40%;margin-left:-${Math.round(2*s)}px;margin-top:-${Math.round(2*s)}px;"></div>
-    </div>
-    <div style="position:absolute;bottom:${Math.round(11*s)}px;right:${Math.round(21*s)}px;z-index:2;">
-      <div style="width:${Math.round(14*s)}px;height:${Math.round(18*s)}px;background:${bc};border:${Math.round(2.5*s)}px solid #333;border-top:none;border-radius:0 0 ${Math.round(7*s)}px ${Math.round(7*s)}px;"></div>
-      <div style="width:${Math.round(19*s)}px;height:${Math.round(8*s)}px;background:${shoeC};border:${Math.round(2*s)}px solid #333;border-radius:50% 50% 40% 40%/60% 60% 40% 40%;margin-left:-${Math.round(2*s)}px;margin-top:-${Math.round(2*s)}px;"></div>
-    </div>
+  const armL='<div style="position:absolute;top:'+Math.round(35*s)+'px;left:-'+Math.round(6*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(28*s)+'px;background:'+tc+';border-radius:'+Math.round(5*s)+'px;z-index:3;border:'+Math.round(2*s)+'px solid #333;"></div>';
+  const armR='<div style="position:absolute;top:'+Math.round(35*s)+'px;right:-'+Math.round(6*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(28*s)+'px;background:'+tc+';border-radius:'+Math.round(5*s)+'px;z-index:3;border:'+Math.round(2*s)+'px solid #333;"></div>';
 
-    <div style="position:absolute;top:${Math.round(54*s)}px;left:${Math.round(1*s)}px;width:${Math.round(15*s)}px;height:${Math.round(26*s)}px;background:${tc};border:${Math.round(2.5*s)}px solid #333;border-radius:${Math.round(9*s)}px;transform:rotate(-22deg);z-index:3;">
-      <div style="position:absolute;bottom:-${Math.round(7*s)}px;right:-${Math.round(4*s)}px;width:${Math.round(12*s)}px;height:${Math.round(12*s)}px;background:${gloveC||'#FDDCB5'};border:${Math.round(2*s)}px solid #333;border-radius:50%;"></div>
-    </div>
-    <div style="position:absolute;top:${Math.round(54*s)}px;right:${Math.round(1*s)}px;width:${Math.round(15*s)}px;height:${Math.round(26*s)}px;background:${tc};border:${Math.round(2.5*s)}px solid #333;border-radius:${Math.round(9*s)}px;transform:rotate(22deg);z-index:3;">
-      <div style="position:absolute;bottom:-${Math.round(7*s)}px;left:-${Math.round(4*s)}px;width:${Math.round(12*s)}px;height:${Math.round(12*s)}px;background:${gloveC||'#FDDCB5'};border:${Math.round(2*s)}px solid #333;border-radius:50%;"></div>
-    </div>
+  const body='<div style="position:absolute;bottom:'+Math.round(36*s)+'px;left:'+Math.round(10*s)+'px;width:'+Math.round(60*s)+'px;height:'+Math.round(42*s)+'px;background:'+tc+';border-radius:'+Math.round(8*s)+'px '+Math.round(8*s)+'px 0 0;z-index:4;border:'+Math.round(2*s)+'px solid #333;">'+armL+armR+'</div>';
 
-    ${bagC?`<div style="position:absolute;top:${Math.round(52*s)}px;right:-${Math.round(3*s)}px;width:${Math.round(13*s)}px;height:${Math.round(17*s)}px;background:${bagC};border:${Math.round(2*s)}px solid #333;border-radius:${Math.round(4*s)}px;z-index:3;"></div>`:''}
+  const faceBase='background:'+skinC+';border-radius:50%;border:'+Math.round(2*s)+'px solid #333;';
+  const eyeL='<div style="position:absolute;top:'+Math.round(10*s)+'px;left:'+Math.round(10*s)+'px;width:'+Math.round(12*s)+'px;height:'+Math.round(3*s)+'px;background:#333;border-radius:2px;"></div>';
+  const eyeR='<div style="position:absolute;top:'+Math.round(10*s)+'px;right:'+Math.round(10*s)+'px;width:'+Math.round(12*s)+'px;height:'+Math.round(3*s)+'px;background:#333;border-radius:2px;"></div>';
+  const mouth='<div style="position:absolute;bottom:'+Math.round(8*s)+'px;left:50%;transform:translateX(-50%) rotate(-5deg);width:'+Math.round(16*s)+'px;height:'+Math.round(2*s)+'px;background:#333;border-radius:2px;"></div>';
+  const glasses=hasGlasses?'<div style="position:absolute;top:'+Math.round(9*s)+'px;left:'+Math.round(8*s)+'px;width:'+Math.round(18*s)+'px;height:'+Math.round(13*s)+'px;border:'+Math.round(2*s)+'px solid '+glassC+';border-radius:'+Math.round(4*s)+'px;background:rgba(100,200,255,0.1);"></div>':'';
+  const face='<div style="position:absolute;top:'+Math.round(4*s)+'px;left:'+Math.round(8*s)+'px;width:'+Math.round(64*s)+'px;height:'+Math.round(64*s)+'px;'+faceBase+'z-index:6;">'+eyeL+eyeR+mouth+glasses+'</div>';
 
-    <div style="position:absolute;top:${Math.round(50*s)}px;left:${Math.round(14*s)}px;width:${Math.round(52*s)}px;height:${Math.round(40*s)}px;background:${tc};border:${Math.round(2.5*s)}px solid #333;border-radius:50% 50% 45% 45%/35% 35% 55% 55%;z-index:4;"></div>
+  const hairBack=isFemale?'<div style="position:absolute;top:0;left:'+Math.round(6*s)+'px;width:'+Math.round(68*s)+'px;height:'+Math.round(50*s)+'px;background:'+hairC+';border-radius:'+Math.round(20*s)+'px '+Math.round(20*s)+'px 0 0;z-index:5;border:'+Math.round(2*s)+'px solid #333;"></div>':'';
+  const hairFront=isFemale
+    ?'<div style="position:absolute;top:-'+Math.round(2*s)+'px;left:'+Math.round(5*s)+'px;width:'+Math.round(70*s)+'px;height:'+Math.round(28*s)+'px;background:'+hairC+';border-radius:'+Math.round(16*s)+'px '+Math.round(16*s)+'px 0 0;z-index:7;border:'+Math.round(2*s)+'px solid #333;"></div>'
+    :'<div style="position:absolute;top:-'+Math.round(4*s)+'px;left:50%;transform:translateX(-50%);width:'+Math.round(24*s)+'px;height:'+Math.round(18*s)+'px;background:'+hairC+';border-radius:'+Math.round(6*s)+'px;z-index:7;border:'+Math.round(2*s)+'px solid #333;"></div>';
+  const ribbon=isFemale?'<div style="position:absolute;top:-'+Math.round(6*s)+'px;right:'+Math.round(4*s)+'px;font-size:'+Math.round(14*s)+'px;z-index:8;">🎀</div>':'';
+  const hat=hatIco?'<div style="position:absolute;top:-'+Math.round(10*s)+'px;left:50%;transform:translateX(-50%);font-size:'+Math.round(22*s)+'px;z-index:9;line-height:1;">'+hatIco+'</div>':'';
 
-    <div style="position:absolute;top:${Math.round(2*s)}px;left:${Math.round(6*s)}px;width:${Math.round(68*s)}px;height:${Math.round(60*s)}px;background:${hairC};border:${Math.round(2.5*s)}px solid #333;border-radius:50%;z-index:5;">
-      ${isFemale?`
-      <div style="position:absolute;left:-${Math.round(8*s)}px;top:${Math.round(16*s)}px;width:${Math.round(12*s)}px;height:${Math.round(30*s)}px;background:${hairC};border:${Math.round(2*s)}px solid #333;border-radius:${Math.round(8*s)}px;"></div>
-      <div style="position:absolute;right:-${Math.round(8*s)}px;top:${Math.round(16*s)}px;width:${Math.round(12*s)}px;height:${Math.round(30*s)}px;background:${hairC};border:${Math.round(2*s)}px solid #333;border-radius:${Math.round(8*s)}px;"></div>`:''}
-    </div>
+  const bagDiv=bagC?'<div style="position:absolute;top:'+Math.round(40*s)+'px;right:-'+Math.round(3*s)+'px;width:'+Math.round(13*s)+'px;height:'+Math.round(17*s)+'px;background:'+bagC+';border:'+Math.round(2*s)+'px solid #333;border-radius:'+Math.round(4*s)+'px;z-index:3;"></div>':'';
+  const hairLong=isFemale?'<div style="position:absolute;top:'+Math.round(50*s)+'px;left:'+Math.round(14*s)+'px;width:'+Math.round(52*s)+'px;height:'+Math.round(40*s)+'px;background:'+hairC+';border-radius:0 0 '+Math.round(10*s)+'px '+Math.round(10*s)+'px;z-index:5;border:'+Math.round(2*s)+'px solid #333;"></div>':'';
+  const accDiv=isFemale?'<div style="position:absolute;top:'+Math.round(30*s)+'px;right:'+Math.round(10*s)+'px;width:'+Math.round(11*s)+'px;height:'+Math.round(11*s)+'px;background:#FF6B6B;border:'+Math.round(2*s)+'px solid #333;border-radius:50%;z-index:8;"></div>':'';
 
-    <div style="position:absolute;top:${Math.round(4*s)}px;left:${Math.round(8*s)}px;width:${Math.round(64*s)}px;height:${Math.round(60*s)}px;background:#FDDCB5;border:${Math.round(2.5*s)}px solid #333;border-radius:50%;z-index:6;">
-      <div style="position:absolute;top:${Math.round(32*s)}px;left:${Math.round(4*s)}px;width:${Math.round(13*s)}px;height:${Math.round(7*s)}px;background:rgba(255,140,120,0.38);border-radius:50%;"></div>
-      <div style="position:absolute;top:${Math.round(32*s)}px;right:${Math.round(4*s)}px;width:${Math.round(13*s)}px;height:${Math.round(7*s)}px;background:rgba(255,140,120,0.38);border-radius:50%;"></div>
-      <div style="position:absolute;top:${Math.round(24*s)}px;left:${Math.round(12*s)}px;width:${Math.round(13*s)}px;height:${Math.round(3*s)}px;background:#333;border-radius:${Math.round(2*s)}px;"></div>
-      <div style="position:absolute;top:${Math.round(24*s)}px;right:${Math.round(12*s)}px;width:${Math.round(13*s)}px;height:${Math.round(3*s)}px;background:#333;border-radius:${Math.round(2*s)}px;"></div>
-      ${hasGlasses?`
-      <div style="position:absolute;top:${Math.round(20*s)}px;left:${Math.round(9*s)}px;width:${Math.round(18*s)}px;height:${Math.round(13*s)}px;border:${Math.round(2*s)}px solid ${glassC};border-radius:${Math.round(4*s)}px;background:rgba(100,200,255,0.1);"></div>
-      <div style="position:absolute;top:${Math.round(20*s)}px;right:${Math.round(9*s)}px;width:${Math.round(18*s)}px;height:${Math.round(13*s)}px;border:${Math.round(2*s)}px solid ${glassC};border-radius:${Math.round(4*s)}px;background:rgba(100,200,255,0.1);"></div>
-      <div style="position:absolute;top:${Math.round(25*s)}px;left:${Math.round(27*s)}px;width:${Math.round(10*s)}px;height:${Math.round(2*s)}px;background:${glassC};"></div>`:''}
-      <div style="position:absolute;bottom:${Math.round(10*s)}px;left:${Math.round(21*s)}px;width:${Math.round(17*s)}px;height:${Math.round(3*s)}px;background:#333;border-radius:${Math.round(2*s)}px;transform:rotate(8deg);"></div>
-    </div>
-
-    <div style="position:absolute;top:${Math.round(2*s)}px;left:${Math.round(8*s)}px;width:${Math.round(64*s)}px;height:${Math.round(22*s)}px;background:${hairC};border:${Math.round(2*s)}px solid #333;border-radius:50% 50% 0 0;border-bottom:none;z-index:7;clip-path:polygon(0 0,100% 0,100% 55%,88% 78%,74% 52%,60% 78%,46% 52%,32% 78%,18% 52%,0 78%);"></div>
-
-    ${isFemale?`<div style="position:absolute;top:-${Math.round(2*s)}px;right:${Math.round(10*s)}px;width:${Math.round(11*s)}px;height:${Math.round(11*s)}px;background:${accC};border:${Math.round(2*s)}px solid #333;border-radius:50%;z-index:8;"></div>`:''}
-
-    ${hatIco?`<div style="position:absolute;top:-${Math.round(10*s)}px;left:50%;transform:translateX(-50%);font-size:${Math.round(22*s)}px;z-index:9;line-height:1;">${hatIco}</div>`:''}
-  </div>`;
+  return '<div style="position:relative;width:'+w+'px;height:'+h+'px;animation:mungFloat 2.8s ease-in-out infinite;flex-shrink:0;isolation:isolate;">'+shadow+bootL+bootR+legL+legR+body+hairBack+hairLong+face+hairFront+ribbon+hat+bagDiv+accDiv+'</div>';
 }
+
 
 // 단상용 캐릭터 SVG (작은 버전)
 function getPodiumCharSVG(student){
