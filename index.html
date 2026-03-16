@@ -702,11 +702,13 @@ html {
 </head>
 <body>
 
+<!-- 상단 바 -->
 <div id="top-bar">
   <div class="bar-brand">
     <div class="b1">🎹 JY PIANO</div>
     <div class="b2" id="bar-song">연습실</div>
   </div>
+  <!-- 중앙 레벨/배지 -->
   <div id="bar-level-badge" style="position:absolute;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;" onclick="openLevelPopup()">
     <div id="bar-badge-ico" style="font-size:0.95rem;line-height:1;">🌱</div>
     <div id="bar-badge-txt" style="font-family:'Jua',sans-serif;font-size:0.6rem;color:#2D3436;white-space:nowrap;">Lv.1 새싹</div>
@@ -722,6 +724,7 @@ html {
   </div>
 </div>
 
+<!-- 하단 탭 바 -->
 <div id="tab-bar">
   <button class="tab-item active" id="tab-home" onclick="switchTab('home')">
     <div class="tab-ico-wrap"><span class="t-ico">🏠</span></div>
@@ -747,8 +750,10 @@ html {
     <span class="t-lbl">관리</span>
   </button>
 </div>
+<!-- 말풍선 (탭바 위 고정) -->
 <div class="speech-bubble" id="reward-speech">연습 10회 → 가챠권 🎟</div>
 
+<!-- 티켓 추가 모달 -->
 <div class="ticket-modal-bg" id="ticket-add-modal">
   <div class="ticket-modal">
     <h3>🎟 게임권 추가</h3>
@@ -766,10 +771,12 @@ html {
   </div>
 </div>
 
+<!-- ① 연습 홈 -->
 <div id="pg-practice" class="page">
   <div class="practice-hero">
     <div class="logo">JY PIANO</div>
     <div class="sub">연습실</div>
+
   </div>
   <div class="page-inner" style="padding-top:4px">
     <div class="search-bar">
@@ -787,6 +794,7 @@ html {
   </div>
 </div>
 
+<!-- ② 곡 목록 -->
 <div id="pg-songs" class="page">
   <div class="page-inner">
     <button class="back-btn" onclick="switchTab('practice')">← 연습으로</button>
@@ -797,6 +805,7 @@ html {
   </div>
 </div>
 
+<!-- 한손/양손 모달 -->
 <div class="modal-bg" id="hands-modal">
   <div class="modal-box">
     <div class="modal-title">🎹 연주 방식을 선택해주세요</div>
@@ -808,6 +817,7 @@ html {
   </div>
 </div>
 
+<!-- ③ 설정 -->
 <div id="pg-set" class="page">
   <div class="page-inner">
     <button class="back-btn" onclick="showPage('pg-songs')">← 뒤로</button>
@@ -847,6 +857,7 @@ html {
   </div>
 </div>
 
+<!-- ④ 연습 -->
 <div id="pg-prac" class="page">
   <div class="page-inner">
     <button class="back-btn" onclick="switchTab('practice')">← 홈으로</button>
@@ -872,6 +883,7 @@ html {
   </div>
 </div>
 
+<!-- ⑤ 보상 탭 -->
 <div id="pg-reward" class="page">
   <div class="reward-inner">
     <div class="reward-header">
@@ -879,11 +891,13 @@ html {
       <div class="r-sub">연습 10회 완료 = 가챠권 1장</div>
     </div>
 
+    <!-- 게임권 현황 -->
     <div class="ticket-card">
       <div class="ticket-count" id="ticket-count">0</div>
       <div class="ticket-label">🎟 보유 게임권</div>
     </div>
 
+    <!-- 다음 권까지 진행 -->
     <div class="progress-card">
       <div class="pc-title">🎯 다음 게임권까지</div>
       <div class="pc-bar-wrap"><div class="pc-bar" id="pc-bar" style="width:0%"></div></div>
@@ -891,6 +905,7 @@ html {
       <div class="pc-history" id="pc-history"></div>
     </div>
 
+    <!-- 버튼들 -->
     <div class="reward-btns">
       <button class="r-btn r-btn-gacha" id="r-btn-gacha" onclick="useTicketAndPlay()" disabled>
         🎰 게임권 사용해서 가챠 돌리기
@@ -900,6 +915,7 @@ html {
       </button>
     </div>
 
+    <!-- 상품 안내 -->
     <div class="prizes-info">
       <div class="pi-title">🏆 당첨 상품 안내 (마지막 공 기준)</div>
       <div id="prizes-list"></div>
@@ -907,12 +923,14 @@ html {
   </div>
 </div>
 
+<!-- 레벨 팝업 -->
 <div class="level-popup-bg" id="level-popup-bg" onclick="closeLevelPopup(event)">
   <div class="level-popup" id="level-popup">
     <div class="lp-handle"></div>
     <div class="lp-title">🏆 레벨 현황</div>
     <div class="lp-sub">배지를 누르면 상세 정보를 볼 수 있어요</div>
 
+    <!-- 내 레벨 -->
     <div class="lp-my-level" id="lp-my-level">
       <div class="lp-my-badge" id="lp-my-badge">🌱 Lv.1 새싹</div>
       <div class="lp-my-pts" id="lp-my-pts">총 0 포인트 보유</div>
@@ -922,11 +940,13 @@ html {
       <div class="lp-my-exptxt" id="lp-my-exptxt">다음 레벨까지 50포인트 남음</div>
     </div>
 
+    <!-- 내 랭킹 -->
     <div class="lp-rank-card">
       <div style="font-family:'Jua',sans-serif;font-size:0.78rem;color:#aaa;margin-bottom:4px;">나의 현재 랭킹</div>
       <div class="lp-my-ranking" id="lp-my-ranking">-</div>
       <div class="lp-my-ranking-sub" id="lp-my-ranking-sub">학생 등록 후 표시돼요</div>
     </div>
+    <!-- 친구 현황 -->
     <div class="lp-stat-row">
       <div class="lp-stat-chip lower">
         <div class="lp-stat-num" id="lp-lower">-</div>
@@ -942,23 +962,29 @@ html {
       </div>
     </div>
 
+    <!-- 전체 로드맵 -->
     <div class="lp-roadmap" id="lp-roadmap"></div>
 
     <button class="lp-close" onclick="closeLevelPopup()">닫기</button>
   </div>
 </div>
 
+<!-- 학생 로그인 모달 -->
 <div class="login-modal-bg" id="login-modal-bg">
   <div class="login-modal">
     <div class="lm-handle"></div>
     <div class="lm-title">🎹 JY PIANO</div>
     <div class="lm-sub">이름을 선택해서 시작하세요!</div>
+    <!-- 성씨 필터 -->
     <div class="surname-filter" id="surname-filter"></div>
+    <!-- 학생 목록 -->
     <div class="student-list" id="login-student-list"></div>
+    <!-- 게스트 접속 -->
     <button class="guest-btn" onclick="loginAsGuest()">👤 게스트로 접속 (연습만 가능)</button>
   </div>
 </div>
 
+<!-- 비밀번호 모달 -->
 <div class="admin-modal-bg" id="admin-pw-modal">
   <div class="admin-modal">
     <h3>🔐 관리자 확인</h3>
@@ -971,6 +997,7 @@ html {
   </div>
 </div>
 
+<!-- 관리자 페이지 -->
 <div id="pg-admin" class="page">
   <div class="admin-header">
     <div class="ah-title">⚙️ 관리자 모드</div>
@@ -978,8 +1005,10 @@ html {
   </div>
   <div class="admin-inner">
 
+    <!-- 곡 추가 버튼 -->
     <button class="admin-add-btn" onclick="showAddForm()">+ 새 곡 추가하기</button>
 
+    <!-- 곡 추가/수정 폼 -->
     <div class="admin-section admin-form" id="song-form">
       <div class="admin-section-title" id="form-title">➕ 곡 추가</div>
       <div class="form-group">
@@ -1055,6 +1084,7 @@ html {
       </div>
     </div>
 
+    <!-- 게임권 관리 -->
     <div class="admin-section">
       <div class="admin-section-title">🎟 게임권 관리</div>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:#f8f9fa;border-radius:10px;margin-bottom:8px;">
@@ -1067,6 +1097,7 @@ html {
       <div class="firebase-notice">관리자 비밀번호 확인 후 게임권이 추가돼요</div>
     </div>
 
+    <!-- 학생 관리 -->
     <div class="admin-section">
       <div class="admin-section-title">👥 학생 관리</div>
       <div id="admin-student-list" style="margin-bottom:8px;"></div>
@@ -1076,6 +1107,7 @@ html {
       </div>
     </div>
 
+    <!-- 곡 목록 관리 -->
     <div class="admin-section">
       <div class="admin-section-title">
         🎵 곡 목록 관리
@@ -1084,6 +1116,7 @@ html {
       <div id="admin-song-list"></div>
     </div>
 
+    <!-- 카테고리 관리 -->
     <div class="admin-section">
       <div class="admin-section-title">🏷️ 카테고리 현황</div>
       <div class="cat-manage-grid" id="admin-cat-grid"></div>
@@ -1095,10 +1128,12 @@ html {
   </div>
 </div>
 
+<!-- 홈 탭 -->
 <div id="pg-home" class="page active">
   <div style="min-height:100%;">
     <div style="padding:18px 14px 120px;">
 
+      <!-- 현재 접속자 바 -->
       <div class="current-user-bar" id="current-user-bar" onclick="openLoginModal()" style="margin-top:4px;">
         <div class="cub-avatar" id="cub-avatar">?</div>
         <div class="cub-info">
@@ -1107,10 +1142,12 @@ html {
         </div>
         <div class="cub-change">변경 ›</div>
       </div>
+      <!-- home-char/name 숨김 처리 (참조 유지) -->
       <div id="home-char" style="display:none;"></div>
       <div id="home-student-name" style="display:none;">---</div>
       <div id="home-student-sub" style="display:none;">피아노 마을 주민</div>
 
+      <!-- 레벨 카드 -->
       <div style="background:#fff;border:1px solid #eee;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 3px 12px rgba(0,0,0,0.06);">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
           <div>
@@ -1125,6 +1162,7 @@ html {
         <div style="font-family:'Jua',sans-serif;font-size:0.72rem;color:#aaa;text-align:right;" id="home-exp-txt">다음 레벨까지 50포인트 남음</div>
       </div>
 
+      <!-- 연습 통계 -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
         <div style="background:#fff;border-radius:14px;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
           <div style="font-family:'Do Hyeon',sans-serif;font-size:1.8rem;color:#f59f00;" id="home-total-practice">0</div>
@@ -1136,6 +1174,7 @@ html {
         </div>
       </div>
 
+      <!-- 시상대 -->
       <div style="background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
         <div style="font-family:'Jua',sans-serif;font-size:0.82rem;color:#aaa;margin-bottom:10px;text-align:center;">🏆 피아노 마을 랭킹</div>
         <div class="podium-wrap" id="podium-wrap-home">
@@ -1143,6 +1182,7 @@ html {
         </div>
       </div>
 
+      <!-- 이용 안내 -->
       <div style="background:linear-gradient(135deg,#FFF8F0,#FFF0F5);border:1.5px solid #FFD6C0;border-radius:18px;padding:18px 16px;margin-top:4px;">
         <div style="font-family:'Do Hyeon',sans-serif;font-size:1rem;color:#FF6B6B;margin-bottom:14px;display:flex;align-items:center;gap:6px;">
           📋 JY PIANO 이용 안내
@@ -1199,12 +1239,14 @@ html {
   </div>
 </div>
 
+<!-- 마을 탭 -->
 <div id="pg-village" class="page">
   <div class="village-inner">
     <div class="village-header">
       <div class="village-header-title">👤 내 캐릭터</div>
       <div class="village-header-sub">나만의 캐릭터를 꾸며봐요!</div>
     </div>
+    <!-- 포인트 바 -->
     <div class="village-pts-bar">
       <div>
         <div class="vpb-label">보유 포인트</div>
@@ -1214,27 +1256,33 @@ html {
         <div class="vpb-pts" id="village-pts-display">0p</div>
       </div>
     </div>
+    <!-- 캐릭터 미리보기 -->
     <div id="village-char-preview" style="display:flex;justify-content:center;padding:16px 0 6px;min-height:140px;">
       <span style="font-size:3rem;">🐣</span>
     </div>
     <div id="village-char-name" style="text-align:center;font-family:'Jua',sans-serif;font-size:0.82rem;color:#aaa;margin-bottom:14px;">캐릭터를 생성해주세요</div>
+    <!-- 메뉴 -->
     <div class="village-menu">
+      <!-- 캐릭터 생성 -->
       <div class="vmenu-card" id="vmenu-create" onclick="openCharCreate()">
         <div class="vm-ico">✨</div>
         <div class="vm-name">캐릭터 생성</div>
         <div class="vm-sub" id="vmenu-create-sub">새 캐릭터 만들기</div>
       </div>
+      <!-- 캐릭터 꾸미기 -->
       <div class="vmenu-card" id="vmenu-char" onclick="openCharEdit()">
         <div class="vm-ico">👗</div>
         <div class="vm-name">캐릭터 꾸미기</div>
         <div class="vm-sub" id="vmenu-char-sub">아이템 장착하기</div>
       </div>
+      <!-- 친구 캐릭터 구경 -->
       <div class="vmenu-card disabled">
         <div class="vm-ico">👫</div>
         <div class="vm-name">친구 구경하기</div>
         <div class="vm-sub">Firebase 연동 후 오픈</div>
         <div class="vm-badge">준비중</div>
       </div>
+      <!-- 포인트 선물 -->
       <div class="vmenu-card" onclick="openGiftModal()">
         <div class="vm-ico">🎁</div>
         <div class="vm-name">포인트 선물</div>
@@ -1244,16 +1292,19 @@ html {
   </div>
 </div>
 
+<!-- 캐릭터 생성 화면 -->
 <div class="char-create-bg" id="char-create-bg">
   <div class="char-create-wrap">
     <button onclick="closeCharCreate()" style="background:none;border:none;color:#888;font-family:'Jua',sans-serif;font-size:0.85rem;cursor:pointer;padding:4px 0;">← 뒤로</button>
     <div class="cc-title">캐릭터 만들기</div>
     <div class="cc-sub">나만의 캐릭터를 만들어봐요!</div>
+    <!-- 미리보기 -->
     <div class="char-preview">
       <div id="cc-preview-area">
         <div id="cc-preview-div" style="display:flex;justify-content:center;align-items:center;height:140px;"></div>
       </div>
     </div>
+    <!-- 성별 선택 -->
     <div class="cc-section">
       <div class="cc-section-title">성별 선택</div>
       <div class="gender-grid">
@@ -1267,6 +1318,7 @@ html {
         </div>
       </div>
     </div>
+    <!-- 기본 옷 세트 -->
     <div class="cc-section">
       <div class="cc-section-title">기본 옷 세트 선택</div>
       <div class="outfit-grid" id="outfit-grid"></div>
@@ -1275,6 +1327,7 @@ html {
   </div>
 </div>
 
+<!-- 캐릭터 꾸미기 화면 -->
 <div class="char-edit-bg" id="char-edit-bg">
   <div class="char-edit-wrap">
     <div class="ce-header">
@@ -1282,6 +1335,7 @@ html {
       <div class="ce-title">캐릭터 꾸미기</div>
       <button class="ce-shop-btn" onclick="openShop()">상점 가기</button>
     </div>
+    <!-- 캐릭터 + 슬롯 -->
     <div class="ce-main">
       <div class="ce-char-area">
         <div id="ce-preview-div" style="display:flex;justify-content:center;align-items:center;min-height:120px;"></div>
@@ -1289,19 +1343,23 @@ html {
       </div>
       <div class="ce-slots" id="ce-slots"></div>
     </div>
+    <!-- 소지품 -->
     <div class="ce-inv-title">소지 아이템</div>
     <div class="ce-inv-tabs" id="ce-inv-tabs"></div>
     <div class="ce-inv-grid" id="ce-inv-grid"></div>
   </div>
 </div>
 
+<!-- 상점 -->
 <div class="shop-bg" id="shop-bg">
+  <!-- 상단 고정: 헤더 + 캐릭터 미리보기 + 카테고리 탭 -->
   <div class="shop-fixed-top">
     <div class="shop-header">
       <button class="shop-back" onclick="closeShop()">← 뒤로</button>
       <div class="shop-title">아이템 상점</div>
       <div class="shop-pts" id="shop-pts-display">0p</div>
     </div>
+    <!-- 캐릭터 미리보기 (상단 고정) -->
     <div id="shop-char-preview-area" style="display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #eee;border-radius:14px;padding:12px 14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
       <div id="shop-char-preview" style="display:flex;justify-content:center;align-items:center;min-width:72px;min-height:90px;">
         <span style="font-size:2.5rem;">🐣</span>
@@ -1316,6 +1374,7 @@ html {
     </div>
     <div class="shop-cat-tabs" id="shop-cat-tabs"></div>
   </div>
+  <!-- 스크롤 영역: 아이템 목록만 -->
   <div class="shop-scroll">
     <div class="shop-grid" id="shop-grid" style="padding-top:8px;"></div>
   </div>
@@ -1329,6 +1388,7 @@ html {
   </div>
 </div>
 
+<!-- 포인트 선물 모달 -->
 <div class="gift-modal-bg" id="gift-modal-bg" onclick="closeGiftModal(event)">
   <div class="gift-modal">
     <div class="gm-title">🎁 포인트 선물</div>
@@ -1347,6 +1407,7 @@ html {
   </div>
 </div>
 
+<!-- ⑥ 핀볼 가챠 -->
 <div id="pg-pinball" class="page">
   <div class="pb-wrap">
     <button class="back-btn" style="color:#636e72" onclick="switchTab('reward')">← 보상으로</button>
@@ -1433,20 +1494,21 @@ const SONG_DB=[
     {vex:'b/4',lb:'시',freq:493.88,dur:'q'},{vex:'a/4',lb:'라',freq:440.00,dur:'q'},{vex:'g/4',lb:'솔',freq:392.00,dur:'h'}
   ]},
 ];
+
 const CAT_META={
   book:{items:[{key:'동요',icon:'🎵',color:'#4ECDC4'},{key:'바이엘',icon:'📖',color:'#FF6B6B'},{key:'체르니',icon:'🎹',color:'#9775FA'},{key:'기타',icon:'🌟',color:'#FFE66D'}]},
   genre:{items:[{key:'동요',icon:'🌸',color:'#FF8FAB'},{key:'클래식',icon:'🎻',color:'#9775FA'},{key:'연습곡',icon:'📝',color:'#74C0FC'},{key:'OST',icon:'🎬',color:'#FF922B'}]},
   level:{items:[{key:'입문',icon:'🌱',color:'#51CF66'},{key:'초급',icon:'⭐',color:'#FFE66D'},{key:'중급',icon:'🌟',color:'#FF922B'},{key:'고급',icon:'💎',color:'#CC5DE8'}]},
   hands:{items:[{key:'오른손',icon:'🤚',color:'#74C0FC'},{key:'양손',icon:'🤲',color:'#FF922B'}]}
 };
+
 // 게임권 / 연습 진행 상태
 // SESSIONS_PER_TICKET: 완료 횟수 1회 = 곡 1곡 완주
 // 10회 완주 = 게임권 1장
 const SESSIONS_PER_TICKET = 10;
 let tickets = 0;
 let practiceCount = 0; // 총 완료 횟수 (10회마다 티켓)
-let currentCycleCount = 0;
-// 현재 10회 사이클 내 완료 수
+let currentCycleCount = 0; // 현재 10회 사이클 내 완료 수
 let isTestMode = false;
 
 function addPracticeSession(){
@@ -1459,8 +1521,7 @@ function addPracticeSession(){
     showTicketAlert();
   }
   updateRewardUI();
-  saveProgressLocal();
-  // 연습 진행상황 즉시 저장
+  saveProgressLocal(); // 연습 진행상황 즉시 저장
 }
 
 function showTicketAlert(){
@@ -1535,6 +1596,7 @@ const PRIZES=[
   {score:100, color:'#4ECDC4',label:'💎 100점', prob:'8%',  count:7},
   {score:0,   color:'#555',   label:'꽝',        prob:'90%', count:90},
 ];
+
 function renderPrizesInfo(){
   const el = document.getElementById('prizes-list');
   el.innerHTML = PRIZES.map(p=>`
@@ -1548,8 +1610,7 @@ function renderPrizesInfo(){
 // 앱 상태
 let curSong=SONG_DB[0], curHandsMode='right', activeFilters={}, curNotes=[];
 let scoreMode='right';       // 'right' | 'both'
-let scoringHand='right';
-// 현재 채점 중인 손 'right' | 'left'
+let scoringHand='right';     // 현재 채점 중인 손 'right' | 'left'
 let leftStates=[], leftCur=0; // 왼손 상태
 let totalSes=3, curSes=1, states=[], cur=0;
 let listening=false, paused=false;
@@ -1700,8 +1761,7 @@ function gotoSet(){
 function goPrac(){
   // 채점방식에 따라 curNotes 설정
   if(scoreMode==='both' && curSong.hands==='both'){
-    curNotes = curSong.right;
-    // 오른손 먼저
+    curNotes = curSong.right; // 오른손 먼저
     leftStates = curSong.left.map(()=>'waiting');
     leftCur = 0;
     scoringHand = 'right';
@@ -1734,7 +1794,7 @@ function initSes(){
   document.getElementById('mic-go-btn').disabled=false;
   document.getElementById('mic-go-btn').textContent='🎤 마이크 켜고 연습 시작';
   updateHandIndicator();
-  setStatus('idle'); renderSesDots(); initNoteBar(); updBarCount();
+  setStatus('idle'); renderSesDots(); drawNoteBar(); updBarCount();
   if(typeof ABCJS!=='undefined') drawScore(); else loadABCjs();
 }
 
@@ -1837,8 +1897,7 @@ function drawGrandStaff(wrap){ if(wrap) wrap.innerHTML=''; drawScoreABC(); }
 // VexFlow → ABC 음표 변환
 // vex: 'c/4' → ABC: 'C' (옥타브 처리 포함)
 function vexToABC(vex, dur){
-  if(!vex) return 'z';
-  // 쉼표
+  if(!vex) return 'z'; // 쉼표
   const nameMap={c:'C',d:'D',e:'E',f:'F',g:'G',a:'A',b:'B'};
   const parts=vex.toLowerCase().split('/');
   const noteName=parts[0].replace('#','').replace('b','');
@@ -1846,6 +1905,7 @@ function vexToABC(vex, dur){
   const hasFlat=parts[0].includes('b')&&!parts[0].includes('#');
   const oct=parseInt(parts[1])||4;
   let abc=nameMap[noteName]||'C';
+
   // 임시표
   if(hasSharp) abc='^'+abc;
   else if(hasFlat) abc='_'+abc;
@@ -1908,21 +1968,25 @@ function buildABCString(song, bpm, rStates, lStates, handsMode){
   }
   return abc;
 }
-
 // 음표 상태 색상 CSS 오버레이 (ABCjs 렌더 후 SVG 수정)
-function colorizeABCNotes(svgEl, statesArr, offset){
-  if(!svgEl || !statesArr) return;
+function colorizeABCNotes(svgEl, notes, states, offset){
+  if(!svgEl || !states) return;
+  // ABCjs는 음표마다 data-index 또는 순서로 접근 가능
+  // abcjs-note 클래스를 가진 요소들을 순서대로 색칠
   const noteEls=svgEl.querySelectorAll('.abcjs-note');
-  for(let i=0; i<statesArr.length; i++){
-    const el = noteEls[(offset||0) + i];
-    if(!el) continue;
-    const st=statesArr[i];
-    const col=st==='current'?'#f59f00':st==='correct'?'#2f9e44':st==='wrong'?'#e03131':'#74C0FC';
-    el.querySelectorAll('path,ellipse,rect,polygon').forEach(p=>{
-      p.setAttribute('fill',col);
-      p.setAttribute('stroke',col);
-    });
-  }
+  let noteIdx=0;
+  noteEls.forEach(el=>{
+    const i=(offset||0)+noteIdx;
+    if(i<states.length){
+      const st=states[i];
+      const col=st==='current'?'#f59f00':st==='correct'?'#2f9e44':st==='wrong'?'#e03131':'#74C0FC';
+      el.querySelectorAll('path,ellipse,rect,polygon').forEach(p=>{
+        p.setAttribute('fill',col);
+        p.setAttribute('stroke',col);
+      });
+    }
+    noteIdx++;
+  });
 }
 
 function drawScoreABC(){
@@ -1931,6 +1995,7 @@ function drawScoreABC(){
   area.innerHTML='';
   const song=curSong, bpm=song.bpm||4;
   const handsMode=curHandsMode;
+
   // ABCjs 로딩 확인
   if(typeof ABCJS==='undefined'){
     area.innerHTML='<p style="color:#bbb;padding:10px;font-size:0.8rem;">악보 로딩 중...</p>';
@@ -1957,9 +2022,10 @@ function drawScoreABC(){
     // 음표 색상 적용
     const svgEl=document.getElementById('abc-paper');
     if(svgEl){
-      colorizeABCNotes(svgEl, states, 0);
-      if(handsMode==='both' && song.hands==='both' && song.left){
-        colorizeABCNotes(svgEl, leftStates, song.right.length);
+      colorizeABCNotes(svgEl, song.right, states, 0);
+      if(handsMode==='both' && song.hands==='both'){
+        // 왼손은 별도 SVG 요소나 두 번째 성부
+        // ABCjs V:2 음표들은 두 번째 그룹으로 처리됨
       }
     }
   }catch(e){
@@ -1991,20 +2057,16 @@ function drawScore(){
   drawScoreABC();
 }
 
-// 노트 바 (하단 동그라미) 초기화 - DOM 요소는 처음에 한 번만 생성
-function initNoteBar(){
+function drawNoteBar(){
   const bar=document.getElementById('note-bar'); bar.innerHTML='';
   // 오른손 음표
   curNotes.forEach((n,i)=>{
     const chip=document.createElement('div'); chip.className='note-chip';
-    const dot=document.createElement('div');
-    dot.className='note-dot '+(states[i]||'waiting');
-    dot.id='note-dot-r-'+i;
-    dot.textContent=n.lb;
+    const dot=document.createElement('div'); dot.className='note-dot '+states[i]; dot.textContent=n.lb;
     const lbl=document.createElement('div'); lbl.className='note-lbl'; lbl.textContent=i+1;
     chip.append(dot,lbl); bar.appendChild(chip);
   });
-  // 양손 곡이면 왼손 음표도 항상 표시
+  // 양손 곡이면 왼손 음표도 항상 표시 (채점 시작 전에도)
   if(curHandsMode==='both' && curSong.hands==='both' && curSong.left && curSong.left.length){
     const div=document.createElement('div');
     div.style.cssText='width:100%;border-top:1px dashed #ddd;margin:6px 0 4px;display:flex;align-items:center;gap:4px;';
@@ -2014,58 +2076,29 @@ function initNoteBar(){
       const chip=document.createElement('div'); chip.className='note-chip';
       const dot=document.createElement('div');
       dot.className='note-dot '+(leftStates[i]||'waiting');
-      dot.id='note-dot-l-'+i;
-      dot.style.background='#FFD8A8'; // 초기 대기 색상
+      dot.style.background=leftStates[i]==='correct'?'#51CF66':leftStates[i]==='current'?'#f59f00':leftStates[i]==='wrong'?'#FF6B6B':'#FFD8A8';
       dot.textContent=n.lb;
       const lbl=document.createElement('div'); lbl.className='note-lbl'; lbl.textContent=i+1;
       chip.append(dot,lbl); bar.appendChild(chip);
     });
   }
-  updateNoteBarProgress();
-}
-
-// 상태에 따라 클래스/색상만 실시간 업데이트
-function updateNoteBar(){
-  // 오른손
-  states.forEach((st, i)=>{
-    const dot = document.getElementById('note-dot-r-' + i);
-    if(dot) dot.className = 'note-dot ' + st;
-  });
-  // 왼손
-  if(curHandsMode==='both' && curSong.hands==='both' && curSong.left){
-    leftStates.forEach((st, i)=>{
-      const dot = document.getElementById('note-dot-l-' + i);
-      if(dot) {
-        dot.className = 'note-dot ' + st;
-        if(st === 'waiting') dot.style.background = '#FFD8A8';
-        else if(st === 'correct') dot.style.background = '#51CF66';
-        else if(st === 'current') dot.style.background = '#f59f00';
-        else if(st === 'wrong') dot.style.background = '#FF6B6B';
-      }
-    });
-  }
-  updateNoteBarProgress();
-}
-
-// 진행바 업데이트
-function updateNoteBarProgress(){
-  const totalNotes = (scoreMode==='both'&&curSong.hands==='both') ? curNotes.length + (curSong.left?.length||0) : curNotes.length;
+  // 진행바 - 오른손+왼손 합산
+  const totalNotes = scoreMode==='both'&&curSong.hands==='both'
+    ? curNotes.length + (curSong.left?.length||0)
+    : curNotes.length;
   const doneNotes = states.filter(s=>s==='correct').length + leftStates.filter(s=>s==='correct').length;
   document.getElementById('prog-bar').style.width=(doneNotes/totalNotes*100)+'%';
 }
 
 function redraw(){
-  // ABCjs: 음표 색상 갱신
+  // ABCjs: 음표 색상만 갱신 (매 프레임 재렌더는 느리므로 색상만 업데이트)
   const svgEl=document.getElementById('abc-paper');
   if(svgEl && typeof ABCJS!=='undefined'){
-    colorizeABCNotes(svgEl, states, 0);
-    if(curHandsMode==='both' && curSong.hands==='both' && curSong.left) {
-       colorizeABCNotes(svgEl, leftStates, curSong.right.length);
-    }
+    colorizeABCNotes(svgEl, curSong.right, states, 0);
   } else if(typeof ABCJS!=='undefined'){
     drawScoreABC();
   }
-  updateNoteBar();
+  drawNoteBar();
   updateHandIndicator();
 }
 
@@ -2082,8 +2115,7 @@ function detectLoop(){
   if(!listening) return;
   if(paused){rafId=requestAnimationFrame(detectLoop);return;}
   const buf=new Float32Array(analyser.fftSize); analyser.getFloatTimeDomainData(buf);
-  let rms=0;
-  for(const v of buf) rms+=v*v; rms=Math.sqrt(rms/buf.length);
+  let rms=0; for(const v of buf) rms+=v*v; rms=Math.sqrt(rms/buf.length);
   // 피아노 소음 필터: RMS 임계값 높임 (말소리/주변 소음 제거)
   if(rms>0.025){
     const freq=detectPitch(buf,audioCtx.sampleRate);
@@ -2108,8 +2140,7 @@ function detectLoop(){
               if(cur<curNotes.length){ states[cur]='current'; setStatus('ok'); setTimeout(()=>setStatus('go'),600); }
               else {
                 // 오른손 완료 → 왼손으로 전환
-                scoringHand='left';
-                leftCur=0;
+                scoringHand='left'; leftCur=0;
                 if(leftStates.length) leftStates[0]='current';
                 setStatus('go'); updateHandIndicator();
               }
@@ -2154,8 +2185,7 @@ function detectLoop(){
         }
       }
     } else {
-      lastDetectedFreq=-1;
-      freqStableCount=0;
+      lastDetectedFreq=-1; freqStableCount=0;
       document.getElementById('det-note').textContent='—';
       document.getElementById('det-hz').textContent='소리 감지 중...';
     }
@@ -2168,8 +2198,7 @@ function detectLoop(){
 
 function onSessionComplete(){
   // 한 세션(곡 1회) 완료
-  addPracticeSession();
-  // 연습 카운트 +1, 게임권 체크
+  addPracticeSession(); // 연습 카운트 +1, 게임권 체크
   // 포인트 + 경험치 지급 (난이도 기반)
   if(curSong){
     const earned = addPoints(curSong.level || '입문');
@@ -2190,8 +2219,7 @@ function onSessionComplete(){
     setTimeout(()=>{ curSes++; initSes(); }, 2200);
   } else {
     // 전체 완료
-    const gotTicket = currentCycleCount === 0 && tickets > 0;
-    // 방금 티켓 받았는지
+    const gotTicket = currentCycleCount === 0 && tickets > 0; // 방금 티켓 받았는지
     const b=document.getElementById('done-banner');
     b.textContent = gotTicket
       ? `🎟 게임권 획득! 보상 탭에서 가챠를 돌려보세요!`
@@ -2251,6 +2279,7 @@ const TOTAL_BALLS=100;
 let pbCanvas,pbCtx,pbBalls=[],pbPegs=[],pbSlots=[];
 let pbRunning=false,pbBallsDone=0,pbTotalScore=0,pbBestScore=0,pbAnimId=null;
 let pbPrizePool=[],pbDropTimer=0;
+
 function buildPrizePool(){
   const pool=[];
   PRIZES.forEach(p=>{for(let i=0;i<p.count;i++) pool.push(p);});
@@ -2482,6 +2511,7 @@ function showPinballResult(){
 // 관리자 기능
 const ADMIN_PW='5363';
 let adminLoggedIn=false,editingId=null;
+
 function toggleLeftNotes(){
   const hands = document.getElementById('f-hands').value;
   const grp = document.getElementById('f-left-group');
@@ -2622,4 +2652,1017 @@ function saveSong(){
     };
     alert('수정됐어요!');
   }else{
-    SONG_DB.push({id:'
+    SONG_DB.push({id:'song_'+Date.now(),name,emoji,bpm,hands,tags:{book,genre,level,hands:hl},right:notes,left:leftNotes});
+    alert('추가됐어요!\n(새로고침 시 초기화됩니다)');
+  }
+  hideForm();renderAdminSongList();renderAdminCatGrid();renderAdminStudentList();renderCatGrid('book');
+}
+function deleteSong(id){
+  const s=SONG_DB.find(s=>s.id===id);if(!s)return;
+  if(!confirm(`'${s.name}'을 삭제할까요?`))return;
+  SONG_DB.splice(SONG_DB.findIndex(s=>s.id===id),1);
+  renderAdminSongList();renderAdminCatGrid();renderCatGrid('book');
+}
+
+// 레벨 시스템
+const LEVELS = [
+  {lv:1, name:'새싹',         icon:'🌱', minPts:0,    cls:'lv-1', expColor:'#868e96'},
+  {lv:2, name:'연주자',       icon:'🎵', minPts:50,   cls:'lv-2', expColor:'#51CF66'},
+  {lv:3, name:'스타',         icon:'⭐', minPts:150,  cls:'lv-3', expColor:'#ffd43b'},
+  {lv:4, name:'아티스트',     icon:'🎸', minPts:350,  cls:'lv-4', expColor:'#74c0fc'},
+  {lv:5, name:'마에스트로',   icon:'👑', minPts:700,  cls:'lv-5', expColor:'#ffa94d'},
+  {lv:6, name:'레전드',       icon:'💎', minPts:1200, cls:'lv-6', expColor:'#9775fa'},
+  {lv:7, name:'그랜드마스터', icon:'🔥', minPts:2000, cls:'lv-7', expColor:'#ff6b6b'},
+  {lv:8, name:'피아노신',     icon:'✨', minPts:3000, cls:'lv-8', expColor:'#ffd700'},
+];
+
+// 난이도별 포인트
+const LEVEL_POINTS = {입문:1, 초급:2, 중급:4, 고급:8};
+
+let totalPoints = 0;     // 구매용 포인트 (옷 사면 줄어듦)
+let totalPracticeExp = 0; // 레벨/배지 기준 경험치 (절대 안 줄어듦, 연습 횟수로만 증가)
+
+function getLevelInfo(pts) {
+  let cur = LEVELS[0];
+  for (let i = LEVELS.length - 1; i >= 0; i--) {
+    if (pts >= LEVELS[i].minPts) { cur = LEVELS[i]; break; }
+  }
+  const nextIdx = LEVELS.findIndex(l => l.lv === cur.lv) + 1;
+  const next = nextIdx < LEVELS.length ? LEVELS[nextIdx] : null;
+  const curMin = cur.minPts;
+  const nextMin = next ? next.minPts : cur.minPts;
+  const pct = next ? Math.min(100, ((pts - curMin) / (nextMin - curMin)) * 100) : 100;
+  const need = next ? nextMin - pts : 0;
+  return { cur, next, pct, need };
+}
+
+// addPoints: 학생 시스템에서 통합 처리
+
+function updateLevelUI() {
+  const info = getLevelInfo(totalPracticeExp); // 레벨은 경험치 기반
+  const { cur, next, pct, need } = info;
+
+  renderPodium();
+}
+
+// 레벨 팝업
+// 임시 학생 포인트 데이터 (Firebase 연동 전 - 나중에 실제 데이터로 교체)
+// 관리자 탭에서 학생 추가 시 여기에 쌓임
+let studentPoints = []; // [{name:'홍길동', pts:120}, ...]
+
+function openLevelPopup(){
+  const info = getLevelInfo(totalPoints);
+  const { cur, next, pct, need } = info;
+
+  // 내 레벨 영역
+  const myLevel = document.getElementById('lp-my-level');
+  myLevel.style.background = cur.cls === 'lv-8'
+    ? 'linear-gradient(135deg,#fff9db,#ffe066)'
+    : cur.cls === 'lv-7'
+    ? 'linear-gradient(135deg,#ffe3e3,#ffc9c9)'
+    : '#f8f9fa';
+
+  const myBadge = document.getElementById('lp-my-badge');
+  myBadge.textContent = cur.icon + ' Lv.' + cur.lv + ' ' + cur.name;
+  myBadge.className = 'lp-my-badge ' + cur.cls;
+
+  document.getElementById('lp-my-pts').textContent = '연습 경험치: ' + totalPracticeExp + ' · 보유 포인트: ' + totalPoints + 'p';
+
+  const expBar = document.getElementById('lp-my-expbar');
+  expBar.style.width = pct + '%';
+  expBar.style.background = 'linear-gradient(90deg,' + cur.expColor + ',' + (next ? next.expColor : cur.expColor) + ')';
+
+  document.getElementById('lp-my-exptxt').innerHTML = next
+    ? '다음 레벨까지 <strong>' + need + '포인트</strong> 남음'
+    : '<strong style="color:var(--primary)">✨ 최고 레벨 달성!</strong>';
+
+  // 학생 현황 (등록된 학생 기준)
+  if(studentPoints.length > 0){
+    const myLv = cur.lv;
+    const lower = studentPoints.filter(s => getLevelInfo(s.pts).cur.lv < myLv).length;
+    const same  = studentPoints.filter(s => getLevelInfo(s.pts).cur.lv === myLv).length;
+    const higher= studentPoints.filter(s => getLevelInfo(s.pts).cur.lv > myLv).length;
+    document.getElementById('lp-lower').textContent = lower + '명';
+    document.getElementById('lp-same').textContent  = same + '명';
+    document.getElementById('lp-higher').textContent= higher + '명';
+  } else {
+    document.getElementById('lp-lower').textContent = '-';
+    document.getElementById('lp-same').textContent  = '-';
+    document.getElementById('lp-higher').textContent= '-';
+  }
+
+  // 전체 로드맵
+  const roadmap = document.getElementById('lp-roadmap');
+  roadmap.innerHTML = LEVELS.map((lv, idx) => {
+    const isCurrentLv = lv.lv === cur.lv;
+    const isDone = totalPracticeExp >= lv.minPts && !isCurrentLv;
+    const isFuture = totalPracticeExp < lv.minPts;
+    const nextLvMin = LEVELS[idx+1] ? LEVELS[idx+1].minPts : lv.minPts;
+    const ptsRange = LEVELS[idx+1]
+      ? lv.minPts + 'p ~ ' + (nextLvMin-1) + 'p'
+      : lv.minPts + 'p ~';
+
+    let statusTxt = '';
+    let statusCls = '';
+    if(isDone){ statusTxt='달성 완료 ✓'; statusCls='done'; }
+    else if(isCurrentLv){ statusTxt='현재 단계 ★'; statusCls='current'; }
+    else { statusTxt= (lv.minPts - totalPracticeExp) + ' 더 필요'; statusCls='future'; }
+
+    return `<div class="lp-road-item ${isCurrentLv?'current':isDone?'done':'future'}">
+      <div class="lp-road-badge">
+        <div class="level-badge ${lv.cls}" style="font-size:0.78rem;padding:4px 10px;">${lv.icon} Lv.${lv.lv}</div>
+      </div>
+      <div class="lp-road-info">
+        <div class="lp-road-name">${lv.name}</div>
+        <div class="lp-road-pts">${ptsRange}</div>
+      </div>
+      <div class="lp-road-status ${statusCls}">${statusTxt}</div>
+    </div>`;
+  }).join('');
+
+  updatePopupRanking();
+    document.getElementById('level-popup-bg').classList.add('show');
+}
+
+function closeLevelPopup(e){
+  if(e && e.target !== document.getElementById('level-popup-bg')) return;
+  document.getElementById('level-popup-bg').classList.remove('show');
+}
+
+// 랭킹 시스템
+// 캐릭터는 나중에 키우기 게임 완성 후 교체 예정
+
+// 임시 캐릭터 (키우기 게임 연동 전)
+
+function getMedalEmoji(rank){
+  if(rank===1) return '🥇';
+  if(rank===2) return '🥈';
+  if(rank===3) return '🥉';
+  return rank + '위';
+}
+
+// 현재 나의 포인트를 포함한 전체 랭킹 계산
+// getAllRanking 구버전 제거
+
+function renderPodium(){
+  renderPodiumTo('podium-wrap-home');
+}
+
+function updatePopupRanking(){
+  const all = getAllRanking();
+  const myIdx = all.findIndex(s=>s.isMe);
+  const myRank = myIdx + 1;
+  const myLv = getLevelInfo(totalPoints).cur.lv;
+
+  document.getElementById('lp-my-ranking').textContent = getMedalEmoji(myRank);
+  document.getElementById('lp-my-ranking-sub').textContent =
+    all.length > 1 ? '전체 ' + all.length + '명 중 ' + myRank + '위' : '아직 다른 학생이 없어요';
+
+  const lower  = studentPoints.filter(s=>getLevelInfo(s.pts).cur.lv < myLv).length;
+  const same   = studentPoints.filter(s=>getLevelInfo(s.pts).cur.lv === myLv).length;
+  const higher = studentPoints.filter(s=>getLevelInfo(s.pts).cur.lv > myLv).length;
+
+  document.getElementById('lp-lower').textContent  = lower  > 0 ? lower+'명'  : '없음';
+  document.getElementById('lp-same').textContent   = same   > 0 ? same+'명'   : '없음';
+  document.getElementById('lp-higher').textContent = higher > 0 ? higher+'명' : '없음';
+}
+
+// 홈 탭 업데이트
+function updateHomeTab(){
+  const info = getLevelInfo(totalPoints);
+  const { cur, next, pct, need } = info;
+
+  // 홈 캐릭터 - 멍총 CSS 캐릭터
+  const hc = document.getElementById('home-char');
+  if(hc){
+    if(myChar){
+      hc.innerHTML = getMungCharHTML(myChar, 1.0);
+    } else {
+      hc.innerHTML = '<span style="font-size:3.5rem">🐣</span>';
+    }
+  }
+
+  // 레벨 타이틀
+  const ht = document.getElementById('home-level-title');
+  if(ht) ht.textContent = 'Lv.' + cur.lv + ' ' + cur.name;
+  const hp = document.getElementById('home-total-pts');
+  if(hp) hp.textContent = '경험치 ' + totalPracticeExp + ' · 포인트 ' + totalPoints + 'p';
+
+  // 레벨 배지
+  const hb = document.getElementById('home-level-badge2');
+  if(hb){ hb.textContent = cur.icon + ' Lv.' + cur.lv + ' ' + cur.name; hb.className = 'level-badge ' + cur.cls; }
+
+  // 경험치 바
+  const expBar = document.getElementById('home-exp-bar');
+  if(expBar){
+    expBar.style.width = pct + '%';
+    expBar.style.background = 'linear-gradient(90deg,' + cur.expColor + ',' + (next ? next.expColor : cur.expColor) + ')';
+  }
+  const expTxt = document.getElementById('home-exp-txt');
+  if(expTxt) expTxt.textContent = next ? '다음 레벨까지 ' + need + '포인트 남음' : '✨ 최고 레벨 달성!';
+
+  // 총 연습 횟수
+  const tp = document.getElementById('home-total-practice');
+  if(tp) tp.textContent = practiceCount;
+
+  // 랭킹
+  const all = getAllRanking();
+  const myIdx = all.findIndex(s=>s.isMe);
+  const myRank = myIdx + 1;
+  const rd = document.getElementById('home-rank-display');
+  if(rd) rd.textContent = getMedalEmoji(myRank);
+
+  // 시상대
+  renderPodiumTo('podium-wrap-home');
+}
+
+function renderPodiumTo(targetId){
+  const wrap = document.getElementById(targetId);
+  if(!wrap) return;
+  const all = getAllRanking();
+  if(all.length === 0){
+    wrap.innerHTML='<div style="color:#bbb;font-size:0.78rem;text-align:center;width:100%;padding:16px 0">학생 등록 후 랭킹이 표시돼요</div>';
+    return;
+  }
+  const top3 = [all[1], all[0], all[2]];
+  const classes = ['p2','p1','p3'];
+  const heights = ['52px','70px','38px'];
+  const medals = ['🥈','🥇','🥉'];
+  wrap.innerHTML = top3.map((s,i)=>{
+    if(!s) return '<div class="podium-item" style="flex:1"></div>';
+    const info = getLevelInfo(s.pts);
+    const isMeStyle = s.isMe ? 'outline:2px solid #FFE66D;outline-offset:2px;border-radius:8px;' : '';
+    return `<div class="podium-item ${classes[i]}" style="${isMeStyle}">
+      <div class="podium-character">${getPodiumCharSVG(s)}</div>
+      <div class="podium-name">${s.isMe?'나':s.name}</div>
+      <div class="podium-pts">${s.pts}p</div>
+      <div class="podium-badge-mini level-badge ${info.cur.cls}" style="font-size:0.6rem;padding:2px 7px;">${info.cur.icon} Lv.${info.cur.lv}</div>
+      <div class="podium-stand" style="height:${heights[i]}"><span>${medals[i]}</span></div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════════
+// 마을/캐릭터 시스템
+// ════════════════════════════════════════════════════════
+
+// ── 데이터 ──
+const SLOT_TYPES = ['모자','머리','안경','귀걸이','상의','하의','신발','장갑','가방','목걸이','허리띠','배지'];
+const SLOT_ICONS = {'모자':'🎩','머리':'💇','안경':'👓','귀걸이':'💎','상의':'👕','하의':'👖','신발':'👟','장갑':'🧤','가방':'🎒','목걸이':'📿','허리띠':'🪢','배지':'🏅'};
+
+// 아이템 DB (포인트 상점)
+const ITEM_DB = [
+  // 모자
+  {id:'hat1',type:'모자',name:'빨간 베레모',ico:'🎩',color:'#FF6B6B',pts:30,gender:'all'},
+  {id:'hat2',type:'모자',name:'파란 야구모자',ico:'🧢',color:'#4ECDC4',pts:25,gender:'all'},
+  {id:'hat3',type:'모자',name:'왕관',ico:'👑',color:'#FFD700',pts:80,gender:'all'},
+  {id:'hat4',type:'모자',name:'마법사 모자',ico:'🪄',color:'#9775FA',pts:60,gender:'all'},
+  // 머리
+  {id:'hair1',type:'머리',name:'긴 웨이브',ico:'💇',color:'#C0392B',pts:40,gender:'f'},
+  {id:'hair2',type:'머리',name:'단발',ico:'💆',color:'#8B4513',pts:35,gender:'f'},
+  {id:'hair3',type:'머리',name:'포니테일',ico:'🐴',color:'#E74C3C',pts:45,gender:'f'},
+  {id:'hair4',type:'머리',name:'스포츠컷',ico:'✂️',color:'#4A3728',pts:35,gender:'m'},
+  {id:'hair5',type:'머리',name:'곱슬머리',ico:'🌀',color:'#2C3E50',pts:40,gender:'m'},
+  // 안경
+  {id:'glass1',type:'안경',name:'동그란 안경',ico:'👓',color:'#333',pts:20,gender:'all'},
+  {id:'glass2',type:'안경',name:'하트 선글라스',ico:'🕶️',color:'#FF6B6B',pts:35,gender:'all'},
+  {id:'glass3',type:'안경',name:'별 안경',ico:'⭐',color:'#FFD700',pts:50,gender:'all'},
+  // 상의
+  {id:'top1',type:'상의',name:'무지개 티셔츠',ico:'🌈',color:'#FF6B6B',pts:40,gender:'all'},
+  {id:'top2',type:'상의',name:'별 스웨터',ico:'⭐',color:'#9775FA',pts:55,gender:'all'},
+  {id:'top3',type:'상의',name:'하트 후드',ico:'❤️',color:'#FF4D7D',pts:60,gender:'f'},
+  {id:'top4',type:'상의',name:'스트라이프 셔츠',ico:'👔',color:'#4ECDC4',pts:50,gender:'m'},
+  // 하의
+  {id:'bot1',type:'하의',name:'꽃무늬 치마',ico:'🌸',color:'#FFB6C1',pts:45,gender:'f'},
+  {id:'bot2',type:'하의',name:'체크 치마',ico:'🏴',color:'#5C6BC0',pts:40,gender:'f'},
+  {id:'bot3',type:'하의',name:'청바지',ico:'👖',color:'#1565C0',pts:40,gender:'m'},
+  {id:'bot4',type:'하의',name:'카고 팬츠',ico:'🫙',color:'#795548',pts:45,gender:'m'},
+  // 신발
+  {id:'shoe1',type:'신발',name:'핑크 스니커즈',ico:'👟',color:'#FF85A1',pts:35,gender:'all'},
+  {id:'shoe2',type:'신발',name:'무지개 부츠',ico:'🥾',color:'#9B59B6',pts:50,gender:'all'},
+  {id:'shoe3',type:'신발',name:'반짝이 구두',ico:'✨',color:'#FFD700',pts:65,gender:'f'},
+  // 장갑
+  {id:'glove1',type:'장갑',name:'흰 장갑',ico:'🧤',color:'#fff',pts:20,gender:'all'},
+  {id:'glove2',type:'장갑',name:'별무늬 장갑',ico:'⭐',color:'#FFD700',pts:35,gender:'all'},
+  // 가방
+  {id:'bag1',type:'가방',name:'별 배낭',ico:'🎒',color:'#FF922B',pts:45,gender:'all'},
+  {id:'bag2',type:'가방',name:'하트 가방',ico:'💝',color:'#FF4D7D',pts:50,gender:'f'},
+  {id:'bag3',type:'가방',name:'피아노 가방',ico:'🎹',color:'#333',pts:70,gender:'all'},
+  {id:'ear1',type:'귀걸이',name:'별 귀걸이',ico:'⭐',color:'#FFD700',pts:25,gender:'all'},
+  {id:'ear2',type:'귀걸이',name:'하트 귀걸이',ico:'💗',color:'#FF6B6B',pts:30,gender:'f'},
+  {id:'ear3',type:'귀걸이',name:'다이아 귀걸이',ico:'💎',color:'#87CEEB',pts:55,gender:'all'},
+  {id:'neck1',type:'목걸이',name:'진주 목걸이',ico:'📿',color:'#F5F5DC',pts:40,gender:'f'},
+  {id:'neck2',type:'목걸이',name:'별자리 목걸이',ico:'✨',color:'#9775FA',pts:50,gender:'all'},
+  {id:'neck3',type:'목걸이',name:'피아노 펜던트',ico:'🎹',color:'#333',pts:65,gender:'all'},
+  {id:'belt1',type:'허리띠',name:'별 허리띠',ico:'⭐',color:'#FFD700',pts:30,gender:'all'},
+  {id:'belt2',type:'허리띠',name:'리본 허리띠',ico:'🎀',color:'#FF85A1',pts:35,gender:'f'},
+  {id:'belt3',type:'허리띠',name:'체인 허리띠',ico:'⛓️',color:'#C0C0C0',pts:45,gender:'all'},
+  {id:'badge1',type:'배지',name:'피아노 배지',ico:'🎹',color:'#4ECDC4',pts:20,gender:'all'},
+  {id:'badge2',type:'배지',name:'별 배지',ico:'🌟',color:'#FFD700',pts:25,gender:'all'},
+  {id:'badge3',type:'배지',name:'왕관 배지',ico:'👑',color:'#FFD700',pts:60,gender:'all'},
+  {id:'badge4',type:'배지',name:'음표 배지',ico:'🎵',color:'#FF6B6B',pts:20,gender:'all'},
+];
+
+// 기본 옷 세트
+const OUTFIT_SETS = {
+  f: [
+    {id:'of1', name:'핑크 원피스', color:'#FF85A1', topColor:'#FF85A1', botColor:'#FF85A1'},
+    {id:'of2', name:'보라 후드+치마', color:'#9B59B6', topColor:'#9B59B6', botColor:'#5C6BC0'},
+    {id:'of3', name:'민트 교복', color:'#4ECDC4', topColor:'#fff', botColor:'#5C6BC0'},
+  ],
+  m: [
+    {id:'om1', name:'민트 줄무늬 티', color:'#4ECDC4', topColor:'#4ECDC4', botColor:'#5C6BC0'},
+    {id:'om2', name:'빨간 스포츠웨어', color:'#FF6B6B', topColor:'#FF6B6B', botColor:'#333'},
+    {id:'om3', name:'남색 교복', color:'#1a237e', topColor:'#1a237e', botColor:'#263238'},
+  ]
+};
+
+// 캐릭터 데이터 (학생별 저장)
+let myChar = null; // {gender, outfitId, equipped:{모자,머리,...}, skinColor}
+let previewEquip = {}; // 미리입기용
+let selectedShopItem = null;
+let shopCurrentCat = '전체';
+let invCurrentCat = '전체';
+let myInventory = []; // 소지한 아이템 id 배열
+let ccGender = 'f';
+let ccOutfitId = 'of1';
+
+// ── 포인트 ──
+// 일일 자동 충전 (자정 기준)
+function checkDailyBonus(){
+  const today = new Date().toDateString();
+  const lastBonus = localStorage.getItem('jypiano_lastbonus_'+(currentStudent?.id||'guest'));
+  if(lastBonus !== today){
+    totalPoints += 10; // 일일 보너스는 포인트(구매용)만
+    if(currentStudent){ currentStudent.pts=totalPoints; const idx=STUDENTS.findIndex(s=>s.id===currentStudent.id); if(idx>=0)STUDENTS[idx].pts=totalPoints; }
+    localStorage.setItem('jypiano_lastbonus_'+(currentStudent?.id||'guest'), today);
+    updateLevelUI();
+    updateVillagePts();
+  }
+}
+
+function updateVillagePts(){
+  const el = document.getElementById('village-pts-display');
+  if(el) el.textContent = totalPoints + 'p';
+  const sel = document.getElementById('shop-pts-display');
+  if(sel) sel.textContent = totalPoints + 'p';
+  const tel = document.getElementById('town-pts-display');
+  if(tel) tel.textContent = totalPoints + 'p';
+  const gel = document.getElementById('gift-my-pts');
+  if(gel) gel.textContent = totalPoints;
+}
+
+// ── 마을 탭 진입 ──
+function updateVillageTab(){
+  updateVillagePts();
+  checkDailyBonus();
+  updateVillagePts();
+  // 캐릭터 미리보기
+  const preview=document.getElementById('village-char-preview');
+  const nameEl=document.getElementById('village-char-name');
+  if(preview){
+    if(myChar){
+      preview.innerHTML=getMungCharHTML(myChar,1.0);
+      if(nameEl) nameEl.textContent=(currentStudent?currentStudent.name:'')+(myChar.gender==='f'?' · 여자':'· 남자');
+    } else {
+      preview.innerHTML='<span style="font-size:3rem">🐣</span>';
+      if(nameEl) nameEl.textContent='캐릭터를 생성해주세요';
+    }
+  }
+  const charCard=document.getElementById('vmenu-char');
+  const createCard=document.getElementById('vmenu-create');
+  const charSub=document.getElementById('vmenu-char-sub');
+  const createSub=document.getElementById('vmenu-create-sub');
+  if(myChar){
+    if(charCard){charCard.classList.add('has-char');charCard.style.opacity='1';}
+    if(charSub) charSub.textContent='아이템 장착하기';
+    if(createCard) createCard.style.opacity='0.75';
+    if(createSub) createSub.textContent='다시 만들기';
+  } else {
+    if(charCard){charCard.style.opacity='0.4';}
+    if(charSub) charSub.textContent='먼저 생성해주세요';
+    if(createCard) createCard.style.opacity='1';
+    if(createSub) createSub.textContent='새 캐릭터 만들기';
+  }
+}
+
+// ── 캐릭터 생성 ──
+function openCharCreate(){
+  ccGender='f'; ccOutfitId='of1';
+  renderOutfitGrid();
+  updateGenderUI();
+  renderCCPreview();
+  document.getElementById('char-create-bg').classList.add('show');
+}
+function closeCharCreate(){ document.getElementById('char-create-bg').classList.remove('show'); }
+
+function selectGender(g){
+  ccGender=g;
+  ccOutfitId = g==='f'?'of1':'om1';
+  updateGenderUI(); renderOutfitGrid(); renderCCPreview();
+}
+function updateGenderUI(){
+  document.getElementById('gc-f').classList.toggle('sel', ccGender==='f');
+  document.getElementById('gc-m').classList.toggle('sel', ccGender==='m');
+}
+function renderOutfitGrid(){
+  const sets = OUTFIT_SETS[ccGender];
+  const el = document.getElementById('outfit-grid');
+  el.innerHTML = sets.map(s=>`
+    <div class="outfit-card ${s.id===ccOutfitId?'sel':''}" onclick="selectOutfit('${s.id}')">
+      <div class="oc-char" style="display:flex;justify-content:center;height:65px;overflow:hidden;">${getMungCharHTML({gender:ccGender,topColor:s.topColor,botColor:s.botColor,equipped:{}},0.48)}</div>
+      <div class="oc-name">${s.name}</div>
+    </div>`).join('');
+}
+function selectOutfit(id){ ccOutfitId=id; renderOutfitGrid(); renderCCPreview(); }
+
+function renderCCPreview(){
+  const sets = OUTFIT_SETS[ccGender];
+  const outfit = sets.find(s=>s.id===ccOutfitId)||sets[0];
+  const el = document.getElementById('cc-preview-div');
+  if(el) el.innerHTML = getMungCharHTML({gender:ccGender, topColor:outfit.topColor, botColor:outfit.botColor, equipped:{}}, 1.0);
+}
+
+function confirmCreateChar(){
+  if(!currentStudent){ alert('먼저 로그인해주세요!'); return; }
+  const sets = OUTFIT_SETS[ccGender];
+  const outfit = sets.find(s=>s.id===ccOutfitId)||sets[0];
+  myChar = { gender:ccGender, topColor:outfit.topColor, botColor:outfit.botColor, hairColor:(ccGender==='f'?'#8B4513':'#1a1a1a'), equipped:{} };
+  myInventory = [];
+  previewEquip = {};
+  saveCharLocal();
+  closeCharCreate();
+  updateVillageTab();
+  updateHomeTab();
+  alert('캐릭터가 생성됐어요! 🎉');
+}
+
+// ── SD 캐릭터 SVG ──
+
+function getItemColor(itemId){ const item=ITEM_DB.find(i=>i.id===itemId); return item?item.color:'#aaa'; }
+function getItemIco(itemId){ const item=ITEM_DB.find(i=>i.id===itemId); return item?item.ico:'?'; }
+
+function renderCharSVG(svgId, equipped){
+  const divId = svgId.replace('-svg','-div');
+  const el = document.getElementById(divId) || document.getElementById(svgId);
+  if(!el||!myChar) return;
+  el.innerHTML = getMungCharHTML({...myChar, equipped: equipped||myChar.equipped||{}}, 0.9);
+}
+
+// ── 캐릭터 꾸미기 ──
+function openCharEdit(){
+  if(!currentStudent){ alert('먼저 로그인해주세요!'); return; }
+  if(!myChar){ alert('먼저 캐릭터를 생성해주세요!'); openCharCreate(); return; }
+  previewEquip = {...(myChar.equipped||{})};
+  document.getElementById('char-edit-bg').classList.add('show');
+  renderCESlots();
+  renderCEInvTabs();
+  renderCEInv('전체');
+  setTimeout(()=>{
+    const el=document.getElementById('ce-preview-div');
+    if(el&&myChar) el.innerHTML=getMungCharHTML({...myChar,equipped:previewEquip},0.9);
+  }, 80);
+}
+function closeCharEdit(){ document.getElementById('char-edit-bg').classList.remove('show'); }
+
+function renderCESlots(){
+  const el = document.getElementById('ce-slots');
+  el.innerHTML = SLOT_TYPES.map(type=>{
+    const itemId = previewEquip[type];
+    const item = itemId ? ITEM_DB.find(i=>i.id===itemId) : null;
+    return `<div class="ce-slot ${itemId?'equipped':''}" onclick="unequipSlot('${type}')">
+      <div class="slot-ico">${SLOT_ICONS[type]}</div>
+      <div class="slot-name">${type}</div>
+      <div class="slot-item">${item?item.name:'없음'}</div>
+    </div>`;
+  }).join('');
+}
+function unequipSlot(type){
+  delete previewEquip[type];
+  renderCharSVG('ce-preview-div', previewEquip);
+  renderCESlots();
+  renderCEInv(invCurrentCat);
+}
+function renderCEInvTabs(){
+  const cats = ['전체', ...SLOT_TYPES];
+  const el = document.getElementById('ce-inv-tabs');
+  el.innerHTML = cats.map(c=>`<div class="ce-inv-tab ${c===invCurrentCat?'active':''}" onclick="renderCEInv('${c}')">${c}</div>`).join('');
+}
+function renderCEInv(cat){
+  invCurrentCat = cat;
+  renderCEInvTabs();
+  const el = document.getElementById('ce-inv-grid');
+  const items = myInventory.map(id=>ITEM_DB.find(i=>i.id===id)).filter(Boolean);
+  const filtered = cat==='전체' ? items : items.filter(i=>i.type===cat);
+  if(!filtered.length){ el.innerHTML='<div class="ce-empty">소지한 아이템이 없어요<br>상점에서 구매해보세요!</div>'; return; }
+  el.innerHTML = filtered.map(item=>{
+    const isEquipped = previewEquip[item.type]===item.id;
+    return `<div class="ce-item ${isEquipped?'equipped':''}" onclick="equipItem('${item.id}')">
+      <div class="ci-ico">${item.ico}</div>
+      <div class="ci-name">${item.name}</div>
+      <div class="ci-type">${item.type}</div>
+    </div>`;
+  }).join('');
+}
+function equipItem(itemId){
+  const item = ITEM_DB.find(i=>i.id===itemId);
+  if(!item) return;
+  if(previewEquip[item.type]===itemId){ delete previewEquip[item.type]; }
+  else previewEquip[item.type] = itemId;
+  myChar.equipped = {...previewEquip};
+  renderCharSVG('ce-preview-div', previewEquip);
+  renderCESlots();
+  renderCEInv(invCurrentCat);
+}
+function resetEquip(){
+  previewEquip = {};
+  myChar.equipped = {};
+  renderCharSVG('ce-preview-div', previewEquip);
+  renderCESlots();
+  renderCEInv(invCurrentCat);
+}
+
+// ── 상점 ──
+function openShop(){
+  renderShopCatTabs(); renderShopGrid('전체');
+  document.getElementById('shop-bg').classList.add('show');
+  updateVillagePts();
+  // 상점 캐릭터 미리보기 초기화
+  updateShopCharPreview(null);
+}
+function closeShop(){ document.getElementById('shop-bg').classList.remove('show'); cancelPreview(); }
+function renderShopCatTabs(){
+  const cats=['전체',...SLOT_TYPES];
+  document.getElementById('shop-cat-tabs').innerHTML=cats.map(c=>`<div class="shop-cat-tab ${c===shopCurrentCat?'active':''}" onclick="renderShopGrid('${c}')">${c}</div>`).join('');
+}
+function renderShopGrid(cat){
+  shopCurrentCat=cat;
+  renderShopCatTabs();
+  const items = cat==='전체' ? ITEM_DB : ITEM_DB.filter(i=>i.type===cat);
+  const filtered = myChar ? items.filter(i=>i.gender==='all'||i.gender===myChar.gender) : items;
+  document.getElementById('shop-grid').innerHTML = filtered.map(item=>{
+    const owned = myInventory.includes(item.id);
+    const prev = selectedShopItem===item.id;
+    return `<div class="shop-item ${owned?'owned':''} ${prev?'previewing':''}" onclick="selectShopItem('${item.id}')">
+      <div class="si-ico">${item.ico}</div>
+      <div class="si-name">${item.name}</div>
+      ${owned ? '<div class="si-owned">보유중</div>' : `<div class="si-pts">${item.pts}p</div>`}
+      <div class="si-preview">${owned?'탭해서 장착':'탭해서 미리보기'}</div>
+    </div>`;
+  }).join('');
+}
+function updateShopCharPreview(itemId){
+  const el = document.getElementById('shop-char-preview');
+  const titleEl = document.getElementById('shop-preview-title');
+  const hintEl = document.getElementById('shop-preview-hint');
+  const itemNameEl = document.getElementById('shop-preview-item-name');
+  const itemTextEl = document.getElementById('shop-preview-item-text');
+  if(!el) return;
+
+  if(!myChar){
+    el.innerHTML = '<span style="font-size:2.5rem;">🐣</span>';
+    if(titleEl) titleEl.textContent = '캐릭터 없음';
+    if(hintEl) hintEl.textContent = '먼저 캐릭터를 생성해주세요';
+    return;
+  }
+
+  // 미리보기용 장착 상태
+  let previewData = {...myChar, equipped:{...(myChar.equipped||{})}};
+  if(itemId){
+    const item = ITEM_DB.find(i=>i.id===itemId);
+    if(item) previewData.equipped[item.type] = itemId;
+  }
+
+  el.innerHTML = getMungCharHTML(previewData, 0.82);
+
+  if(itemId){
+    const item = ITEM_DB.find(i=>i.id===itemId);
+    if(titleEl) titleEl.textContent = '미리보기 중';
+    if(hintEl) hintEl.style.display='none';
+    if(itemNameEl){ itemNameEl.style.display='block'; }
+    if(itemTextEl && item){ itemTextEl.textContent = item.ico+' '+item.name+' 입어보는 중...'; }
+  } else {
+    if(titleEl) titleEl.textContent = '내 캐릭터';
+    if(hintEl){ hintEl.style.display='block'; hintEl.innerHTML='아이템을 탭하면<br>미리 입어볼 수 있어요 👗'; }
+    if(itemNameEl) itemNameEl.style.display='none';
+  }
+}
+
+function selectShopItem(itemId){
+  const item=ITEM_DB.find(i=>i.id===itemId);
+  if(!item) return;
+
+  if(myInventory.includes(itemId)){
+    // 이미 보유 → 꾸미기 화면에서 바로 장착
+    if(myChar){ previewEquip[item.type]=itemId; myChar.equipped={...previewEquip}; saveCharLocal(); renderCharSVG('ce-preview-div',previewEquip); renderCESlots(); renderCEInv(invCurrentCat); }
+    updateShopCharPreview(null); // 상점 미리보기도 갱신
+    return;
+  }
+
+  selectedShopItem=itemId;
+  // 상점 미리보기 업데이트
+  updateShopCharPreview(itemId);
+  // 하단 구매 바
+  document.getElementById('sbb-name').textContent=item.name;
+  document.getElementById('sbb-pts').textContent=item.pts+'p';
+  document.getElementById('shop-buy-bar').classList.add('show');
+  renderShopGrid(shopCurrentCat);
+}
+function cancelPreview(){
+  selectedShopItem=null;
+  if(myChar){ previewEquip={...(myChar.equipped||{})}; renderCharSVG('ce-preview-div',previewEquip); }
+  updateShopCharPreview(null);
+  document.getElementById('shop-buy-bar').classList.remove('show');
+  renderShopGrid(shopCurrentCat);
+}
+function buyItem(){
+  if(!selectedShopItem) return;
+  const item=ITEM_DB.find(i=>i.id===selectedShopItem);
+  if(!item) return;
+  if(totalPoints<item.pts){ alert('포인트가 부족해요! ('+totalPoints+'p / '+item.pts+'p 필요)'); return; }
+  totalPoints-=item.pts;
+  if(currentStudent){currentStudent.pts=totalPoints;const idx=STUDENTS.findIndex(s=>s.id===currentStudent.id);if(idx>=0)STUDENTS[idx].pts=totalPoints;}
+  myInventory.push(item.id);
+  if(myChar){previewEquip[item.type]=item.id;myChar.equipped={...previewEquip};}
+  saveCharLocal();
+  selectedShopItem=null;
+  updateVillagePts();
+  updateLevelUI();
+  document.getElementById('shop-buy-bar').classList.remove('show');
+  updateShopCharPreview(null);
+  renderShopGrid(shopCurrentCat);
+  alert(item.name+' 구매 완료! (잔여 '+totalPoints+'p)');
+}
+
+// ── 마을 꾸미기 (캔버스) ──
+let townCtx, townW, townH, townAnimId=null;
+// 마을 시스템 제거됨
+
+const TOWN_OBJECTS = [
+  {id:'tree1',ico:'🌳',name:'나무',pts:30},
+  {id:'flower1',ico:'🌸',name:'벚꽃나무',pts:40},
+  {id:'bench1',ico:'🪑',name:'벤치',pts:25},
+  {id:'lamp1',ico:'💡',name:'가로등',pts:20},
+  {id:'fountain1',ico:'⛲',name:'분수대',pts:80},
+  {id:'pond1',ico:'🫧',name:'연못',pts:60},
+  {id:'piano1',ico:'🎹',name:'야외 피아노',pts:100},
+  {id:'note1',ico:'🎵',name:'음표 조각',pts:35},
+  {id:'flag1',ico:'🚩',name:'깃발',pts:15},
+  {id:'mailbox1',ico:'📮',name:'우체통',pts:20},
+];
+
+// ── 아이소메트릭 좌표 변환 (넓은 섬 맵) ──
+
+// 섬 모양 정의 (타원형 섬, 14x14 그리드)
+const ISLAND_GRID = 15;
+const ISLAND_CX = 7.5, ISLAND_CY = 7.5;
+const ISLAND_RX = 6.2, ISLAND_RY = 6.2;
+
+function isIslandTile(gx, gy){
+  const dx=(gx-ISLAND_CX)/ISLAND_RX;
+  const dy=(gy-ISLAND_CY)/ISLAND_RY;
+  return dx*dx+dy*dy <= 1.0;
+}
+function isIslandEdge(gx, gy){
+  const dx=(gx-ISLAND_CX)/ISLAND_RX;
+  const dy=(gy-ISLAND_CY)/ISLAND_RY;
+  const r=dx*dx+dy*dy;
+  return r>0.72 && r<=1.0;
+}
+
+let selectedTownObj=null;
+let myTownInventory=[]; // 구매한 마을 오브젝트 목록 [{id, ico, name, pts}]
+let previewObj=null;    // 반투명 미리보기 중인 오브젝트
+let previewGX=4, previewGY=4; // 미리보기 위치
+
+// ── 포인트 선물 ──
+function openGiftModal(){
+  if(!currentStudent){alert('먼저 로그인해주세요!');return;}
+  updateVillagePts();
+  const el=document.getElementById('gift-student-list');
+  const others=STUDENTS.filter(s=>s.id!==currentStudent?.id);
+  if(!others.length){el.innerHTML='<div style="color:#bbb;font-size:0.8rem;padding:10px;text-align:center;">다른 학생이 없어요</div>';
+  }else{
+    el.innerHTML=others.map(s=>`<div class="gm-student" id="gm-stu-${s.id}" onclick="selectGiftTarget('${s.id}')">
+      <div class="gs-avatar">${s.name[0]}</div>
+      <div class="gs-name">${s.name}</div>
+      <div class="gs-pts">${s.pts}p</div>
+    </div>`).join('');
+  }
+  document.getElementById('gift-modal-bg').classList.add('show');
+}
+let giftTargetId=null;
+function selectGiftTarget(id){
+  giftTargetId=id;
+  document.querySelectorAll('.gm-student').forEach(el=>el.classList.remove('sel'));
+  const el=document.getElementById('gm-stu-'+id);
+  if(el)el.classList.add('sel');
+}
+function closeGiftModal(e){
+  if(e&&e.target!==document.getElementById('gift-modal-bg'))return;
+  document.getElementById('gift-modal-bg').classList.remove('show');
+  giftTargetId=null;
+}
+function sendGift(){
+  if(!giftTargetId){alert('선물할 친구를 선택해주세요!');return;}
+  const amount=parseInt(document.getElementById('gift-amount').value)||0;
+  if(amount<=0){alert('선물할 포인트를 입력해주세요!');return;}
+  if(totalPoints<amount){alert('포인트가 부족해요! (보유: '+totalPoints+'p)');return;}
+  const target=STUDENTS.find(s=>s.id===giftTargetId);
+  if(!target)return;
+  totalPoints-=amount;
+  target.pts+=amount;
+  if(currentStudent){currentStudent.pts=totalPoints;const idx=STUDENTS.findIndex(s=>s.id===currentStudent.id);if(idx>=0)STUDENTS[idx].pts=totalPoints;}
+  updateLevelUI(); updateVillagePts(); renderPodium();
+  document.getElementById('gift-modal-bg').classList.remove('show');
+  giftTargetId=null;
+  alert(target.name+'에게 '+amount+'p 선물 완료!\n잔여 포인트: '+totalPoints+'p');
+}
+
+// ── 학생 시스템 ──
+let STUDENTS = [
+  {id:'s1', name:'박상호', pts:0},
+  {id:'s2', name:'정지윤', pts:0},
+  {id:'s3', name:'정충희', pts:0},
+  {id:'s4', name:'정석희', pts:0},
+  {id:'s5', name:'박상윤', pts:0},
+];
+// localStorage에서 포인트 복원
+STUDENTS.forEach(s=>{
+  const saved=localStorage.getItem('jypiano_pts_'+s.id);
+  if(saved!==null) s.pts=parseInt(saved)||0;
+});
+let currentStudent = null;
+let selectedSurname = '전체';
+
+function openLoginModal(){
+  renderSurnameFilter();
+  renderLoginStudentList('전체');
+  document.getElementById('login-modal-bg').classList.add('show');
+}
+function closeLoginModal(){
+  document.getElementById('login-modal-bg').classList.remove('show');
+}
+function getSurnames(){
+  return ['전체', ...[...new Set(STUDENTS.map(s=>s.name[0]))]];
+}
+function renderSurnameFilter(){
+  const el=document.getElementById('surname-filter');
+  el.innerHTML=getSurnames().map(s=>
+    `<button class="sf-btn ${s===selectedSurname?'active':''}" onclick="filterBySurname('${s}')">${s}</button>`
+  ).join('');
+}
+function filterBySurname(surname){
+  selectedSurname=surname;
+  renderSurnameFilter();
+  renderLoginStudentList(surname);
+}
+function renderLoginStudentList(filter){
+  const el=document.getElementById('login-student-list');
+  const list=filter==='전체'?STUDENTS:STUDENTS.filter(s=>s.name[0]===filter);
+  if(!list.length){el.innerHTML='<div style="color:#bbb;font-size:0.82rem;padding:10px;text-align:center;">해당 학생이 없어요</div>';return;}
+  el.innerHTML=list.map(s=>{
+    const info=getLevelInfo(s.pts);
+    const isMe=currentStudent&&currentStudent.id===s.id;
+    return `<div class="student-item" onclick="loginAsStudent('${s.id}')" style="${isMe?'border-color:var(--secondary);background:#F0FDFB;':''}">
+      <div class="si-avatar">${s.name[0]}</div>
+      <div style="flex:1">
+        <div class="si-sname">${s.name}${isMe?' ✓':''}</div>
+        <div class="si-slv">${info.cur.icon} Lv.${info.cur.lv} · ${s.pts}p</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function saveCharLocal(){
+  if(!currentStudent) return;
+  localStorage.setItem('jypiano_char_'+currentStudent.id, JSON.stringify(myChar));
+  localStorage.setItem('jypiano_inv_'+currentStudent.id, JSON.stringify(myInventory));
+}
+
+function saveProgressLocal(){
+  // 게임권 + 연습 사이클 카운트 저장 (학생별)
+  const key = currentStudent ? currentStudent.id : 'guest';
+  localStorage.setItem('jypiano_tickets_'+key, tickets);
+  localStorage.setItem('jypiano_cycle_'+key, currentCycleCount);
+  localStorage.setItem('jypiano_practice_'+key, practiceCount);
+}
+function loginAsStudent(id){
+  const student=STUDENTS.find(s=>s.id===id);
+  if(!student) return;
+  currentStudent=student;
+  totalPoints=student.pts;
+  // 로컬 캐릭터/인벤토리 로드
+  const savedChar=localStorage.getItem('jypiano_char_'+id);
+  const savedInv=localStorage.getItem('jypiano_inv_'+id);
+  myChar=savedChar?JSON.parse(savedChar):null;
+  myInventory=savedInv?JSON.parse(savedInv):[];
+  // 경험치 복원 (레벨/배지 기준)
+  const savedExp=localStorage.getItem('jypiano_exp_'+id);
+  totalPracticeExp=savedExp?parseInt(savedExp)||0:totalPoints; // 없으면 totalPoints로 초기화
+  // 게임권 + 연습 사이클 복원
+  const savedTickets = localStorage.getItem('jypiano_tickets_'+id);
+  const savedCycle   = localStorage.getItem('jypiano_cycle_'+id);
+  const savedPCount  = localStorage.getItem('jypiano_practice_'+id);
+  tickets           = savedTickets ? parseInt(savedTickets)||0 : 0;
+  currentCycleCount = savedCycle   ? parseInt(savedCycle)||0   : 0;
+  practiceCount     = savedPCount  ? parseInt(savedPCount)||0  : 0;
+  closeLoginModal();
+  updateCurrentUserBar();
+  updateHomeTab();
+  updateLevelUI();
+  updateRewardUI();
+  checkDailyBonus();
+}
+function loginAsGuest(){
+  currentStudent=null;
+  totalPoints=0;
+  closeLoginModal();
+  updateCurrentUserBar();
+  updateHomeTab();
+}
+function updateCurrentUserBar(){
+  const avatar=document.getElementById('cub-avatar');
+  const name=document.getElementById('cub-name');
+  const sub=document.getElementById('cub-sub');
+  if(!avatar) return;
+  if(currentStudent){
+    avatar.textContent=currentStudent.name[0];
+    name.textContent=currentStudent.name;
+    const info=getLevelInfo(currentStudent.pts);
+    sub.textContent=info.cur.icon+' Lv.'+info.cur.lv+' '+info.cur.name+' · '+currentStudent.pts+'p';
+  } else {
+    avatar.textContent='👤';
+    name.textContent='게스트';
+    sub.textContent='연습만 가능해요';
+  }
+  const hn=document.getElementById('home-student-name');
+  if(hn) hn.textContent=currentStudent?currentStudent.name:'게스트';
+}
+// addPoints - 연습 완료 시 포인트(구매용) + 경험치(레벨용) 모두 지급
+function addPoints(songLevel){
+  const pts = LEVEL_POINTS[songLevel] || 1;
+  // 포인트 (구매용, 옷 사면 줄어듦)
+  totalPoints += pts;
+  // 경험치 (레벨/배지 기준, 절대 안 줄어듦)
+  totalPracticeExp += pts;
+  if(currentStudent){
+    currentStudent.pts = totalPoints;
+    const idx = STUDENTS.findIndex(s=>s.id===currentStudent.id);
+    if(idx>=0) STUDENTS[idx].pts = totalPoints;
+    localStorage.setItem('jypiano_pts_'+currentStudent.id, totalPoints);
+    localStorage.setItem('jypiano_exp_'+currentStudent.id, totalPracticeExp);
+  }
+  updateLevelUI();
+  updateVillagePts();
+  return pts;
+}
+// getAllRanking 오버라이드 - STUDENTS 기반
+function getAllRanking(){
+  const all=STUDENTS.map(s=>({name:s.name,pts:s.pts,isMe:currentStudent&&s.id===currentStudent.id}));
+  if(!currentStudent) all.push({name:'게스트',pts:totalPoints,isMe:true});
+  all.sort((a,b)=>b.pts-a.pts);
+  return all;
+}
+
+// ── 관리자 학생 관리 ──
+function renderAdminStudentList(){
+  const el=document.getElementById('admin-student-list');
+  if(!el) return;
+  if(!STUDENTS.length){el.innerHTML='<div class="empty-msg">등록된 학생이 없어요</div>';return;}
+  el.innerHTML=STUDENTS.map(s=>`
+    <div class="admin-song-item" id="stu-row-${s.id}">
+      <div class="asi-emoji">${s.name[0]}</div>
+      <div class="asi-info" style="flex:1">
+        <div class="asi-name" id="stu-name-${s.id}">${s.name}</div>
+        <div class="asi-meta">${getLevelInfo(s.pts).cur.icon} Lv.${getLevelInfo(s.pts).cur.lv} · ${s.pts}p</div>
+      </div>
+      <div class="asi-btns">
+        <button class="asi-btn edit" onclick="startEditStudent('${s.id}')">수정</button>
+        <button class="asi-btn del" onclick="deleteStudent('${s.id}')">삭제</button>
+      </div>
+    </div>`).join('');
+}
+function startEditStudent(id){
+  const s=STUDENTS.find(s=>s.id===id);
+  if(!s) return;
+  const nameEl=document.getElementById('stu-name-'+id);
+  const row=document.getElementById('stu-row-'+id);
+  if(!nameEl||!row) return;
+  // 이름 영역을 인풋으로 교체
+  nameEl.innerHTML=`<input id="stu-edit-inp-${id}" value="${s.name}" style="border:1px solid var(--secondary);border-radius:6px;padding:3px 7px;font-family:'Jua',sans-serif;font-size:0.85rem;width:120px;outline:none;">`;
+  // 버튼 교체
+  row.querySelector('.asi-btns').innerHTML=`
+    <button class="asi-btn edit" onclick="confirmEditStudent('${id}')">저장</button>
+    <button class="asi-btn" style="background:#f1f3f5;color:#868e96;" onclick="renderAdminStudentList()">취소</button>`;
+  document.getElementById('stu-edit-inp-'+id).focus();
+}
+function confirmEditStudent(id){
+  const inp=document.getElementById('stu-edit-inp-'+id);
+  if(!inp) return;
+  const newName=inp.value.trim();
+  if(!newName){alert('이름을 입력해주세요!');return;}
+  if(STUDENTS.find(s=>s.name===newName&&s.id!==id)){alert('이미 있는 이름이에요!');return;}
+  const idx=STUDENTS.findIndex(s=>s.id===id);
+  if(idx>=0){
+    STUDENTS[idx].name=newName;
+    if(currentStudent&&currentStudent.id===id){
+      currentStudent.name=newName;
+      updateCurrentUserBar();
+    }
+  }
+  renderAdminStudentList();
+}
+function addStudent(){
+  const inp=document.getElementById('new-student-name');
+  const name=inp.value.trim();
+  if(!name){alert('이름을 입력해주세요!');return;}
+  if(STUDENTS.find(s=>s.name===name)){alert('이미 있는 학생이에요!');return;}
+  STUDENTS.push({id:'s'+Date.now(),name,pts:0});
+  inp.value='';
+  renderAdminStudentList();
+  alert(name+' 학생이 추가됐어요!');
+}
+function deleteStudent(id){
+  const s=STUDENTS.find(s=>s.id===id);
+  if(!s) return;
+  if(!confirm(`'${s.name}' 학생을 삭제할까요?`)) return;
+  STUDENTS=STUDENTS.filter(s=>s.id!==id);
+  if(currentStudent&&currentStudent.id===id){currentStudent=null;totalPoints=0;updateCurrentUserBar();}
+  renderAdminStudentList();
+}
+
+// ── 멍총 캐릭터 HTML 생성 ──
+function getMungCharHTML(char, scale){
+  scale=scale||1.0;
+  if(!char) return '<span style="font-size:3rem">🐣</span>';
+  const s=scale;
+  const tc=char.topColor||'#4ECDC4';
+  const bc=char.botColor||'#5C6BC0';
+  const hairC=char.hairColor||'#4A3728';
+  const skinC=char.skinColor||'#FDBCB4';
+  const isFemale=char.gender==='f';
+  const eq=char.equipped||{};
+  const bagC=eq['가방']?getItemColor(eq['가방']):null;
+  const hatIco=eq['모자']?getItemIco(eq['모자']):null;
+  const hasGlasses=!!(eq['안경']);
+  const glassC=hasGlasses?getItemColor(eq['안경']):'#333';
+  const w=Math.round(80*s), h=Math.round(110*s);
+
+  // 각 파트를 개행 없는 문자열로 조합
+  const shadow='<div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:'+Math.round(60*s)+'px;height:'+Math.round(8*s)+'px;background:rgba(0,0,0,0.10);border-radius:50%;z-index:1;"></div>';
+
+  const bootL='<div style="position:absolute;bottom:0;left:'+Math.round(14*s)+'px;width:'+Math.round(18*s)+'px;height:'+Math.round(22*s)+'px;background:#333;border-radius:'+Math.round(4*s)+'px '+Math.round(4*s)+'px 0 0;z-index:2;"></div>';
+  const bootR='<div style="position:absolute;bottom:0;right:'+Math.round(14*s)+'px;width:'+Math.round(18*s)+'px;height:'+Math.round(22*s)+'px;background:#333;border-radius:'+Math.round(4*s)+'px '+Math.round(4*s)+'px 0 0;z-index:2;"></div>';
+
+  const legL='<div style="position:absolute;bottom:'+Math.round(18*s)+'px;left:'+Math.round(18*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(22*s)+'px;background:'+bc+';z-index:2;"></div>';
+  const legR='<div style="position:absolute;bottom:'+Math.round(18*s)+'px;right:'+Math.round(18*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(22*s)+'px;background:'+bc+';z-index:2;"></div>';
+
+  const armL='<div style="position:absolute;top:'+Math.round(35*s)+'px;left:-'+Math.round(6*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(28*s)+'px;background:'+tc+';border-radius:'+Math.round(5*s)+'px;z-index:3;border:'+Math.round(2*s)+'px solid #333;"></div>';
+  const armR='<div style="position:absolute;top:'+Math.round(35*s)+'px;right:-'+Math.round(6*s)+'px;width:'+Math.round(14*s)+'px;height:'+Math.round(28*s)+'px;background:'+tc+';border-radius:'+Math.round(5*s)+'px;z-index:3;border:'+Math.round(2*s)+'px solid #333;"></div>';
+
+  const body='<div style="position:absolute;bottom:'+Math.round(36*s)+'px;left:'+Math.round(10*s)+'px;width:'+Math.round(60*s)+'px;height:'+Math.round(42*s)+'px;background:'+tc+';border-radius:'+Math.round(8*s)+'px '+Math.round(8*s)+'px 0 0;z-index:4;border:'+Math.round(2*s)+'px solid #333;">'+armL+armR+'</div>';
+
+  const faceBase='background:'+skinC+';border-radius:50%;border:'+Math.round(2*s)+'px solid #333;';
+  const eyeL='<div style="position:absolute;top:'+Math.round(10*s)+'px;left:'+Math.round(10*s)+'px;width:'+Math.round(12*s)+'px;height:'+Math.round(3*s)+'px;background:#333;border-radius:2px;"></div>';
+  const eyeR='<div style="position:absolute;top:'+Math.round(10*s)+'px;right:'+Math.round(10*s)+'px;width:'+Math.round(12*s)+'px;height:'+Math.round(3*s)+'px;background:#333;border-radius:2px;"></div>';
+  const mouth='<div style="position:absolute;bottom:'+Math.round(8*s)+'px;left:50%;transform:translateX(-50%) rotate(-5deg);width:'+Math.round(16*s)+'px;height:'+Math.round(2*s)+'px;background:#333;border-radius:2px;"></div>';
+  const glasses=hasGlasses?'<div style="position:absolute;top:'+Math.round(9*s)+'px;left:'+Math.round(8*s)+'px;width:'+Math.round(18*s)+'px;height:'+Math.round(13*s)+'px;border:'+Math.round(2*s)+'px solid '+glassC+';border-radius:'+Math.round(4*s)+'px;background:rgba(100,200,255,0.1);"></div>':'';
+  const face='<div style="position:absolute;top:'+Math.round(4*s)+'px;left:'+Math.round(8*s)+'px;width:'+Math.round(64*s)+'px;height:'+Math.round(64*s)+'px;'+faceBase+'z-index:6;">'+eyeL+eyeR+mouth+glasses+'</div>';
+
+  const hairBack=isFemale?'<div style="position:absolute;top:0;left:'+Math.round(6*s)+'px;width:'+Math.round(68*s)+'px;height:'+Math.round(50*s)+'px;background:'+hairC+';border-radius:'+Math.round(20*s)+'px '+Math.round(20*s)+'px 0 0;z-index:5;border:'+Math.round(2*s)+'px solid #333;"></div>':'';
+  const hairFront=isFemale
+    ?'<div style="position:absolute;top:-'+Math.round(2*s)+'px;left:'+Math.round(5*s)+'px;width:'+Math.round(70*s)+'px;height:'+Math.round(28*s)+'px;background:'+hairC+';border-radius:'+Math.round(16*s)+'px '+Math.round(16*s)+'px 0 0;z-index:7;border:'+Math.round(2*s)+'px solid #333;"></div>'
+    :'<div style="position:absolute;top:-'+Math.round(4*s)+'px;left:50%;transform:translateX(-50%);width:'+Math.round(24*s)+'px;height:'+Math.round(18*s)+'px;background:'+hairC+';border-radius:'+Math.round(6*s)+'px;z-index:7;border:'+Math.round(2*s)+'px solid #333;"></div>';
+  const ribbon=isFemale?'<div style="position:absolute;top:-'+Math.round(6*s)+'px;right:'+Math.round(4*s)+'px;font-size:'+Math.round(14*s)+'px;z-index:8;">🎀</div>':'';
+  const hat=hatIco?'<div style="position:absolute;top:-'+Math.round(10*s)+'px;left:50%;transform:translateX(-50%);font-size:'+Math.round(22*s)+'px;z-index:9;line-height:1;">'+hatIco+'</div>':'';
+
+  const bagDiv=bagC?'<div style="position:absolute;top:'+Math.round(40*s)+'px;right:-'+Math.round(3*s)+'px;width:'+Math.round(13*s)+'px;height:'+Math.round(17*s)+'px;background:'+bagC+';border:'+Math.round(2*s)+'px solid #333;border-radius:'+Math.round(4*s)+'px;z-index:3;"></div>':'';
+  const hairLong=isFemale?'<div style="position:absolute;top:'+Math.round(50*s)+'px;left:'+Math.round(14*s)+'px;width:'+Math.round(52*s)+'px;height:'+Math.round(40*s)+'px;background:'+hairC+';border-radius:0 0 '+Math.round(10*s)+'px '+Math.round(10*s)+'px;z-index:5;border:'+Math.round(2*s)+'px solid #333;"></div>':'';
+  const accDiv=isFemale?'<div style="position:absolute;top:'+Math.round(30*s)+'px;right:'+Math.round(10*s)+'px;width:'+Math.round(11*s)+'px;height:'+Math.round(11*s)+'px;background:#FF6B6B;border:'+Math.round(2*s)+'px solid #333;border-radius:50%;z-index:8;"></div>':'';
+
+  return '<div style="position:relative;width:'+w+'px;height:'+h+'px;animation:mungFloat 2.8s ease-in-out infinite;flex-shrink:0;isolation:isolate;">'+shadow+bootL+bootR+legL+legR+body+hairBack+hairLong+face+hairFront+ribbon+hat+bagDiv+accDiv+'</div>';
+}
+
+
+// 단상용 캐릭터 SVG (작은 버전)
+function getPodiumCharSVG(student){
+  // 현재 로그인한 학생이면 myChar, 아니면 기본 캐릭터
+  const isMe = currentStudent && student.isMe;
+  const charData = isMe && myChar ? myChar : null;
+  if(!charData) return getMungCharHTML({gender:'f',topColor:'#4ECDC4',botColor:'#5C6BC0',equipped:{}}, 0.45);
+  return getMungCharHTML(charData, 0.45);
+}
+
+// ── 초기화 ──
+renderCatGrid('book');
+renderPrizesInfo();
+updateRewardUI();
+updateLevelUI();
+renderPodium();
+document.getElementById('bar-song').textContent='홈';
+updateHomeTab();
+setTimeout(()=>openLoginModal(), 400);
+</script>
+</body>
+</html>
